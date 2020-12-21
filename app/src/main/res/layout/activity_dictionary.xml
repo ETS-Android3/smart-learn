@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activityDictionaryLayout"
+    tools:context=".activities.DictionaryActivity"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:theme="@style/AppTheme.AppBarOverlay"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleMarginStart="40dp"
+        android:textDirection="locale"
+        android:background="@color/colorToolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/app_name" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnAddWord_ExistingD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_words_from_exiting_dictionary"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"/>
+
+
+        <Button
+            android:id="@+id/btnAddWord_ExternalD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnAddWord_ExistingD"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:text="@string/add_words_from_external_dictionary"
+            android:textSize="20sp" />
+
+
+
+        <Button
+            android:id="@+id/btnDisplayWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/display_words"
+            android:layout_marginTop="15dp"
+            android:textSize="20sp"
+            android:layout_below="@+id/btnAddWord_ExternalD"
+            android:background="@color/white"/>
+
+
+        <Button
+            android:id="@+id/btnUpdateD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnDisplayWords"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:text="@string/update_dictionary"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        >
+
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:background="@color/white_closed"
+            android:text="@string/test"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddNewWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/rose"
+            android:src="@drawable/btn_plus"
+            app:fabSize="normal"
+            tools:ignore="RelativeOverlap" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnDeleteDictionary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/gray"
+            android:src="@drawable/btn_delete"
+            app:fabSize="normal" />
+
+    </RelativeLayout>
+</LinearLayout>

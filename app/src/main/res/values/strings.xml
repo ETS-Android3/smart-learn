@@ -1,3 +1,16 @@
 <resources>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="app_name">smart-learn</string>
+    <string name="new_dictionary" translatable="false">New dictionary</string>
+    <string name="open_dictionary" translatable="false">Open dictionary</string>
+    <string name="help" translatable="false">Help</string>
+    <string name="import_dictionary" translatable="false">Import dictionary</string>
+    <string name="no_entry_here">No entry here</string>
+    <string name="add_dictionary">Add dictionary</string>
+    <string name="search">Search</string>
+    <string name="add_words_from_exiting_dictionary">Add words from exiting dictionary</string>
+    <string name="add_words_from_external_dictionary">Add words from external dictionary</string>
+    <string name="display_words">Display Words</string>
+    <string name="update_dictionary">Update dictionary</string>
+    <string name="test" translatable="false">Test</string>
 </resources>

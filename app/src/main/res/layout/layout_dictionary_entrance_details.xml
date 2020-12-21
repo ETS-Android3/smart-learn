@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dictionaryCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="10dp"
+    app:cardPreventCornerOverlap="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvEntranceWord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="word"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvEntranceTranslation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="translation"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvEntrancePhonetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="phonetic"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/ivCheck"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
