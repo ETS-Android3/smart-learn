@@ -11,6 +11,7 @@ import com.licenta.smart_learn.entities.DictionaryDetails
 import com.licenta.smart_learn.entities.DictionaryEntrance
 import com.licenta.smart_learn.recycler_view.adapters.DictionariesRVAdapter
 import com.licenta.smart_learn.recycler_view.adapters.EntrancesRVAdapter
+import com.licenta.smart_learn.repository.DatabaseSchema
 import com.licenta.smart_learn.services.ApplicationService
 import kotlinx.android.synthetic.main.dialog_add_word.*
 import kotlinx.android.synthetic.main.dialog_new_dictionary.*
@@ -34,7 +35,28 @@ private fun dictionaryDetailsCheck(
     dictionaryName: String
 ): Boolean{
 
+    if (dictionaryName.isEmpty()) {
+        Toast.makeText(activity, "Enter a name", Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    // check dictionaryName length
+    if (dictionaryName.length > DatabaseSchema.DictionariesTable.DIMENSION_COLUMN_NAME) {
+        Toast.makeText( activity, "This name is too big. Choose a shorter name.",
+            Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    //add dictionary only if this does not exist
+    if (applicationService.dictionaryService.checkIfDictionaryExist(dictionaryName)) {
+        Toast.makeText(
+            activity, "Dictionary $dictionaryName already exists. Choose other name",
+            Toast.LENGTH_LONG).show()
+        return false
+    }
+
     return true
+
 }
 
 
@@ -152,6 +174,36 @@ private fun entryCheck(
     translation: String,
     phonetic: String
 ): Boolean {
+
+    if(word.isEmpty() && translation.isEmpty() && phonetic.isEmpty()){
+        Toast.makeText(activity,
+            "All fields are empty. You must enter value in at least one field",
+            Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    if(word.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_WORD){
+        Toast.makeText(activity, "This word is too big.",Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    if(phonetic.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_PHONETIC){
+        Toast.makeText(activity, "This phonetic translation is too big.",
+            Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    // TODO: check to see if word exist in all database not only in one dictionary
+    // add word only if this does not exists in current dictionary
+    if(word.isNotEmpty() &&
+        applicationService.dictionaryService.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
+
+        Toast.makeText(activity, "Word $word already exists in this dictionary.",
+            Toast.LENGTH_LONG).show()
+        return false
+    }
+
+    // TODO: check if translation exists in dictionary
 
     return true
 

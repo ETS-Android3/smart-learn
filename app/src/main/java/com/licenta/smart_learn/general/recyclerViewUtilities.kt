@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.licenta.smart_learn.recycler_view.ItemTouchCallback
 import com.licenta.smart_learn.recycler_view.adapters.BaseRVAdapter
 import com.licenta.smart_learn.recycler_view.adapters.DictionariesRVAdapter
+import com.licenta.smart_learn.recycler_view.adapters.EntrancesRVAdapter
 import com.licenta.smart_learn.services.activities.DictionariesRVActivityService
+import com.licenta.smart_learn.services.activities.EntrancesRVActivityService
 
 /** helper for decoration */
 class ItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {
@@ -42,6 +44,12 @@ fun initRecyclerView(
             1 -> {
                 baseAdaptor =
                     DictionariesRVAdapter(activityServiceUtilities as DictionariesRVActivityService)
+                adapter = baseAdaptor
+                return baseAdaptor
+            }
+            2 -> {
+                baseAdaptor =
+                    EntrancesRVAdapter(activityServiceUtilities as EntrancesRVActivityService)
                 adapter = baseAdaptor
                 return baseAdaptor
             }

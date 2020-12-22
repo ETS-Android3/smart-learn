@@ -3,54 +3,75 @@ package com.licenta.smart_learn.services
 import com.licenta.smart_learn.entities.DictionaryDetails
 import com.licenta.smart_learn.entities.DictionaryEntrance
 import com.licenta.smart_learn.general.ActivityServiceUtilities
+import com.licenta.smart_learn.general.SELECTED_DICTIONARY_ID
+import com.licenta.smart_learn.repository.DictionaryRepository
 
 
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b
  * */
-class DictionaryService(private val activityServiceUtilities: ActivityServiceUtilities<*, *>) {
+class DictionaryService(private val activityServiceUtilities: ActivityServiceUtilities<*,*>) {
 
-    fun addDictionary(dictionaryName: String){
+    private var dictionaryRepository: DictionaryRepository = DictionaryRepository(activityServiceUtilities)
 
-    }
-
-    fun updateDictionary(dictionaryDetails: DictionaryDetails){
-
-    }
-
-    fun getDictionary(title: String): DictionaryDetails? {
-        return DictionaryDetails(title="test")
-    }
-
-    fun deleteDictionary(dictionaryId: Int){
-
-    }
-
-    fun getDictionaries() : List<DictionaryDetails> {
-        return ArrayList()
+    fun getDictionaryEntries() : List<DictionaryEntrance> {
+        return dictionaryRepository.getDictionaryEntries(SELECTED_DICTIONARY_ID)
     }
 
     fun getDictionaryEntries(dictionaryId : Int) : List<DictionaryEntrance> {
-        return ArrayList()
+        return dictionaryRepository.getDictionaryEntries(dictionaryId)
     }
 
-    fun getDictionary(dictionaryId: Int): DictionaryDetails? {
-        return DictionaryDetails(title="test")
+    fun checkIfDictionaryExist(dictionaryName: String) : Boolean {
+        return dictionaryRepository.checkIfDictionaryExist(dictionaryName)
     }
 
-    fun deleteEntrance(entranceId: Int){
-
+    fun checkIfWordExist(word: String, dictionaryId: Int) : Boolean {
+        return dictionaryRepository.checkIfWordExist(word,dictionaryId)
     }
 
-    fun updateEntrance(dictionaryEntrance: DictionaryEntrance){
-
+    fun addDictionary(dictionaryName: String){
+        dictionaryRepository.addDictionary(dictionaryName)
     }
 
-    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
-        return DictionaryEntrance(word = "test",translation = "test",phonetic = "test",dictionaryId = 1)
+    fun updateDictionary(dictionaryDetails: DictionaryDetails){
+        dictionaryRepository.updateDictionary(dictionaryDetails)
+    }
+
+    fun deleteDictionary(dictionaryId: Int){
+        dictionaryRepository.deleteDictionary(dictionaryId)
     }
 
     fun addEntrance(dictionaryEntrance: DictionaryEntrance) {
-
+        dictionaryRepository.addEntrance(dictionaryEntrance)
     }
+
+    fun updateEntrance(dictionaryEntrance: DictionaryEntrance){
+        dictionaryRepository.updateEntrance(dictionaryEntrance)
+    }
+
+    fun deleteEntrance(entranceId: Int){
+        dictionaryRepository.deleteEntrance(entranceId)
+    }
+
+    fun getDictionaries() : List<DictionaryDetails> {
+        return dictionaryRepository.getDictionaries()
+    }
+
+    fun getDictionary(dictionaryId: Int): DictionaryDetails? {
+        return dictionaryRepository.getDictionary(dictionaryId)
+    }
+
+    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
+        return dictionaryRepository.getUpdatedEntrance(dictionaryEntrance)
+    }
+
+    fun getDictionary(title: String): DictionaryDetails? {
+        return dictionaryRepository.getDictionary(title)
+    }
+
+    fun getEntrance(entranceId: Int): DictionaryEntrance? {
+        return dictionaryRepository.getEntrance(entranceId)
+    }
+
 }
