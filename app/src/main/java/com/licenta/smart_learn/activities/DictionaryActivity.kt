@@ -76,6 +76,12 @@ class DictionaryActivity : AppCompatActivity() {
     }
 
 
+    fun startTestGenerationActivity(){
+        val intent = Intent(this, GameGenerationActivity::class.java)
+        startActivity(intent)
+    }
+
+
     /** Show entries from the selected dictionary */
     fun startEntrancesRVActivity(){
         val intent = Intent(this, EntrancesRVActivity::class.java)

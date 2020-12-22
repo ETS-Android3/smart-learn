@@ -8,6 +8,7 @@ import com.licenta.smart_learn.general.SELECTED_DICTIONARY_ID
 import com.licenta.smart_learn.general.showAddDictionaryDialog
 import com.licenta.smart_learn.general.showAddEntranceDialog
 import com.licenta.smart_learn.services.ApplicationService
+import com.licenta.smart_learn.services.GameService
 import kotlinx.android.synthetic.main.activity_dictionary.*
 
 
@@ -27,7 +28,13 @@ class DictionaryActivityService(private var dictionaryActivity: DictionaryActivi
         }
 
         activity.btnTest.setOnClickListener {
-            dictionaryActivity.startTestActivity()
+            //dictionaryActivity.startTestActivity()
+
+            // TODO: remove this when refactoring is made
+            GameService.getGameServiceInstance().currentGame = GameService.GAME_A
+            GameService.getGameServiceInstance().currentPlayMode.set(GameService.REMOTE_MODE_PLAY.toInt())
+            GameService.getGameServiceInstance().remotePlayMode.set(GameService.REMOTE_WEB_SOCKET_PLAY.toInt())
+            dictionaryActivity.startTestGenerationActivity()
         }
 
         activity.btnDisplayWords.setOnClickListener {

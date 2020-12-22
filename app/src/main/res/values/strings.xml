@@ -13,4 +13,13 @@
     <string name="display_words">Display Words</string>
     <string name="update_dictionary">Update dictionary</string>
     <string name="test" translatable="false">Test</string>
+    <string name="hello_how_are_you">Hello. How are you?</string>
+    <string name="default_user_img">default_user_img</string>
+    <string name="some_time">08:00 AM</string>
+    <string name="image">image</string>
+    <string name="tab_text_1">Game</string>
+    <string name="tab_text_2">Chat</string>
+    <string name="send_message">Message...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
