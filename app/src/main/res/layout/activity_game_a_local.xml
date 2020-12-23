@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GameAActivity">
+    tools:context=".activities.TestOnlineActivity">
 
 
     <include
-        layout="@layout/play_layout"
+        layout="@layout/online_test_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

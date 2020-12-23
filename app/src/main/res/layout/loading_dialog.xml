@@ -45,11 +45,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLoadingMessage" />
 
     <Button
-        android:id="@+id/btnCancelGeneratedGame"
+        android:id="@+id/btnCancelGeneratedTest"
         android:layout_width="122dp"
         android:layout_height="41dp"
         android:layout_marginTop="18dp"
-        android:text="Cancel game"
+        android:text="Cancel test"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTimer" />
