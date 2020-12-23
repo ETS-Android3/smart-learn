@@ -1,7 +1,7 @@
 package com.smart_learn.web;
 
 import com.smart_learn.core.AuditService;
-import com.smart_learn.core.GameService;
+import com.smart_learn.core.TestService;
 import com.smart_learn.core.ThreadPoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,12 +20,12 @@ import java.util.logging.Level;
 @Scope("prototype")
 public class WebSocketHandler extends AbstractWebSocketHandler {
 
-    private final GameService gameService;
+    private final TestService testService;
     private final ThreadPoolService threadPoolService;
 
     @Autowired
-    public WebSocketHandler(GameService gameService, ThreadPoolService threadPoolService) {
-        this.gameService = gameService;
+    public WebSocketHandler(TestService testService, ThreadPoolService threadPoolService) {
+        this.testService = testService;
         this.threadPoolService = threadPoolService;
     }
 
@@ -46,7 +46,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         super.handleTextMessage(session, message);
         String payload = message.getPayload();
         AuditService.addLog(Level.INFO,"received payload: " + payload);
-        threadPoolService.execute(() -> gameService.onTextMessageReceived(session,payload));
+        threadPoolService.execute(() -> testService.onTextMessageReceived(session,payload));
     }
 
     @Override

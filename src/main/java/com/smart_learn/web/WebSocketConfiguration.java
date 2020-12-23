@@ -31,7 +31,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
         webSocketHandlerRegistry
-                .addHandler(context.getBean(WebSocketHandler.class), "/game").setAllowedOrigins("*");
+                .addHandler(context.getBean(WebSocketHandler.class), "/test").setAllowedOrigins("*");
 
     }
 
