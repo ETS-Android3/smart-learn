@@ -40,5 +40,6 @@ public interface StrictCodes {
     String CHAT_MESSAGE_TIME = "chat_message_time";
     String USER_ID = "user_id";
     String PARTICIPANT_ID = "participant_id";
+    String PARTICIPANT_IS_ADMIN = "participant_is_admin";
 
 }

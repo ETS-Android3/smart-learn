@@ -281,7 +281,8 @@ public class TestService {
             // construct all participant list
             for (Participant value : connection.getParticipants()) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put(StrictCodes.PARTICIPANT_ID, value.getUserId())
+                jsonObject.put(StrictCodes.PARTICIPANT_IS_ADMIN, value.isTestAdmin())
+                        .put(StrictCodes.PARTICIPANT_ID, value.getUserId())
                         .put(StrictCodes.WEBSOCKET_SESSION_ID, value.getWebSocketSession().getId());
                 jsonArray.put(jsonObject);
             }
@@ -338,6 +339,7 @@ public class TestService {
         // create common response
         HashMap<String,String> tmp = new HashMap<>();
         tmp.put(StrictCodes.TRANSMISSION_CODE,StrictCodes.PARTICIPANT_CONNECTED);
+        tmp.put(StrictCodes.PARTICIPANT_IS_ADMIN,String.valueOf(participant.isTestAdmin()));
         tmp.put(StrictCodes.PARTICIPANT_ID,participant.getUserId());
 
         connection.getParticipants().forEach(p -> {
