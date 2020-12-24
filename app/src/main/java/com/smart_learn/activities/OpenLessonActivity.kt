@@ -11,13 +11,13 @@ import com.smart_learn.R
 import com.smart_learn.general.showSettingsDialog
 import com.smart_learn.services.activities.MainActivityService
 
-class MainActivity : AppCompatActivity() {
+class OpenLessonActivity : AppCompatActivity() {
 
     private lateinit var mainActivityService: MainActivityService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_open_lesson)
         setSupportActionBar(findViewById(R.id.toolbarDictionaries))
 
         mainActivityService = MainActivityService(this)

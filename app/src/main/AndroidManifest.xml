@@ -15,13 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.TestSettingsActivity" />
-        <activity android:name=".activities.TestGenerationActivity" />
-        <activity android:name=".activities.TestOnlineActivity" />
-        <activity android:name=".activities.EntrancesRVActivity" />
-        <activity android:name=".activities.TestActivity" />
-        <activity android:name=".activities.DictionaryActivity" />
-        <activity android:name=".activities.DictionariesRVActivity" />
+        <activity android:name=".activities.SimpleLoginActivity"></activity>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.TestSettingsActivity" />
+        <activity android:name=".activities.TestGenerationActivity" />
+        <activity android:name=".activities.TestOnlineActivity" />
+        <activity android:name=".activities.EntrancesRVActivity" />
+        <activity android:name=".activities.TestActivity" />
+        <activity android:name=".activities.DictionaryActivity" />
+        <activity android:name=".activities.DictionariesRVActivity" />
+        <activity android:name=".activities.OpenLessonActivity" />
     </application>
 
 </manifest>

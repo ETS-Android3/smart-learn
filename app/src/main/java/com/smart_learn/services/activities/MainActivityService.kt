@@ -2,16 +2,16 @@ package com.smart_learn.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
-import com.smart_learn.activities.MainActivity
+import com.smart_learn.activities.OpenLessonActivity
 import com.smart_learn.general.ActivityServiceUtilities
 import com.smart_learn.general.showAddDictionaryDialog
 import com.smart_learn.services.ApplicationService
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_open_lesson.*
 
-class MainActivityService(private var mainActivity: MainActivity) :
-    ActivityServiceUtilities<MainActivityService, MainActivity> {
+class MainActivityService(private var openLessonActivity: OpenLessonActivity) :
+    ActivityServiceUtilities<MainActivityService, OpenLessonActivity> {
 
-    private var activity: Activity = mainActivity.getActivity()
+    private var activity: Activity = openLessonActivity.getActivity()
 
     /** FIXME: fix this BUG . A fix can be to instantiate variable in the init constructor
      *  when you initialize something with 'this' put declaration last or to try to make DatabaseHandler a singleton class
@@ -21,7 +21,7 @@ class MainActivityService(private var mainActivity: MainActivity) :
      *
      * Example: if declaration will be
      *     private var applicationService: ApplicationService = ApplicationService(this)
-     *     private var activity: Activity = mainActivity.getActivity()
+     *     private var activity: Activity = openLessonActivity.getActivity()
      *
      *   it will appear a null exception in DatabaseHandler because activity is NULL
      *   (application service will go through services until the repository and after that to DatabaseHandler)
@@ -40,7 +40,7 @@ class MainActivityService(private var mainActivity: MainActivity) :
         }
 
         activity.btnOpenDictionary.setOnClickListener {
-            mainActivity.startDictionariesRVActivity()
+            openLessonActivity.startDictionariesRVActivity()
         }
 
     }
@@ -53,8 +53,8 @@ class MainActivityService(private var mainActivity: MainActivity) :
         return this
     }
 
-    override fun getParentActivity(): MainActivity {
-        return mainActivity
+    override fun getParentActivity(): OpenLessonActivity {
+        return openLessonActivity
     }
 
     override fun getApplicationService(): ApplicationService {
