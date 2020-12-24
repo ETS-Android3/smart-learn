@@ -1,8 +1,12 @@
 package com.smart_learn.services.activities
 
 import android.app.Activity
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import com.smart_learn.R
+import com.smart_learn.activities.DictionariesRVActivity
 import com.smart_learn.activities.DictionaryActivity
+import com.smart_learn.activities.TestOnlineActivity
 import com.smart_learn.general.ActivityServiceUtilities
 import com.smart_learn.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.general.showAddDictionaryDialog

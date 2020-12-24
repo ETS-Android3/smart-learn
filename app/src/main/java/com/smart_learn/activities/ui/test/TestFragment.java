@@ -105,6 +105,7 @@ public class TestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
         ((RemotePlay) CurrentConfig.getCurrentConfigInstance().currentActivity).initLayoutElements(view);
+
         return view;
     }
 }

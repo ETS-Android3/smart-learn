@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.util.Pair;
 
 import com.smart_learn.activities.TestActivity;
 import com.smart_learn.activities.TestOnlineActivity;
@@ -14,6 +13,7 @@ import com.smart_learn.activities.ui.test.ChatMessageModel;
 import com.smart_learn.activities.ui.test.ChatMessageRVAdapter;
 import com.smart_learn.activities.ui.test.ParticipantModel;
 import com.smart_learn.activities.ui.test.ParticipantsRVAdapter;
+import com.smart_learn.activities.ui.test.QuestionModel;
 import com.smart_learn.config.CurrentConfig;
 import com.smart_learn.config.GeneralConfig;
 import com.smart_learn.remote.test.BasicPlayMode;
@@ -109,6 +109,9 @@ public final class TestService {
     /** Use this to avoid to cancel a test multiple times */
     private AtomicBoolean testStopped = new AtomicBoolean(false);
 
+    /** Use to display different layout when test is finished */
+    public AtomicBoolean testSuccessfullyFinished = new AtomicBoolean(false);
+
     /*  ***************************************************************************************
      *                          SETTINGS FOR REMOTE TEST MODE
      *  - attributes bellow are used as public fields for an easy access (eliminating getters
@@ -138,7 +141,7 @@ public final class TestService {
     public AtomicBoolean isTestAdmin = new AtomicBoolean(false);
 
     /** question number , question, response */
-    public HashMap<Integer, Pair<String,String>> testQuestions;
+    public HashMap<Integer, QuestionModel> testQuestions;
 
     /** first element will be current question*/
     public Queue<Integer> questionIdQueue;
@@ -278,7 +281,10 @@ public final class TestService {
                         // and add new code
                         testCode.append(jsonObject.getString(StrictCodes.TEST_CODE));
 
-                        //TODO: show test code on device
+                        // set himself as participant
+                        participantModelList = new ArrayList<>();
+                        participantModelList.add(new ParticipantModel(true,GeneralConfig.USER_ID,
+                                    ParticipantsRVAdapter.VIEW_TYPE_CONNECTED));
 
                     }
 
@@ -300,7 +306,7 @@ public final class TestService {
                         String question = tmp.getString(StrictCodes.QUESTION);
                         String answer = tmp.getString(StrictCodes.RESPONSE);
 
-                        TestService.getTestServiceInstance().testQuestions.put(id, new Pair<>(question,answer));
+                        TestService.getTestServiceInstance().testQuestions.put(id, new QuestionModel(question,answer));
                     }
 
                     // TODO: set random question queue
@@ -312,8 +318,9 @@ public final class TestService {
                         participantModelList = new ArrayList<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject tmp = jsonArray.getJSONObject(i);
-                            participantModelList.add(new ParticipantModel(tmp.getString(StrictCodes.PARTICIPANT_ID),
-                                    ParticipantsRVAdapter.VIEW_TYPE_CONNECTED));
+                            participantModelList.add(
+                                    new ParticipantModel(Boolean.parseBoolean(tmp.getString(StrictCodes.PARTICIPANT_IS_ADMIN)),
+                                            tmp.getString(StrictCodes.PARTICIPANT_ID), ParticipantsRVAdapter.VIEW_TYPE_CONNECTED));
                         }
                     }
 
@@ -329,9 +336,7 @@ public final class TestService {
                         return;
                     }
 
-                    startOnlineTest();
                     testStarted.set(true);
-
                     break;
                 }
 
@@ -383,6 +388,7 @@ public final class TestService {
 
                     // build message
                     ParticipantModel participantModel = new ParticipantModel(
+                            Boolean.parseBoolean(jsonObject.getString(StrictCodes.PARTICIPANT_IS_ADMIN)),
                             jsonObject.getString(StrictCodes.PARTICIPANT_ID),
                             ParticipantsRVAdapter.VIEW_TYPE_CONNECTED
                     );
@@ -453,10 +459,14 @@ public final class TestService {
         thread.start();
     }
 
-    private void startOnlineTest(){
+    // FIXME: this function can be called when a START_TEST payload is receive but an error occurred
+    //  websocket is closed on failure because I try to launch a countdown timer. I believe is because
+    //  launh is made from websocket thread probably
+    public void startOnlineTest(){
 
         // how much time is allocated for a turn (in seconds)
         AtomicInteger turnTime = new AtomicInteger(TURN_TIME);
+        AtomicBoolean firstQuestion = new AtomicBoolean(true);
 
         // test must be finished in TOTAL_TEST_TIME
         new CountDownTimer(TOTAL_TEST_TIME, 1000){
@@ -465,44 +475,56 @@ public final class TestService {
             public void onTick(long millisUntilFinished) {
                 //Log.i(Logs.INFO,"Time [MAIN_TEST_TIME] " + millisUntilFinished / 1000);
 
-                int time = turnTime.decrementAndGet();
-                ((RemotePlay) basicTestModeActivity).updateTime(String.valueOf(time));
-
-                // time for choosing is ended up --> go to next question
-                if(time <= 0){
-                    if(questionIdQueue == null || questionIdQueue.isEmpty()){
-                        ((RemotePlay) basicTestModeActivity).disableTest(false,"Test finished");
-                        this.cancel();
-                        return;
-                    }
-
-                    Pair<String,String> pair = testQuestions.get(questionIdQueue.remove());
-                    if(pair == null){
-                        GeneralUtilities.showToast(Logs.UNEXPECTED_ERROR + " no question pair to show");
-                        ((RemotePlay) basicTestModeActivity).disableTest(false,Logs.UNEXPECTED_ERROR + "Test aborted");
-                        this.cancel();
-                        return;
-                    }
-
-                    String question = pair.first;
-                    if(question == null){
-                        GeneralUtilities.showToast(Logs.UNEXPECTED_ERROR + " no question body to show");
-                        ((RemotePlay) basicTestModeActivity).disableTest(false,Logs.UNEXPECTED_ERROR + "Test aborted");
-                        this.cancel();
-                        return;
-                    }
-
-                    ((RemotePlay) basicTestModeActivity).setNextQuestion(question);
-
-                    turnTime.set(TURN_TIME);
-
-                    return;
-                }
-
                 if(abortTestConnection.get()){
                     ((RemotePlay) basicTestModeActivity).disableTest(false,Logs.UNEXPECTED_ERROR + "Test aborted");
                     this.cancel();
                 }
+
+                if(!testStarted.get()){
+                    return;
+                }
+
+                int time = turnTime.decrementAndGet();
+                ((RemotePlay) basicTestModeActivity).updateTime(String.valueOf(time));
+
+                // time for choosing is ended up --> go to next question
+                if(time <= 0 || firstQuestion.get()){
+                    firstQuestion.set(false);
+
+                    if(questionIdQueue == null || questionIdQueue.isEmpty()){
+                        int totalQuestions = 0;
+                        int correctResponses = 0;
+                        // get a small statistics
+                        for (QuestionModel value : testQuestions.values()) {
+                            totalQuestions++;
+                            if(value.isCorrectResponse()){
+                                correctResponses++;
+                            }
+                        }
+
+                        ((RemotePlay) basicTestModeActivity).disableTest(false,
+                                "Test finished: " + correctResponses + "/" + totalQuestions);
+                        testSuccessfullyFinished.set(true);
+
+                        this.cancel();
+                        return;
+                    }
+
+                    currentQuestionId.set(questionIdQueue.remove());
+                    QuestionModel questionModel = testQuestions.get(currentQuestionId.get());
+                    if(questionModel == null){
+                        GeneralUtilities.showToast(Logs.UNEXPECTED_ERROR + " no question model to show");
+                        ((RemotePlay) basicTestModeActivity).disableTest(false,Logs.UNEXPECTED_ERROR + "Test aborted");
+                        this.cancel();
+                        return;
+                    }
+
+                    ((RemotePlay) basicTestModeActivity).setNextQuestion(questionModel.getQuestion());
+
+                    turnTime.set(TURN_TIME);
+
+                }
+
             }
 
             @Override
@@ -517,8 +539,10 @@ public final class TestService {
                             "Test was active for to much time. Test disabled.");
                 }
                 Log.e(Logs.UNEXPECTED_ERROR,"Timer [MAIN_TEST_TIMER] finished because test count down was over.");
+
             }
         }.start();
+
 
     }
 
@@ -536,6 +560,7 @@ public final class TestService {
 
         Send request to notify server to abort test and delete existing connexion info. */
 
+        /*
         // only an admin can stop the test
         if(isTestAdmin.get()){
             JSONObject payload = new JSONObject();
@@ -553,6 +578,8 @@ public final class TestService {
             }
             return;
         }
+
+         */
 
 
         if(testWebSocket != null){
@@ -592,39 +619,35 @@ public final class TestService {
             payload.put(StrictCodes.TRANSMISSION_CODE, StrictCodes.START_TEST)
                     .put(StrictCodes.TEST_CODE, testCode)
                     .put(StrictCodes.WEBSOCKET_SESSION_ID, webSocketSessionId.toString());
+
+            testWebSocket.send(payload.toString());
+            Log.i(Logs.INFO, payload.toString());
         }
         catch (JSONException e) {
             e.printStackTrace();
-            return;
         }
-
-        // send signal for starting the test
-        webSocketSendResponse(payload.toString());
     }
 
-
-    private String createResponsePayload(String response){
+    private String createResponsePayload(int questionId, String response){
         JSONObject payload = new JSONObject();
         try {
-            currentQuestionId.set(questionIdQueue.remove());
-            Pair<String,String> pair = testQuestions.get(currentQuestionId.get());
-            if(pair == null){
+            QuestionModel questionModel = testQuestions.get(questionId);
+            if(questionModel == null) {
                 return null;
             }
 
-            String question = pair.first;
-            if(question == null){
-                return null;
-            }
+            // first attach participant response to question and update hash
+            questionModel.setParticipantResponse(response);
+            testQuestions.put(questionId,questionModel);
 
             payload.put(StrictCodes.TRANSMISSION_CODE, StrictCodes.TEST_RESPONSE)
                     .put(StrictCodes.TEST_CODE, testCode)
                     .put(StrictCodes.WEBSOCKET_SESSION_ID, webSocketSessionId.toString())
                     .put(StrictCodes.USER_ID, GeneralConfig.USER_ID)
                     .put(StrictCodes.QUESTION_ID, currentQuestionId.get())
-                    .put(StrictCodes.QUESTION, question)
-                    .put(StrictCodes.RESPONSE, response)
-                    .put(StrictCodes.CORRECT_RESPONSE, response.toLowerCase().equals(question.toLowerCase()));
+                    .put(StrictCodes.QUESTION, questionModel.getQuestion())
+                    .put(StrictCodes.RESPONSE, questionModel.getParticipantResponse())
+                    .put(StrictCodes.CORRECT_RESPONSE, questionModel.isCorrectResponse());
 
         }
         catch (JSONException e) {
@@ -635,9 +658,9 @@ public final class TestService {
         return payload.toString();
     }
 
-    public void webSocketSendResponse(String response){
+    public void webSocketSendResponse(int questionId, String response){
 
-        String payload = createResponsePayload(response);
+        String payload = createResponsePayload(questionId, response);
 
         if(payload == null){
             GeneralUtilities.showToast(Logs.UNEXPECTED_ERROR + "Response cannot be send to server. Try again.");
@@ -649,7 +672,7 @@ public final class TestService {
     }
 
 
-    public void aborTestAlert(Context context){
+    public void abortTestAlert(Context context){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("You want to leave?");
         builder.setCancelable(false);

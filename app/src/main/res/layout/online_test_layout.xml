@@ -30,15 +30,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvResponse"
-        android:layout_width="303dp"
-        android:layout_height="77dp"
+    <EditText
+        android:id="@+id/etResponse"
+        android:layout_width="355dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="46dp"
+        android:ems="10"
         android:hint="Insert response"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartTest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
+        app:layout_constraintTop_toBottomOf="@+id/tvStatus"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -48,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvResponse" />
+        app:layout_constraintTop_toBottomOf="@+id/etResponse" />
 
     <Button
         android:id="@+id/btnStartTest"
@@ -59,6 +66,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStatus" />
+
+    <Button
+        android:id="@+id/btnDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="41dp"
+        android:text="See responses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

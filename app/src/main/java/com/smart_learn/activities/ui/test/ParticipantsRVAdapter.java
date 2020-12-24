@@ -2,6 +2,7 @@ package com.smart_learn.activities.ui.test;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,10 @@ public class ParticipantsRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         void bind(ParticipantModel participantModel) {
             tvUserId.setText(participantModel.getParticipantId());
+
+            if(participantModel.isTestAdmin()){
+                tvUserId.setBackgroundColor(Color.GREEN);
+            }
         }
     }
 

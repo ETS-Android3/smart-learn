@@ -38,27 +38,24 @@
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/txt_size"
-            android:background="@drawable/rounded_shape"
-            android:textColor="@color/white"
             android:layout_marginTop="10dp"
+            android:background="@color/white_closed"
             android:text="@string/new_dictionary"
-            />
-
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size" />
 
 
         <Button
             android:id="@+id/btnOpenDictionary"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/txt_size"
-            android:background="@drawable/rounded_shape"
-            android:textColor="@color/white"
-            android:text="@string/open_dictionary"
-            android:layout_marginTop="50dp"
             android:layout_below="@+id/btnNewDictionary"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@color/white_closed"
+            android:text="@string/open_dictionary"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size" />
 
 
         <Button
@@ -67,8 +64,8 @@
             android:layout_height="@dimen/btn_height"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/txt_size"
-            android:background="@drawable/rounded_shape"
-            android:textColor="@color/white"
+            android:background="@color/white_closed"
+            android:textColor="@color/black"
             android:text="@string/import_dictionary"
             android:layout_marginTop="50dp"
             android:layout_below="@+id/btnOpenDictionary"
@@ -79,15 +76,13 @@
             android:id="@+id/btnHelp"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
-            android:layout_centerHorizontal="true"
-            android:textSize="@dimen/txt_size"
-            android:background="@drawable/rounded_shape"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/rose"
-            android:text="@string/help"
-            android:layout_marginTop="50dp"
             android:layout_below="@+id/btnImportDictionary"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@color/white_closed"
+            android:text="@string/help"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size" />
     </RelativeLayout>
 
 

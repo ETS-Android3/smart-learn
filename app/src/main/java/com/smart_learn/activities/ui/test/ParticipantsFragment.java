@@ -122,9 +122,12 @@ public class ParticipantsFragment extends Fragment {
 
     public void addParticipant(ParticipantModel participantModel){
 
+        /*
         if(participantExists(participantModel.getParticipantId())){
             return;
         }
+
+         */
 
         CurrentConfig.getCurrentConfigInstance().currentActivity.runOnUiThread(() -> {
             participantModelList.add(participantModel);
@@ -152,6 +155,7 @@ public class ParticipantsFragment extends Fragment {
     private void addTestInfo(){
 
         ParticipantModel model1 = new ParticipantModel(
+                false,
                 "guest abcd",
                 ParticipantsRVAdapter.VIEW_TYPE_CONNECTED
         );
