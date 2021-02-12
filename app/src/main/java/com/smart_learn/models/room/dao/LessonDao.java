@@ -14,9 +14,17 @@ import java.util.List;
 @Dao
 public interface LessonDao extends BasicDao<Lesson> {
 
-    /** Get only Lesson info`s without objects relationship data. */
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
-    LiveData<Lesson> getSampleLesson(int lessonId);
+    LiveData<Lesson> getSampleLiveLesson(int lessonId);
+
+    @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE name LIKE :lessonName")
+    LiveData<Lesson> getSampleLiveLesson(String lessonName);
+
+    @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
+    Lesson getSampleLesson(int lessonId);
+
+    @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE name LIKE :lessonName")
+    Lesson getSampleLesson(String lessonName);
 
 
     /** Get all Lesson info`s (with objects relationship data).
@@ -24,10 +32,10 @@ public interface LessonDao extends BasicDao<Lesson> {
      * info`s from Lesson. */
     @Transaction
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
-    LiveData<LessonWithJoinedInfo> getFullLessonInfo(int lessonId);
+    LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId);
 
 
     /** Get only Lessons info`s without objects relationship data. */
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE)
-    LiveData<List<Lesson>> getAllSampleLessons();
+    LiveData<List<Lesson>> getAllLiveSampleLessons();
 }

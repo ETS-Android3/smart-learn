@@ -22,13 +22,17 @@ public class LessonViewModel extends AndroidViewModel {
         repository = new LessonRepository(application);
     }
 
-    public LiveData<Lesson> getSampleLesson(int lessonId) {
-        return repository.getSampleLesson(lessonId);
+    public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
+        return repository.getSampleLiveLesson(lessonId);
     }
 
-    public LiveData<LessonWithJoinedInfo> getFullLesson(int lessonId) { return repository.getFullLesson(lessonId); }
+    public LiveData<Lesson> getSampleLiveLesson(String lessonName) {
+        return repository.getSampleLiveLesson(lessonName);
+    }
 
-    public LiveData<List<Lesson>> getAllSampleLessons() { return repository.getAllSampleLessons(); }
+    public LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId) { return repository.getFullLiveLessonInfo(lessonId); }
+
+    public LiveData<List<Lesson>> getAllLiveSampleLessons() { return repository.getAllLiveSampleLessons(); }
 
     public void insert(Lesson lesson) { repository.insert(lesson); }
 
