@@ -4,7 +4,7 @@ import com.smart_learn.entities.DictionaryDetails
 import com.smart_learn.entities.DictionaryEntrance
 import com.smart_learn.general.ActivityServiceUtilities
 import com.smart_learn.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.repository.DictionaryRepository
+import com.smart_learn.repository.LessonRepositoryK
 
 
 /**  TODO: To check This class must be a singleton class
@@ -12,66 +12,66 @@ import com.smart_learn.repository.DictionaryRepository
  * */
 class DictionaryService(private val activityServiceUtilities: ActivityServiceUtilities<*,*>) {
 
-    private var dictionaryRepository: DictionaryRepository = DictionaryRepository(activityServiceUtilities)
+    private var lessonRepositoryK: LessonRepositoryK = LessonRepositoryK(activityServiceUtilities)
 
     fun getDictionaryEntries() : List<DictionaryEntrance> {
-        return dictionaryRepository.getDictionaryEntries(SELECTED_DICTIONARY_ID)
+        return lessonRepositoryK.getDictionaryEntries(SELECTED_DICTIONARY_ID)
     }
 
     fun getDictionaryEntries(dictionaryId : Int) : List<DictionaryEntrance> {
-        return dictionaryRepository.getDictionaryEntries(dictionaryId)
+        return lessonRepositoryK.getDictionaryEntries(dictionaryId)
     }
 
     fun checkIfDictionaryExist(dictionaryName: String) : Boolean {
-        return dictionaryRepository.checkIfDictionaryExist(dictionaryName)
+        return lessonRepositoryK.checkIfDictionaryExist(dictionaryName)
     }
 
     fun checkIfWordExist(word: String, dictionaryId: Int) : Boolean {
-        return dictionaryRepository.checkIfWordExist(word,dictionaryId)
+        return lessonRepositoryK.checkIfWordExist(word,dictionaryId)
     }
 
     fun addDictionary(dictionaryName: String){
-        dictionaryRepository.addDictionary(dictionaryName)
+        lessonRepositoryK.addDictionary(dictionaryName)
     }
 
     fun updateDictionary(dictionaryDetails: DictionaryDetails){
-        dictionaryRepository.updateDictionary(dictionaryDetails)
+        lessonRepositoryK.updateDictionary(dictionaryDetails)
     }
 
     fun deleteDictionary(dictionaryId: Int){
-        dictionaryRepository.deleteDictionary(dictionaryId)
+        lessonRepositoryK.deleteDictionary(dictionaryId)
     }
 
     fun addEntrance(dictionaryEntrance: DictionaryEntrance) {
-        dictionaryRepository.addEntrance(dictionaryEntrance)
+        lessonRepositoryK.addEntrance(dictionaryEntrance)
     }
 
     fun updateEntrance(dictionaryEntrance: DictionaryEntrance){
-        dictionaryRepository.updateEntrance(dictionaryEntrance)
+        lessonRepositoryK.updateEntrance(dictionaryEntrance)
     }
 
     fun deleteEntrance(entranceId: Int){
-        dictionaryRepository.deleteEntrance(entranceId)
+        lessonRepositoryK.deleteEntrance(entranceId)
     }
 
     fun getDictionaries() : List<DictionaryDetails> {
-        return dictionaryRepository.getDictionaries()
+        return lessonRepositoryK.getDictionaries()
     }
 
     fun getDictionary(dictionaryId: Int): DictionaryDetails? {
-        return dictionaryRepository.getDictionary(dictionaryId)
+        return lessonRepositoryK.getDictionary(dictionaryId)
     }
 
     fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
-        return dictionaryRepository.getUpdatedEntrance(dictionaryEntrance)
+        return lessonRepositoryK.getUpdatedEntrance(dictionaryEntrance)
     }
 
     fun getDictionary(title: String): DictionaryDetails? {
-        return dictionaryRepository.getDictionary(title)
+        return lessonRepositoryK.getDictionary(title)
     }
 
     fun getEntrance(entranceId: Int): DictionaryEntrance? {
-        return dictionaryRepository.getEntrance(entranceId)
+        return lessonRepositoryK.getEntrance(entranceId)
     }
 
 }

@@ -9,7 +9,7 @@ import com.smart_learn.general.ActivityServiceUtilities
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b
  * */
-class DictionaryRepository(private val activityServiceUtilities: ActivityServiceUtilities<*, *>) {
+class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUtilities<*, *>) {
 
     private val databaseHandler: DatabaseHandler = DatabaseHandler(activityServiceUtilities.getActivity())
 
