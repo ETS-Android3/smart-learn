@@ -59,6 +59,13 @@ dependencies {
     // https://stackoverflow.com/questions/57442809/how-to-use-androidx-recyclerview-selection-in-androidx-recyclerview-widget-or-h
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
 
+
+    // leave that like here
+    // if you let only annotationProcessor will not work
+    // https://stackoverflow.com/questions/37991892/how-to-use-lombok-plugin-in-android-studio/51162444#51162444
+    implementation 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
     // Room components
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
@@ -71,14 +78,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // if you upgrade from java-8 change this
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
 
-
-    // leave that like here
-    // if you let only annotationProcessor will not work
-    // https://stackoverflow.com/questions/37991892/how-to-use-lombok-plugin-in-android-studio/51162444#51162444
-    implementation 'org.projectlombok:lombok:1.18.16'
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    // for debugging with SQLite on phone
+    // https://stackoverflow.com/questions/19194576/how-do-i-view-the-sqlite-database-on-an-android-device
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
 
 }
