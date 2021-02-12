@@ -55,7 +55,7 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     }
 
     /** Check if Lesson already exists in database. */
-    boolean checkIfLessonExist(String lessonName){
+    public boolean checkIfLessonExist(String lessonName){
         return lessonDao.getSampleLiveLesson(lessonName) == null;
     }
 }

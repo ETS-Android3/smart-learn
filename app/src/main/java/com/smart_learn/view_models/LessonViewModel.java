@@ -34,6 +34,10 @@ public class LessonViewModel extends AndroidViewModel {
 
     public LiveData<List<Lesson>> getAllLiveSampleLessons() { return repository.getAllLiveSampleLessons(); }
 
+    boolean checkIfLessonExist(String lessonName) {
+        return repository.checkIfLessonExist(lessonName);
+    }
+
     public void insert(Lesson lesson) { repository.insert(lesson); }
 
     public void update(Lesson lesson) { repository.update(lesson); }
