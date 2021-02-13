@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.entities.DictionaryEntrance
+import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddEntranceDialog
 import com.smart_learn.recycler_view.ActionModeCallback

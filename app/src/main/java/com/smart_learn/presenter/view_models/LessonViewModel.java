@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.models.room.entities.Lesson;
-import com.smart_learn.models.room.relationships.LessonWithJoinedInfo;
-import com.smart_learn.repository.LessonRepository;
+import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.data.models.room.relationships.LessonWithJoinedInfo;
+import com.smart_learn.data.repository.LessonRepository;
 
 import java.util.List;
 

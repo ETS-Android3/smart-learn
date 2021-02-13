@@ -7,11 +7,11 @@ import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.smart_learn.R
-import com.smart_learn.entities.DictionaryDetails
-import com.smart_learn.entities.DictionaryEntrance
+import com.smart_learn.data.entities.DictionaryDetails
+import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter
 import com.smart_learn.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.repository.DatabaseSchema
+import com.smart_learn.data.repository.DatabaseSchema
 import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.dialog_add_word.*
 import kotlinx.android.synthetic.main.dialog_new_dictionary.*

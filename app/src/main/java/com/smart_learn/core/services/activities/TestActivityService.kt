@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import com.smart_learn.presenter.activities.TestActivity
-import com.smart_learn.entities.DictionaryEntrance
+import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.core.general.ActivityServiceUtilities
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.services.ApplicationService

@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.entities.DictionaryDetails
+import com.smart_learn.data.entities.DictionaryDetails
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddDictionaryDialog

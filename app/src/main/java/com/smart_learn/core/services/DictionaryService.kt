@@ -1,10 +1,10 @@
 package com.smart_learn.core.services
 
-import com.smart_learn.entities.DictionaryDetails
-import com.smart_learn.entities.DictionaryEntrance
+import com.smart_learn.data.entities.DictionaryDetails
+import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.core.general.ActivityServiceUtilities
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.repository.LessonRepositoryK
+import com.smart_learn.data.repository.LessonRepositoryK
 
 
 /**  TODO: To check This class must be a singleton class
