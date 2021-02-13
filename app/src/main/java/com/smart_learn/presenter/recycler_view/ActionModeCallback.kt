@@ -1,4 +1,4 @@
-package com.smart_learn.recycler_view
+package com.smart_learn.presenter.recycler_view
 
 import android.view.ActionMode
 import android.view.Menu
@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.MenuRes
 import com.smart_learn.R
-import com.smart_learn.recycler_view.adapters.BaseRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
 
 /**
  * Here is the action mode which will be started on recycler view lists

@@ -1,8 +1,8 @@
-package com.smart_learn.remote.api;
+package com.smart_learn.core.remote.api;
 
 import android.util.Log;
 
-import com.smart_learn.config.CurrentConfig;
+import com.smart_learn.core.config.CurrentConfig;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.core.utilities.Logs;
 

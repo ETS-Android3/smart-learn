@@ -1,4 +1,4 @@
-package com.smart_learn.remote.test;
+package com.smart_learn.core.remote.test;
 
 public interface BasicPlayMode {
     void updateInfo();

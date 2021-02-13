@@ -1,4 +1,4 @@
-package com.smart_learn.recycler_view.adapters
+package com.smart_learn.presenter.recycler_view.adapters
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.core.general.ActivityServiceUtilities
 import com.smart_learn.core.general.DEBUG_MODE
-import com.smart_learn.recycler_view.ActionModeCallback
+import com.smart_learn.presenter.recycler_view.ActionModeCallback
 
 abstract class BaseRVAdapter <T> (
     private val activityServiceUtilities: ActivityServiceUtilities<*, *>

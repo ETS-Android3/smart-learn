@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.smart_learn.config.CurrentConfig;
+import com.smart_learn.core.config.CurrentConfig;
 
 public interface GeneralUtilities {
 

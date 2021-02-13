@@ -16,8 +16,8 @@ import com.smart_learn.R;
 import com.smart_learn.presenter.activities.ui.test.ChatMessageModel;
 import com.smart_learn.presenter.activities.ui.test.ParticipantModel;
 import com.smart_learn.presenter.activities.ui.test.TestFragmentAdapter;
-import com.smart_learn.config.CurrentConfig;
-import com.smart_learn.remote.test.RemotePlay;
+import com.smart_learn.core.config.CurrentConfig;
+import com.smart_learn.core.remote.test.RemotePlay;
 import com.smart_learn.core.services.TestService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 

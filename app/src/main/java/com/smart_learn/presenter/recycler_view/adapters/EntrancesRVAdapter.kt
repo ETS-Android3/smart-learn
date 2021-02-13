@@ -1,4 +1,4 @@
-package com.smart_learn.recycler_view.adapters
+package com.smart_learn.presenter.recycler_view.adapters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -14,7 +14,7 @@ import com.smart_learn.R
 import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddEntranceDialog
-import com.smart_learn.recycler_view.ActionModeCallback
+import com.smart_learn.presenter.recycler_view.ActionModeCallback
 import com.smart_learn.core.services.activities.EntrancesRVActivityService
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
 import kotlinx.android.synthetic.main.layout_dictionary_entrance_details.view.*

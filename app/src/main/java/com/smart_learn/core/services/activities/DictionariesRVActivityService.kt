@@ -5,7 +5,7 @@ import com.smart_learn.R
 import com.smart_learn.presenter.activities.DictionariesRVActivity
 import com.smart_learn.data.entities.DictionaryDetails
 import com.smart_learn.core.general.*
-import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapter
 import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
 

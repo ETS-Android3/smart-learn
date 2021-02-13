@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.smart_learn.config.RoomConfig;
+import com.smart_learn.core.config.RoomConfig;
 import com.smart_learn.data.models.room.dao.LessonDao;
 import com.smart_learn.data.models.room.dao.WordDao;
 import com.smart_learn.data.models.room.dao.ExpressionDao;

@@ -1,10 +1,10 @@
-package com.smart_learn.config;
+package com.smart_learn.core.config;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 
-import com.smart_learn.remote.api.HttpRequestService;
+import com.smart_learn.core.remote.api.HttpRequestService;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

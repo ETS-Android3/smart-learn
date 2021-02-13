@@ -8,10 +8,10 @@ import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.smart_learn.recycler_view.ItemTouchCallback
-import com.smart_learn.recycler_view.adapters.BaseRVAdapter
-import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter
-import com.smart_learn.recycler_view.adapters.EntrancesRVAdapter
+import com.smart_learn.presenter.recycler_view.ItemTouchCallback
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapter
 import com.smart_learn.core.services.activities.DictionariesRVActivityService
 import com.smart_learn.core.services.activities.EntrancesRVActivityService
 

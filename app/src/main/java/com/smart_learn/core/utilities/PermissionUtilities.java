@@ -5,7 +5,7 @@ import android.content.pm.PackageManager;
 
 import androidx.core.content.ContextCompat;
 
-import com.smart_learn.config.CurrentConfig;
+import com.smart_learn.core.config.CurrentConfig;
 
 public interface PermissionUtilities {
 

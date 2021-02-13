@@ -15,8 +15,8 @@ import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.smart_learn.R;
-import com.smart_learn.config.CurrentConfig;
-import com.smart_learn.remote.test.RemotePlay;
+import com.smart_learn.core.config.CurrentConfig;
+import com.smart_learn.core.remote.test.RemotePlay;
 import com.smart_learn.core.utilities.Logs;
 
 import java.util.ArrayList;

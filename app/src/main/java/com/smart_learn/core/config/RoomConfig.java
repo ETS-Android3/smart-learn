@@ -1,4 +1,4 @@
-package com.smart_learn.config;
+package com.smart_learn.core.config;
 
 public interface RoomConfig {
 

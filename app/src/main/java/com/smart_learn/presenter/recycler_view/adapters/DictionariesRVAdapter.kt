@@ -1,4 +1,4 @@
-package com.smart_learn.recycler_view.adapters
+package com.smart_learn.presenter.recycler_view.adapters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -16,7 +16,7 @@ import com.smart_learn.data.entities.DictionaryDetails
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddDictionaryDialog
-import com.smart_learn.recycler_view.ActionModeCallback
+import com.smart_learn.presenter.recycler_view.ActionModeCallback
 import com.smart_learn.core.services.activities.DictionariesRVActivityService
 import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
 import kotlinx.android.synthetic.main.layout_dictionary_details.view.*

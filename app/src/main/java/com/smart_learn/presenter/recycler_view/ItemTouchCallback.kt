@@ -1,4 +1,4 @@
-package com.smart_learn.recycler_view
+package com.smart_learn.presenter.recycler_view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.smart_learn.recycler_view.adapters.BaseRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
 import java.util.*
 
 /**

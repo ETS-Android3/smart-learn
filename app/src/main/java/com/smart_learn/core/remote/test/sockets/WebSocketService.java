@@ -1,4 +1,4 @@
-package com.smart_learn.remote.test.sockets;
+package com.smart_learn.core.remote.test.sockets;
 
 
 import okhttp3.OkHttpClient;

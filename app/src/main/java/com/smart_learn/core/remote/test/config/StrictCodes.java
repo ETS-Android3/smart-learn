@@ -1,4 +1,4 @@
-package com.smart_learn.remote.test.config;
+package com.smart_learn.core.remote.test.config;
 
 /** This codes are used in socket server and api server , so must be the same */
 public interface StrictCodes {

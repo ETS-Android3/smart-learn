@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.smart_learn.R;
-import com.smart_learn.config.CurrentConfig;
+import com.smart_learn.core.config.CurrentConfig;
 
 public class SimpleLoginActivity extends AppCompatActivity {
 

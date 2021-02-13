@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.smart_learn.config.RoomConfig;
+import com.smart_learn.core.config.RoomConfig;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.relationships.LessonWithJoinedInfo;
 

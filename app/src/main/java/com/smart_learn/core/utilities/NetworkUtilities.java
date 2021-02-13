@@ -5,8 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.smart_learn.config.CurrentConfig;
-import com.smart_learn.remote.api.HttpRequestService;
+import com.smart_learn.core.config.CurrentConfig;
+import com.smart_learn.core.remote.api.HttpRequestService;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
