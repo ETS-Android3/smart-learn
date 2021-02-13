@@ -1,9 +1,9 @@
-package com.smart_learn.services;
+package com.smart_learn.core.services;
 
 import android.util.Log;
 
 import com.smart_learn.repository.BasicRoomRepository;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.utilities.Logs;
 
 public abstract class BasicRoomService <T> {
 

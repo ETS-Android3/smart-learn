@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
 import com.smart_learn.config.CurrentConfig;
-import com.smart_learn.services.TestService;
+import com.smart_learn.core.services.TestService;
 
 public class MainActivity extends AppCompatActivity {
 

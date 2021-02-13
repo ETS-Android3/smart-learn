@@ -1,4 +1,4 @@
-package com.smart_learn.general
+package com.smart_learn.core.general
 
 import android.app.Activity
 import android.util.Log
@@ -12,7 +12,7 @@ import com.smart_learn.entities.DictionaryEntrance
 import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter
 import com.smart_learn.recycler_view.adapters.EntrancesRVAdapter
 import com.smart_learn.repository.DatabaseSchema
-import com.smart_learn.services.ApplicationService
+import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.dialog_add_word.*
 import kotlinx.android.synthetic.main.dialog_new_dictionary.*
 

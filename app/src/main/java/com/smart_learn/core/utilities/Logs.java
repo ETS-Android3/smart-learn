@@ -1,4 +1,4 @@
-package com.smart_learn.utilities;
+package com.smart_learn.core.utilities;
 
 
 public interface Logs {

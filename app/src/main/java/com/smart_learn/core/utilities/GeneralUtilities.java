@@ -1,4 +1,4 @@
-package com.smart_learn.utilities;
+package com.smart_learn.core.utilities;
 
 import android.util.Log;
 import android.widget.Toast;

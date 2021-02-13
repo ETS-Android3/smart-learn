@@ -13,11 +13,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
 import com.smart_learn.entities.DictionaryDetails
-import com.smart_learn.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.general.indexesOf
-import com.smart_learn.general.showAddDictionaryDialog
+import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.core.general.indexesOf
+import com.smart_learn.core.general.showAddDictionaryDialog
 import com.smart_learn.recycler_view.ActionModeCallback
-import com.smart_learn.services.activities.DictionariesRVActivityService
+import com.smart_learn.core.services.activities.DictionariesRVActivityService
 import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
 import kotlinx.android.synthetic.main.layout_dictionary_details.view.*
 import java.util.*

@@ -1,4 +1,4 @@
-package com.smart_learn.general
+package com.smart_learn.core.general
 
 import android.app.Activity
 import android.content.Context
@@ -12,8 +12,8 @@ import com.smart_learn.recycler_view.ItemTouchCallback
 import com.smart_learn.recycler_view.adapters.BaseRVAdapter
 import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter
 import com.smart_learn.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.services.activities.DictionariesRVActivityService
-import com.smart_learn.services.activities.EntrancesRVActivityService
+import com.smart_learn.core.services.activities.DictionariesRVActivityService
+import com.smart_learn.core.services.activities.EntrancesRVActivityService
 
 /** helper for decoration */
 class ItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {

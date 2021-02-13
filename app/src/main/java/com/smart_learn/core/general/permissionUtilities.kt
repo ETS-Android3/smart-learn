@@ -1,4 +1,4 @@
-package com.smart_learn.general
+package com.smart_learn.core.general
 
 import android.Manifest
 import android.app.Activity

@@ -2,8 +2,8 @@ package com.smart_learn.remote.test.sockets;
 
 import android.util.Log;
 
-import com.smart_learn.utilities.GeneralUtilities;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.core.utilities.Logs;
 
 import okhttp3.Response;
 import okhttp3.WebSocket;

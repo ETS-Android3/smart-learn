@@ -1,4 +1,4 @@
-package com.smart_learn.services;
+package com.smart_learn.core.services;
 
 import android.app.Application;
 

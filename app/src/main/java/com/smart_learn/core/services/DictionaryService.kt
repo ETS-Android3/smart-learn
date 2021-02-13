@@ -1,9 +1,9 @@
-package com.smart_learn.services
+package com.smart_learn.core.services
 
 import com.smart_learn.entities.DictionaryDetails
 import com.smart_learn.entities.DictionaryEntrance
-import com.smart_learn.general.ActivityServiceUtilities
-import com.smart_learn.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.repository.LessonRepositoryK
 
 

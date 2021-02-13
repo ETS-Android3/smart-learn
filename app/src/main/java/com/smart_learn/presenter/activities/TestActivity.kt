@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.smart_learn.R
-import com.smart_learn.general.showSettingsDialog
-import com.smart_learn.services.activities.TestActivityService
+import com.smart_learn.core.general.showSettingsDialog
+import com.smart_learn.core.services.activities.TestActivityService
 
 class TestActivity : AppCompatActivity() {
 

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.smart_learn.models.room.dao.BasicDao;
 import com.smart_learn.models.room.db.AppRoomDatabase;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.utilities.Logs;
 
 public abstract class BasicRoomRepository <T> {
 

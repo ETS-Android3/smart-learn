@@ -13,9 +13,9 @@ import com.smart_learn.config.CurrentConfig;
 import com.smart_learn.config.GeneralConfig;
 import com.smart_learn.entities.DictionaryEntrance;
 import com.smart_learn.remote.test.config.StrictCodes;
-import com.smart_learn.services.TestService;
-import com.smart_learn.utilities.GeneralUtilities;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.services.TestService;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.core.utilities.Logs;
 
 import org.json.JSONArray;
 import org.json.JSONException;

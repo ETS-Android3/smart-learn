@@ -8,8 +8,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.smart_learn.R
-import com.smart_learn.general.showSettingsDialog
-import com.smart_learn.services.activities.MainActivityService
+import com.smart_learn.core.general.showSettingsDialog
+import com.smart_learn.core.services.activities.MainActivityService
 
 class OpenLessonActivity : AppCompatActivity() {
 

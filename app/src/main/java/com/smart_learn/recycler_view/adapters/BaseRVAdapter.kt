@@ -5,8 +5,8 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.smart_learn.general.ActivityServiceUtilities
-import com.smart_learn.general.DEBUG_MODE
+import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.core.general.DEBUG_MODE
 import com.smart_learn.recycler_view.ActionModeCallback
 
 abstract class BaseRVAdapter <T> (

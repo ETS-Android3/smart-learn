@@ -1,11 +1,11 @@
-package com.smart_learn.services.activities
+package com.smart_learn.core.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.OpenLessonActivity
-import com.smart_learn.general.ActivityServiceUtilities
-import com.smart_learn.general.showAddDictionaryDialog
-import com.smart_learn.services.ApplicationService
+import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.core.general.showAddDictionaryDialog
+import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.activity_open_lesson.*
 
 class MainActivityService(private var openLessonActivity: OpenLessonActivity) :

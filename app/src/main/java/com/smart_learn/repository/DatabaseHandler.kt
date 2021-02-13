@@ -12,9 +12,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.smart_learn.general.DATABASE_ERROR
-import com.smart_learn.general.DATABASE_SUCCESS
-import com.smart_learn.general.DEBUG_MODE
+import com.smart_learn.core.general.DATABASE_ERROR
+import com.smart_learn.core.general.DATABASE_SUCCESS
+import com.smart_learn.core.general.DEBUG_MODE
 
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b

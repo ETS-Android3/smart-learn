@@ -1,4 +1,4 @@
-package com.smart_learn.services.activities
+package com.smart_learn.core.services.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -7,10 +7,10 @@ import android.widget.CheckBox
 import android.widget.Toast
 import com.smart_learn.presenter.activities.TestActivity
 import com.smart_learn.entities.DictionaryEntrance
-import com.smart_learn.general.ActivityServiceUtilities
-import com.smart_learn.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.services.ApplicationService
-import com.smart_learn.services.DictionaryService
+import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.core.services.DictionaryService
 import kotlinx.android.synthetic.main.page_test_knowledge.*
 
 class TestActivityService(private val testActivity: TestActivity) :

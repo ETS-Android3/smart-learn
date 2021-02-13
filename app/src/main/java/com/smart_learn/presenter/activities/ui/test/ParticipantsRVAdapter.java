@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.utilities.Logs;
 
 import java.util.List;
 

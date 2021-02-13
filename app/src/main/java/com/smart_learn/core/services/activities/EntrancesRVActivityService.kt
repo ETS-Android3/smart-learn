@@ -1,12 +1,12 @@
-package com.smart_learn.services.activities
+package com.smart_learn.core.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.EntrancesRVActivity
 import com.smart_learn.entities.DictionaryEntrance
-import com.smart_learn.general.*
+import com.smart_learn.core.general.*
 import com.smart_learn.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.services.ApplicationService
+import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
 
 class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVActivity)

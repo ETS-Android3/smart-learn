@@ -1,4 +1,4 @@
-package com.smart_learn.utilities;
+package com.smart_learn.core.utilities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

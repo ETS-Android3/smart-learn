@@ -12,10 +12,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
 import com.smart_learn.entities.DictionaryEntrance
-import com.smart_learn.general.indexesOf
-import com.smart_learn.general.showAddEntranceDialog
+import com.smart_learn.core.general.indexesOf
+import com.smart_learn.core.general.showAddEntranceDialog
 import com.smart_learn.recycler_view.ActionModeCallback
-import com.smart_learn.services.activities.EntrancesRVActivityService
+import com.smart_learn.core.services.activities.EntrancesRVActivityService
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
 import kotlinx.android.synthetic.main.layout_dictionary_entrance_details.view.*
 import java.util.*

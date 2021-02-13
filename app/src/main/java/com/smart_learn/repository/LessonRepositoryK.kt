@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import com.smart_learn.entities.DictionaryDetails
 import com.smart_learn.entities.DictionaryEntrance
-import com.smart_learn.general.ActivityServiceUtilities
+import com.smart_learn.core.general.ActivityServiceUtilities
 
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b

@@ -1,4 +1,4 @@
-package com.smart_learn.general
+package com.smart_learn.core.general
 
 /**
  * Values from this file are used across the activities

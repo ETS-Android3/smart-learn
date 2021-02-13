@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import com.smart_learn.R
-import com.smart_learn.general.showSettingsDialog
-import com.smart_learn.services.activities.EntrancesRVActivityService
+import com.smart_learn.core.general.showSettingsDialog
+import com.smart_learn.core.services.activities.EntrancesRVActivityService
 
 class EntrancesRVActivity : AppCompatActivity() {
 

@@ -1,6 +1,6 @@
-package com.smart_learn.services
+package com.smart_learn.core.services
 
-import com.smart_learn.general.ActivityServiceUtilities
+import com.smart_learn.core.general.ActivityServiceUtilities
 
 /**
  * This class should act as a container class for the activityServices classes through which

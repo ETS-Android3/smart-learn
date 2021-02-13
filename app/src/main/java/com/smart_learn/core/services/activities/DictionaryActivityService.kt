@@ -1,14 +1,14 @@
-package com.smart_learn.services.activities
+package com.smart_learn.core.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.DictionaryActivity
-import com.smart_learn.general.ActivityServiceUtilities
-import com.smart_learn.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.general.showAddDictionaryDialog
-import com.smart_learn.general.showAddEntranceDialog
-import com.smart_learn.services.ApplicationService
-import com.smart_learn.services.TestService
+import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.core.general.showAddDictionaryDialog
+import com.smart_learn.core.general.showAddEntranceDialog
+import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.core.services.TestService
 import kotlinx.android.synthetic.main.activity_dictionary.*
 
 

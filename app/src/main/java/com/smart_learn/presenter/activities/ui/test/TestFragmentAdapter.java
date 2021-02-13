@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.smart_learn.R;
-import com.smart_learn.utilities.Logs;
+import com.smart_learn.core.utilities.Logs;
 
 import lombok.Getter;
 import lombok.Setter;
