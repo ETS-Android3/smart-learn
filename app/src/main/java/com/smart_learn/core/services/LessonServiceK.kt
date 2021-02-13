@@ -62,9 +62,12 @@ class LessonServiceK(private val activityServiceUtilities: ActivityServiceUtilit
         return lessonRepositoryK.getSampleLiveLesson(dictionaryId)
     }
 
+    /** Remove support for this method.
+     *
     fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
         return lessonRepositoryK.getUpdatedEntrance(dictionaryEntrance)
     }
+    */
 
     fun getSampleLiveLesson(title: String): DictionaryDetails? {
         return lessonRepositoryK.getSampleLiveLesson(title)

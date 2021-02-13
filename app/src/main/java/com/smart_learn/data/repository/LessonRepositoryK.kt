@@ -82,6 +82,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     }
 
 
+    /** Remove support for this method.
+     *
     fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
 
         var query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}"
@@ -128,6 +130,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         return null
 
     }
+    */
+
 
     /** insert word */
     fun insert(dictionaryEntrance: DictionaryEntrance) {

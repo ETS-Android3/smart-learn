@@ -301,6 +301,9 @@ fun showAddEntranceDialog(
             // add new entrance in database
             applicationService.lessonServiceK.insert(newEntrance)
 
+            /**
+             * This update should be made automatically using LiveData.
+
             // update recycler view with word from database (need update for primary key)
             if(updateRecyclerView){
                 val updatedEntrance = applicationService.lessonServiceK.getUpdatedEntrance(newEntrance)
@@ -308,6 +311,8 @@ fun showAddEntranceDialog(
                     entranceRVAdapter.insertItem(updatedEntrance)
                 }
             }
+
+            */
 
             dialog.dismiss()
         }
