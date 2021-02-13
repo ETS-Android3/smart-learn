@@ -9,18 +9,18 @@ import android.view.Menu
 import android.view.MenuItem
 import com.smart_learn.R
 import com.smart_learn.core.general.showSettingsDialog
-import com.smart_learn.core.services.activities.MainActivityService
+import com.smart_learn.core.services.activities.OpenLessonActivityService
 
 class OpenLessonActivity : AppCompatActivity() {
 
-    private lateinit var mainActivityService: MainActivityService
+    private lateinit var openLessonActivityService: OpenLessonActivityService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_lesson)
         setSupportActionBar(findViewById(R.id.toolbarDictionaries))
 
-        mainActivityService = MainActivityService(this)
+        openLessonActivityService = OpenLessonActivityService(this)
 
     }
 

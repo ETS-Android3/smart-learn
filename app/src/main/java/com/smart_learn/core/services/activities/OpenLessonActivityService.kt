@@ -8,8 +8,8 @@ import com.smart_learn.core.general.showAddDictionaryDialog
 import com.smart_learn.core.services.ApplicationService
 import kotlinx.android.synthetic.main.activity_open_lesson.*
 
-class MainActivityService(private var openLessonActivity: OpenLessonActivity) :
-    ActivityServiceUtilities<MainActivityService, OpenLessonActivity> {
+class OpenLessonActivityService(private var openLessonActivity: OpenLessonActivity) :
+    ActivityServiceUtilities<OpenLessonActivityService, OpenLessonActivity> {
 
     private var activity: Activity = openLessonActivity.getActivity()
 
@@ -32,7 +32,7 @@ class MainActivityService(private var openLessonActivity: OpenLessonActivity) :
 
         activity.btnNewDictionary.setOnClickListener {
             showAddDictionaryDialog(
-                "MainActivityService",
+                "OpenLessonActivityService",
                 activity,
                 R.layout.dialog_new_dictionary,
                 applicationService
@@ -49,7 +49,7 @@ class MainActivityService(private var openLessonActivity: OpenLessonActivity) :
         return activity
     }
 
-    override fun getActivityService(): MainActivityService {
+    override fun getActivityService(): OpenLessonActivityService {
         return this
     }
 
