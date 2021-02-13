@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.presenter.recycler_view.ItemTouchCallback
-import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
-import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapter
-import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.core.services.activities.DictionariesRVActivityService
-import com.smart_learn.core.services.activities.EntrancesRVActivityService
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapterK
+import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapterK
+import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
+import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
+import com.smart_learn.presenter.view_models.LessonRVViewModelK
+import com.smart_learn.presenter.view_models.EntranceRVViewModelK
 
 /** helper for decoration */
 class ItemDecoration(private val padding: Int) : RecyclerView.ItemDecoration() {
@@ -30,11 +31,11 @@ fun initRecyclerView(
     activity: Activity,
     recyclerView: RecyclerView,
     itemDecoration: RecyclerView.ItemDecoration,
-    activityServiceUtilities: ActivityServiceUtilities<*,*>,
+    activityViewModelUtilitiesK: ActivityViewModelUtilitiesK<*, *>,
     adapterType: Int
-): BaseRVAdapter<*>? {
+): BaseRVAdapterK<*>? {
 
-    val baseAdaptor: BaseRVAdapter<*>
+    val baseAdaptorK: BaseRVAdapterK<*>
     // https://www.youtube.com/watch?v=Jo6Mtq7zkkg
     // create recycler view
     recyclerView.apply {
@@ -42,16 +43,16 @@ fun initRecyclerView(
         addItemDecoration(itemDecoration)
         when(adapterType){
             1 -> {
-                baseAdaptor =
-                    DictionariesRVAdapter(activityServiceUtilities as DictionariesRVActivityService)
-                adapter = baseAdaptor
-                return baseAdaptor
+                baseAdaptorK =
+                    DictionariesRVAdapterK(activityViewModelUtilitiesK as LessonRVViewModelK)
+                adapter = baseAdaptorK
+                return baseAdaptorK
             }
             2 -> {
-                baseAdaptor =
-                    EntrancesRVAdapter(activityServiceUtilities as EntrancesRVActivityService)
-                adapter = baseAdaptor
-                return baseAdaptor
+                baseAdaptorK =
+                    EntrancesRVAdapterK(activityViewModelUtilitiesK as EntranceRVViewModelK)
+                adapter = baseAdaptorK
+                return baseAdaptorK
             }
             else -> {
                 Log.e(UNEXPECTED_ERROR,"Type unknown for recycler view adapter in initRecyclerView")
@@ -67,19 +68,19 @@ fun initRecyclerView(
 /** Used to enable some gesture on item touch */
 fun initItemTouchCallback(
     recyclerView: RecyclerView,
-    baseAdapter: BaseRVAdapter<*>
+    baseAdapterK: BaseRVAdapterK<*>
 ){
 
-    val itemTouchHandler = object : ItemTouchCallback(baseAdapter) {
+    val itemTouchHandler = object : ItemTouchCallback(baseAdapterK) {
 
         /** By default only delete and update buttons are added */
         override fun instantiateUnderlayButton(
             context: Context,
-            baseAdaptor: BaseRVAdapter<*>,
+            baseAdaptorK: BaseRVAdapterK<*>,
             position: Int
         ): List<UnderlayButton> {
-            return  listOf(deleteButton(context,baseAdaptor,position),
-                updateButton(context,baseAdaptor,position))
+            return  listOf(deleteButton(context,baseAdaptorK,position),
+                updateButton(context,baseAdaptorK,position))
         }
     }
 
@@ -94,7 +95,7 @@ fun initItemTouchCallback(
  * */
 fun deleteButton(
     context: Context,
-    baseAdaptor: BaseRVAdapter<*>,
+    baseAdaptorK: BaseRVAdapterK<*>,
     position: Int
 ) : ItemTouchCallback.UnderlayButton {
     return ItemTouchCallback.UnderlayButton (
@@ -104,7 +105,7 @@ fun deleteButton(
         android.R.color.holo_red_light,
         object : ItemTouchCallback.UnderlayButtonClickListener {
             override fun onClick() {
-                baseAdaptor.clickDeleteOnSwipe(position)
+                baseAdaptorK.clickDeleteOnSwipe(position)
             }
         })
 }
@@ -115,7 +116,7 @@ fun deleteButton(
  * */
 fun updateButton(
     context: Context,
-    baseAdaptor: BaseRVAdapter<*>,
+    baseAdaptorK: BaseRVAdapterK<*>,
     position: Int
 ) : ItemTouchCallback.UnderlayButton {
 
@@ -126,7 +127,7 @@ fun updateButton(
         android.R.color.holo_blue_light,
         object : ItemTouchCallback.UnderlayButtonClickListener {
             override fun onClick() {
-                baseAdaptor.clickUpdateOnSwipe(position)
+                baseAdaptorK.clickUpdateOnSwipe(position)
             }
         })
 }

@@ -26,11 +26,11 @@
         <activity android:name="com.smart_learn.presenter.activities.TestSettingsActivity" />
         <activity android:name="com.smart_learn.presenter.activities.TestGenerationActivity" />
         <activity android:name="com.smart_learn.presenter.activities.TestOnlineActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.EntrancesRVActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.TestActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.DictionaryActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.DictionariesRVActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.OpenLessonActivity" />
+        <activity android:name="com.smart_learn.presenter.activities.EntranceRVActivityK" />
+        <activity android:name="com.smart_learn.presenter.activities.TestActivityK" />
+        <activity android:name="com.smart_learn.presenter.activities.LessonActivityK" />
+        <activity android:name="com.smart_learn.presenter.activities.LessonRVActivityK" />
+        <activity android:name="com.smart_learn.presenter.activities.OpenLessonActivityK" />
     </application>
 
 </manifest>

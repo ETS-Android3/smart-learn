@@ -6,13 +6,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.MenuRes
 import com.smart_learn.R
-import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapterK
 
 /**
  * Here is the action mode which will be started on recycler view lists
  * (for dictionaries and entries)
  */
-class ActionModeCallback(private var adapter: BaseRVAdapter<*>) : ActionMode.Callback {
+class ActionModeCallbackK(private var adapterK: BaseRVAdapterK<*>) : ActionMode.Callback {
 
     private var actionMode: ActionMode? = null
 
@@ -36,19 +36,19 @@ class ActionModeCallback(private var adapter: BaseRVAdapter<*>) : ActionMode.Cal
     override fun onDestroyActionMode(mode: ActionMode) {
         actionMode = null
         mode.finish()
-        adapter.resetActionMode()
+        adapterK.resetActionMode()
     }
 
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.selectAll -> {
-                adapter.selectAll()
+                adapterK.selectAll()
             }
             R.id.deselect -> {
-                adapter.deselectAll()
+                adapterK.deselectAll()
             }
             R.id.delete -> {
-                adapter.deleteSelected()
+                adapterK.deleteSelected()
             }
         }
         return true
@@ -57,14 +57,14 @@ class ActionModeCallback(private var adapter: BaseRVAdapter<*>) : ActionMode.Cal
     fun startActionMode(view: View, @MenuRes menuResId: Int, title: String? = null, subtitle: String? = null) {
         if(actionMode == null) {
             this.menuResId = menuResId
-            this.title = title + " ${adapter.getSelectedItemsSize()}"
+            this.title = title + " ${adapterK.getSelectedItemsSize()}"
             this.subtitle = subtitle
             view.startActionMode(this)
         }
     }
 
     fun refresh(){
-        actionMode?.title = "Selected" + " ${adapter.getSelectedItemsSize()}"
+        actionMode?.title = "Selected" + " ${adapterK.getSelectedItemsSize()}"
     }
 
     fun finishActionMode() {

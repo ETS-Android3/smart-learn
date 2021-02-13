@@ -7,12 +7,12 @@ import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryDetails
-import com.smart_learn.data.entities.DictionaryEntrance
-import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapter
-import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.data.repository.DatabaseSchema
-import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.data.entities.DictionaryDetailsK
+import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapterK
+import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
+import com.smart_learn.data.repository.DatabaseSchemaK
+import com.smart_learn.core.services.ApplicationServiceK
 import kotlinx.android.synthetic.main.dialog_add_word.*
 import kotlinx.android.synthetic.main.dialog_new_dictionary.*
 
@@ -31,7 +31,7 @@ fun showSettingsDialog(activity: Activity){
 
 private fun dictionaryDetailsCheck(
     activity: Activity,
-    applicationService: ApplicationService,
+    applicationServiceK: ApplicationServiceK,
     dictionaryName: String
 ): Boolean{
 
@@ -41,14 +41,14 @@ private fun dictionaryDetailsCheck(
     }
 
     // check dictionaryName length
-    if (dictionaryName.length > DatabaseSchema.DictionariesTable.DIMENSION_COLUMN_NAME) {
+    if (dictionaryName.length > DatabaseSchemaK.DictionariesTable.DIMENSION_COLUMN_NAME) {
         Toast.makeText( activity, "This name is too big. Choose a shorter name.",
             Toast.LENGTH_LONG).show()
         return false
     }
 
     //add dictionary only if this does not exist
-    if (applicationService.lessonServiceK.checkIfLessonExist(dictionaryName)) {
+    if (applicationServiceK.lessonServiceK.checkIfLessonExist(dictionaryName)) {
         Toast.makeText(
             activity, "Dictionary $dictionaryName already exists. Choose other name",
             Toast.LENGTH_LONG).show()
@@ -64,16 +64,16 @@ fun showAddDictionaryDialog(
     TAG: String,
     activity: Activity,
     dialogLayout: Int?,
-    applicationService: ApplicationService,
+    applicationServiceK: ApplicationServiceK,
     updateDictionary: Boolean = false,
-    currentDictionary: DictionaryDetails? = null,
+    currentDictionaryK: DictionaryDetailsK? = null,
     updateRecyclerView: Boolean = false,
-    dictionariesRVAdapter: DictionariesRVAdapter? = null,
+    dictionariesRVAdapter: DictionariesRVAdapterK? = null,
     position: Int = -1
 ){
 
     // check if this occurs
-    if(updateDictionary && currentDictionary == null){
+    if(updateDictionary && currentDictionaryK == null){
         Log.e(UNEXPECTED_ERROR," current dictionary is null in update listener for $TAG")
         return
     }
@@ -85,14 +85,14 @@ fun showAddDictionaryDialog(
         .customView(dialogLayout)
 
 
-    if(updateDictionary && currentDictionary != null){
+    if(updateDictionary && currentDictionaryK != null){
         // TODO: hide save button and remove space used by this
         dialog.btnSaveDict.visibility = View.INVISIBLE
         dialog.btnUpdateDict.visibility = View.VISIBLE
 
         // get current dictionary
         // set current data in dialog
-        dialog.etDictionaryName.setText(currentDictionary.title)
+        dialog.etDictionaryName.setText(currentDictionaryK.title)
 
         dialog.btnUpdateDict.setOnClickListener {
 
@@ -100,25 +100,25 @@ fun showAddDictionaryDialog(
             val dictionaryName = dialog.etDictionaryName.text.toString().trim()
 
             // make some specific checks
-            if(dictionaryName == currentDictionary.title){
+            if(dictionaryName == currentDictionaryK.title){
                 Toast.makeText(activity,"No modification was made",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             // make some general check
-            if(!dictionaryDetailsCheck(activity,applicationService,dictionaryName)){
+            if(!dictionaryDetailsCheck(activity,applicationServiceK,dictionaryName)){
                 return@setOnClickListener
             }
 
             // dictionaryName is valid
-            currentDictionary.title = dictionaryName
+            currentDictionaryK.title = dictionaryName
 
             // update in database
-            applicationService.lessonServiceK.update(currentDictionary)
+            applicationServiceK.lessonServiceK.update(currentDictionaryK)
 
             // update item in recycler view
             if(updateRecyclerView && dictionariesRVAdapter != null) {
-                dictionariesRVAdapter.updateItem(position, currentDictionary)
+                dictionariesRVAdapter.updateItem(position, currentDictionaryK)
             }
 
             dialog.dismiss()
@@ -135,19 +135,19 @@ fun showAddDictionaryDialog(
             val dictionaryName = dialog.etDictionaryName.text.toString().trim()
 
             // make some general checks
-            if(!dictionaryDetailsCheck(activity,applicationService,dictionaryName)){
+            if(!dictionaryDetailsCheck(activity,applicationServiceK,dictionaryName)){
                 return@setOnClickListener
             }
 
             // dictionaryName is valid
-            val newDictionary: DictionaryDetails = DictionaryDetails(title = dictionaryName)
+            val newDictionaryK: DictionaryDetailsK = DictionaryDetailsK(title = dictionaryName)
 
             // add in database
-            applicationService.lessonServiceK.insert(dictionaryName)
+            applicationServiceK.lessonServiceK.insert(dictionaryName)
 
             // update recycler view with dictionary from database (need update for primary key)
             if(updateRecyclerView){
-                val updatedDictionary = applicationService.lessonServiceK.getSampleLiveLesson(dictionaryName)
+                val updatedDictionary = applicationServiceK.lessonServiceK.getSampleLiveLesson(dictionaryName)
                 if(updatedDictionary != null && dictionariesRVAdapter != null) {
                     dictionariesRVAdapter.insertItem(updatedDictionary)
                 }
@@ -169,7 +169,7 @@ fun showAddDictionaryDialog(
 
 private fun entryCheck(
     activity: Activity,
-    applicationService: ApplicationService,
+    applicationServiceK: ApplicationServiceK,
     word: String,
     translation: String,
     phonetic: String
@@ -182,12 +182,12 @@ private fun entryCheck(
         return false
     }
 
-    if(word.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_WORD){
+    if(word.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_WORD){
         Toast.makeText(activity, "This word is too big.",Toast.LENGTH_LONG).show()
         return false
     }
 
-    if(phonetic.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_PHONETIC){
+    if(phonetic.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_PHONETIC){
         Toast.makeText(activity, "This phonetic translation is too big.",
             Toast.LENGTH_LONG).show()
         return false
@@ -196,7 +196,7 @@ private fun entryCheck(
     // TODO: check to see if word exist in all database not only in one dictionary
     // add word only if this does not exists in current dictionary
     if(word.isNotEmpty() &&
-        applicationService.lessonServiceK.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
+        applicationServiceK.lessonServiceK.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
 
         Toast.makeText(activity, "Word $word already exists in this dictionary.",
             Toast.LENGTH_LONG).show()
@@ -214,17 +214,17 @@ fun showAddEntranceDialog(
     TAG: String,
     activity: Activity,
     dialogLayout: Int?,
-    applicationService: ApplicationService,
+    applicationServiceK: ApplicationServiceK,
     updateEntrance: Boolean = false,
-    entrance: DictionaryEntrance? = null,
+    entranceK: DictionaryEntranceK? = null,
     updateRecyclerView: Boolean = false,
-    entranceRVAdapter: EntrancesRVAdapter? = null,
+    entranceRVAdapter: EntrancesRVAdapterK? = null,
     position: Int = -1
 ){
 
     // check if this occurs
-    if(updateEntrance && entrance == null){
-        Log.e(UNEXPECTED_ERROR," current entrance is null in update listener for $TAG")
+    if(updateEntrance && entranceK == null){
+        Log.e(UNEXPECTED_ERROR," current entranceK is null in update listener for $TAG")
         return
     }
 
@@ -234,16 +234,16 @@ fun showAddEntranceDialog(
         .noAutoDismiss()
         .customView(dialogLayout)
 
-    if(updateEntrance && entrance != null){
+    if(updateEntrance && entranceK != null){
 
         // TODO: hide update button and remove space used by this
         dialog.btnSaveEntrance.visibility = View.INVISIBLE
         dialog.btnUpdateEntrance.visibility = View.VISIBLE
 
         // set current data on dialog elements
-        dialog.etWord.setText(entrance.word)
-        dialog.etTranslation.setText(entrance.translation)
-        dialog.etPhonetic.setText(entrance.phonetic)
+        dialog.etWord.setText(entranceK.word)
+        dialog.etTranslation.setText(entranceK.translation)
+        dialog.etPhonetic.setText(entranceK.phonetic)
 
         dialog.btnUpdateEntrance.setOnClickListener{
 
@@ -252,27 +252,27 @@ fun showAddEntranceDialog(
             val phonetic = dialog.etPhonetic.text.toString().trim()
 
             // make some specific checks for fields data
-            if(word == entrance.word && translation == entrance.translation && phonetic == entrance.phonetic){
+            if(word == entranceK.word && translation == entranceK.translation && phonetic == entranceK.phonetic){
                 Toast.makeText(activity,"No modification was made",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             // make some general checks
-            if(!entryCheck(activity,applicationService,word,translation,phonetic)){
+            if(!entryCheck(activity,applicationServiceK,word,translation,phonetic)){
                 return@setOnClickListener
             }
 
-            // update current entrance
-            entrance.word = word
-            entrance.translation = translation
-            entrance.phonetic = phonetic
+            // update current entranceK
+            entranceK.word = word
+            entranceK.translation = translation
+            entranceK.phonetic = phonetic
 
-            // update entrance in database
-            applicationService.lessonServiceK.update(entrance)
+            // update entranceK in database
+            applicationServiceK.lessonServiceK.update(entranceK)
 
             // update item in recycler view
             if(updateRecyclerView && entranceRVAdapter != null) {
-                entranceRVAdapter.updateItem(position, entrance)
+                entranceRVAdapter.updateItem(position, entranceK)
             }
 
             dialog.dismiss()
@@ -291,22 +291,22 @@ fun showAddEntranceDialog(
             val phonetic = dialog.etPhonetic.text.toString().trim()
 
             // make some checks for fields data
-            if(!entryCheck(activity,applicationService,word,translation,phonetic)){
+            if(!entryCheck(activity,applicationServiceK,word,translation,phonetic)){
                 return@setOnClickListener
             }
 
-            val newEntrance = DictionaryEntrance(word = word,translation = translation,
+            val newEntrance = DictionaryEntranceK(word = word,translation = translation,
                 phonetic = phonetic,dictionaryId = SELECTED_DICTIONARY_ID)
 
-            // add new entrance in database
-            applicationService.lessonServiceK.insert(newEntrance)
+            // add new entranceK in database
+            applicationServiceK.lessonServiceK.insert(newEntrance)
 
             /**
              * This update should be made automatically using LiveData.
 
             // update recycler view with word from database (need update for primary key)
             if(updateRecyclerView){
-                val updatedEntrance = applicationService.lessonServiceK.getUpdatedEntrance(newEntrance)
+                val updatedEntrance = applicationServiceK.lessonServiceK.getUpdatedEntrance(newEntrance)
                 if(updatedEntrance != null && entranceRVAdapter != null) {
                     entranceRVAdapter.insertItem(updatedEntrance)
                 }

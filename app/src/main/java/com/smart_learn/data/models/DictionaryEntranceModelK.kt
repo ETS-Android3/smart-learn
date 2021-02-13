@@ -2,11 +2,11 @@ package com.smart_learn.data.models
 
 
 /**
- * Helper for DictionaryEntrance entity
+ * Helper for DictionaryEntranceK entity
  *
  * this is what is stored in the database
  * */
-abstract class DictionaryEntranceModel(
+abstract class DictionaryEntranceModelK(
     open var entranceId: Int,  // primary key is auto incremented in database
     open var word: String,
     open var translation: String,

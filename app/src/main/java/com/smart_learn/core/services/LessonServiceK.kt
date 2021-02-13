@@ -1,8 +1,8 @@
 package com.smart_learn.core.services
 
-import com.smart_learn.data.entities.DictionaryDetails
-import com.smart_learn.data.entities.DictionaryEntrance
-import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.data.entities.DictionaryDetailsK
+import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.data.repository.LessonRepositoryK
 
@@ -10,15 +10,15 @@ import com.smart_learn.data.repository.LessonRepositoryK
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b
  * */
-class LessonServiceK(private val activityServiceUtilities: ActivityServiceUtilities<*,*>) {
+class LessonServiceK(private val activityViewModelUtilitiesK: ActivityViewModelUtilitiesK<*, *>) {
 
-    private var lessonRepositoryK: LessonRepositoryK = LessonRepositoryK(activityServiceUtilities)
+    private var lessonRepositoryK: LessonRepositoryK = LessonRepositoryK(activityViewModelUtilitiesK)
 
-    fun getFullLiveLessonInfo() : List<DictionaryEntrance> {
+    fun getFullLiveLessonInfo() : List<DictionaryEntranceK> {
         return lessonRepositoryK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID)
     }
 
-    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntrance> {
+    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntranceK> {
         return lessonRepositoryK.getFullLiveLessonInfo(dictionaryId)
     }
 
@@ -34,46 +34,46 @@ class LessonServiceK(private val activityServiceUtilities: ActivityServiceUtilit
         lessonRepositoryK.insert(dictionaryName)
     }
 
-    fun update(dictionaryDetails: DictionaryDetails){
-        lessonRepositoryK.update(dictionaryDetails)
+    fun update(dictionaryDetailsK: DictionaryDetailsK){
+        lessonRepositoryK.update(dictionaryDetailsK)
     }
 
     fun delete(dictionaryId: Int){
         lessonRepositoryK.delete(dictionaryId)
     }
 
-    fun insert(dictionaryEntrance: DictionaryEntrance) {
-        lessonRepositoryK.insert(dictionaryEntrance)
+    fun insert(dictionaryEntranceK: DictionaryEntranceK) {
+        lessonRepositoryK.insert(dictionaryEntranceK)
     }
 
-    fun update(dictionaryEntrance: DictionaryEntrance){
-        lessonRepositoryK.update(dictionaryEntrance)
+    fun update(dictionaryEntranceK: DictionaryEntranceK){
+        lessonRepositoryK.update(dictionaryEntranceK)
     }
 
     fun deleteWord(entranceId: Int){
         lessonRepositoryK.deleteWord(entranceId)
     }
 
-    fun getAllLiveSampleLessons() : List<DictionaryDetails> {
+    fun getAllLiveSampleLessons() : List<DictionaryDetailsK> {
         return lessonRepositoryK.getAllLiveSampleLessons()
     }
 
-    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetails? {
+    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetailsK? {
         return lessonRepositoryK.getSampleLiveLesson(dictionaryId)
     }
 
     /** Remove support for this method.
      *
-    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
+    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntranceK): DictionaryEntranceK? {
         return lessonRepositoryK.getUpdatedEntrance(dictionaryEntrance)
     }
     */
 
-    fun getSampleLiveLesson(title: String): DictionaryDetails? {
+    fun getSampleLiveLesson(title: String): DictionaryDetailsK? {
         return lessonRepositoryK.getSampleLiveLesson(title)
     }
 
-    fun getSampleWord(entranceId: Int): DictionaryEntrance? {
+    fun getSampleWord(entranceId: Int): DictionaryEntranceK? {
         return lessonRepositoryK.getSampleWord(entranceId)
     }
 

@@ -5,19 +5,19 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
 import com.smart_learn.core.general.DEBUG_MODE
-import com.smart_learn.presenter.recycler_view.ActionModeCallback
+import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
 
-abstract class BaseRVAdapter <T> (
-    private val activityServiceUtilities: ActivityServiceUtilities<*, *>
+abstract class BaseRVAdapterK <T> (
+    private val activityViewModelUtilitiesK: ActivityViewModelUtilitiesK<*, *>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     protected var items: MutableList<T> = ArrayList()
     protected var allItems: MutableList<T> = ArrayList()
     protected var selectedItems: MutableSet<Int> = mutableSetOf()
-    protected var actionModeCallback: ActionModeCallback? = null
-    protected var activity: Activity = activityServiceUtilities.getActivity()
+    protected var actionModeCallbackK: ActionModeCallbackK? = null
+    protected var activity: Activity = activityViewModelUtilitiesK.getActivity()
 
 
     /** override from RecyclerView.Adapter<RecyclerView.ViewHolder> */
@@ -31,7 +31,7 @@ abstract class BaseRVAdapter <T> (
     /** My abstract functions */
     abstract fun getContext(): Context
     abstract fun getRecyclerView(): RecyclerView
-    abstract fun getAdapter(): BaseRVAdapter<T>
+    abstract fun getAdapter(): BaseRVAdapterK<T>
     abstract fun selectItem(item: T)
     abstract fun deselectItem(item: T)
     abstract fun deleteFromDatabase(item: T)
@@ -145,7 +145,7 @@ abstract class BaseRVAdapter <T> (
 
 
     fun resetActionMode() {
-        actionModeCallback = null
+        actionModeCallbackK = null
         deselectAll()
 
         notifyDataSetChanged()
@@ -159,21 +159,21 @@ abstract class BaseRVAdapter <T> (
         }
         notifyDataSetChanged()
         checkEmptyState()
-        actionModeCallback?.refresh()
+        actionModeCallbackK?.refresh()
     }
 
     fun deselectAll() {
         clearSelectedElements(false)
         notifyDataSetChanged()
         checkEmptyState()
-        actionModeCallback?.refresh()
+        actionModeCallbackK?.refresh()
     }
 
     fun deleteSelected() {
         if(selectedItems.isNotEmpty()) {
             if (DEBUG_MODE) {
                 Log.d(
-                    "[DictionariesRVAdapter]",
+                    "[DictionariesRVAdapterK]",
                     "Deleted ${selectedItems.size} elements:\n"
                 )
                 selectedItems.forEach {
@@ -185,7 +185,7 @@ abstract class BaseRVAdapter <T> (
         else{
             Toast.makeText(activity,"No item selected", Toast.LENGTH_SHORT).show()
         }
-        actionModeCallback?.refresh()
+        actionModeCallbackK?.refresh()
     }
 
 

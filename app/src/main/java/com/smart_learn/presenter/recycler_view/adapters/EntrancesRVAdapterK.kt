@@ -11,18 +11,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryEntrance
+import com.smart_learn.data.entities.DictionaryEntranceK
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddEntranceDialog
-import com.smart_learn.presenter.recycler_view.ActionModeCallback
-import com.smart_learn.core.services.activities.EntrancesRVActivityService
+import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
+import com.smart_learn.presenter.view_models.EntranceRVViewModelK
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
 import kotlinx.android.synthetic.main.layout_dictionary_entrance_details.view.*
 import java.util.*
 
-class EntrancesRVAdapter(
-    private val entrancesRVActivityService: EntrancesRVActivityService
-) : BaseRVAdapter<DictionaryEntrance>(entrancesRVActivityService), Filterable {
+class EntrancesRVAdapterK(
+    private val entranceRVViewModel: EntranceRVViewModelK
+) : BaseRVAdapterK<DictionaryEntranceK>(entranceRVViewModel), Filterable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return EntrancesViewHolder(
@@ -42,16 +42,16 @@ class EntrancesRVAdapter(
     }
 
 
-    override fun selectItem(item: DictionaryEntrance) {
+    override fun selectItem(item: DictionaryEntranceK) {
         item.isSelected = true
     }
 
-    override fun deselectItem(item: DictionaryEntrance) {
+    override fun deselectItem(item: DictionaryEntranceK) {
         item.isSelected = false
     }
 
-    override fun deleteFromDatabase(item: DictionaryEntrance) {
-        entrancesRVActivityService.getApplicationService().lessonServiceK
+    override fun deleteFromDatabase(item: DictionaryEntranceK) {
+        entranceRVViewModel.getApplicationService().lessonServiceK
             .deleteWord(item.entranceId)
     }
 
@@ -71,25 +71,25 @@ class EntrancesRVAdapter(
     }
 
     override fun getContext(): Context {
-        return entrancesRVActivityService.getParentActivity()
+        return entranceRVViewModel.getParentActivity()
     }
 
     override fun getRecyclerView(): RecyclerView {
         return activity.rvEntrance
     }
 
-    override fun getAdapter(): BaseRVAdapter<DictionaryEntrance> {
+    override fun getAdapter(): BaseRVAdapterK<DictionaryEntranceK> {
         return this
     }
 
     override fun clickUpdateOnSwipe(position: Int) {
         showAddEntranceDialog(
-            "EntrancesRVAdapter",
+            "EntrancesRVAdapterK",
             activity,
             R.layout.dialog_add_word,
-            entrancesRVActivityService.getApplicationService(),
+            entranceRVViewModel.getApplicationService(),
             updateEntrance = true,
-            entrance = items[position],
+            entranceK = items[position],
             updateRecyclerView = true,
             entranceRVAdapter = this,
             position = position
@@ -108,7 +108,7 @@ class EntrancesRVAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val searchValue = constraint.toString()
 
-                val filteredItems: List<DictionaryEntrance>
+                val filteredItems: List<DictionaryEntranceK>
 
                 if (searchValue.isEmpty()) {
                     filteredItems = allItems
@@ -130,8 +130,8 @@ class EntrancesRVAdapter(
 
             /** run on a UI thread */
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                items = (results?.values as List<DictionaryEntrance>).toMutableList()
-                this@EntrancesRVAdapter.notifyDataSetChanged()
+                items = (results?.values as List<DictionaryEntranceK>).toMutableList()
+                this@EntrancesRVAdapterK.notifyDataSetChanged()
             }
         }
     }
@@ -156,7 +156,7 @@ class EntrancesRVAdapter(
             // item view is the recyclerView element
             itemView.setOnClickListener {
 
-                if(actionModeCallback != null) {
+                if(actionModeCallbackK != null) {
 
                     // if element is selected --> deselect element
                     if (items[adapterPosition].isSelected) {
@@ -170,25 +170,25 @@ class EntrancesRVAdapter(
                         ivCheck.visibility = View.VISIBLE
 
                     }
-                    this@EntrancesRVAdapter.notifyItemChanged(adapterPosition)
-                    actionModeCallback?.refresh()
+                    this@EntrancesRVAdapterK.notifyItemChanged(adapterPosition)
+                    actionModeCallbackK?.refresh()
                 }
             }
 
             itemView.setOnLongClickListener {
 
-                if(actionModeCallback == null) {
+                if(actionModeCallbackK == null) {
                     // Start ActionMode
-                    actionModeCallback = ActionModeCallback(this@EntrancesRVAdapter)
-                    actionModeCallback?.startActionMode(
-                        entrancesRVActivityService.getActivity()
+                    actionModeCallbackK = ActionModeCallbackK(this@EntrancesRVAdapterK)
+                    actionModeCallbackK?.startActionMode(
+                        entranceRVViewModel.getActivity()
                             .findViewById(R.id.rvEntrance),
                         R.menu.action_mode_menu, "Selected", ""
                     )
 
                     // change background for items
                     // in bind function is made that change
-                    this@EntrancesRVAdapter.notifyDataSetChanged()
+                    this@EntrancesRVAdapterK.notifyDataSetChanged()
                 }
 
                 return@setOnLongClickListener true
@@ -200,16 +200,16 @@ class EntrancesRVAdapter(
          *
          * Using this function you decide how elements are shown in the recycler view list
          * */
-        fun bind(dictionaryEntrance: DictionaryEntrance){
+        fun bind(dictionaryEntranceK: DictionaryEntranceK){
 
-            tvWord.text = dictionaryEntrance.word
-            tvTranslation.text = dictionaryEntrance.translation
-            tvPhonetic.text = dictionaryEntrance.phonetic
+            tvWord.text = dictionaryEntranceK.word
+            tvTranslation.text = dictionaryEntranceK.translation
+            tvPhonetic.text = dictionaryEntranceK.phonetic
 
-            if(actionModeCallback != null) {
+            if(actionModeCallbackK != null) {
                 itemView.setBackgroundResource(R.color.colorToolbar)
 
-                if (dictionaryEntrance.isSelected) {
+                if (dictionaryEntranceK.isSelected) {
                     ivCheck.visibility = View.VISIBLE
                     // https://www.tutorialkart.com/kotlin-android/how-to-dynamically-change-button-background-in-kotlin-android/
                     itemView.setBackgroundResource(R.drawable.md_btn_selected)

@@ -19,7 +19,7 @@ import com.smart_learn.core.general.DEBUG_MODE
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b
  * */
-class DatabaseHandler(private var activity: Activity) :
+class DatabaseHandlerK(private var activity: Activity) :
     SQLiteOpenHelper(activity, DATABASE_NAME,null, DATABASE_VERSION) {
 
     companion object {
@@ -55,24 +55,24 @@ class DatabaseHandler(private var activity: Activity) :
 
         try {
 
-            var query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchema.DICTIONARIES_TABLE} (" +
-                    "${DatabaseSchema.DictionariesTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
-                    DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME +
-                    " VARCHAR(${DatabaseSchema.DictionariesTable.DIMENSION_COLUMN_NAME})" +
+            var query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchemaK.DICTIONARIES_TABLE} (" +
+                    "${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
+                    DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME +
+                    " VARCHAR(${DatabaseSchemaK.DictionariesTable.DIMENSION_COLUMN_NAME})" +
                     " NOT NULL UNIQUE);"
 
             db.execSQL(query)
 
-            query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchema.ENTRIES_TABLE} (" +
-                    "${DatabaseSchema.EntriesTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
-                    DatabaseSchema.EntriesTable.COLUMN_WORD +
-                    " VARCHAR(${DatabaseSchema.EntriesTable.DIMENSION_COLUMN_WORD}) NOT NULL UNIQUE," +
-                    "${DatabaseSchema.EntriesTable.COLUMN_TRANSLATION} TEXT NOT NULL," +
-                    DatabaseSchema.EntriesTable.COLUMN_PHONETIC +
-                    " VARCHAR(${DatabaseSchema.EntriesTable.DIMENSION_COLUMN_PHONETIC}) NOT NULL," +
-                    "${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY} INTEGER," +
-                    " FOREIGN KEY (${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY})" +
-                    " REFERENCES ${DatabaseSchema.DICTIONARIES_TABLE} (${DatabaseSchema.DictionariesTable.PRIMARY_KEY})" +
+            query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchemaK.ENTRIES_TABLE} (" +
+                    "${DatabaseSchemaK.EntriesTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
+                    DatabaseSchemaK.EntriesTable.COLUMN_WORD +
+                    " VARCHAR(${DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_WORD}) NOT NULL UNIQUE," +
+                    "${DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION} TEXT NOT NULL," +
+                    DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC +
+                    " VARCHAR(${DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_PHONETIC}) NOT NULL," +
+                    "${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY} INTEGER," +
+                    " FOREIGN KEY (${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY})" +
+                    " REFERENCES ${DatabaseSchemaK.DICTIONARIES_TABLE} (${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY})" +
                     ");"
 
             db.execSQL(query)

@@ -17,4 +17,4 @@ const val DATABASE_ERROR = "[DATABASE ERROR] "
 const val UNEXPECTED_ERROR = "[UNEXPECTED ERROR] "
 
 // TODO: before this check to see if you can pass global context to application
-// var DB_HANDLER: DatabaseHandler = TODO("Initialize database when program opens")
+// var DB_HANDLER: DatabaseHandlerK = TODO("Initialize database when program opens")

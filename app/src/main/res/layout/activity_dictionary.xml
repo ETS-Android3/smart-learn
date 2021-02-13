@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activityDictionaryLayout"
-    tools:context=".presenter.activities.DictionaryActivity"
+    tools:context=".presenter.activities.LessonActivityK"
     android:orientation="vertical"
     android:background="@color/background">
 

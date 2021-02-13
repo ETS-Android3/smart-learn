@@ -1,30 +1,29 @@
-package com.smart_learn.core.services.activities
+package com.smart_learn.presenter.view_models
 
 import android.app.Activity
 import com.smart_learn.R
-import com.smart_learn.presenter.activities.DictionaryActivity
-import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.presenter.activities.LessonActivityK
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.general.showAddDictionaryDialog
 import com.smart_learn.core.general.showAddEntranceDialog
-import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.core.services.ApplicationServiceK
 import com.smart_learn.core.services.TestService
 import kotlinx.android.synthetic.main.activity_dictionary.*
 
 
-class DictionaryActivityService(private var dictionaryActivity: DictionaryActivity)
-    : ActivityServiceUtilities<DictionaryActivityService, DictionaryActivity> {
+class LessonViewModelK(private var lessonActivityK: LessonActivityK)
+    : ActivityViewModelUtilitiesK<LessonViewModelK, LessonActivityK> {
 
-    private var activity: Activity = dictionaryActivity.getActivity()
-    private var applicationService: ApplicationService = ApplicationService(this)
+    private var activity: Activity = lessonActivityK.getActivity()
+    private var applicationServiceK: ApplicationServiceK = ApplicationServiceK(this)
 
     init {
         activity.btnAddNewWord.setOnClickListener {
             showAddEntranceDialog(
-                "DictionaryActivityService",
+                "LessonViewModelK",
                 activity,
                 R.layout.dialog_add_word,
-                applicationService)
+                applicationServiceK)
         }
 
         activity.btnTestLocal.setOnClickListener {
@@ -35,28 +34,28 @@ class DictionaryActivityService(private var dictionaryActivity: DictionaryActivi
         activity.btnTestOnline.setOnClickListener {
             // TODO: remove this when refactoring is made
             TestService.getTestServiceInstance().currentTestMode.set(TestService.REMOTE_MODE_TEST.toInt())
-            dictionaryActivity.startTestGenerationActivity()
+            lessonActivityK.startTestGenerationActivity()
         }
 
         activity.btnDisplayWords.setOnClickListener {
-            dictionaryActivity.startEntrancesRVActivity()
+            lessonActivityK.startEntrancesRVActivity()
         }
 
         activity.btnDeleteDictionary.setOnClickListener {
-            applicationService.lessonServiceK.delete(SELECTED_DICTIONARY_ID)
+            applicationServiceK.lessonServiceK.delete(SELECTED_DICTIONARY_ID)
 
             // go to previous activity
-            dictionaryActivity.startDictionariesRVActivity()
+            lessonActivityK.startDictionariesRVActivity()
         }
 
         activity.btnUpdateD.setOnClickListener {
             showAddDictionaryDialog(
-                "DictionaryActivityService",
+                "LessonViewModelK",
                 activity,
                 R.layout.dialog_new_dictionary,
-                applicationService,
+                applicationServiceK,
                 updateDictionary = true,
-                currentDictionary = applicationService.lessonServiceK.getSampleLiveLesson(SELECTED_DICTIONARY_ID)
+                currentDictionaryK = applicationServiceK.lessonServiceK.getSampleLiveLesson(SELECTED_DICTIONARY_ID)
             )
         }
     }
@@ -67,16 +66,16 @@ class DictionaryActivityService(private var dictionaryActivity: DictionaryActivi
         return activity
     }
 
-    override fun getActivityService(): DictionaryActivityService {
+    override fun getActivityService(): LessonViewModelK {
         return this
     }
 
-    override fun getParentActivity(): DictionaryActivity {
-        return dictionaryActivity
+    override fun getParentActivity(): LessonActivityK {
+        return lessonActivityK
     }
 
-    override fun getApplicationService(): ApplicationService {
-        return applicationService
+    override fun getApplicationService(): ApplicationServiceK {
+        return applicationServiceK
     }
 
 }

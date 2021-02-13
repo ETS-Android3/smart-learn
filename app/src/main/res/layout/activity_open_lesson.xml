@@ -5,7 +5,7 @@
     android:id="@+id/activityMainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.activities.OpenLessonActivity"
+    tools:context=".presenter.activities.OpenLessonActivityK"
     android:orientation="vertical"
     android:background="@color/background">
 

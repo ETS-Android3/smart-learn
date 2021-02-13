@@ -12,20 +12,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryDetails
+import com.smart_learn.data.entities.DictionaryDetailsK
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddDictionaryDialog
-import com.smart_learn.presenter.recycler_view.ActionModeCallback
-import com.smart_learn.core.services.activities.DictionariesRVActivityService
+import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
+import com.smart_learn.presenter.view_models.LessonRVViewModelK
 import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
 import kotlinx.android.synthetic.main.layout_dictionary_details.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DictionariesRVAdapter(
-    private val dictionariesRVActivityService: DictionariesRVActivityService
-) : BaseRVAdapter<DictionaryDetails>(dictionariesRVActivityService), Filterable {
+class DictionariesRVAdapterK(
+    private val lessonRVViewModel: LessonRVViewModelK
+) : BaseRVAdapterK<DictionaryDetailsK>(lessonRVViewModel), Filterable {
 
 
     /** override from RecyclerView.Adapter<RecyclerView.ViewHolder> */
@@ -49,16 +49,16 @@ class DictionariesRVAdapter(
 
 
     /** override from base adapter */
-    override fun selectItem(item: DictionaryDetails) {
+    override fun selectItem(item: DictionaryDetailsK) {
         item.isSelected = true
     }
 
-    override fun deselectItem(item: DictionaryDetails) {
+    override fun deselectItem(item: DictionaryDetailsK) {
         item.isSelected = false
     }
 
-    override fun deleteFromDatabase(item: DictionaryDetails) {
-        dictionariesRVActivityService.getApplicationService().lessonServiceK
+    override fun deleteFromDatabase(item: DictionaryDetailsK) {
+        lessonRVViewModel.getApplicationService().lessonServiceK
             .delete(item.dictionaryId)
     }
 
@@ -78,14 +78,14 @@ class DictionariesRVAdapter(
     }
 
     override fun getContext(): Context {
-        return dictionariesRVActivityService.getParentActivity()
+        return lessonRVViewModel.getParentActivity()
     }
 
     override fun getRecyclerView(): RecyclerView {
         return activity.rvDictionaries
     }
 
-    override fun getAdapter(): BaseRVAdapter<DictionaryDetails> {
+    override fun getAdapter(): BaseRVAdapterK<DictionaryDetailsK> {
         return this
     }
 
@@ -94,9 +94,9 @@ class DictionariesRVAdapter(
             "DictionaryRVAdapter",
             activity,
             R.layout.dialog_new_dictionary,
-            dictionariesRVActivityService.getApplicationService(),
+            lessonRVViewModel.getApplicationService(),
             updateDictionary = true,
-            currentDictionary = items[position],
+            currentDictionaryK = items[position],
             updateRecyclerView = true,
             dictionariesRVAdapter = this,
             position = position
@@ -115,7 +115,7 @@ class DictionariesRVAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val searchValue = constraint.toString()
 
-                val filteredItems: List<DictionaryDetails>
+                val filteredItems: List<DictionaryDetailsK>
 
                 if (searchValue.isEmpty()) {
                     filteredItems = allItems
@@ -136,8 +136,8 @@ class DictionariesRVAdapter(
 
             /** run on a UI thread */
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                items = (results?.values as List<DictionaryDetails>).toMutableList()
-                this@DictionariesRVAdapter.notifyDataSetChanged()
+                items = (results?.values as List<DictionaryDetailsK>).toMutableList()
+                this@DictionariesRVAdapterK.notifyDataSetChanged()
             }
         }
     }
@@ -160,7 +160,7 @@ class DictionariesRVAdapter(
 
             itemView.setOnClickListener {
 
-                if(actionModeCallback != null) {
+                if(actionModeCallbackK != null) {
 
                     if(items[adapterPosition].isSelected){
                         items[adapterPosition].isSelected = false
@@ -172,8 +172,8 @@ class DictionariesRVAdapter(
                         selectedItems.add(adapterPosition)
                         ivCheck.visibility = View.VISIBLE
                     }
-                    this@DictionariesRVAdapter.notifyItemChanged(adapterPosition)
-                    actionModeCallback?.refresh()
+                    this@DictionariesRVAdapterK.notifyItemChanged(adapterPosition)
+                    actionModeCallbackK?.refresh()
                     return@setOnClickListener
                 }
 
@@ -184,26 +184,26 @@ class DictionariesRVAdapter(
                 val position: Int = adapterPosition
 
                 // choose what to do with that element
-                // set selected dictionary and launch DictionaryActivity
+                // set selected dictionary and launch LessonActivityK
                 SELECTED_DICTIONARY_ID = items[position].dictionaryId
 
-                dictionariesRVActivityService.getParentActivity().startDictionaryActivity()
+                lessonRVViewModel.getParentActivity().startDictionaryActivity()
             }
 
             itemView.setOnLongClickListener {
 
-                if(actionModeCallback == null) {
+                if(actionModeCallbackK == null) {
                     // Start ActionMode
-                    actionModeCallback = ActionModeCallback(this@DictionariesRVAdapter)
-                    actionModeCallback?.startActionMode(
-                        dictionariesRVActivityService.getActivity()
+                    actionModeCallbackK = ActionModeCallbackK(this@DictionariesRVAdapterK)
+                    actionModeCallbackK?.startActionMode(
+                        lessonRVViewModel.getActivity()
                             .findViewById(R.id.rvDictionaries),
                         R.menu.action_mode_menu, "Selected", ""
                     )
 
                     // change background for items
                     // in bind function is made that change
-                    this@DictionariesRVAdapter.notifyDataSetChanged()
+                    this@DictionariesRVAdapterK.notifyDataSetChanged()
                 }
 
                 return@setOnLongClickListener true
@@ -213,12 +213,12 @@ class DictionariesRVAdapter(
 
 
         /** this is how single elements are displayed in recycler view */
-        fun bind(dictionaryDetails: DictionaryDetails){
+        fun bind(dictionaryDetailsK: DictionaryDetailsK){
 
-            var string: String = dictionaryDetails.title
+            var string: String = dictionaryDetailsK.title
 
-            if(actionModeCallback != null) {
-                if(dictionaryDetails.isSelected){
+            if(actionModeCallbackK != null) {
+                if(dictionaryDetailsK.isSelected){
                     ivCheck.visibility = View.VISIBLE
                     // https://www.tutorialkart.com/kotlin-android/how-to-dynamically-change-button-background-in-kotlin-android/
                     itemView.setBackgroundResource(R.drawable.md_btn_selected)
@@ -233,23 +233,23 @@ class DictionariesRVAdapter(
                 ivCheck.visibility = View.INVISIBLE
             }
 
-            if(dictionaryDetails.searchIndexes.isNotEmpty()){
+            if(dictionaryDetailsK.searchIndexes.isNotEmpty()){
                 //Log.e("mesaj","lalaala")
 
-                string = string.subSequence(0,dictionaryDetails.searchIndexes[0].first).toString() +
+                string = string.subSequence(0,dictionaryDetailsK.searchIndexes[0].first).toString() +
                         "<span style=\"background-color:yellow\">" +
-                        string.subSequence(dictionaryDetails.searchIndexes[0].first,dictionaryDetails.searchIndexes[0].last).toString() + "</span>" +
-                        string.subSequence(dictionaryDetails.searchIndexes[0].last,string.length).toString()
+                        string.subSequence(dictionaryDetailsK.searchIndexes[0].first,dictionaryDetailsK.searchIndexes[0].last).toString() + "</span>" +
+                        string.subSequence(dictionaryDetailsK.searchIndexes[0].last,string.length).toString()
 
                 // TODO: check this deprecated function
                 dictionaryNameTextView.text = Html.fromHtml(string)
                 // remove indexes
-                dictionaryDetails.searchIndexes = ArrayList()
+                dictionaryDetailsK.searchIndexes = ArrayList()
 
                 return
             }
 
-            dictionaryNameTextView.text = dictionaryDetails.title
+            dictionaryNameTextView.text = dictionaryDetailsK.title
 
         }
 

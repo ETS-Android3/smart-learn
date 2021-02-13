@@ -2,24 +2,24 @@ package com.smart_learn.data.repository
 
 import android.content.ContentValues
 import android.database.Cursor
-import com.smart_learn.data.entities.DictionaryDetails
-import com.smart_learn.data.entities.DictionaryEntrance
-import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.data.entities.DictionaryDetailsK
+import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
 
 /**  TODO: To check This class must be a singleton class
  *    https://medium.com/swlh/singleton-class-in-kotlin-c3398e7fd76b
  * */
-class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUtilities<*, *>) {
+class LessonRepositoryK(private val activityViewModelUtilitiesK: ActivityViewModelUtilitiesK<*, *>) {
 
-    private val databaseHandler: DatabaseHandler = DatabaseHandler(activityServiceUtilities.getActivity())
+    private val databaseHandlerK: DatabaseHandlerK = DatabaseHandlerK(activityViewModelUtilitiesK.getActivity())
 
     /** check if dictionary already exists in database */
     fun checkIfLessonExist(dictionaryName: String) : Boolean {
 
-        val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +
-                " WHERE ${DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME} LIKE '${dictionaryName}';"
+        val query = "SELECT * FROM ${DatabaseSchemaK.DICTIONARIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME} LIKE '${dictionaryName}';"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor == null || !cursor.moveToFirst()) {
             cursor?.close()
@@ -34,11 +34,11 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     /** check if word already exists in specific dictionary */
     fun checkIfWordExist(word: String, dictionaryId: Int) : Boolean {
 
-        val query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}" +
-                " WHERE ${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY} = $dictionaryId" +
-                " AND ${DatabaseSchema.EntriesTable.COLUMN_WORD} LIKE '${word}';"
+        val query = "SELECT * FROM ${DatabaseSchemaK.ENTRIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY} = $dictionaryId" +
+                " AND ${DatabaseSchemaK.EntriesTable.COLUMN_WORD} LIKE '${word}';"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor == null || !cursor.moveToFirst()) {
             cursor?.close()
@@ -53,73 +53,73 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     /** insert lesson */
     fun insert(dictionaryName: String) {
         val contentValues = ContentValues()
-        contentValues.put(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryName)
-        databaseHandler.executeInsert(DatabaseSchema.DICTIONARIES_TABLE,contentValues)
+        contentValues.put(DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryName)
+        databaseHandlerK.executeInsert(DatabaseSchemaK.DICTIONARIES_TABLE,contentValues)
     }
 
     /** update lesson */
-    fun update(dictionaryDetails: DictionaryDetails) {
+    fun update(dictionaryDetailsK: DictionaryDetailsK) {
         val contentValues = ContentValues()
-        contentValues.put(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryDetails.title)
+        contentValues.put(DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryDetailsK.title)
 
-        val selection = "${DatabaseSchema.DictionariesTable.PRIMARY_KEY} = ?"
-        val selectionArgs = arrayOf(dictionaryDetails.dictionaryId.toString())
+        val selection = "${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY} = ?"
+        val selectionArgs = arrayOf(dictionaryDetailsK.dictionaryId.toString())
 
-        databaseHandler.executeUpdate(DatabaseSchema.DICTIONARIES_TABLE,contentValues,selection,selectionArgs)
+        databaseHandlerK.executeUpdate(DatabaseSchemaK.DICTIONARIES_TABLE,contentValues,selection,selectionArgs)
     }
 
     /** delete lesson */
     fun delete(dictionaryId: Int){
         // delete all his words
-        var selection = "${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY} = ?"
+        var selection = "${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY} = ?"
         var selectionArgs = arrayOf(dictionaryId.toString())
-        databaseHandler.executeDelete(DatabaseSchema.ENTRIES_TABLE,selection,selectionArgs)
+        databaseHandlerK.executeDelete(DatabaseSchemaK.ENTRIES_TABLE,selection,selectionArgs)
 
         // delete dictionary
-        selection = "${DatabaseSchema.DictionariesTable.PRIMARY_KEY} = ?"
+        selection = "${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY} = ?"
         selectionArgs = arrayOf(dictionaryId.toString())
-        databaseHandler.executeDelete(DatabaseSchema.DICTIONARIES_TABLE,selection,selectionArgs)
+        databaseHandlerK.executeDelete(DatabaseSchemaK.DICTIONARIES_TABLE,selection,selectionArgs)
     }
 
 
     /** Remove support for this method.
      *
-    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntrance): DictionaryEntrance? {
+    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntranceK): DictionaryEntranceK? {
 
-        var query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}"
+        var query = "SELECT * FROM ${DatabaseSchemaK.ENTRIES_TABLE}"
         var done: Boolean = false
 
         if(dictionaryEntrance.entranceId > 0 && !done){
-            query += " WHERE ${DatabaseSchema.EntriesTable.PRIMARY_KEY} = ${dictionaryEntrance.entranceId};"
+            query += " WHERE ${DatabaseSchemaK.EntriesTable.PRIMARY_KEY} = ${dictionaryEntrance.entranceId};"
             done = true
         }
 
         if(dictionaryEntrance.word != "" && !done){
-            query += " WHERE ${DatabaseSchema.EntriesTable.COLUMN_WORD} LIKE '${dictionaryEntrance.word}';"
+            query += " WHERE ${DatabaseSchemaK.EntriesTable.COLUMN_WORD} LIKE '${dictionaryEntrance.word}';"
             done = true
         }
 
         if(dictionaryEntrance.translation != "" && !done){
-            query += " WHERE ${DatabaseSchema.EntriesTable.COLUMN_TRANSLATION} LIKE '${dictionaryEntrance.translation}';"
+            query += " WHERE ${DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION} LIKE '${dictionaryEntrance.translation}';"
             done = true
         }
 
         if(dictionaryEntrance.phonetic != ""  && !done){
-            query += " WHERE ${DatabaseSchema.EntriesTable.COLUMN_PHONETIC} LIKE '${dictionaryEntrance.phonetic}';"
+            query += " WHERE ${DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC} LIKE '${dictionaryEntrance.phonetic}';"
             done = true
         }
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             cursor.moveToFirst()
             val entrance =
-                DictionaryEntrance(
-                    cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.PRIMARY_KEY)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_WORD)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_TRANSLATION)),
-                    cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_PHONETIC)),
-                    cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY))
+                DictionaryEntranceK(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.PRIMARY_KEY)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_WORD)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY))
                 )
 
             cursor.close()
@@ -134,39 +134,39 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
 
 
     /** insert word */
-    fun insert(dictionaryEntrance: DictionaryEntrance) {
+    fun insert(dictionaryEntranceK: DictionaryEntranceK) {
         val contentValues = ContentValues()
 
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_WORD, dictionaryEntrance.word)
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_TRANSLATION, dictionaryEntrance.translation)
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_PHONETIC, dictionaryEntrance.phonetic)
-        contentValues.put(DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY, dictionaryEntrance.dictionaryId)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_WORD, dictionaryEntranceK.word)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION, dictionaryEntranceK.translation)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC, dictionaryEntranceK.phonetic)
+        contentValues.put(DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY, dictionaryEntranceK.dictionaryId)
 
-        databaseHandler.executeInsert(DatabaseSchema.ENTRIES_TABLE,contentValues)
+        databaseHandlerK.executeInsert(DatabaseSchemaK.ENTRIES_TABLE,contentValues)
     }
 
 
-    fun getSampleWord(entranceId: Int): DictionaryEntrance? {
+    fun getSampleWord(entranceId: Int): DictionaryEntranceK? {
 
-        val entrance: DictionaryEntrance
-        val query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}" +
-                " WHERE ${DatabaseSchema.EntriesTable.PRIMARY_KEY} = $entranceId;"
+        val entranceK: DictionaryEntranceK
+        val query = "SELECT * FROM ${DatabaseSchemaK.ENTRIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.EntriesTable.PRIMARY_KEY} = $entranceId;"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             cursor.moveToFirst()
-            entrance =  DictionaryEntrance(
-                cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.PRIMARY_KEY)),
-                cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_WORD)),
-                cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_TRANSLATION)),
-                cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_PHONETIC)),
-                cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY))
+            entranceK =  DictionaryEntranceK(
+                cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.PRIMARY_KEY)),
+                cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_WORD)),
+                cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION)),
+                cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC)),
+                cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY))
             )
 
             cursor.close()
 
-            return entrance
+            return entranceK
         }
 
         return null
@@ -174,47 +174,47 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     }
 
     /** update word */
-    fun update(dictionaryEntrance: DictionaryEntrance) {
+    fun update(dictionaryEntranceK: DictionaryEntranceK) {
         val contentValues = ContentValues()
 
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_WORD, dictionaryEntrance.word)
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_TRANSLATION, dictionaryEntrance.translation)
-        contentValues.put(DatabaseSchema.EntriesTable.COLUMN_PHONETIC, dictionaryEntrance.phonetic)
-        contentValues.put(DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY, dictionaryEntrance.dictionaryId)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_WORD, dictionaryEntranceK.word)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION, dictionaryEntranceK.translation)
+        contentValues.put(DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC, dictionaryEntranceK.phonetic)
+        contentValues.put(DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY, dictionaryEntranceK.dictionaryId)
 
-        val selection = "${DatabaseSchema.EntriesTable.PRIMARY_KEY} = ?"
-        val selectionArgs = arrayOf(dictionaryEntrance.entranceId.toString())
+        val selection = "${DatabaseSchemaK.EntriesTable.PRIMARY_KEY} = ?"
+        val selectionArgs = arrayOf(dictionaryEntranceK.entranceId.toString())
 
-        databaseHandler.executeUpdate(DatabaseSchema.ENTRIES_TABLE,contentValues,selection,selectionArgs)
+        databaseHandlerK.executeUpdate(DatabaseSchemaK.ENTRIES_TABLE,contentValues,selection,selectionArgs)
     }
 
     /** delete word */
     fun deleteWord(entranceId: Int){
 
-        val selection = "${DatabaseSchema.EntriesTable.PRIMARY_KEY} = ?"
+        val selection = "${DatabaseSchemaK.EntriesTable.PRIMARY_KEY} = ?"
         val selectionArgs = arrayOf(entranceId.toString())
 
-        databaseHandler.executeDelete(DatabaseSchema.ENTRIES_TABLE,selection,selectionArgs)
+        databaseHandlerK.executeDelete(DatabaseSchemaK.ENTRIES_TABLE,selection,selectionArgs)
     }
 
     /** get all entries for a specific dictionary */
-    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntrance> {
+    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntranceK> {
 
-        val entriesList = ArrayList<DictionaryEntrance>()
-        val query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}" +
-                " WHERE ${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY} = ${dictionaryId};"
+        val entriesList = ArrayList<DictionaryEntranceK>()
+        val query = "SELECT * FROM ${DatabaseSchemaK.ENTRIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY} = ${dictionaryId};"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             while (cursor.moveToNext()){
                 entriesList.add(
-                    DictionaryEntrance(
-                        cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.PRIMARY_KEY)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_WORD)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_TRANSLATION)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseSchema.EntriesTable.COLUMN_PHONETIC)),
-                        cursor.getInt(cursor.getColumnIndex(DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY))
+                    DictionaryEntranceK(
+                        cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.PRIMARY_KEY)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_WORD)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC)),
+                        cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY))
                     )
                 )
             }
@@ -226,20 +226,20 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     }
 
 
-    /** get a list of all dictionaries based on DictionaryDetails */
-    fun getAllLiveSampleLessons() : List<DictionaryDetails> {
+    /** get a list of all dictionaries based on DictionaryDetailsK */
+    fun getAllLiveSampleLessons() : List<DictionaryDetailsK> {
 
-        val dictionaryList = ArrayList<DictionaryDetails>()
-        val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE};"
+        val dictionaryList = ArrayList<DictionaryDetailsK>()
+        val query = "SELECT * FROM ${DatabaseSchemaK.DICTIONARIES_TABLE};"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             while (cursor.moveToNext()){
                 dictionaryList.add(
-                    DictionaryDetails(
-                        cursor.getInt(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.PRIMARY_KEY)),
-                        cursor.getString(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME))
+                    DictionaryDetailsK(
+                        cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.PRIMARY_KEY)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME))
                     )
                 )
             }
@@ -250,48 +250,48 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         return dictionaryList
     }
 
-    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetails? {
+    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetailsK? {
 
-        val dictionary: DictionaryDetails
-        val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +
-                " WHERE ${DatabaseSchema.DictionariesTable.PRIMARY_KEY} = $dictionaryId;"
+        val dictionaryK: DictionaryDetailsK
+        val query = "SELECT * FROM ${DatabaseSchemaK.DICTIONARIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY} = $dictionaryId;"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             cursor.moveToFirst()
-            dictionary =  DictionaryDetails(
-                cursor.getInt(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.PRIMARY_KEY)),
-                cursor.getString(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME))
+            dictionaryK =  DictionaryDetailsK(
+                cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.PRIMARY_KEY)),
+                cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME))
             )
 
             cursor.close()
 
-            return dictionary
+            return dictionaryK
         }
 
         return null
 
     }
 
-    fun getSampleLiveLesson(title: String): DictionaryDetails? {
+    fun getSampleLiveLesson(title: String): DictionaryDetailsK? {
 
-        val dictionary: DictionaryDetails
-        val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +
-                " WHERE ${DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME} LIKE '$title';"
+        val dictionaryK: DictionaryDetailsK
+        val query = "SELECT * FROM ${DatabaseSchemaK.DICTIONARIES_TABLE}" +
+                " WHERE ${DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME} LIKE '$title';"
 
-        val cursor: Cursor? = databaseHandler.executeQuery(query)
+        val cursor: Cursor? = databaseHandlerK.executeQuery(query)
 
         if (cursor != null) {
             cursor.moveToFirst()
-            dictionary =  DictionaryDetails(
-                cursor.getInt(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.PRIMARY_KEY)),
-                cursor.getString(cursor.getColumnIndex(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME))
+            dictionaryK =  DictionaryDetailsK(
+                cursor.getInt(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.PRIMARY_KEY)),
+                cursor.getString(cursor.getColumnIndex(DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME))
             )
 
             cursor.close()
 
-            return dictionary
+            return dictionaryK
         }
 
         return null

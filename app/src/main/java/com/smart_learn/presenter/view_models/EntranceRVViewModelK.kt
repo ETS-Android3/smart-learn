@@ -1,20 +1,20 @@
-package com.smart_learn.core.services.activities
+package com.smart_learn.presenter.view_models
 
 import android.app.Activity
 import com.smart_learn.R
-import com.smart_learn.presenter.activities.EntrancesRVActivity
-import com.smart_learn.data.entities.DictionaryEntrance
+import com.smart_learn.presenter.activities.EntranceRVActivityK
+import com.smart_learn.data.entities.DictionaryEntranceK
 import com.smart_learn.core.general.*
-import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapter
-import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
+import com.smart_learn.core.services.ApplicationServiceK
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
 
-class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVActivity)
-    : ActivityServiceUtilities<EntrancesRVActivityService, EntrancesRVActivity> {
+class EntranceRVViewModelK(private var entranceRVActivityK: EntranceRVActivityK)
+    : ActivityViewModelUtilitiesK<EntranceRVViewModelK, EntranceRVActivityK> {
 
-    private var activity: Activity = entrancesRVActivity.getActivity()
-    private lateinit var entrancesRVAdapter: EntrancesRVAdapter
-    private var applicationService: ApplicationService = ApplicationService(this)
+    private var activity: Activity = entranceRVActivityK.getActivity()
+    private lateinit var entrancesRVAdapter: EntrancesRVAdapterK
+    private var applicationServiceK: ApplicationServiceK = ApplicationServiceK(this)
 
     init{
 
@@ -23,7 +23,7 @@ class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVAct
                 "EntranceRVActivityService",
                 activity,
                 R.layout.dialog_add_word,
-                applicationService,
+                applicationServiceK,
                 updateRecyclerView = true,
                 entranceRVAdapter = entrancesRVAdapter
             )
@@ -39,9 +39,9 @@ class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVAct
             activity = activity,
             recyclerView = activity.rvEntrance,
             itemDecoration = ItemDecoration(10),
-            activityServiceUtilities = this,
+            activityViewModelUtilitiesK = this,
             adapterType = 2
-        ) as EntrancesRVAdapter
+        ) as EntrancesRVAdapterK
 
         // add data in recycler view
         loadData()
@@ -53,8 +53,8 @@ class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVAct
 
     /** load data from database into recycler view */
     private fun loadData() {
-        val tmpList: MutableList<DictionaryEntrance> = ArrayList()
-        applicationService.lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID).forEach {
+        val tmpList: MutableList<DictionaryEntranceK> = ArrayList()
+        applicationServiceK.lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID).forEach {
             tmpList.add(it)
         }
         entrancesRVAdapter.submitList(tmpList)
@@ -66,22 +66,22 @@ class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVAct
         startActivityStateData()
     }
 
-    fun getAdapter(): EntrancesRVAdapter { return entrancesRVAdapter }
+    fun getAdapter(): EntrancesRVAdapterK { return entrancesRVAdapter }
 
     override fun getActivity(): Activity {
         return activity
     }
 
-    override fun getActivityService(): EntrancesRVActivityService {
+    override fun getActivityService(): EntranceRVViewModelK {
         return this
     }
 
-    override fun getParentActivity(): EntrancesRVActivity {
-        return entrancesRVActivity
+    override fun getParentActivity(): EntranceRVActivityK {
+        return entranceRVActivityK
     }
 
-    override fun getApplicationService(): ApplicationService {
-        return applicationService
+    override fun getApplicationService(): ApplicationServiceK {
+        return applicationServiceK
     }
 
 }

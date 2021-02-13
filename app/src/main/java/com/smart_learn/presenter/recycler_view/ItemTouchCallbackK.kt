@@ -10,17 +10,17 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapter
+import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapterK
 import java.util.*
 
 /**
  * This class handles support gestures from recycler view
  *  FIXME: canvas not cleared
  * */
-abstract class ItemTouchCallback(private val activityAdapterUtilities: BaseRVAdapter<*>) :
+abstract class ItemTouchCallback(private val activityAdapterKUtilities: BaseRVAdapterK<*>) :
     ItemTouchHelper.Callback() {
 
-    private val recyclerView: RecyclerView = activityAdapterUtilities.getRecyclerView()
+    private val recyclerView: RecyclerView = activityAdapterKUtilities.getRecyclerView()
 
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
@@ -181,8 +181,8 @@ abstract class ItemTouchCallback(private val activityAdapterUtilities: BaseRVAda
             if (dX < 0) {
                 if (!buttonsBuffer.containsKey(position)) {
                     buttonsBuffer[position] =
-                        instantiateUnderlayButton(context = activityAdapterUtilities.getContext(),
-                            baseAdaptor = activityAdapterUtilities.getAdapter(),position = position)
+                        instantiateUnderlayButton(context = activityAdapterKUtilities.getContext(),
+                            baseAdaptorK = activityAdapterKUtilities.getAdapter(),position = position)
                 }
 
                 val buttons = buttonsBuffer[position] ?: return
@@ -205,7 +205,7 @@ abstract class ItemTouchCallback(private val activityAdapterUtilities: BaseRVAda
 
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        //activityAdapterUtilities.getAdapter().markPosition(viewHolder.adapterPosition)
+        //activityAdapterKUtilities.getAdapter().markPosition(viewHolder.adapterPosition)
 
         val position = viewHolder.adapterPosition
         if (swipePosition != position) {
@@ -220,7 +220,7 @@ abstract class ItemTouchCallback(private val activityAdapterUtilities: BaseRVAda
 
     abstract fun instantiateUnderlayButton(
         context: Context,
-        baseAdaptor: BaseRVAdapter<*>,
+        baseAdaptorK: BaseRVAdapterK<*>,
         position: Int
     ): List<UnderlayButton>
 

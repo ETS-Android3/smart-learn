@@ -1,7 +1,6 @@
 package com.smart_learn.presenter.activities
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,20 +8,24 @@ import android.view.MenuItem
 import android.widget.SearchView
 import com.smart_learn.R
 import com.smart_learn.core.general.showSettingsDialog
-import com.smart_learn.core.services.activities.DictionariesRVActivityService
+import com.smart_learn.presenter.view_models.EntranceRVViewModelK
 
-class DictionariesRVActivity : AppCompatActivity(){
+class EntranceRVActivityK : AppCompatActivity() {
 
-    private lateinit var dictionariesRVActivityService: DictionariesRVActivityService
+    private lateinit var entranceRVViewModel: EntranceRVViewModelK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rv_dictionaries)
+        setContentView(R.layout.activity_rv_entrances)
+
+        // https://android--code.blogspot.com/2020/06/android-kotlin-toolbar-back-button.html
+        // https://stackoverflow.com/questions/26515058/this-activity-already-has-an-action-bar-supplied-by-the-window-decor
+        // set toolbar as support action bar
         setSupportActionBar(findViewById(R.id.toolbarDictionaries))
 
         // set up toolbar
         supportActionBar?.apply {
-            title = "Dictionaries"
+            title = "Dictionary entries"
 
             // show back button on toolbar
             // on back button press, it will navigate to parent activity
@@ -31,8 +34,9 @@ class DictionariesRVActivity : AppCompatActivity(){
         }
 
         // other settings
-        dictionariesRVActivityService = DictionariesRVActivityService(this)
+        entranceRVViewModel = EntranceRVViewModelK(this)
     }
+
 
 
     /** Inflate the menu. This adds items to the action bar if it is present. */
@@ -46,7 +50,7 @@ class DictionariesRVActivity : AppCompatActivity(){
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                dictionariesRVActivityService.getAdapter().filter.filter(newText)
+                entranceRVViewModel.getAdapter().filter.filter(newText)
                 return true
             }
 
@@ -62,7 +66,7 @@ class DictionariesRVActivity : AppCompatActivity(){
     /** Handle presses on the action bar menu items */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.btnSettingsRV -> {
+            R.id.btnSettings -> {
                 showSettingsDialog(this)
                 return true
             }
@@ -71,23 +75,15 @@ class DictionariesRVActivity : AppCompatActivity(){
     }
 
 
+
     override fun onResume() {
         super.onResume()
-        dictionariesRVActivityService.resetStateData()
+        entranceRVViewModel.resetStateData()
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    /**
-     * These functions are for activity management
-     * */
-    fun startDictionaryActivity(){
-        val intent = Intent(this, DictionaryActivity::class.java)
-        startActivity(intent)
     }
 
     fun getActivity(): Activity { return this }

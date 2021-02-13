@@ -1,14 +1,14 @@
 package com.smart_learn.data.entities
 
-import com.smart_learn.data.models.DictionaryEntranceModel
+import com.smart_learn.data.models.DictionaryEntranceModelK
 
-class DictionaryEntrance(
+class DictionaryEntranceK(
     override var entranceId: Int = -1, // primary key is auto incremented in database
     override var word: String,
     override var translation: String,
     override var phonetic: String,
     override var dictionaryId: Int
-) : DictionaryEntranceModel(entranceId,word,translation,phonetic,dictionaryId) {
+) : DictionaryEntranceModelK(entranceId,word,translation,phonetic,dictionaryId) {
 
     // this indexes are used for search value in recycler view for making the foreground color
     var searchIndexes: List<IntRange> = ArrayList()
@@ -21,7 +21,7 @@ class DictionaryEntrance(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DictionaryEntrance
+        other as DictionaryEntranceK
 
         if (word != other.word) return false
         if (translation != other.translation) return false
@@ -43,7 +43,7 @@ class DictionaryEntrance(
     }
 
     override fun toString(): String {
-        return "DictionaryEntrance(entranceId=$entranceId, word='$word', translation='$translation'," +
+        return "DictionaryEntranceK(entranceId=$entranceId, word='$word', translation='$translation'," +
                 " phonetic='$phonetic', dictionaryId=$dictionaryId, isSelected=$isSelected)"
     }
 

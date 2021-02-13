@@ -6,7 +6,7 @@ package com.smart_learn.data.repository
  * IMPORTANT: When you change the schema change models too
  * */
 
-object DatabaseSchema {
+object DatabaseSchemaK {
 
     const val DICTIONARIES_TABLE = "dictionaries"
     const val ENTRIES_TABLE = "entries"

@@ -1,6 +1,6 @@
 package com.smart_learn.tests
 
-/** from nextPressed in TestActivity
+/** from nextPressed in TestActivityK
 *
 if(!isReadFromExternalStoragePermission(activity, activity.activityTestLayout,false)){
     return
@@ -52,7 +52,7 @@ init{
             fileLines.forEach {
                 println(it)
                 val line: List<String> = it.split(",")
-                this.entranceList.add(DictionaryEntrance(line[0], line[1], line[2]))
+                this.entranceList.add(DictionaryEntranceK(line[0], line[1], line[2]))
             }
 
             // TODO: learn more about Toast.make

@@ -1,23 +1,22 @@
-package com.smart_learn.core.services.activities
+package com.smart_learn.presenter.view_models
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
-import com.smart_learn.presenter.activities.TestActivity
-import com.smart_learn.data.entities.DictionaryEntrance
-import com.smart_learn.core.general.ActivityServiceUtilities
+import com.smart_learn.presenter.activities.TestActivityK
+import com.smart_learn.data.entities.DictionaryEntranceK
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.core.services.ApplicationService
+import com.smart_learn.core.services.ApplicationServiceK
 import com.smart_learn.core.services.LessonServiceK
 import kotlinx.android.synthetic.main.page_test_knowledge.*
 
-class TestActivityService(private val testActivity: TestActivity) :
-    ActivityServiceUtilities<TestActivityService, TestActivity> {
+class TestViewModelK(private val testActivityK: TestActivityK) :
+    ActivityViewModelUtilitiesK<TestViewModelK, TestActivityK> {
 
     // get the activity
-    private var activity: Activity = testActivity.getActivity()
+    private var activity: Activity = testActivityK.getActivity()
 
     // GUI element
     private var checkBoxButtonList: List<CheckBox> = ArrayList()
@@ -29,8 +28,8 @@ class TestActivityService(private val testActivity: TestActivity) :
     private var score = 0
     private var checkInsertedResult : Boolean = false
     private var randomNumber : Int = -1 // with -1 I cannot obtain any value
-    private var entriesList: List<DictionaryEntrance>
-    private var entrance : DictionaryEntrance? = null
+    private var entriesList: List<DictionaryEntranceK>
+    private var entranceK : DictionaryEntranceK? = null
 
     init {
 
@@ -99,37 +98,37 @@ class TestActivityService(private val testActivity: TestActivity) :
         // check for reverse and phonetics
         if(activity.reverseSwitch.isChecked && activity.phoneticSwitch.isChecked) {
 
-            if(translation == entrance?.translation && phonetic == entrance?.phonetic){
+            if(translation == entranceK?.translation && phonetic == entranceK?.phonetic){
                 score++
                 activity.resultLabel.text = "Correct!"
                 return
             }
 
-            activity.resultLabel.text =  entrance?.translation + " " + entrance?.phonetic
+            activity.resultLabel.text =  entranceK?.translation + " " + entranceK?.phonetic
             return
         }
 
         // check only for reverse
         if(activity.reverseSwitch.isChecked){
 
-            if(translation == entrance?.translation){
+            if(translation == entranceK?.translation){
                 score++
                 activity.resultLabel.text = "Correct!"
                 return
             }
 
-            activity.resultLabel.text =  entrance?.translation
+            activity.resultLabel.text =  entranceK?.translation
             return
         }
 
         // normal check ( without reverse / reverse and phonetics )
-        if(translation == entrance?.word){
+        if(translation == entranceK?.word){
             score++
             activity.resultLabel.text = "Correct!"
             return
         }
 
-        activity.resultLabel.text = entrance?.word
+        activity.resultLabel.text = entranceK?.word
     }
 
 
@@ -145,7 +144,7 @@ class TestActivityService(private val testActivity: TestActivity) :
         currentQuestionNumber = 1
         checkInsertedResult = false
         randomNumber = -1 // with -1 I cannot obtain any value
-        entrance = null
+        entranceK = null
 
         activity.scoreLabel.text = ""
         activity.wordLabel.text = ""
@@ -178,16 +177,16 @@ class TestActivityService(private val testActivity: TestActivity) :
         // test is not over ( we still have question left )
         // generate new word
         randomNumber = generateEntranceRandomIndex()
-        entrance = getEntrance(randomNumber)
+        entranceK = getEntrance(randomNumber)
 
-        if(entrance == null)
+        if(entranceK == null)
             return
 
         if(activity.reverseSwitch.isChecked) {
-            activity.wordLabel.text = entrance?.word
+            activity.wordLabel.text = entranceK?.word
         }
         else{
-            activity.wordLabel.text = entrance?.translation
+            activity.wordLabel.text = entranceK?.translation
         }
 
         checkInsertedResult = true // on next click we will check the inserted result
@@ -210,7 +209,7 @@ class TestActivityService(private val testActivity: TestActivity) :
     }
 
 
-    private fun getEntrance(index: Int) : DictionaryEntrance? {
+    private fun getEntrance(index: Int) : DictionaryEntranceK? {
 
         if(entriesList.isEmpty()){
             Toast.makeText(activity, "No words available!", Toast.LENGTH_LONG).show()
@@ -218,7 +217,7 @@ class TestActivityService(private val testActivity: TestActivity) :
         }
 
         if(index < 0 || index >= entriesList.size) {
-            Log.e("[TestActivityService]"," Index $index is incorrect!")
+            Log.e("[TestViewModelK]"," Index $index is incorrect!")
             return null
         }
 
@@ -230,15 +229,15 @@ class TestActivityService(private val testActivity: TestActivity) :
         return activity
     }
 
-    override fun getActivityService(): TestActivityService {
+    override fun getActivityService(): TestViewModelK {
         return this
     }
 
-    override fun getParentActivity(): TestActivity {
-        return testActivity
+    override fun getParentActivity(): TestActivityK {
+        return testActivityK
     }
 
-    override fun getApplicationService(): ApplicationService {
+    override fun getApplicationService(): ApplicationServiceK {
         TODO("Not yet implemented")
     }
 

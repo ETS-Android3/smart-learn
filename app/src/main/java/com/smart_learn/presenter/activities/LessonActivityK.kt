@@ -4,23 +4,33 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.smart_learn.R
 import com.smart_learn.core.general.showSettingsDialog
-import com.smart_learn.core.services.activities.OpenLessonActivityService
+import com.smart_learn.presenter.view_models.LessonViewModelK
 
-class OpenLessonActivity : AppCompatActivity() {
+class LessonActivityK : AppCompatActivity() {
 
-    private lateinit var openLessonActivityService: OpenLessonActivityService
+    private lateinit var lessonViewModel: LessonViewModelK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_open_lesson)
-        setSupportActionBar(findViewById(R.id.toolbarDictionaries))
+        setContentView(R.layout.activity_dictionary)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
-        openLessonActivityService = OpenLessonActivityService(this)
+        // set up toolbar
+        supportActionBar?.apply {
+            title = "Dictionary"
+
+            // show back button on toolbar
+            // on back button press, it will navigate to parent activity
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        // other settings
+        lessonViewModel = LessonViewModelK(this)
 
     }
 
@@ -50,19 +60,30 @@ class OpenLessonActivity : AppCompatActivity() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("[APPLICATION CLOSED]","Application was successfully closed")
-    }
-
-
     /**
      * These functions are for activity management
      * */
+
+
+    /** When a dictionary is deleted go to previous activity */
     fun startDictionariesRVActivity(){
-        val intent = Intent(this, DictionariesRVActivity::class.java)
+        val intent = Intent(this, LessonRVActivityK::class.java)
         startActivity(intent)
     }
+
+
+    fun startTestGenerationActivity(){
+        val intent = Intent(this, TestGenerationActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    /** Show entries from the selected dictionary */
+    fun startEntrancesRVActivity(){
+        val intent = Intent(this, EntranceRVActivityK::class.java)
+        startActivity(intent)
+    }
+
 
     fun getActivity(): Activity { return this }
 
