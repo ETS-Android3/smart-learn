@@ -11,29 +11,29 @@ import java.util.List;
 
 public class WordService extends BasicRoomService<Word> {
 
-    private final WordRepository repository;
+    private final WordRepository wordRepository;
 
     public WordService(Application application){
-        repository = new WordRepository(application);
+        wordRepository = new WordRepository(application);
 
         // set super repository
-        super.basicRoomRepository = repository;
+        super.basicRoomRepository = wordRepository;
     }
 
     public Word getSampleWord(String word){
-        return repository.getSampleWord(word);
+        return wordRepository.getSampleWord(word);
     }
 
     public LiveData<List<Word>> getAllLiveWords(){
-        return repository.getAllLiveWords();
+        return wordRepository.getAllLiveWords();
     }
 
     boolean checkIfWordExist(String word){
-        return repository.checkIfWordExist(word);
+        return wordRepository.checkIfWordExist(word);
     }
 
     boolean checkIfWordExist(String word, long lessonId){
-        return repository.checkIfWordExist(word,lessonId);
+        return wordRepository.checkIfWordExist(word,lessonId);
     }
 
 }
