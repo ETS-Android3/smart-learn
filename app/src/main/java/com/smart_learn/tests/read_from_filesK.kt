@@ -52,7 +52,7 @@ init{
             fileLines.forEach {
                 println(it)
                 val line: List<String> = it.split(",")
-                this.entranceList.add(DictionaryEntranceK(line[0], line[1], line[2]))
+                this.entranceList.add(LessonEntranceK(line[0], line[1], line[2]))
             }
 
             // TODO: learn more about Toast.make
@@ -60,7 +60,7 @@ init{
                 .show()
         }
         catch (e: Exception){
-            //Log.e("init in Dictionary", pathname + "File Not Found [$e]")
+            //Log.e("init in Lesson", pathname + "File Not Found [$e]")
             Toast.makeText(activity, "File Not Found",
                 Toast.LENGTH_LONG).show()
         }

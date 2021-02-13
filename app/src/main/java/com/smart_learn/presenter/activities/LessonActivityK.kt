@@ -16,12 +16,12 @@ class LessonActivityK : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dictionary)
+        setContentView(R.layout.activity_lesson)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         // set up toolbar
         supportActionBar?.apply {
-            title = "Dictionary"
+            title = "Lesson"
 
             // show back button on toolbar
             // on back button press, it will navigate to parent activity
@@ -65,8 +65,8 @@ class LessonActivityK : AppCompatActivity() {
      * */
 
 
-    /** When a dictionary is deleted go to previous activity */
-    fun startDictionariesRVActivity(){
+    /** When a lesson is deleted go to previous activity */
+    fun startLessonRVActivityK(){
         val intent = Intent(this, LessonRVActivityK::class.java)
         startActivity(intent)
     }
@@ -78,7 +78,7 @@ class LessonActivityK : AppCompatActivity() {
     }
 
 
-    /** Show entries from the selected dictionary */
+    /** Show entries from the selected lesson */
     fun startEntrancesRVActivity(){
         val intent = Intent(this, EntranceRVActivityK::class.java)
         startActivity(intent)

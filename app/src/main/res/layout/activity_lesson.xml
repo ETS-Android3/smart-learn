@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activityDictionaryLayout"
+    android:id="@+id/activityLessonLayout"
     tools:context=".presenter.activities.LessonActivityK"
     android:orientation="vertical"
     android:background="@color/background">
@@ -32,23 +32,23 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnAddWord_ExistingD"
+            android:id="@+id/btnAddWord_ExistingL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_words_from_exiting_dictionary"
+            android:text="@string/add_words_from_exiting_lesson"
             android:textSize="20sp"
             android:layout_marginTop="15dp"
             android:background="@color/white"/>
 
 
         <Button
-            android:id="@+id/btnAddWord_ExternalD"
+            android:id="@+id/btnAddWord_ExternalL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnAddWord_ExistingD"
+            android:layout_below="@+id/btnAddWord_ExistingL"
             android:layout_marginTop="15dp"
             android:background="@color/white"
-            android:text="@string/add_words_from_external_dictionary"
+            android:text="@string/add_words_from_external_lesson"
             android:textSize="20sp" />
 
 
@@ -60,18 +60,18 @@
             android:text="@string/display_words"
             android:layout_marginTop="15dp"
             android:textSize="20sp"
-            android:layout_below="@+id/btnAddWord_ExternalD"
+            android:layout_below="@+id/btnAddWord_ExternalL"
             android:background="@color/white"/>
 
 
         <Button
-            android:id="@+id/btnUpdateD"
+            android:id="@+id/btnUpdateLesson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnDisplayWords"
             android:layout_marginTop="15dp"
             android:background="@color/white"
-            android:text="@string/update_dictionary"
+            android:text="@string/update_lesson"
             android:textSize="20sp" />
 
     </RelativeLayout>
@@ -99,7 +99,7 @@
             tools:ignore="RelativeOverlap" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnDeleteDictionary"
+            android:id="@+id/btnDeleteLesson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

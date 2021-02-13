@@ -22,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, SimpleLoginActivity.class);
         //startActivity(intent);
 
-        TestService.getTestServiceInstance().currentTestMode.set(TestService.REMOTE_MODE_TEST);
-        //dictionaryActivity.startTestGenerationActivity()
-        Intent intent = new Intent(this, TestGenerationActivity.class);
+        //TestService.getTestServiceInstance().currentTestMode.set(TestService.REMOTE_MODE_TEST);
+        //lessonActivity.startTestGenerationActivity()
+        //Intent intent = new Intent(this, OpenLessonActivity.class);
+        Intent intent = new Intent(this, OpenLessonActivityK.class);
         startActivity(intent);
     }
 }

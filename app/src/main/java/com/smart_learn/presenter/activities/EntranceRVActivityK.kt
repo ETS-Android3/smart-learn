@@ -21,11 +21,11 @@ class EntranceRVActivityK : AppCompatActivity() {
         // https://android--code.blogspot.com/2020/06/android-kotlin-toolbar-back-button.html
         // https://stackoverflow.com/questions/26515058/this-activity-already-has-an-action-bar-supplied-by-the-window-decor
         // set toolbar as support action bar
-        setSupportActionBar(findViewById(R.id.toolbarDictionaries))
+        setSupportActionBar(findViewById(R.id.toolbarLessons))
 
         // set up toolbar
         supportActionBar?.apply {
-            title = "Dictionary entries"
+            title = "Lesson entries"
 
             // show back button on toolbar
             // on back button press, it will navigate to parent activity

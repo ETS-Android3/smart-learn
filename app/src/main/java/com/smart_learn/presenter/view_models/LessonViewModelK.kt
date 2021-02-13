@@ -3,12 +3,12 @@ package com.smart_learn.presenter.view_models
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.LessonActivityK
-import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
-import com.smart_learn.core.general.showAddDictionaryDialog
+import com.smart_learn.core.general.SELECTED_LESSON_ID
+import com.smart_learn.core.general.showAddLessonDialog
 import com.smart_learn.core.general.showAddEntranceDialog
 import com.smart_learn.core.services.ApplicationServiceK
 import com.smart_learn.core.services.TestService
-import kotlinx.android.synthetic.main.activity_dictionary.*
+import kotlinx.android.synthetic.main.activity_lesson.*
 
 
 class LessonViewModelK(private var lessonActivityK: LessonActivityK)
@@ -41,21 +41,21 @@ class LessonViewModelK(private var lessonActivityK: LessonActivityK)
             lessonActivityK.startEntrancesRVActivity()
         }
 
-        activity.btnDeleteDictionary.setOnClickListener {
-            applicationServiceK.lessonServiceK.delete(SELECTED_DICTIONARY_ID)
+        activity.btnDeleteLesson.setOnClickListener {
+            applicationServiceK.lessonServiceK.delete(SELECTED_LESSON_ID)
 
             // go to previous activity
-            lessonActivityK.startDictionariesRVActivity()
+            lessonActivityK.startLessonRVActivityK()
         }
 
-        activity.btnUpdateD.setOnClickListener {
-            showAddDictionaryDialog(
+        activity.btnUpdateLesson.setOnClickListener {
+            showAddLessonDialog(
                 "LessonViewModelK",
                 activity,
-                R.layout.dialog_new_dictionary,
+                R.layout.dialog_new_lesson,
                 applicationServiceK,
-                updateDictionary = true,
-                currentDictionaryK = applicationServiceK.lessonServiceK.getSampleLiveLesson(SELECTED_DICTIONARY_ID)
+                updateLesson = true,
+                currentLessonK = applicationServiceK.lessonServiceK.getSampleLiveLesson(SELECTED_LESSON_ID)
             )
         }
     }

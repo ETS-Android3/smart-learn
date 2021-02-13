@@ -15,22 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.smart_learn.presenter.activities.SimpleLoginActivity"></activity>
-        <activity android:name="com.smart_learn.presenter.activities.MainActivity">
+        <activity android:name=".presenter.activities.OpenLessonActivity"></activity>
+        <activity android:name=".presenter.activities.SimpleLoginActivity" />
+        <activity android:name=".presenter.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.smart_learn.presenter.activities.TestSettingsActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.TestGenerationActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.TestOnlineActivity" />
-        <activity android:name="com.smart_learn.presenter.activities.EntranceRVActivityK" />
-        <activity android:name="com.smart_learn.presenter.activities.TestActivityK" />
-        <activity android:name="com.smart_learn.presenter.activities.LessonActivityK" />
-        <activity android:name="com.smart_learn.presenter.activities.LessonRVActivityK" />
-        <activity android:name="com.smart_learn.presenter.activities.OpenLessonActivityK" />
+        <activity android:name=".presenter.activities.TestSettingsActivity" />
+        <activity android:name=".presenter.activities.TestGenerationActivity" />
+        <activity android:name=".presenter.activities.TestOnlineActivity" />
+        <activity android:name=".presenter.activities.EntranceRVActivityK" />
+        <activity android:name=".presenter.activities.TestActivityK" />
+        <activity android:name=".presenter.activities.LessonActivityK" />
+        <activity android:name=".presenter.activities.LessonRVActivityK" />
+        <activity android:name=".presenter.activities.OpenLessonActivityK" />
     </application>
 
 </manifest>

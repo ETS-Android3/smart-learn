@@ -7,14 +7,14 @@ import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryDetailsK
-import com.smart_learn.data.entities.DictionaryEntranceK
-import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapterK
+import com.smart_learn.data.entities.LessonDetailsK
+import com.smart_learn.data.entities.LessonEntranceK
+import com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapterK
 import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
 import com.smart_learn.data.repository.DatabaseSchemaK
 import com.smart_learn.core.services.ApplicationServiceK
 import kotlinx.android.synthetic.main.dialog_add_word.*
-import kotlinx.android.synthetic.main.dialog_new_dictionary.*
+import kotlinx.android.synthetic.main.dialog_new_lesson.*
 
 
 fun showSettingsDialog(activity: Activity){
@@ -29,28 +29,28 @@ fun showSettingsDialog(activity: Activity){
 
 
 
-private fun dictionaryDetailsCheck(
+private fun lessonDetailsCheck(
     activity: Activity,
     applicationServiceK: ApplicationServiceK,
-    dictionaryName: String
+    lessonName: String
 ): Boolean{
 
-    if (dictionaryName.isEmpty()) {
+    if (lessonName.isEmpty()) {
         Toast.makeText(activity, "Enter a name", Toast.LENGTH_LONG).show()
         return false
     }
 
-    // check dictionaryName length
-    if (dictionaryName.length > DatabaseSchemaK.DictionariesTable.DIMENSION_COLUMN_NAME) {
+    // check lessonName length
+    if (lessonName.length > DatabaseSchemaK.LessonsTable.DIMENSION_COLUMN_NAME) {
         Toast.makeText( activity, "This name is too big. Choose a shorter name.",
             Toast.LENGTH_LONG).show()
         return false
     }
 
-    //add dictionary only if this does not exist
-    if (applicationServiceK.lessonServiceK.checkIfLessonExist(dictionaryName)) {
+    //add lesson only if this does not exist
+    if (applicationServiceK.lessonServiceK.checkIfLessonExist(lessonName)) {
         Toast.makeText(
-            activity, "Dictionary $dictionaryName already exists. Choose other name",
+            activity, "Lesson $lessonName already exists. Choose other name",
             Toast.LENGTH_LONG).show()
         return false
     }
@@ -60,21 +60,21 @@ private fun dictionaryDetailsCheck(
 }
 
 
-fun showAddDictionaryDialog(
+fun showAddLessonDialog(
     TAG: String,
     activity: Activity,
     dialogLayout: Int?,
     applicationServiceK: ApplicationServiceK,
-    updateDictionary: Boolean = false,
-    currentDictionaryK: DictionaryDetailsK? = null,
+    updateLesson: Boolean = false,
+    currentLessonK: LessonDetailsK? = null,
     updateRecyclerView: Boolean = false,
-    dictionariesRVAdapter: DictionariesRVAdapterK? = null,
+    lessonRVAdapter: LessonRVAdapterK? = null,
     position: Int = -1
 ){
 
     // check if this occurs
-    if(updateDictionary && currentDictionaryK == null){
-        Log.e(UNEXPECTED_ERROR," current dictionary is null in update listener for $TAG")
+    if(updateLesson && currentLessonK == null){
+        Log.e(UNEXPECTED_ERROR," current lesson is null in update listener for $TAG")
         return
     }
 
@@ -85,40 +85,40 @@ fun showAddDictionaryDialog(
         .customView(dialogLayout)
 
 
-    if(updateDictionary && currentDictionaryK != null){
+    if(updateLesson && currentLessonK != null){
         // TODO: hide save button and remove space used by this
-        dialog.btnSaveDict.visibility = View.INVISIBLE
-        dialog.btnUpdateDict.visibility = View.VISIBLE
+        dialog.btnSaveLesson.visibility = View.INVISIBLE
+        dialog.btnUpdateLess.visibility = View.VISIBLE
 
-        // get current dictionary
+        // get current lesson
         // set current data in dialog
-        dialog.etDictionaryName.setText(currentDictionaryK.title)
+        dialog.etLessonName.setText(currentLessonK.title)
 
-        dialog.btnUpdateDict.setOnClickListener {
+        dialog.btnUpdateLess.setOnClickListener {
 
             // get inserted data
-            val dictionaryName = dialog.etDictionaryName.text.toString().trim()
+            val lessonName = dialog.etLessonName.text.toString().trim()
 
             // make some specific checks
-            if(dictionaryName == currentDictionaryK.title){
+            if(lessonName == currentLessonK.title){
                 Toast.makeText(activity,"No modification was made",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
             // make some general check
-            if(!dictionaryDetailsCheck(activity,applicationServiceK,dictionaryName)){
+            if(!lessonDetailsCheck(activity,applicationServiceK,lessonName)){
                 return@setOnClickListener
             }
 
-            // dictionaryName is valid
-            currentDictionaryK.title = dictionaryName
+            // lesson name is valid
+            currentLessonK.title = lessonName
 
             // update in database
-            applicationServiceK.lessonServiceK.update(currentDictionaryK)
+            applicationServiceK.lessonServiceK.update(currentLessonK)
 
             // update item in recycler view
-            if(updateRecyclerView && dictionariesRVAdapter != null) {
-                dictionariesRVAdapter.updateItem(position, currentDictionaryK)
+            if(updateRecyclerView && lessonRVAdapter != null) {
+                lessonRVAdapter.updateItem(position, currentLessonK)
             }
 
             dialog.dismiss()
@@ -127,29 +127,29 @@ fun showAddDictionaryDialog(
     else{
 
         // TODO: hide update button and remove space used by this
-        dialog.btnSaveDict.visibility = View.VISIBLE
-        dialog.btnUpdateDict.visibility = View.INVISIBLE
+        dialog.btnSaveLesson.visibility = View.VISIBLE
+        dialog.btnUpdateLess.visibility = View.INVISIBLE
 
-        dialog.btnSaveDict.setOnClickListener {
+        dialog.btnSaveLesson.setOnClickListener {
 
-            val dictionaryName = dialog.etDictionaryName.text.toString().trim()
+            val lessonName = dialog.etLessonName.text.toString().trim()
 
             // make some general checks
-            if(!dictionaryDetailsCheck(activity,applicationServiceK,dictionaryName)){
+            if(!lessonDetailsCheck(activity,applicationServiceK,lessonName)){
                 return@setOnClickListener
             }
 
-            // dictionaryName is valid
-            val newDictionaryK: DictionaryDetailsK = DictionaryDetailsK(title = dictionaryName)
+            // lessonName is valid
+            val newLessonK: LessonDetailsK = LessonDetailsK(title = lessonName)
 
             // add in database
-            applicationServiceK.lessonServiceK.insert(dictionaryName)
+            applicationServiceK.lessonServiceK.insert(lessonName)
 
-            // update recycler view with dictionary from database (need update for primary key)
+            // update recycler view with lesson from database (need update for primary key)
             if(updateRecyclerView){
-                val updatedDictionary = applicationServiceK.lessonServiceK.getSampleLiveLesson(dictionaryName)
-                if(updatedDictionary != null && dictionariesRVAdapter != null) {
-                    dictionariesRVAdapter.insertItem(updatedDictionary)
+                val updatedLesson = applicationServiceK.lessonServiceK.getSampleLiveLesson(lessonName)
+                if(updatedLesson != null && lessonRVAdapter != null) {
+                    lessonRVAdapter.insertItem(updatedLesson)
                 }
             }
 
@@ -157,7 +157,7 @@ fun showAddDictionaryDialog(
         }
     }
 
-    dialog.btnCancelDict.setOnClickListener{
+    dialog.btnCancelLesson.setOnClickListener{
         dialog.dismiss()
     }
 
@@ -193,17 +193,17 @@ private fun entryCheck(
         return false
     }
 
-    // TODO: check to see if word exist in all database not only in one dictionary
-    // add word only if this does not exists in current dictionary
+    // TODO: check to see if word exist in all database not only in one lesson
+    // add word only if this does not exists in current lesson
     if(word.isNotEmpty() &&
-        applicationServiceK.lessonServiceK.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
+        applicationServiceK.lessonServiceK.checkIfWordExist(word,SELECTED_LESSON_ID)){
 
-        Toast.makeText(activity, "Word $word already exists in this dictionary.",
+        Toast.makeText(activity, "Word $word already exists in this lesson.",
             Toast.LENGTH_LONG).show()
         return false
     }
 
-    // TODO: check if translation exists in dictionary
+    // TODO: check if translation exists in lesson
 
     return true
 
@@ -216,7 +216,7 @@ fun showAddEntranceDialog(
     dialogLayout: Int?,
     applicationServiceK: ApplicationServiceK,
     updateEntrance: Boolean = false,
-    entranceK: DictionaryEntranceK? = null,
+    entranceK: LessonEntranceK? = null,
     updateRecyclerView: Boolean = false,
     entranceRVAdapter: EntrancesRVAdapterK? = null,
     position: Int = -1
@@ -295,8 +295,8 @@ fun showAddEntranceDialog(
                 return@setOnClickListener
             }
 
-            val newEntrance = DictionaryEntranceK(word = word,translation = translation,
-                phonetic = phonetic,dictionaryId = SELECTED_DICTIONARY_ID)
+            val newEntrance = LessonEntranceK(word = word,translation = translation,
+                phonetic = phonetic,lessonId = SELECTED_LESSON_ID)
 
             // add new entranceK in database
             applicationServiceK.lessonServiceK.insert(newEntrance)

@@ -11,23 +11,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.data.entities.LessonEntranceK
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddEntranceDialog
 import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
 import com.smart_learn.presenter.view_models.EntranceRVViewModelK
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
-import kotlinx.android.synthetic.main.layout_dictionary_entrance_details.view.*
+import kotlinx.android.synthetic.main.layout_lesson_entrance_details.view.*
 import java.util.*
 
 class EntrancesRVAdapterK(
     private val entranceRVViewModel: EntranceRVViewModelK
-) : BaseRVAdapterK<DictionaryEntranceK>(entranceRVViewModel), Filterable {
+) : BaseRVAdapterK<LessonEntranceK>(entranceRVViewModel), Filterable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return EntrancesViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_dictionary_entrance_details,
+                R.layout.layout_lesson_entrance_details,
                 parent, false
             )
         )
@@ -42,15 +42,15 @@ class EntrancesRVAdapterK(
     }
 
 
-    override fun selectItem(item: DictionaryEntranceK) {
+    override fun selectItem(item: LessonEntranceK) {
         item.isSelected = true
     }
 
-    override fun deselectItem(item: DictionaryEntranceK) {
+    override fun deselectItem(item: LessonEntranceK) {
         item.isSelected = false
     }
 
-    override fun deleteFromDatabase(item: DictionaryEntranceK) {
+    override fun deleteFromDatabase(item: LessonEntranceK) {
         entranceRVViewModel.getApplicationService().lessonServiceK
             .deleteWord(item.entranceId)
     }
@@ -78,7 +78,7 @@ class EntrancesRVAdapterK(
         return activity.rvEntrance
     }
 
-    override fun getAdapter(): BaseRVAdapterK<DictionaryEntranceK> {
+    override fun getAdapter(): BaseRVAdapterK<LessonEntranceK> {
         return this
     }
 
@@ -108,7 +108,7 @@ class EntrancesRVAdapterK(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val searchValue = constraint.toString()
 
-                val filteredItems: List<DictionaryEntranceK>
+                val filteredItems: List<LessonEntranceK>
 
                 if (searchValue.isEmpty()) {
                     filteredItems = allItems
@@ -130,7 +130,7 @@ class EntrancesRVAdapterK(
 
             /** run on a UI thread */
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                items = (results?.values as List<DictionaryEntranceK>).toMutableList()
+                items = (results?.values as List<LessonEntranceK>).toMutableList()
                 this@EntrancesRVAdapterK.notifyDataSetChanged()
             }
         }
@@ -200,16 +200,16 @@ class EntrancesRVAdapterK(
          *
          * Using this function you decide how elements are shown in the recycler view list
          * */
-        fun bind(dictionaryEntranceK: DictionaryEntranceK){
+        fun bind(lessonEntranceK: LessonEntranceK){
 
-            tvWord.text = dictionaryEntranceK.word
-            tvTranslation.text = dictionaryEntranceK.translation
-            tvPhonetic.text = dictionaryEntranceK.phonetic
+            tvWord.text = lessonEntranceK.word
+            tvTranslation.text = lessonEntranceK.translation
+            tvPhonetic.text = lessonEntranceK.phonetic
 
             if(actionModeCallbackK != null) {
                 itemView.setBackgroundResource(R.color.colorToolbar)
 
-                if (dictionaryEntranceK.isSelected) {
+                if (lessonEntranceK.isSelected) {
                     ivCheck.visibility = View.VISIBLE
                     // https://www.tutorialkart.com/kotlin-android/how-to-dynamically-change-button-background-in-kotlin-android/
                     itemView.setBackgroundResource(R.drawable.md_btn_selected)

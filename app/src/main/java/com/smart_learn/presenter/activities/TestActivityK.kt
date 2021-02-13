@@ -16,7 +16,7 @@ class TestActivityK : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
-        setSupportActionBar(findViewById(R.id.toolbarDictionaries))
+        setSupportActionBar(findViewById(R.id.toolbarLessons))
 
         // set up toolbar
         supportActionBar?.apply {

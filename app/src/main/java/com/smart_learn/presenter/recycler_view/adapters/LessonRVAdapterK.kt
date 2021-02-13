@@ -12,27 +12,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.data.entities.DictionaryDetailsK
-import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.data.entities.LessonDetailsK
+import com.smart_learn.core.general.SELECTED_LESSON_ID
 import com.smart_learn.core.general.indexesOf
-import com.smart_learn.core.general.showAddDictionaryDialog
+import com.smart_learn.core.general.showAddLessonDialog
 import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
 import com.smart_learn.presenter.view_models.LessonRVViewModelK
-import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
-import kotlinx.android.synthetic.main.layout_dictionary_details.view.*
+import kotlinx.android.synthetic.main.activity_rv_lessons.*
+import kotlinx.android.synthetic.main.layout_lesson_details.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DictionariesRVAdapterK(
+class LessonRVAdapterK(
     private val lessonRVViewModel: LessonRVViewModelK
-) : BaseRVAdapterK<DictionaryDetailsK>(lessonRVViewModel), Filterable {
+) : BaseRVAdapterK<LessonDetailsK>(lessonRVViewModel), Filterable {
 
 
     /** override from RecyclerView.Adapter<RecyclerView.ViewHolder> */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return DictionaryViewHolder(
+        return LessonViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_dictionary_details,
+                R.layout.layout_lesson_details,
                 parent,
                 false
             )
@@ -41,7 +41,7 @@ class DictionariesRVAdapterK(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
-            is DictionaryViewHolder -> {
+            is LessonViewHolder -> {
                 holder.bind(items[position])
             }
         }
@@ -49,32 +49,32 @@ class DictionariesRVAdapterK(
 
 
     /** override from base adapter */
-    override fun selectItem(item: DictionaryDetailsK) {
+    override fun selectItem(item: LessonDetailsK) {
         item.isSelected = true
     }
 
-    override fun deselectItem(item: DictionaryDetailsK) {
+    override fun deselectItem(item: LessonDetailsK) {
         item.isSelected = false
     }
 
-    override fun deleteFromDatabase(item: DictionaryDetailsK) {
+    override fun deleteFromDatabase(item: LessonDetailsK) {
         lessonRVViewModel.getApplicationService().lessonServiceK
-            .delete(item.dictionaryId)
+            .delete(item.lessonId)
     }
 
     override fun checkEmptyState(){
 
         if (items.isEmpty()) {
-            activity.tvNoEntryDictRV.visibility = View.VISIBLE
-            activity.btnAddDictRV.visibility = View.VISIBLE
+            activity.tvNoEntryLessonRV.visibility = View.VISIBLE
+            activity.btnAddLessonRV.visibility = View.VISIBLE
 
             // clear all selected
             clearSelectedElements(true)
             return
         }
 
-        activity.tvNoEntryDictRV.visibility = View.INVISIBLE
-        activity.btnAddDictRV.visibility = View.INVISIBLE
+        activity.tvNoEntryLessonRV.visibility = View.INVISIBLE
+        activity.btnAddLessonRV.visibility = View.INVISIBLE
     }
 
     override fun getContext(): Context {
@@ -82,23 +82,23 @@ class DictionariesRVAdapterK(
     }
 
     override fun getRecyclerView(): RecyclerView {
-        return activity.rvDictionaries
+        return activity.rvLessons
     }
 
-    override fun getAdapter(): BaseRVAdapterK<DictionaryDetailsK> {
+    override fun getAdapter(): BaseRVAdapterK<LessonDetailsK> {
         return this
     }
 
     override fun clickUpdateOnSwipe(position: Int) {
-        showAddDictionaryDialog(
-            "DictionaryRVAdapter",
+        showAddLessonDialog(
+            "LessonRVAdapter",
             activity,
-            R.layout.dialog_new_dictionary,
+            R.layout.dialog_new_lesson,
             lessonRVViewModel.getApplicationService(),
-            updateDictionary = true,
-            currentDictionaryK = items[position],
+            updateLesson = true,
+            currentLessonK = items[position],
             updateRecyclerView = true,
-            dictionariesRVAdapter = this,
+            lessonRVAdapter = this,
             position = position
         )
     }
@@ -115,7 +115,7 @@ class DictionariesRVAdapterK(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val searchValue = constraint.toString()
 
-                val filteredItems: List<DictionaryDetailsK>
+                val filteredItems: List<LessonDetailsK>
 
                 if (searchValue.isEmpty()) {
                     filteredItems = allItems
@@ -136,8 +136,8 @@ class DictionariesRVAdapterK(
 
             /** run on a UI thread */
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                items = (results?.values as List<DictionaryDetailsK>).toMutableList()
-                this@DictionariesRVAdapterK.notifyDataSetChanged()
+                items = (results?.values as List<LessonDetailsK>).toMutableList()
+                this@LessonRVAdapterK.notifyDataSetChanged()
             }
         }
     }
@@ -146,12 +146,12 @@ class DictionariesRVAdapterK(
     /**
      * Class to specific how an element from recycler view will be shown
      * */
-    inner class DictionaryViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LessonViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        // itemView.dictionaryNameTextView refers to element with id dictionaryNameTextView
-        // is equivalent to findViewById(R.layout.dictionaryNameTextView)
-        private val dictionaryNameTextView: TextView = itemView.dictionaryNameTextView
-        private val ivCheck: ImageView = itemView.ivCheckDict
+        // itemView.tvLessonName refers to element with id tvLessonName
+        // is equivalent to findViewById(R.layout.tvLessonName)
+        private val tvLessonName: TextView = itemView.tvLessonName
+        private val ivCheck: ImageView = itemView.ivCheckLesson
         private val viewHolderBackground: Drawable = itemView.background
 
 
@@ -172,7 +172,7 @@ class DictionariesRVAdapterK(
                         selectedItems.add(adapterPosition)
                         ivCheck.visibility = View.VISIBLE
                     }
-                    this@DictionariesRVAdapterK.notifyItemChanged(adapterPosition)
+                    this@LessonRVAdapterK.notifyItemChanged(adapterPosition)
                     actionModeCallbackK?.refresh()
                     return@setOnClickListener
                 }
@@ -184,26 +184,26 @@ class DictionariesRVAdapterK(
                 val position: Int = adapterPosition
 
                 // choose what to do with that element
-                // set selected dictionary and launch LessonActivityK
-                SELECTED_DICTIONARY_ID = items[position].dictionaryId
+                // set selected lesson and launch LessonActivityK
+                SELECTED_LESSON_ID = items[position].lessonId
 
-                lessonRVViewModel.getParentActivity().startDictionaryActivity()
+                lessonRVViewModel.getParentActivity().startLessonActivityK()
             }
 
             itemView.setOnLongClickListener {
 
                 if(actionModeCallbackK == null) {
                     // Start ActionMode
-                    actionModeCallbackK = ActionModeCallbackK(this@DictionariesRVAdapterK)
+                    actionModeCallbackK = ActionModeCallbackK(this@LessonRVAdapterK)
                     actionModeCallbackK?.startActionMode(
                         lessonRVViewModel.getActivity()
-                            .findViewById(R.id.rvDictionaries),
+                            .findViewById(R.id.rvLessons),
                         R.menu.action_mode_menu, "Selected", ""
                     )
 
                     // change background for items
                     // in bind function is made that change
-                    this@DictionariesRVAdapterK.notifyDataSetChanged()
+                    this@LessonRVAdapterK.notifyDataSetChanged()
                 }
 
                 return@setOnLongClickListener true
@@ -213,12 +213,12 @@ class DictionariesRVAdapterK(
 
 
         /** this is how single elements are displayed in recycler view */
-        fun bind(dictionaryDetailsK: DictionaryDetailsK){
+        fun bind(lessonDetailsK: LessonDetailsK){
 
-            var string: String = dictionaryDetailsK.title
+            var string: String = lessonDetailsK.title
 
             if(actionModeCallbackK != null) {
-                if(dictionaryDetailsK.isSelected){
+                if(lessonDetailsK.isSelected){
                     ivCheck.visibility = View.VISIBLE
                     // https://www.tutorialkart.com/kotlin-android/how-to-dynamically-change-button-background-in-kotlin-android/
                     itemView.setBackgroundResource(R.drawable.md_btn_selected)
@@ -233,23 +233,23 @@ class DictionariesRVAdapterK(
                 ivCheck.visibility = View.INVISIBLE
             }
 
-            if(dictionaryDetailsK.searchIndexes.isNotEmpty()){
+            if(lessonDetailsK.searchIndexes.isNotEmpty()){
                 //Log.e("mesaj","lalaala")
 
-                string = string.subSequence(0,dictionaryDetailsK.searchIndexes[0].first).toString() +
+                string = string.subSequence(0,lessonDetailsK.searchIndexes[0].first).toString() +
                         "<span style=\"background-color:yellow\">" +
-                        string.subSequence(dictionaryDetailsK.searchIndexes[0].first,dictionaryDetailsK.searchIndexes[0].last).toString() + "</span>" +
-                        string.subSequence(dictionaryDetailsK.searchIndexes[0].last,string.length).toString()
+                        string.subSequence(lessonDetailsK.searchIndexes[0].first,lessonDetailsK.searchIndexes[0].last).toString() + "</span>" +
+                        string.subSequence(lessonDetailsK.searchIndexes[0].last,string.length).toString()
 
                 // TODO: check this deprecated function
-                dictionaryNameTextView.text = Html.fromHtml(string)
+                tvLessonName.text = Html.fromHtml(string)
                 // remove indexes
-                dictionaryDetailsK.searchIndexes = ArrayList()
+                lessonDetailsK.searchIndexes = ArrayList()
 
                 return
             }
 
-            dictionaryNameTextView.text = dictionaryDetailsK.title
+            tvLessonName.text = lessonDetailsK.title
 
         }
 

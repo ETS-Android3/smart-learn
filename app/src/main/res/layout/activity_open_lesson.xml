@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"/>
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarDictionaries"
+        android:id="@+id/toolbarLessons"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:titleMarginStart="40dp"
@@ -34,41 +34,41 @@
         android:layout_marginTop="60dp">
 
         <Button
-            android:id="@+id/btnNewDictionary"
+            android:id="@+id/btnNewLesson"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@color/white_closed"
-            android:text="@string/new_dictionary"
+            android:text="@string/new_lesson"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size" />
 
 
         <Button
-            android:id="@+id/btnOpenDictionary"
+            android:id="@+id/btnOpenLesson"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
-            android:layout_below="@+id/btnNewDictionary"
+            android:layout_below="@+id/btnNewLesson"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@color/white_closed"
-            android:text="@string/open_dictionary"
+            android:text="@string/open_lesson"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size" />
 
 
         <Button
-            android:id="@+id/btnImportDictionary"
+            android:id="@+id/btnImportLesson"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
             android:layout_centerHorizontal="true"
             android:textSize="@dimen/txt_size"
             android:background="@color/white_closed"
             android:textColor="@color/black"
-            android:text="@string/import_dictionary"
+            android:text="@string/import_lesson"
             android:layout_marginTop="50dp"
-            android:layout_below="@+id/btnOpenDictionary"
+            android:layout_below="@+id/btnOpenLesson"
             />
 
 
@@ -76,7 +76,7 @@
             android:id="@+id/btnHelp"
             android:layout_width="@dimen/btn_width"
             android:layout_height="@dimen/btn_height"
-            android:layout_below="@+id/btnImportDictionary"
+            android:layout_below="@+id/btnImportLesson"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@color/white_closed"

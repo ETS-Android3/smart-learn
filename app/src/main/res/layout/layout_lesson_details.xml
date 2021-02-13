@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dictionaryCardView"
+    android:id="@+id/lessonCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/dictionaryNameTextView"
+            android:id="@+id/tvLessonName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="TextView"
@@ -31,7 +31,7 @@
             android:layout_marginTop="2dp"/>
 
         <ImageView
-            android:id="@+id/ivCheckDict"
+            android:id="@+id/ivCheckLesson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/checkbox_on_background" />

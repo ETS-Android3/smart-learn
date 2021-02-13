@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.smart_learn.R;
 import com.smart_learn.core.config.CurrentConfig;
 import com.smart_learn.core.config.GeneralConfig;
-import com.smart_learn.data.entities.DictionaryEntranceK;
+import com.smart_learn.data.entities.LessonEntranceK;
 import com.smart_learn.core.remote.test.config.StrictCodes;
 import com.smart_learn.core.services.TestService;
 import com.smart_learn.core.utilities.GeneralUtilities;
@@ -74,16 +74,16 @@ public class LoadingConnectionDialog {
         });
     }
 
-    private List<DictionaryEntranceK> createSampleData(){
+    private List<LessonEntranceK> createSampleData(){
 
-        List<DictionaryEntranceK> dictionaryEntranceKList = new ArrayList<>();
-        dictionaryEntranceKList.add(new DictionaryEntranceK(-1,"hello","salut","", 0));
-        dictionaryEntranceKList.add(new DictionaryEntranceK(-1,"two","2","", 0));
-        dictionaryEntranceKList.add(new DictionaryEntranceK(-1,"three","3","", 0));
-        dictionaryEntranceKList.add(new DictionaryEntranceK(-1,"four","4","", 0));
-        dictionaryEntranceKList.add(new DictionaryEntranceK(-1,"five","5","", 0));
+        List<LessonEntranceK> lessonEntranceKList = new ArrayList<>();
+        lessonEntranceKList.add(new LessonEntranceK(-1,"hello","salut","", 0));
+        lessonEntranceKList.add(new LessonEntranceK(-1,"two","2","", 0));
+        lessonEntranceKList.add(new LessonEntranceK(-1,"three","3","", 0));
+        lessonEntranceKList.add(new LessonEntranceK(-1,"four","4","", 0));
+        lessonEntranceKList.add(new LessonEntranceK(-1,"five","5","", 0));
 
-        return dictionaryEntranceKList;
+        return lessonEntranceKList;
     }
 
     /** helper for creating connection message */
@@ -97,14 +97,14 @@ public class LoadingConnectionDialog {
                         .put(StrictCodes.PARTICIPANTS_NUMBER, TestService.getTestServiceInstance().maxParticipants);
 
                 // if participant generated the test send test details
-                List<DictionaryEntranceK> dictionaryEntranceKList = createSampleData();
+                List<LessonEntranceK> lessonEntranceKList = createSampleData();
 
                 JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < dictionaryEntranceKList.size(); i++){
+                for (int i = 0; i < lessonEntranceKList.size(); i++){
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(StrictCodes.QUESTION_ID,i)
-                            .put(StrictCodes.QUESTION, dictionaryEntranceKList.get(i).getWord())
-                            .put(StrictCodes.RESPONSE, dictionaryEntranceKList.get(i).getTranslation());
+                            .put(StrictCodes.QUESTION, lessonEntranceKList.get(i).getWord())
+                            .put(StrictCodes.RESPONSE, lessonEntranceKList.get(i).getTranslation());
                     jsonArray.put(jsonObject);
                 }
 

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvDictionaries"
+        android:id="@+id/rvLessons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbarEntrance"
@@ -28,7 +28,7 @@
         tools:itemCount="30" />
 
     <TextView
-        android:id="@+id/tvNoEntryDictRV"
+        android:id="@+id/tvNoEntryLessonRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_entry_here"
@@ -39,13 +39,13 @@
         android:layout_marginTop="80dp"/>
 
     <Button
-        android:id="@+id/btnAddDictRV"
+        android:id="@+id/btnAddLessonRV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="200dp"
         android:background="@color/white_closed"
-        android:text="@string/add_dictionary"
+        android:text="@string/add_lesson"
         android:textSize="20sp" />
 </RelativeLayout>

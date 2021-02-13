@@ -45,7 +45,7 @@ class DatabaseHandlerK(private var activity: Activity) :
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
         // TODO: add another sql for db.execSQL
-        //db.execSQL("DROP TABLE IF EXISTS $EXAMPLE_DICTIONARY")
+        //db.execSQL("DROP TABLE IF EXISTS $EXAMPLE_LESSON")
         onCreate(db)
     }
 
@@ -55,10 +55,10 @@ class DatabaseHandlerK(private var activity: Activity) :
 
         try {
 
-            var query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchemaK.DICTIONARIES_TABLE} (" +
-                    "${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
-                    DatabaseSchemaK.DictionariesTable.COLUMN_DICTIONARY_NAME +
-                    " VARCHAR(${DatabaseSchemaK.DictionariesTable.DIMENSION_COLUMN_NAME})" +
+            var query = "CREATE TABLE IF NOT EXISTS ${DatabaseSchemaK.LESSONS_TABLE} (" +
+                    "${DatabaseSchemaK.LessonsTable.PRIMARY_KEY} INTEGER PRIMARY KEY," +
+                    DatabaseSchemaK.LessonsTable.COLUMN_LESSON_NAME +
+                    " VARCHAR(${DatabaseSchemaK.LessonsTable.DIMENSION_COLUMN_NAME})" +
                     " NOT NULL UNIQUE);"
 
             db.execSQL(query)
@@ -70,9 +70,9 @@ class DatabaseHandlerK(private var activity: Activity) :
                     "${DatabaseSchemaK.EntriesTable.COLUMN_TRANSLATION} TEXT NOT NULL," +
                     DatabaseSchemaK.EntriesTable.COLUMN_PHONETIC +
                     " VARCHAR(${DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_PHONETIC}) NOT NULL," +
-                    "${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY} INTEGER," +
-                    " FOREIGN KEY (${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_DICTIONARY})" +
-                    " REFERENCES ${DatabaseSchemaK.DICTIONARIES_TABLE} (${DatabaseSchemaK.DictionariesTable.PRIMARY_KEY})" +
+                    "${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_LESSON} INTEGER," +
+                    " FOREIGN KEY (${DatabaseSchemaK.EntriesTable.FOREIGN_KEY_LESSON})" +
+                    " REFERENCES ${DatabaseSchemaK.LESSONS_TABLE} (${DatabaseSchemaK.LessonsTable.PRIMARY_KEY})" +
                     ");"
 
             db.execSQL(query)

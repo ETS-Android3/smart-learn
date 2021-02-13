@@ -173,7 +173,7 @@ abstract class BaseRVAdapterK <T> (
         if(selectedItems.isNotEmpty()) {
             if (DEBUG_MODE) {
                 Log.d(
-                    "[DictionariesRVAdapterK]",
+                    "[LessonRVAdapterK]",
                     "Deleted ${selectedItems.size} elements:\n"
                 )
                 selectedItems.forEach {

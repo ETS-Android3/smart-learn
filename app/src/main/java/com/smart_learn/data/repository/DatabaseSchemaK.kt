@@ -8,18 +8,18 @@ package com.smart_learn.data.repository
 
 object DatabaseSchemaK {
 
-    const val DICTIONARIES_TABLE = "dictionaries"
+    const val LESSONS_TABLE = "lessons"
     const val ENTRIES_TABLE = "entries"
 
-    object DictionariesTable{
-        const val PRIMARY_KEY = "pk_dictionary_id"
-        const val COLUMN_DICTIONARY_NAME = "dictionary_name"
+    object LessonsTable{
+        const val PRIMARY_KEY = "pk_lesson_id"
+        const val COLUMN_LESSON_NAME = "lesson_name"
         const val DIMENSION_COLUMN_NAME = 64
     }
 
     object EntriesTable{
         const val PRIMARY_KEY = "pk_entry_id"
-        const val FOREIGN_KEY_DICTIONARY = "fk_dictionary_id" /* references PRIMARY_KEY from DictionariesTable*/
+        const val FOREIGN_KEY_LESSON = "fk_lesson_id" /* references PRIMARY_KEY from LessonsTable*/
         const val COLUMN_WORD = "word"
         const val COLUMN_TRANSLATION = "translation" // this column does not have a limit
         const val COLUMN_PHONETIC = "phonetic"

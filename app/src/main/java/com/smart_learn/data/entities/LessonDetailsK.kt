@@ -1,11 +1,11 @@
 package com.smart_learn.data.entities
 
-import com.smart_learn.data.models.DictionaryDetailsModelK
+import com.smart_learn.data.models.LessonDetailsModelK
 
-class DictionaryDetailsK(
-    override var dictionaryId: Int = -1,
+class LessonDetailsK(
+    override var lessonId: Int = -1,
     override var title: String
-) : DictionaryDetailsModelK(dictionaryId, title) {
+) : LessonDetailsModelK(lessonId, title) {
 
     // this indexes are used for search value in recycler view for making the foreground color
     var searchIndexes: List<IntRange> = ArrayList()
@@ -14,6 +14,6 @@ class DictionaryDetailsK(
     var isSelected: Boolean = false
 
     override fun toString(): String {
-        return "DictionaryDetailsK(dictionaryId=$dictionaryId, title='$title')"
+        return "LessonDetailsK(lessonId=$lessonId, title='$title')"
     }
 }

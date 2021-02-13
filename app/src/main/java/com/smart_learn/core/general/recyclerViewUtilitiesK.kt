@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.presenter.recycler_view.ItemTouchCallback
 import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapterK
-import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapterK
+import com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapterK
 import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
 import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
 import com.smart_learn.presenter.view_models.LessonRVViewModelK
@@ -44,7 +44,7 @@ fun initRecyclerView(
         when(adapterType){
             1 -> {
                 baseAdaptorK =
-                    DictionariesRVAdapterK(activityViewModelUtilitiesK as LessonRVViewModelK)
+                    LessonRVAdapterK(activityViewModelUtilitiesK as LessonRVViewModelK)
                 adapter = baseAdaptorK
                 return baseAdaptorK
             }

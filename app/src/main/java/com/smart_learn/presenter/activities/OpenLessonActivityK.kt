@@ -18,7 +18,7 @@ class OpenLessonActivityK : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_lesson)
-        setSupportActionBar(findViewById(R.id.toolbarDictionaries))
+        setSupportActionBar(findViewById(R.id.toolbarLessons))
 
         openLessonViewModel = OpenLessonViewModelK(this)
 
@@ -59,7 +59,7 @@ class OpenLessonActivityK : AppCompatActivity() {
     /**
      * These functions are for activity management
      * */
-    fun startDictionariesRVActivity(){
+    fun startLessonRVActivityK(){
         val intent = Intent(this, LessonRVActivityK::class.java)
         startActivity(intent)
     }

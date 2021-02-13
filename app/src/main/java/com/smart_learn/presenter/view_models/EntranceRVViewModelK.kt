@@ -3,7 +3,7 @@ package com.smart_learn.presenter.view_models
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.EntranceRVActivityK
-import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.data.entities.LessonEntranceK
 import com.smart_learn.core.general.*
 import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
 import com.smart_learn.core.services.ApplicationServiceK
@@ -53,8 +53,8 @@ class EntranceRVViewModelK(private var entranceRVActivityK: EntranceRVActivityK)
 
     /** load data from database into recycler view */
     private fun loadData() {
-        val tmpList: MutableList<DictionaryEntranceK> = ArrayList()
-        applicationServiceK.lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID).forEach {
+        val tmpList: MutableList<LessonEntranceK> = ArrayList()
+        applicationServiceK.lessonServiceK.getFullLiveLessonInfo(SELECTED_LESSON_ID).forEach {
             tmpList.add(it)
         }
         entrancesRVAdapter.submitList(tmpList)

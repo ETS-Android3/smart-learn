@@ -1,9 +1,9 @@
 package com.smart_learn.core.services
 
-import com.smart_learn.data.entities.DictionaryDetailsK
-import com.smart_learn.data.entities.DictionaryEntranceK
+import com.smart_learn.data.entities.LessonDetailsK
+import com.smart_learn.data.entities.LessonEntranceK
 import com.smart_learn.presenter.view_models.ActivityViewModelUtilitiesK
-import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.core.general.SELECTED_LESSON_ID
 import com.smart_learn.data.repository.LessonRepositoryK
 
 
@@ -14,66 +14,66 @@ class LessonServiceK(private val activityViewModelUtilitiesK: ActivityViewModelU
 
     private var lessonRepositoryK: LessonRepositoryK = LessonRepositoryK(activityViewModelUtilitiesK)
 
-    fun getFullLiveLessonInfo() : List<DictionaryEntranceK> {
-        return lessonRepositoryK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID)
+    fun getFullLiveLessonInfo() : List<LessonEntranceK> {
+        return lessonRepositoryK.getFullLiveLessonInfo(SELECTED_LESSON_ID)
     }
 
-    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntranceK> {
-        return lessonRepositoryK.getFullLiveLessonInfo(dictionaryId)
+    fun getFullLiveLessonInfo(lessonId : Int) : List<LessonEntranceK> {
+        return lessonRepositoryK.getFullLiveLessonInfo(lessonId)
     }
 
-    fun checkIfLessonExist(dictionaryName: String) : Boolean {
-        return lessonRepositoryK.checkIfLessonExist(dictionaryName)
+    fun checkIfLessonExist(lessonName: String) : Boolean {
+        return lessonRepositoryK.checkIfLessonExist(lessonName)
     }
 
-    fun checkIfWordExist(word: String, dictionaryId: Int) : Boolean {
-        return lessonRepositoryK.checkIfWordExist(word,dictionaryId)
+    fun checkIfWordExist(word: String, lessonId: Int) : Boolean {
+        return lessonRepositoryK.checkIfWordExist(word,lessonId)
     }
 
-    fun insert(dictionaryName: String){
-        lessonRepositoryK.insert(dictionaryName)
+    fun insert(lessonName: String){
+        lessonRepositoryK.insert(lessonName)
     }
 
-    fun update(dictionaryDetailsK: DictionaryDetailsK){
-        lessonRepositoryK.update(dictionaryDetailsK)
+    fun update(lessonDetailsK: LessonDetailsK){
+        lessonRepositoryK.update(lessonDetailsK)
     }
 
-    fun delete(dictionaryId: Int){
-        lessonRepositoryK.delete(dictionaryId)
+    fun delete(lessonId: Int){
+        lessonRepositoryK.delete(lessonId)
     }
 
-    fun insert(dictionaryEntranceK: DictionaryEntranceK) {
-        lessonRepositoryK.insert(dictionaryEntranceK)
+    fun insert(lessonEntranceK: LessonEntranceK) {
+        lessonRepositoryK.insert(lessonEntranceK)
     }
 
-    fun update(dictionaryEntranceK: DictionaryEntranceK){
-        lessonRepositoryK.update(dictionaryEntranceK)
+    fun update(lessonEntranceK: LessonEntranceK){
+        lessonRepositoryK.update(lessonEntranceK)
     }
 
     fun deleteWord(entranceId: Int){
         lessonRepositoryK.deleteWord(entranceId)
     }
 
-    fun getAllLiveSampleLessons() : List<DictionaryDetailsK> {
+    fun getAllLiveSampleLessons() : List<LessonDetailsK> {
         return lessonRepositoryK.getAllLiveSampleLessons()
     }
 
-    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetailsK? {
-        return lessonRepositoryK.getSampleLiveLesson(dictionaryId)
+    fun getSampleLiveLesson(lessonId: Int): LessonDetailsK? {
+        return lessonRepositoryK.getSampleLiveLesson(lessonId)
     }
 
     /** Remove support for this method.
      *
-    fun getUpdatedEntrance(dictionaryEntrance: DictionaryEntranceK): DictionaryEntranceK? {
-        return lessonRepositoryK.getUpdatedEntrance(dictionaryEntrance)
+    fun getUpdatedEntrance(lessonEntrance: LessonEntranceK): LessonEntranceK? {
+        return lessonRepositoryK.getUpdatedEntrance(lessonEntrance)
     }
     */
 
-    fun getSampleLiveLesson(title: String): DictionaryDetailsK? {
+    fun getSampleLiveLesson(title: String): LessonDetailsK? {
         return lessonRepositoryK.getSampleLiveLesson(title)
     }
 
-    fun getSampleWord(entranceId: Int): DictionaryEntranceK? {
+    fun getSampleWord(entranceId: Int): LessonEntranceK? {
         return lessonRepositoryK.getSampleWord(entranceId)
     }
 

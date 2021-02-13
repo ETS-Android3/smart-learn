@@ -3,29 +3,29 @@ package com.smart_learn.presenter.view_models
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.LessonRVActivityK
-import com.smart_learn.data.entities.DictionaryDetailsK
+import com.smart_learn.data.entities.LessonDetailsK
 import com.smart_learn.core.general.*
-import com.smart_learn.presenter.recycler_view.adapters.DictionariesRVAdapterK
+import com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapterK
 import com.smart_learn.core.services.ApplicationServiceK
-import kotlinx.android.synthetic.main.activity_rv_dictionaries.*
+import kotlinx.android.synthetic.main.activity_rv_lessons.*
 
 class LessonRVViewModelK(private var lessonRVActivityK: LessonRVActivityK)
     : ActivityViewModelUtilitiesK<LessonRVViewModelK, LessonRVActivityK> {
 
     private var activity: Activity = lessonRVActivityK.getActivity()
-    private lateinit var dictionariesRVAdapter: DictionariesRVAdapterK
+    private lateinit var lessonRVAdapter: LessonRVAdapterK
     private var applicationServiceK: ApplicationServiceK = ApplicationServiceK(this)
 
     init{
 
-        activity.btnAddDictRV.setOnClickListener{
-            showAddDictionaryDialog(
+        activity.btnAddLessonRV.setOnClickListener{
+            showAddLessonDialog(
                 "LessonRVViewModelK",
                 activity,
-                R.layout.dialog_new_dictionary,
+                R.layout.dialog_new_lesson,
                 applicationServiceK,
                 updateRecyclerView = true,
-                dictionariesRVAdapter = dictionariesRVAdapter as DictionariesRVAdapterK
+                lessonRVAdapter = lessonRVAdapter as LessonRVAdapterK
             )
         }
 
@@ -34,29 +34,29 @@ class LessonRVViewModelK(private var lessonRVActivityK: LessonRVActivityK)
 
     private fun startActivityStateData(){
         // start recycler view
-        dictionariesRVAdapter = initRecyclerView(
+        lessonRVAdapter = initRecyclerView(
             activity = activity,
-            recyclerView = activity.rvDictionaries,
+            recyclerView = activity.rvLessons,
             itemDecoration = ItemDecoration(10),
             activityViewModelUtilitiesK = this,
             adapterType = 1
-        ) as DictionariesRVAdapterK
+        ) as LessonRVAdapterK
 
         // add data in recycler view
         loadData()
 
         // init gestures
-        initItemTouchCallback(activity.rvDictionaries,dictionariesRVAdapter)
+        initItemTouchCallback(activity.rvLessons,lessonRVAdapter)
     }
 
 
     /** load data from database into recycler view */
     private fun loadData(){
-        val tmpList: MutableList<DictionaryDetailsK> = ArrayList()
+        val tmpList: MutableList<LessonDetailsK> = ArrayList()
         applicationServiceK.lessonServiceK.getAllLiveSampleLessons().forEach {
             tmpList.add(it)
         }
-        dictionariesRVAdapter.submitList(tmpList)
+        lessonRVAdapter.submitList(tmpList)
     }
 
 
@@ -66,7 +66,7 @@ class LessonRVViewModelK(private var lessonRVActivityK: LessonRVActivityK)
     }
 
 
-    fun getAdapter(): DictionariesRVAdapterK { return dictionariesRVAdapter }
+    fun getAdapter(): LessonRVAdapterK { return lessonRVAdapter }
 
 
     override fun getActivity(): Activity {

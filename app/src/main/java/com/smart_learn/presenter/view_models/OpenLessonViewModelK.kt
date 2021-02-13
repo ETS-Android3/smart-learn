@@ -3,7 +3,7 @@ package com.smart_learn.presenter.view_models
 import android.app.Activity
 import com.smart_learn.R
 import com.smart_learn.presenter.activities.OpenLessonActivityK
-import com.smart_learn.core.general.showAddDictionaryDialog
+import com.smart_learn.core.general.showAddLessonDialog
 import com.smart_learn.core.services.ApplicationServiceK
 import kotlinx.android.synthetic.main.activity_open_lesson.*
 
@@ -29,17 +29,17 @@ class OpenLessonViewModelK(private var openLessonActivityK: OpenLessonActivityK)
 
     init {
 
-        activity.btnNewDictionary.setOnClickListener {
-            showAddDictionaryDialog(
+        activity.btnNewLesson.setOnClickListener {
+            showAddLessonDialog(
                 "OpenLessonViewModelK",
                 activity,
-                R.layout.dialog_new_dictionary,
+                R.layout.dialog_new_lesson,
                 applicationServiceK
             )
         }
 
-        activity.btnOpenDictionary.setOnClickListener {
-            openLessonActivityK.startDictionariesRVActivity()
+        activity.btnOpenLesson.setOnClickListener {
+            openLessonActivityK.startLessonRVActivityK()
         }
 
     }

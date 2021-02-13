@@ -10,7 +10,7 @@ import com.smart_learn.presenter.recycler_view.adapters.BaseRVAdapterK
 
 /**
  * Here is the action mode which will be started on recycler view lists
- * (for dictionaries and entries)
+ * (for lessons and entries)
  */
 class ActionModeCallbackK(private var adapterK: BaseRVAdapterK<*>) : ActionMode.Callback {
 

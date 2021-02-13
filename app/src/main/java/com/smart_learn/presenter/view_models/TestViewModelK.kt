@@ -6,8 +6,8 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
 import com.smart_learn.presenter.activities.TestActivityK
-import com.smart_learn.data.entities.DictionaryEntranceK
-import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
+import com.smart_learn.data.entities.LessonEntranceK
+import com.smart_learn.core.general.SELECTED_LESSON_ID
 import com.smart_learn.core.services.ApplicationServiceK
 import com.smart_learn.core.services.LessonServiceK
 import kotlinx.android.synthetic.main.page_test_knowledge.*
@@ -28,8 +28,8 @@ class TestViewModelK(private val testActivityK: TestActivityK) :
     private var score = 0
     private var checkInsertedResult : Boolean = false
     private var randomNumber : Int = -1 // with -1 I cannot obtain any value
-    private var entriesList: List<DictionaryEntranceK>
-    private var entranceK : DictionaryEntranceK? = null
+    private var entriesList: List<LessonEntranceK>
+    private var entranceK : LessonEntranceK? = null
 
     init {
 
@@ -58,7 +58,7 @@ class TestViewModelK(private val testActivityK: TestActivityK) :
         // make other initial settings
         // this must be initialised here to prevent problems when you initialize with 'this'
         lessonServiceK = LessonServiceK(this)
-        entriesList = lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID)
+        entriesList = lessonServiceK.getFullLiveLessonInfo(SELECTED_LESSON_ID)
 
     }
 
@@ -209,7 +209,7 @@ class TestViewModelK(private val testActivityK: TestActivityK) :
     }
 
 
-    private fun getEntrance(index: Int) : DictionaryEntranceK? {
+    private fun getEntrance(index: Int) : LessonEntranceK? {
 
         if(entriesList.isEmpty()){
             Toast.makeText(activity, "No words available!", Toast.LENGTH_LONG).show()
