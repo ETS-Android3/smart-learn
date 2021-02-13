@@ -1,27 +1,35 @@
-package com.smart_learn.activities
+package com.smart_learn.presenter.activities
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.smart_learn.R
 import com.smart_learn.general.showSettingsDialog
-import com.smart_learn.services.activities.MainActivityService
+import com.smart_learn.services.activities.TestActivityService
 
-class OpenLessonActivity : AppCompatActivity() {
+class TestActivity : AppCompatActivity() {
 
-    private lateinit var mainActivityService: MainActivityService
+    private lateinit var testActivityService: TestActivityService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_open_lesson)
+        setContentView(R.layout.activity_test)
         setSupportActionBar(findViewById(R.id.toolbarDictionaries))
 
-        mainActivityService = MainActivityService(this)
+        // set up toolbar
+        supportActionBar?.apply {
+            title = "Test"
 
+            // show back button on toolbar
+            // on back button press, it will navigate to parent activity
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        // other settings
+        testActivityService = TestActivityService(this)
     }
 
 
@@ -30,7 +38,6 @@ class OpenLessonActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
-
 
     /** Handle presses on the action bar menu items */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -43,27 +50,11 @@ class OpenLessonActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("[APPLICATION CLOSED]","Application was successfully closed")
-    }
-
-
-    /**
-     * These functions are for activity management
-     * */
-    fun startDictionariesRVActivity(){
-        val intent = Intent(this, DictionariesRVActivity::class.java)
-        startActivity(intent)
-    }
-
     fun getActivity(): Activity { return this }
-
 }

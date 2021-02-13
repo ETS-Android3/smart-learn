@@ -1,4 +1,4 @@
-package com.smart_learn.activities.ui.test;
+package com.smart_learn.presenter.activities.ui.test;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -2,7 +2,7 @@ package com.smart_learn.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
-import com.smart_learn.activities.OpenLessonActivity
+import com.smart_learn.presenter.activities.OpenLessonActivity
 import com.smart_learn.general.ActivityServiceUtilities
 import com.smart_learn.general.showAddDictionaryDialog
 import com.smart_learn.services.ApplicationService

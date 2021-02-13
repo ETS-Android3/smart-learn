@@ -1,4 +1,4 @@
-package com.smart_learn.activities;
+package com.smart_learn.presenter.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

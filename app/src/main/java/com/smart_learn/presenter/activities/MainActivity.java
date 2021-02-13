@@ -1,9 +1,9 @@
-package com.smart_learn.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.smart_learn.presenter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
 import com.smart_learn.config.CurrentConfig;

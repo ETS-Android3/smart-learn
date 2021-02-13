@@ -7,13 +7,13 @@ import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.smart_learn.activities.TestActivity;
-import com.smart_learn.activities.TestOnlineActivity;
-import com.smart_learn.activities.ui.test.ChatMessageModel;
-import com.smart_learn.activities.ui.test.ChatMessageRVAdapter;
-import com.smart_learn.activities.ui.test.ParticipantModel;
-import com.smart_learn.activities.ui.test.ParticipantsRVAdapter;
-import com.smart_learn.activities.ui.test.QuestionModel;
+import com.smart_learn.presenter.activities.TestActivity;
+import com.smart_learn.presenter.activities.TestOnlineActivity;
+import com.smart_learn.presenter.activities.ui.test.ChatMessageModel;
+import com.smart_learn.presenter.activities.ui.test.ChatMessageRVAdapter;
+import com.smart_learn.presenter.activities.ui.test.ParticipantModel;
+import com.smart_learn.presenter.activities.ui.test.ParticipantsRVAdapter;
+import com.smart_learn.presenter.activities.ui.test.QuestionModel;
 import com.smart_learn.config.CurrentConfig;
 import com.smart_learn.config.GeneralConfig;
 import com.smart_learn.remote.test.BasicPlayMode;

@@ -2,7 +2,7 @@ package com.smart_learn.services.activities
 
 import android.app.Activity
 import com.smart_learn.R
-import com.smart_learn.activities.DictionariesRVActivity
+import com.smart_learn.presenter.activities.DictionariesRVActivity
 import com.smart_learn.entities.DictionaryDetails
 import com.smart_learn.general.*
 import com.smart_learn.recycler_view.adapters.DictionariesRVAdapter

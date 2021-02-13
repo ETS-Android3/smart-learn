@@ -1,4 +1,4 @@
-package com.smart_learn.activities;
+package com.smart_learn.presenter.activities;
 
 
 import android.annotation.SuppressLint;
@@ -13,9 +13,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.smart_learn.R;
-import com.smart_learn.activities.ui.test.ChatMessageModel;
-import com.smart_learn.activities.ui.test.ParticipantModel;
-import com.smart_learn.activities.ui.test.TestFragmentAdapter;
+import com.smart_learn.presenter.activities.ui.test.ChatMessageModel;
+import com.smart_learn.presenter.activities.ui.test.ParticipantModel;
+import com.smart_learn.presenter.activities.ui.test.TestFragmentAdapter;
 import com.smart_learn.config.CurrentConfig;
 import com.smart_learn.remote.test.RemotePlay;
 import com.smart_learn.services.TestService;
