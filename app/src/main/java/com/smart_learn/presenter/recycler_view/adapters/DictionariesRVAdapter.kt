@@ -58,8 +58,8 @@ class DictionariesRVAdapter(
     }
 
     override fun deleteFromDatabase(item: DictionaryDetails) {
-        dictionariesRVActivityService.getApplicationService().dictionaryService
-            .deleteDictionary(item.dictionaryId)
+        dictionariesRVActivityService.getApplicationService().lessonServiceK
+            .delete(item.dictionaryId)
     }
 
     override fun checkEmptyState(){

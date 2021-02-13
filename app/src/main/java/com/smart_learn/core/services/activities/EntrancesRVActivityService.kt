@@ -54,7 +54,7 @@ class EntrancesRVActivityService(private var entrancesRVActivity: EntrancesRVAct
     /** load data from database into recycler view */
     private fun loadData() {
         val tmpList: MutableList<DictionaryEntrance> = ArrayList()
-        applicationService.dictionaryService.getDictionaryEntries(SELECTED_DICTIONARY_ID).forEach {
+        applicationService.lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID).forEach {
             tmpList.add(it)
         }
         entrancesRVAdapter.submitList(tmpList)

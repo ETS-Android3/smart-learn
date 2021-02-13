@@ -14,7 +14,7 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     private val databaseHandler: DatabaseHandler = DatabaseHandler(activityServiceUtilities.getActivity())
 
     /** check if dictionary already exists in database */
-    fun checkIfDictionaryExist(dictionaryName: String) : Boolean {
+    fun checkIfLessonExist(dictionaryName: String) : Boolean {
 
         val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +
                 " WHERE ${DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME} LIKE '${dictionaryName}';"
@@ -50,15 +50,15 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         return true
     }
 
-
-    fun addDictionary(dictionaryName: String) {
+    /** insert lesson */
+    fun insert(dictionaryName: String) {
         val contentValues = ContentValues()
         contentValues.put(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryName)
         databaseHandler.executeInsert(DatabaseSchema.DICTIONARIES_TABLE,contentValues)
     }
 
-
-    fun updateDictionary(dictionaryDetails: DictionaryDetails) {
+    /** update lesson */
+    fun update(dictionaryDetails: DictionaryDetails) {
         val contentValues = ContentValues()
         contentValues.put(DatabaseSchema.DictionariesTable.COLUMN_DICTIONARY_NAME, dictionaryDetails.title)
 
@@ -68,8 +68,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         databaseHandler.executeUpdate(DatabaseSchema.DICTIONARIES_TABLE,contentValues,selection,selectionArgs)
     }
 
-
-    fun deleteDictionary(dictionaryId: Int){
+    /** delete lesson */
+    fun delete(dictionaryId: Int){
         // delete all his words
         var selection = "${DatabaseSchema.EntriesTable.FOREIGN_KEY_DICTIONARY} = ?"
         var selectionArgs = arrayOf(dictionaryId.toString())
@@ -129,8 +129,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
 
     }
 
-
-    fun addEntrance(dictionaryEntrance: DictionaryEntrance) {
+    /** insert word */
+    fun insert(dictionaryEntrance: DictionaryEntrance) {
         val contentValues = ContentValues()
 
         contentValues.put(DatabaseSchema.EntriesTable.COLUMN_WORD, dictionaryEntrance.word)
@@ -141,7 +141,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         databaseHandler.executeInsert(DatabaseSchema.ENTRIES_TABLE,contentValues)
     }
 
-    fun getEntrance(entranceId: Int): DictionaryEntrance? {
+
+    fun getSampleWord(entranceId: Int): DictionaryEntrance? {
 
         val entrance: DictionaryEntrance
         val query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}" +
@@ -168,8 +169,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
 
     }
 
-
-    fun updateEntrance(dictionaryEntrance: DictionaryEntrance) {
+    /** update word */
+    fun update(dictionaryEntrance: DictionaryEntrance) {
         val contentValues = ContentValues()
 
         contentValues.put(DatabaseSchema.EntriesTable.COLUMN_WORD, dictionaryEntrance.word)
@@ -183,7 +184,8 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         databaseHandler.executeUpdate(DatabaseSchema.ENTRIES_TABLE,contentValues,selection,selectionArgs)
     }
 
-    fun deleteEntrance(entranceId: Int){
+    /** delete word */
+    fun deleteWord(entranceId: Int){
 
         val selection = "${DatabaseSchema.EntriesTable.PRIMARY_KEY} = ?"
         val selectionArgs = arrayOf(entranceId.toString())
@@ -192,7 +194,7 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
     }
 
     /** get all entries for a specific dictionary */
-    fun getDictionaryEntries(dictionaryId : Int) : List<DictionaryEntrance> {
+    fun getFullLiveLessonInfo(dictionaryId : Int) : List<DictionaryEntrance> {
 
         val entriesList = ArrayList<DictionaryEntrance>()
         val query = "SELECT * FROM ${DatabaseSchema.ENTRIES_TABLE}" +
@@ -221,7 +223,7 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
 
 
     /** get a list of all dictionaries based on DictionaryDetails */
-    fun getDictionaries() : List<DictionaryDetails> {
+    fun getAllLiveSampleLessons() : List<DictionaryDetails> {
 
         val dictionaryList = ArrayList<DictionaryDetails>()
         val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE};"
@@ -244,7 +246,7 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
         return dictionaryList
     }
 
-    fun getDictionary(dictionaryId: Int): DictionaryDetails? {
+    fun getSampleLiveLesson(dictionaryId: Int): DictionaryDetails? {
 
         val dictionary: DictionaryDetails
         val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +
@@ -268,7 +270,7 @@ class LessonRepositoryK(private val activityServiceUtilities: ActivityServiceUti
 
     }
 
-    fun getDictionary(title: String): DictionaryDetails? {
+    fun getSampleLiveLesson(title: String): DictionaryDetails? {
 
         val dictionary: DictionaryDetails
         val query = "SELECT * FROM ${DatabaseSchema.DICTIONARIES_TABLE}" +

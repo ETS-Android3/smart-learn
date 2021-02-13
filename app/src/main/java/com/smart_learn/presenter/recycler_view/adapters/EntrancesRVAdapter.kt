@@ -51,8 +51,8 @@ class EntrancesRVAdapter(
     }
 
     override fun deleteFromDatabase(item: DictionaryEntrance) {
-        entrancesRVActivityService.getApplicationService().dictionaryService
-            .deleteEntrance(item.entranceId)
+        entrancesRVActivityService.getApplicationService().lessonServiceK
+            .deleteWord(item.entranceId)
     }
 
     override fun checkEmptyState(){

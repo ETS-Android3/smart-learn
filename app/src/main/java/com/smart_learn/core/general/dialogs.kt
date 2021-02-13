@@ -48,7 +48,7 @@ private fun dictionaryDetailsCheck(
     }
 
     //add dictionary only if this does not exist
-    if (applicationService.dictionaryService.checkIfDictionaryExist(dictionaryName)) {
+    if (applicationService.lessonServiceK.checkIfLessonExist(dictionaryName)) {
         Toast.makeText(
             activity, "Dictionary $dictionaryName already exists. Choose other name",
             Toast.LENGTH_LONG).show()
@@ -114,7 +114,7 @@ fun showAddDictionaryDialog(
             currentDictionary.title = dictionaryName
 
             // update in database
-            applicationService.dictionaryService.updateDictionary(currentDictionary)
+            applicationService.lessonServiceK.update(currentDictionary)
 
             // update item in recycler view
             if(updateRecyclerView && dictionariesRVAdapter != null) {
@@ -143,11 +143,11 @@ fun showAddDictionaryDialog(
             val newDictionary: DictionaryDetails = DictionaryDetails(title = dictionaryName)
 
             // add in database
-            applicationService.dictionaryService.addDictionary(dictionaryName)
+            applicationService.lessonServiceK.insert(dictionaryName)
 
             // update recycler view with dictionary from database (need update for primary key)
             if(updateRecyclerView){
-                val updatedDictionary = applicationService.dictionaryService.getDictionary(dictionaryName)
+                val updatedDictionary = applicationService.lessonServiceK.getSampleLiveLesson(dictionaryName)
                 if(updatedDictionary != null && dictionariesRVAdapter != null) {
                     dictionariesRVAdapter.insertItem(updatedDictionary)
                 }
@@ -196,7 +196,7 @@ private fun entryCheck(
     // TODO: check to see if word exist in all database not only in one dictionary
     // add word only if this does not exists in current dictionary
     if(word.isNotEmpty() &&
-        applicationService.dictionaryService.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
+        applicationService.lessonServiceK.checkIfWordExist(word,SELECTED_DICTIONARY_ID)){
 
         Toast.makeText(activity, "Word $word already exists in this dictionary.",
             Toast.LENGTH_LONG).show()
@@ -268,7 +268,7 @@ fun showAddEntranceDialog(
             entrance.phonetic = phonetic
 
             // update entrance in database
-            applicationService.dictionaryService.updateEntrance(entrance)
+            applicationService.lessonServiceK.update(entrance)
 
             // update item in recycler view
             if(updateRecyclerView && entranceRVAdapter != null) {
@@ -299,11 +299,11 @@ fun showAddEntranceDialog(
                 phonetic = phonetic,dictionaryId = SELECTED_DICTIONARY_ID)
 
             // add new entrance in database
-            applicationService.dictionaryService.addEntrance(newEntrance)
+            applicationService.lessonServiceK.insert(newEntrance)
 
             // update recycler view with word from database (need update for primary key)
             if(updateRecyclerView){
-                val updatedEntrance = applicationService.dictionaryService.getUpdatedEntrance(newEntrance)
+                val updatedEntrance = applicationService.lessonServiceK.getUpdatedEntrance(newEntrance)
                 if(updatedEntrance != null && entranceRVAdapter != null) {
                     entranceRVAdapter.insertItem(updatedEntrance)
                 }

@@ -43,7 +43,7 @@ class DictionaryActivityService(private var dictionaryActivity: DictionaryActivi
         }
 
         activity.btnDeleteDictionary.setOnClickListener {
-            applicationService.dictionaryService.deleteDictionary(SELECTED_DICTIONARY_ID)
+            applicationService.lessonServiceK.delete(SELECTED_DICTIONARY_ID)
 
             // go to previous activity
             dictionaryActivity.startDictionariesRVActivity()
@@ -56,7 +56,7 @@ class DictionaryActivityService(private var dictionaryActivity: DictionaryActivi
                 R.layout.dialog_new_dictionary,
                 applicationService,
                 updateDictionary = true,
-                currentDictionary = applicationService.dictionaryService.getDictionary(SELECTED_DICTIONARY_ID)
+                currentDictionary = applicationService.lessonServiceK.getSampleLiveLesson(SELECTED_DICTIONARY_ID)
             )
         }
     }

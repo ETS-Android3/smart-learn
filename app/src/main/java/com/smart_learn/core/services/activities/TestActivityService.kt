@@ -10,7 +10,7 @@ import com.smart_learn.data.entities.DictionaryEntrance
 import com.smart_learn.core.general.ActivityServiceUtilities
 import com.smart_learn.core.general.SELECTED_DICTIONARY_ID
 import com.smart_learn.core.services.ApplicationService
-import com.smart_learn.core.services.DictionaryService
+import com.smart_learn.core.services.LessonServiceK
 import kotlinx.android.synthetic.main.page_test_knowledge.*
 
 class TestActivityService(private val testActivity: TestActivity) :
@@ -23,7 +23,7 @@ class TestActivityService(private val testActivity: TestActivity) :
     private var checkBoxButtonList: List<CheckBox> = ArrayList()
 
     // other elements
-    private var dictionaryService: DictionaryService
+    private var lessonServiceK: LessonServiceK
     private var questionsNumber: Int = 0
     private var currentQuestionNumber = 0
     private var score = 0
@@ -58,8 +58,8 @@ class TestActivityService(private val testActivity: TestActivity) :
 
         // make other initial settings
         // this must be initialised here to prevent problems when you initialize with 'this'
-        dictionaryService = DictionaryService(this)
-        entriesList = dictionaryService.getDictionaryEntries(SELECTED_DICTIONARY_ID)
+        lessonServiceK = LessonServiceK(this)
+        entriesList = lessonServiceK.getFullLiveLessonInfo(SELECTED_DICTIONARY_ID)
 
     }
 

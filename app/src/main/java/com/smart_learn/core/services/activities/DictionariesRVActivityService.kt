@@ -53,7 +53,7 @@ class DictionariesRVActivityService(private var dictionariesRVActivity: Dictiona
     /** load data from database into recycler view */
     private fun loadData(){
         val tmpList: MutableList<DictionaryDetails> = ArrayList()
-        applicationService.dictionaryService.getDictionaries().forEach {
+        applicationService.lessonServiceK.getAllLiveSampleLessons().forEach {
             tmpList.add(it)
         }
         dictionariesRVAdapter.submitList(tmpList)

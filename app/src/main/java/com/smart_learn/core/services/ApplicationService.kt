@@ -10,6 +10,6 @@ import com.smart_learn.core.general.ActivityServiceUtilities
  */
 class ApplicationService(private val activityServiceUtilities: ActivityServiceUtilities<*, *>) {
 
-    var dictionaryService: DictionaryService = DictionaryService(activityServiceUtilities)
+    var lessonServiceK: LessonServiceK = LessonServiceK(activityServiceUtilities)
 
 }
