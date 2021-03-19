@@ -32,8 +32,8 @@ public class Expression extends LessonEntrance {
 
     private String expression;
 
-    public Expression(long createdAt, long modifiedAt, long fkLessonId, Translation translation, String expression) {
-        super(createdAt, modifiedAt, fkLessonId, translation);
+    public Expression(long createdAt, long modifiedAt, long fkLessonId, boolean isSelected, Translation translation, String expression) {
+        super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
         this.expression = expression;
     }
 }

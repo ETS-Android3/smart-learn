@@ -1,13 +1,17 @@
 package com.smart_learn.core.services;
 
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.relationships.LessonWithJoinedInfo;
+import com.smart_learn.data.models.room.entities.helpers.ResponseInfo;
 import com.smart_learn.data.repository.LessonRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonService extends BasicRoomService<Lesson> {
@@ -21,20 +25,79 @@ public class LessonService extends BasicRoomService<Lesson> {
         super.basicRoomRepository = lessonRepository;
     }
 
-    public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
+    public LiveData<Lesson> getSampleLiveLesson(long lessonId) {
         return lessonRepository.getSampleLiveLesson(lessonId);
     }
 
-    public LiveData<Lesson> getSampleLiveLesson(String lessonName) {
-        return lessonRepository.getSampleLiveLesson(lessonName);
+    @NonNull
+    public List<Lesson> getAllSampleLesson(){
+        List<Lesson> tmp = lessonRepository.getAllLiveSampleLessons().getValue();
+        if(tmp == null){
+            return new ArrayList<>();
+        }
+        return tmp;
     }
-
-    public LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId) { return lessonRepository.getFullLiveLessonInfo(lessonId); }
 
     public LiveData<List<Lesson>> getAllLiveSampleLessons() { return lessonRepository.getAllLiveSampleLessons(); }
 
+    public LiveData<Integer> getLiveSelectedItemsCount(){ return lessonRepository.getLiveSelectedItemsCount(); }
+
+    public LiveData<Integer> getLiveItemsNumber(){ return lessonRepository.getLiveItemsNumber(); }
+
+    public void deleteSelectedItems(){ lessonRepository.deleteSelectedItems(); }
+
+    public void updateSelectAll(boolean isSelected){ lessonRepository.updateSelectAll(isSelected); }
+
+
     public boolean checkIfLessonExist(String lessonName) {
         return lessonRepository.checkIfLessonExist(lessonName);
+    }
+
+    private ResponseInfo lessonDetailsCheck(Lesson lesson){
+
+        if (lesson.getName().isEmpty()) {
+            return new ResponseInfo(false,"Enter a name");
+        }
+
+        /* TODO: check name length
+        if (lessonName.length() > DatabaseSchemaK.LessonsTable.DIMENSION_COLUMN_NAME) {
+            liveToastMessage.setValue("This name is too big. Choose a shorter name.");
+            return false;
+        }
+         */
+
+        // Add lesson only if this does not exist (should have a unique name).
+        if (checkIfLessonExist(lesson.getName())) {
+            return new ResponseInfo(false,"Lesson " + lesson.getName() + " already exists. Choose other name");
+        }
+
+        return new ResponseInfo(true,"");
+    }
+
+    /** Try to add new lesson using results from lesson dialog */
+    public ResponseInfo tryToAddOrUpdateNewLesson(@NonNull Lesson lesson, boolean update){
+        if(lesson == null){
+            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewLesson] lesson is null");
+            return new ResponseInfo(false,"[Internal error. The modification was not saved.]");
+        }
+
+        // make some general checks
+        ResponseInfo responseInfo = lessonDetailsCheck(lesson);
+        if(!responseInfo.isOk()){
+            return responseInfo;
+        }
+
+        // here lesson is valid
+        if(update){
+            lesson.setModifiedAt(System.currentTimeMillis());
+            update(lesson);
+            return responseInfo;
+        }
+
+        Lesson newLesson = new Lesson(lesson.getName(), System.currentTimeMillis(), System.currentTimeMillis(),false);
+        insert(newLesson);
+
+        return responseInfo;
     }
 
 }

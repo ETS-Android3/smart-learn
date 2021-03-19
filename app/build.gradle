@@ -6,6 +6,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    // use this in order to use data binding
+    dataBinding{
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.smart_learn"
         minSdkVersion 24
@@ -59,6 +64,12 @@ dependencies {
     // https://stackoverflow.com/questions/57442809/how-to-use-androidx-recyclerview-selection-in-androidx-recyclerview-widget-or-h
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
 
+    // for swipe reveal layout
+    // https://github.com/chthai64/SwipeRevealLayout
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // leave that like here
     // if you let only annotationProcessor will not work

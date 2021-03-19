@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lessonCardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    android:layout_marginStart="2dp"
-    android:layout_marginEnd="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="10dp"
-    app:cardPreventCornerOverlap="false"
-    >
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewHolder"
+            type="com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapter.LessonViewHolder" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lessonCardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false">
 
-        <TextView
-            android:id="@+id/tvLessonName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TextView"
-            android:textSize="24sp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginTop="2dp"/>
+        <!--
+            Data binding with include layouts:
+            https://medium.com/@elia.maracani/android-data-binding-passing-a-variable-to-an-include-d-layout-3567099b58f
+            https://stackoverflow.com/questions/32947440/android-data-binding-using-include-tag
+        -->
+        <include
+        layout="@layout/layout_lesson_details_normal_mode"
+        android:id="@+id/includeNormalModeLayout"
+        android:visibility="@{viewHolder.liveLiveActionModeIsActive ? View.GONE : View.VISIBLE}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        bind:passedViewHolder="@{viewHolder}"/>
 
-        <ImageView
-            android:id="@+id/ivCheckLesson"
+        <include
+            layout="@layout/layout_lesson_details_action_mode"
+            android:id="@+id/includeActionModeLayout"
+            android:visibility="@{viewHolder.liveLiveActionModeIsActive ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/checkbox_on_background" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            bind:passedViewHolder="@{viewHolder}"/>
+    </androidx.cardview.widget.CardView>
+</layout>

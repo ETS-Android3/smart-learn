@@ -18,6 +18,12 @@ public interface BasicDao <T> {
     @Update(onConflict = OnConflictStrategy.IGNORE)
     void update(T value);
 
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    void updateAll(List<T> items);
+
     @Delete
     void delete(T value);
+
+    @Delete
+    void deleteAll(List<T> items);
 }

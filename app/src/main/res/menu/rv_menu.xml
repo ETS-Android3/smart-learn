@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"
         android:title="@string/search"
-        app:actionViewClass="android.widget.SearchView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
     <item
         android:id="@+id/btnSettingsRV"

@@ -4,9 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.dao.LessonDao;
 import com.smart_learn.data.models.room.db.AppRoomDatabase;
+import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.relationships.LessonWithJoinedInfo;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     }
 
     /** Get a sample LiveData wrapped lesson based on lessonId. */
-    public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
+    public LiveData<Lesson> getSampleLiveLesson(long lessonId) {
         return lessonDao.getSampleLiveLesson(lessonId);
     }
 
@@ -43,6 +43,7 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     public LiveData<Lesson> getSampleLiveLesson(String lessonName) {
         return lessonDao.getSampleLiveLesson(lessonName);
     }
+
 
     /** Get all entries for a specific lesson. */
     public LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId) {
@@ -58,4 +59,28 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     public boolean checkIfLessonExist(String lessonName){
         return lessonDao.getSampleLiveLesson(lessonName) == null;
     }
+
+    public void updateAll(List<Lesson> items){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            lessonDao.updateAll(items);
+        });
+    }
+
+    public void deleteAll(){
+        AppRoomDatabase.databaseWriteExecutor.execute(lessonDao::deleteAll);
+    }
+
+    public void deleteSelectedItems(){
+        AppRoomDatabase.databaseWriteExecutor.execute(lessonDao::deleteSelectedItems);
+    }
+
+    public void updateSelectAll(boolean isSelected){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            lessonDao.updateSelectAll(isSelected);
+        });
+    }
+
+    public LiveData<Integer> getLiveSelectedItemsCount(){ return lessonDao.getLiveSelectedItemsCount(); }
+
+    public LiveData<Integer> getLiveItemsNumber(){ return lessonDao.getLiveItemsNumber(); }
 }

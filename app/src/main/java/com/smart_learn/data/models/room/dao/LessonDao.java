@@ -15,17 +15,10 @@ import java.util.List;
 public interface LessonDao extends BasicDao<Lesson> {
 
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
-    LiveData<Lesson> getSampleLiveLesson(int lessonId);
+    LiveData<Lesson> getSampleLiveLesson(long lessonId);
 
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE name LIKE :lessonName")
     LiveData<Lesson> getSampleLiveLesson(String lessonName);
-
-    @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
-    Lesson getSampleLesson(int lessonId);
-
-    @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE name LIKE :lessonName")
-    Lesson getSampleLesson(String lessonName);
-
 
     /** Get all Lesson info`s (with objects relationship data).
      * This will make a join for objects relationship between Lesson and 'relationship object'
@@ -34,8 +27,22 @@ public interface LessonDao extends BasicDao<Lesson> {
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
     LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId);
 
-
     /** Get only Lessons info`s without objects relationship data. */
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE)
     LiveData<List<Lesson>> getAllLiveSampleLessons();
+
+    @Query("DELETE FROM " + RoomConfig.LESSONS_TABLE)
+    void deleteAll();
+
+    @Query("DELETE FROM " + RoomConfig.LESSONS_TABLE + " WHERE isSelected")
+    void deleteSelectedItems();
+
+    @Query("UPDATE " + RoomConfig.LESSONS_TABLE + " set isSelected = :isSelected")
+    void updateSelectAll(boolean isSelected);
+
+    @Query("SELECT COUNT(lessonId) FROM " + RoomConfig.LESSONS_TABLE + " WHERE isSelected")
+    LiveData<Integer> getLiveSelectedItemsCount();
+
+    @Query("SELECT COUNT(lessonId) FROM " + RoomConfig.LESSONS_TABLE)
+    LiveData<Integer> getLiveItemsNumber();
 }

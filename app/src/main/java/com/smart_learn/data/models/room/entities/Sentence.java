@@ -32,8 +32,8 @@ public class Sentence extends LessonEntrance {
 
     private String sentence;
 
-    public Sentence(long createdAt, long modifiedAt, long fkLessonId, Translation translation, String sentence) {
-        super(createdAt, modifiedAt, fkLessonId, translation);
+    public Sentence(long createdAt, long modifiedAt, long fkLessonId, boolean isSelected, Translation translation, String sentence) {
+        super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
         this.sentence = sentence;
     }
 }

@@ -19,4 +19,5 @@ public interface Logs {
     String ERROR = "[ERROR] ";
     String UNEXPECTED_ERROR = "[UNEXPECTED ERROR] ";
     String FUNCTION = "[FUNCTION]";
+    String NOT_IMPLEMENTED = "[Not implemented]";
 }

@@ -1,25 +1,21 @@
 package com.smart_learn.presenter.activities;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.presenter.activities.dialogs.DialogButtonsActionCallback;
-import com.smart_learn.presenter.activities.dialogs.DialogDismissCallback;
-import com.smart_learn.presenter.activities.dialogs.LessonDialog;
+import com.smart_learn.databinding.ActivityOpenLessonBinding;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
 import com.smart_learn.presenter.view_models.OpenLessonViewModel;
 
@@ -30,40 +26,20 @@ public class OpenLessonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_lesson);
 
-        setSupportActionBar(findViewById(R.id.toolbarLessons));
+        // set data binding
+        ActivityOpenLessonBinding activityBinding = DataBindingUtil.setContentView(this,
+                R.layout.activity_open_lesson);
+        activityBinding.setLifecycleOwner(this);
 
-        // set ViewModel
-        openLessonViewModel = new ViewModelProvider(this).get(OpenLessonViewModel.class);
+        setSupportActionBar(activityBinding.toolbarLessons);
 
-        // set observers
-        openLessonViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-               Toast.makeText(OpenLessonActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-        });
+        setListeners(activityBinding);
 
+        setViewModel();
 
-
-        // get GUI components
-        Button btnNewLesson = findViewById(R.id.btnNewLesson);
-        Button btnOpenLesson = findViewById(R.id.btnOpenLesson);
-
-        // set listeners
-        btnNewLesson.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showAddLessonDialog();
-            }
-        });
-
-        btnOpenLesson.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //startLessonRVActivity();
-            }
-        });
-
+        // link data binding with view model
+        activityBinding.setViewModel(openLessonViewModel);
     }
 
     @Override
@@ -89,9 +65,35 @@ public class OpenLessonActivity extends AppCompatActivity {
         return true;
     }
 
-    public void startLessonRVActivity(){
-        //Intent intent = new Intent(this, LessonRVActivity.class);
-        //startActivity(intent);
+    private void setListeners(ActivityOpenLessonBinding activityBinding){
+        activityBinding.btnNewLesson.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showAddLessonDialog();
+            }
+        });
+
+        activityBinding.btnOpenLesson.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               startLessonRVActivity();
+            }
+        });
+    }
+
+    private void setViewModel(){
+        openLessonViewModel = new ViewModelProvider(this).get(OpenLessonViewModel.class);
+
+        // set observers
+        openLessonViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(OpenLessonActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void startLessonRVActivity(){
+        Intent intent = new Intent(this, LessonRVActivity.class);
+        startActivity(intent);
     }
 
     private void showSettingsDialog(){
@@ -100,25 +102,7 @@ public class OpenLessonActivity extends AppCompatActivity {
     }
 
     private void showAddLessonDialog(){
-
-        DialogFragment dialogFragment = new LessonDialog(true, R.string.add_lesson, R.layout.dialog_new_lesson,
-                R.string.save, R.string.cancel, new DialogButtonsActionCallback() {
-
-            @Override
-            public void onPositiveButtonPressed(View view, DialogInterface dialog, int which) {
-                EditText etLessonName = ((AlertDialog) dialog).findViewById(R.id.etLessonName);
-                openLessonViewModel.processLessonDialog(etLessonName, new DialogDismissCallback() {
-                    @Override
-                    public void onDismiss() {
-                        dialog.dismiss();
-                    }
-                });
-            }
-
-        });
-
+        DialogFragment dialogFragment = openLessonViewModel.prepareLessonDialog(false, null);
         dialogFragment.show(getSupportFragmentManager(), "OpenLessonActivity");
-
     }
-
 }

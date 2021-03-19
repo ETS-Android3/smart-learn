@@ -4,42 +4,49 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.smart_learn.R;
+import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.databinding.DialogNewLessonBinding;
+import com.smart_learn.presenter.view_models.LessonDialogViewModel;
 
 /** https://developer.android.com/guide/topics/ui/dialogs */
 public class LessonDialog extends DialogFragment {
 
+    private final Lesson lesson;
     private final boolean setCancelable;
     private final int title;
-    private final int layout;
     private final int positiveButton;
     private final int negativeButton;
-    private final DialogButtonsActionCallback dialogButtonsActionCallback;
+    private final DialogActionsCallback dialogActionsCallback;
+    private LessonDialogViewModel lessonDialogViewModel;
 
 
     /**
+     * @param lesson Lesson to link with ViewModel which will be shown in dialog. If NULL ViewModel
+     *              default info`s will be shown.
      * @param setCancelable If setCancelable is true when you click beside the dialog the dialog is
      *                     dismissed
      * @param title Resource string id for dialog title
-     * @param layout Resource id for dialog custom layout
      * @param positiveButton The resource id of the text to display in the positive button
      * @param negativeButton The resource id of the text to display in the negative button
-     * @param dialogButtonsActionCallback Callback for actions related to positive and negative buttons
+     * @param dialogActionsCallback Callback for actions related to positive and negative buttons
      * */
-    public LessonDialog(boolean setCancelable, int title, int layout, int positiveButton, int negativeButton,
-                        DialogButtonsActionCallback dialogButtonsActionCallback) {
+    public LessonDialog(@Nullable Lesson lesson, boolean setCancelable, int title, int positiveButton,
+                        int negativeButton, DialogActionsCallback dialogActionsCallback) {
+        this.lesson = lesson;
         this.setCancelable = setCancelable;
         this.title = title;
-        this.layout = layout;
         this.positiveButton = positiveButton;
         this.negativeButton = negativeButton;
-        this.dialogButtonsActionCallback = dialogButtonsActionCallback;
+        this.dialogActionsCallback = dialogActionsCallback;
     }
 
 
@@ -47,13 +54,22 @@ public class LessonDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
+        // set data binding
+        DialogNewLessonBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.dialog_new_lesson,null, false);
+        dialogBinding.setLifecycleOwner(this);
+
+        setViewModel();
+
+        // link data binding with view model
+        dialogBinding.setViewModel(lessonDialogViewModel);
+
         // build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         // set dialog characteristics
         builder.setTitle(title)
-                .setView(inflater.inflate(layout, null))
+                .setView(dialogBinding.getRoot())
                 // If setCancelable is true when you click beside the dialog the dialog is dismissed.
                 .setCancelable(setCancelable)
                 // add action buttons
@@ -75,23 +91,20 @@ public class LessonDialog extends DialogFragment {
         // https://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked/10661281#10661281
         // https://stackoverflow.com/questions/6142308/android-dialog-keep-dialog-open-when-button-is-pressed/6142413#6142413
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
             @Override
             public void onShow(DialogInterface dialogInterface) {
-
-                Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        dialogButtonsActionCallback.onPositiveButtonPressed(view, dialogInterface,
-                                AlertDialog.BUTTON_POSITIVE);
-                    }
-                });
+                dialogActionsCallback.onShowDialog(dialogInterface,dialogBinding);
             }
         });
 
         return dialog;
+    }
+
+    private void setViewModel(){
+        lessonDialogViewModel = new ViewModelProvider(this).get(LessonDialogViewModel.class);
+        if(lesson != null){
+            lessonDialogViewModel.setLiveLessonInfo(lesson);
+        }
     }
 
 }

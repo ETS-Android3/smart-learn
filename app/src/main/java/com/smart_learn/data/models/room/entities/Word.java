@@ -32,8 +32,8 @@ public class Word extends LessonEntrance {
 
     private String word;
 
-    public Word(long createdAt, long modifiedAt, long fkLessonId, Translation translation, String word) {
-        super(createdAt, modifiedAt, fkLessonId, translation);
+    public Word(long createdAt, long modifiedAt, long fkLessonId, boolean isSelected, Translation translation, String word) {
+        super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
         this.word = word;
     }
 }

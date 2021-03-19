@@ -65,16 +65,20 @@ public abstract class AppRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 LessonDao dao = instance.lessonDao();
 
-                Lesson a = new Lesson("Lesson 1", System.currentTimeMillis(), System.currentTimeMillis());
-                Lesson b = new Lesson("Lesson 2", System.currentTimeMillis(), System.currentTimeMillis());
+                Lesson a = new Lesson("Lesson 1", System.currentTimeMillis(), System.currentTimeMillis(), false);
+                Lesson b = new Lesson("Lesson 2", System.currentTimeMillis(), System.currentTimeMillis(), false);
+                Lesson c = new Lesson("Lesson 3", System.currentTimeMillis(), System.currentTimeMillis(), false);
+                Lesson d = new Lesson("Lesson 4", System.currentTimeMillis(), System.currentTimeMillis(), false);
                 long id = dao.insert(b);
+                id = dao.insert(c);
+                id = dao.insert(d);
                 id = dao.insert(a);
 
 
                 WordDao wordDao = instance.wordDao();
-                Word aa = new Word(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Word aa = new Word(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("trans 1", "phon 1"),"word 1");
-                Word bb = new Word(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Word bb = new Word(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("trans 2", "phon 2"),"word 2");
 
                 wordDao.insert(aa);
@@ -83,10 +87,10 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
 
                 ExpressionDao expDao = instance.expressionDao();
-                Expression aaa = new Expression(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Expression aaa = new Expression(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("exp 1", "phon exp 1"),"exp 1");
 
-                Expression bbb = new Expression(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Expression bbb = new Expression(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("exp 2", "phon exp 2"),"exp 2");
 
 
@@ -94,10 +98,10 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 expDao.insert(bbb);
 
                 SentenceDao senDao = instance.sentenceDao();
-                Sentence aaaa = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Sentence aaaa = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("sen 1", "phon sen 1"),"sen 1");
 
-                Sentence bbbb = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,
+                Sentence bbbb = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
                         new Translation("sen 2", "phon sen 2"),"sen 2");
 
                 senDao.insert(aaaa);

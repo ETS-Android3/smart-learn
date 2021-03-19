@@ -6,20 +6,18 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.smart_learn.R
-import com.smart_learn.data.entities.LessonDetailsK
 import com.smart_learn.core.general.SELECTED_LESSON_ID
 import com.smart_learn.core.general.indexesOf
 import com.smart_learn.core.general.showAddLessonDialog
+import com.smart_learn.data.entities.LessonDetailsK
 import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
 import com.smart_learn.presenter.view_models.LessonRVViewModelK
 import kotlinx.android.synthetic.main.activity_rv_lessons.*
 import kotlinx.android.synthetic.main.layout_lesson_details.view.*
+import kotlinx.android.synthetic.main.layout_lesson_details_action_mode.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -154,11 +152,13 @@ class LessonRVAdapterK(
         private val ivCheck: ImageView = itemView.ivCheckLesson
         private val viewHolderBackground: Drawable = itemView.background
 
-
         /**this constructor is for listener --> more info ( https://www.youtube.com/watch?v=ai9rSGcDhyQ )*/
         init{
 
-            itemView.setOnClickListener {
+            val mainSwipeLayout = itemView.findViewById<LinearLayout>(R.id.mainSwipeLayout)
+            val actionModeLayout = itemView.findViewById<LinearLayout>(R.id.actionModeLayout)
+
+            actionModeLayout?.setOnClickListener {
 
                 if(actionModeCallbackK != null) {
 
@@ -166,8 +166,7 @@ class LessonRVAdapterK(
                         items[adapterPosition].isSelected = false
                         selectedItems.remove(adapterPosition)
                         ivCheck.visibility = View.GONE
-                    }
-                    else{
+                    } else{
                         items[adapterPosition].isSelected = true
                         selectedItems.add(adapterPosition)
                         ivCheck.visibility = View.VISIBLE
@@ -176,7 +175,9 @@ class LessonRVAdapterK(
                     actionModeCallbackK?.refresh()
                     return@setOnClickListener
                 }
+            }
 
+            mainSwipeLayout.setOnClickListener {
 
                 // adapterPosition is equivalent to this.adapterPosition
                 // in this lambda function 'this' keyword is referred to itemView
@@ -190,7 +191,7 @@ class LessonRVAdapterK(
                 lessonRVViewModel.getParentActivity().startLessonActivityK()
             }
 
-            itemView.setOnLongClickListener {
+            mainSwipeLayout.setOnLongClickListener {
 
                 if(actionModeCallbackK == null) {
                     // Start ActionMode
@@ -236,10 +237,10 @@ class LessonRVAdapterK(
             if(lessonDetailsK.searchIndexes.isNotEmpty()){
                 //Log.e("mesaj","lalaala")
 
-                string = string.subSequence(0,lessonDetailsK.searchIndexes[0].first).toString() +
+                string = string.subSequence(0, lessonDetailsK.searchIndexes[0].first).toString() +
                         "<span style=\"background-color:yellow\">" +
                         string.subSequence(lessonDetailsK.searchIndexes[0].first,lessonDetailsK.searchIndexes[0].last).toString() + "</span>" +
-                        string.subSequence(lessonDetailsK.searchIndexes[0].last,string.length).toString()
+                        string.subSequence(lessonDetailsK.searchIndexes[0].last, string.length).toString()
 
                 // TODO: check this deprecated function
                 tvLessonName.text = Html.fromHtml(string)
