@@ -1,5 +1,6 @@
 package com.smart_learn.presenter.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -37,6 +38,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class LessonRVActivity extends AppCompatActivity {
+
+    public static final String LESSON_ID = "LESSON_ID";
 
     private LessonRVViewModel lessonRVViewModel;
     private LessonRVAdapter lessonRVAdapter;
@@ -121,9 +124,10 @@ public class LessonRVActivity extends AppCompatActivity {
         dialogFragment.show(getSupportFragmentManager(), "LessonRVActivity");
     }
 
-    public void startLessonActivity(){
-        //Intent intent = new Intent(this, LessonActivity.class);
-        //startActivity(intent);
+    public void startLessonActivity(long lessonId){
+        Intent intent = new Intent(this, LessonActivity.class);
+        intent.putExtra(LESSON_ID,lessonId);
+        startActivity(intent);
     }
 
     private void setListeners(ActivityRvLessonsBinding activityBinding){

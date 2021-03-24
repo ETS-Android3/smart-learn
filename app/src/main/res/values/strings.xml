@@ -25,6 +25,8 @@
     <string name="ok">OK</string>
     <string name="no">No</string>
     <string name="add_lesson">Add Lesson</string>
+    <string name="add_entrance">Add Entrance</string>
+    <string name="update_entrance">Update Entrance</string>
     <string name="settings">Settings</string>
     <string name="save">Save</string>
     <!-- TODO: Remove or change this placeholder text -->

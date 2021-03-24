@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presenter.activities.LessonRVActivity"></activity>
+        <activity android:name=".presenter.activities.LessonActivity"></activity>
+        <activity android:name=".presenter.activities.LessonRVActivity" />
         <activity android:name=".presenter.activities.OpenLessonActivity" />
         <activity android:name=".presenter.activities.SimpleLoginActivity" />
         <activity android:name=".presenter.activities.MainActivity">

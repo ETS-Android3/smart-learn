@@ -22,7 +22,7 @@ class EntranceRVViewModelK(private var entranceRVActivityK: EntranceRVActivityK)
             showAddEntranceDialog(
                 "EntranceRVActivityService",
                 activity,
-                R.layout.dialog_add_word,
+                R.layout.dialog_add_lesson_word,
                 applicationServiceK,
                 updateRecyclerView = true,
                 entranceRVAdapter = entrancesRVAdapter

@@ -1,10 +1,14 @@
 package com.smart_learn.core.services;
 
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.models.room.entities.helpers.ResponseInfo;
 import com.smart_learn.data.repository.WordRepository;
 
 import java.util.List;
@@ -34,6 +38,66 @@ public class WordService extends BasicRoomService<Word> {
 
     boolean checkIfWordExist(String word, long lessonId){
         return wordRepository.checkIfWordExist(word,lessonId);
+    }
+
+    private ResponseInfo wordDetailsCheck(Word word){
+
+        if(word.getWord().isEmpty()){
+            return new ResponseInfo(false,"Enter a word");
+        }
+
+        /* TODO: check word length
+         if(word.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_WORD){
+        Toast.makeText(activity, "This word is too big.",Toast.LENGTH_LONG).show()
+        return false
+        }
+
+        if(phonetic.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_PHONETIC){
+        Toast.makeText(activity, "This phonetic translation is too big.",
+            Toast.LENGTH_LONG).show()
+        return false
+        }
+
+         */
+
+        /*
+        // TODO: check to see if word exist in all database not only in one lesson
+        // add word only if this does not exists in current lesson
+        if (checkIfWordExist(word.getWord())) {
+            return new ResponseInfo(false,"Word " + word.getWord() + " already exists in this lesson. Choose other word");
+        }
+         */
+
+        // TODO: check if translation exists in lesson
+
+        return new ResponseInfo(true,"");
+    }
+
+    /** Try to add new Word using results from lesson entrance dialog */
+    public ResponseInfo tryToAddOrUpdateNewWord(@NonNull Word word, boolean update){
+        if(word == null){
+            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewWord] word is null");
+            return new ResponseInfo(false,"[Internal error. The modification was not saved.]");
+        }
+
+        // make some general checks
+        ResponseInfo responseInfo = wordDetailsCheck(word);
+        if(!responseInfo.isOk()){
+            return responseInfo;
+        }
+
+        // here word is valid
+        if(update){
+            word.setModifiedAt(System.currentTimeMillis());
+            update(word);
+            return responseInfo;
+        }
+
+        Word newWord = new Word(System.currentTimeMillis(), System.currentTimeMillis(), word.getFkLessonId(),
+                false, word.getTranslation(), word.getWord());
+        insert(newWord);
+
+        return responseInfo;
     }
 
 }

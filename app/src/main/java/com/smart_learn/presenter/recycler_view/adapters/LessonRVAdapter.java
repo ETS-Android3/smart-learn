@@ -24,6 +24,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutLessonDetailsBinding;
+import com.smart_learn.presenter.activities.LessonRVActivity;
 import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
 
 import java.util.ArrayList;
@@ -227,9 +228,8 @@ public class LessonRVAdapter extends ListAdapter <Lesson, LessonRVAdapter.Lesson
                 @Override
                 public void onClick(View v) {
                     // if action mode is not set then set selected lesson and launch LessonActivity
-                    //SELECTED_LESSON_ID = items[position].lessonId;
-
-                    //lessonRVViewModel.getParentActivity().startLessonActivityK();
+                    Lesson item = getItem(getAdapterPosition());
+                    ((LessonRVActivity)activityCallback.getActivity()).startLessonActivity(item.getLessonId());
                 }
             });
 

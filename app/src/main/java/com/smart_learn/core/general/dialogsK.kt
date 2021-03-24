@@ -13,7 +13,7 @@ import com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapterK
 import com.smart_learn.presenter.recycler_view.adapters.EntrancesRVAdapterK
 import com.smart_learn.data.repository.DatabaseSchemaK
 import com.smart_learn.core.services.ApplicationServiceK
-import kotlinx.android.synthetic.main.dialog_add_word.*
+import kotlinx.android.synthetic.main.dialog_add_lesson_word.*
 import kotlinx.android.synthetic.main.dialog_new_lesson.*
 
 

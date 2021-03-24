@@ -86,7 +86,7 @@ class EntrancesRVAdapterK(
         showAddEntranceDialog(
             "EntrancesRVAdapterK",
             activity,
-            R.layout.dialog_add_word,
+            R.layout.dialog_add_lesson_word,
             entranceRVViewModel.getApplicationService(),
             updateEntrance = true,
             entranceK = items[position],

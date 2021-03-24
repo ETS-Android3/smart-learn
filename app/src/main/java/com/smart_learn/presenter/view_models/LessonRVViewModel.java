@@ -10,7 +10,7 @@ import com.smart_learn.data.models.room.entities.Lesson;
 
 import java.util.List;
 
-public class LessonRVViewModel extends LessonViewModel  {
+public class LessonRVViewModel extends BasicLessonViewModel {
 
     // By default, the empty mode will be set to false in order to avoid showing him before
     // the first loading of the adapter list.

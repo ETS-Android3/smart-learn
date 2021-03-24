@@ -22,7 +22,7 @@ class LessonViewModelK(private var lessonActivityK: LessonActivityK)
             showAddEntranceDialog(
                 "LessonViewModelK",
                 activity,
-                R.layout.dialog_add_word,
+                R.layout.dialog_add_lesson_word,
                 applicationServiceK)
         }
 

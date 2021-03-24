@@ -13,25 +13,25 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.databinding.DialogNewLessonBinding;
-import com.smart_learn.presenter.view_models.LessonDialogViewModel;
+import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
+import com.smart_learn.databinding.DialogAddLessonWordBinding;
+import com.smart_learn.presenter.view_models.LessonEntranceDialogViewModel;
 
-/** https://developer.android.com/guide/topics/ui/dialogs */
-public class LessonDialog extends DialogFragment {
+public class LessonEntranceDialog extends DialogFragment {
 
-    private final Lesson lesson;
+    private final Word word;
     private final boolean setCancelable;
     private final int title;
     private final int positiveButton;
     private final int negativeButton;
-    private final DialogActionsCallback<DialogNewLessonBinding> dialogActionsCallback;
-    private LessonDialogViewModel lessonDialogViewModel;
+    private final DialogActionsCallback<DialogAddLessonWordBinding> dialogActionsCallback;
+    private LessonEntranceDialogViewModel lessonEntranceDialogViewModel;
 
 
     /**
-     * @param lesson Lesson to link with ViewModel which will be shown in dialog. If NULL ViewModel
-     *              default info`s will be shown.
+     * @param lessonEntrance LessonEntrance to link with ViewModel which will be shown in dialog.
+     *                      If NULL ViewModel default info`s will be shown.
      * @param setCancelable If setCancelable is true when you click beside the dialog the dialog is
      *                     dismissed
      * @param title Resource string id for dialog title
@@ -39,9 +39,9 @@ public class LessonDialog extends DialogFragment {
      * @param negativeButton The resource id of the text to display in the negative button
      * @param dialogActionsCallback Callback for actions related to positive and negative buttons
      * */
-    public LessonDialog(@Nullable Lesson lesson, boolean setCancelable, int title, int positiveButton,
-                        int negativeButton, DialogActionsCallback<DialogNewLessonBinding> dialogActionsCallback) {
-        this.lesson = lesson;
+    public LessonEntranceDialog(@Nullable LessonEntrance lessonEntrance, boolean setCancelable, int title, int positiveButton,
+                        int negativeButton, DialogActionsCallback<DialogAddLessonWordBinding> dialogActionsCallback) {
+        this.word = (Word)lessonEntrance;
         this.setCancelable = setCancelable;
         this.title = title;
         this.positiveButton = positiveButton;
@@ -55,14 +55,14 @@ public class LessonDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         // set data binding
-        DialogNewLessonBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.dialog_new_lesson,null, false);
+        DialogAddLessonWordBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.dialog_add_lesson_word,null, false);
         dialogBinding.setLifecycleOwner(this);
 
         setViewModel();
 
         // link data binding with view model
-        dialogBinding.setViewModel(lessonDialogViewModel);
+        dialogBinding.setViewModel(lessonEntranceDialogViewModel);
 
         // build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
@@ -101,9 +101,9 @@ public class LessonDialog extends DialogFragment {
     }
 
     private void setViewModel(){
-        lessonDialogViewModel = new ViewModelProvider(this).get(LessonDialogViewModel.class);
-        if(lesson != null){
-            lessonDialogViewModel.setLiveLessonInfo(lesson);
+        lessonEntranceDialogViewModel = new ViewModelProvider(this).get(LessonEntranceDialogViewModel.class);
+        if(word != null){
+            lessonEntranceDialogViewModel.setLiveLessonInfo(word);
         }
     }
 
