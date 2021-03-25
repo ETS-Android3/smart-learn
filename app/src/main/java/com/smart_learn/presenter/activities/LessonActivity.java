@@ -95,8 +95,8 @@ public class LessonActivity extends AppCompatActivity {
 
         activityBinding.btnTestLocal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TestService.getTestServiceInstance().currentTestMode.set(TestService.LOCAL_MODE_TEST.toInt())
-                //TestService.getTestServiceInstance().launchTestActivity()
+                Intent intent = new Intent(LessonActivity.this, TestLocalActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -170,12 +170,6 @@ public class LessonActivity extends AppCompatActivity {
         DialogFragment dialogFragment = basicLessonEntranceViewModel.prepareEntranceDialog(false, null, currentLessonId);
         dialogFragment.show(getSupportFragmentManager(), "LessonActivity");
     }
-
-    private void startTestGenerationActivity(){
-        //Intent intent = new Intent(this, TestGenerationActivity.class);
-        //startActivity(intent);
-    }
-
 
     /** Show entries from the selected lesson */
     private void startLessonEntriesRVActivity(){
