@@ -60,7 +60,7 @@ public class LessonService extends BasicRoomService<Lesson> {
         }
 
         /* TODO: check name length
-        if (lessonName.length() > DatabaseSchemaK.LessonsTable.DIMENSION_COLUMN_NAME) {
+        if (lessonName.length() > DatabaseSchema.LessonsTable.DIMENSION_COLUMN_NAME) {
             liveToastMessage.setValue("This name is too big. Choose a shorter name.");
             return false;
         }

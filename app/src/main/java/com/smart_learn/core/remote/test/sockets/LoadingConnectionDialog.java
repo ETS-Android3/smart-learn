@@ -11,11 +11,12 @@ import android.widget.TextView;
 import com.smart_learn.R;
 import com.smart_learn.core.config.CurrentConfig;
 import com.smart_learn.core.config.GeneralConfig;
-import com.smart_learn.data.entities.LessonEntranceK;
 import com.smart_learn.core.remote.test.config.StrictCodes;
 import com.smart_learn.core.services.TestService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.core.utilities.Logs;
+import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,16 +75,16 @@ public class LoadingConnectionDialog {
         });
     }
 
-    private List<LessonEntranceK> createSampleData(){
+    private List<LessonEntrance> createSampleData(){
 
-        List<LessonEntranceK> lessonEntranceKList = new ArrayList<>();
-        lessonEntranceKList.add(new LessonEntranceK(-1,"hello","salut","", 0));
-        lessonEntranceKList.add(new LessonEntranceK(-1,"two","2","", 0));
-        lessonEntranceKList.add(new LessonEntranceK(-1,"three","3","", 0));
-        lessonEntranceKList.add(new LessonEntranceK(-1,"four","4","", 0));
-        lessonEntranceKList.add(new LessonEntranceK(-1,"five","5","", 0));
+        List<LessonEntrance> lessonEntranceList = new ArrayList<>();
+        //lessonEntranceList.add(new LessonEntrance(-1,"hello","salut","", 0));
+        //lessonEntranceList.add(new LessonEntrance(-1,"two","2","", 0));
+        //lessonEntranceList.add(new LessonEntrance(-1,"three","3","", 0));
+        //lessonEntranceList.add(new LessonEntrance(-1,"four","4","", 0));
+        //lessonEntranceList.add(new LessonEntrance(-1,"five","5","", 0));
 
-        return lessonEntranceKList;
+        return lessonEntranceList;
     }
 
     /** helper for creating connection message */
@@ -97,14 +98,14 @@ public class LoadingConnectionDialog {
                         .put(StrictCodes.PARTICIPANTS_NUMBER, TestService.getTestServiceInstance().maxParticipants);
 
                 // if participant generated the test send test details
-                List<LessonEntranceK> lessonEntranceKList = createSampleData();
+                List<LessonEntrance> lessonEntranceList = createSampleData();
 
                 JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < lessonEntranceKList.size(); i++){
+                for (int i = 0; i < lessonEntranceList.size(); i++){
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(StrictCodes.QUESTION_ID,i)
-                            .put(StrictCodes.QUESTION, lessonEntranceKList.get(i).getWord())
-                            .put(StrictCodes.RESPONSE, lessonEntranceKList.get(i).getTranslation());
+                            .put(StrictCodes.QUESTION, ((Word)lessonEntranceList.get(i)).getWord())
+                            .put(StrictCodes.RESPONSE, lessonEntranceList.get(i).getTranslation());
                     jsonArray.put(jsonObject);
                 }
 

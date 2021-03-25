@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.smart_learn.presenter.activities.TestActivityK;
+import com.smart_learn.presenter.activities.TestLocalActivity;
 import com.smart_learn.presenter.activities.TestOnlineActivity;
 import com.smart_learn.presenter.activities.ui.test.ChatMessageModel;
 import com.smart_learn.presenter.activities.ui.test.ChatMessageRVAdapter;
@@ -196,7 +196,7 @@ public final class TestService {
                 GeneralUtilities.showToast(Logs.ERROR + "No test mode is selected");
                 return;
             case LOCAL_MODE_TEST:
-                intent = new Intent(CurrentConfig.getCurrentConfigInstance().currentContext, TestActivityK.class);
+                intent = new Intent(CurrentConfig.getCurrentConfigInstance().currentContext, TestLocalActivity.class);
                 break;
             case REMOTE_MODE_TEST:
                 intent = new Intent(CurrentConfig.getCurrentConfigInstance().currentContext, TestOnlineActivity.class);

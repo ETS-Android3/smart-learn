@@ -31,11 +31,6 @@
         <activity android:name=".presenter.activities.TestSettingsActivity" />
         <activity android:name=".presenter.activities.TestGenerationActivity" />
         <activity android:name=".presenter.activities.TestOnlineActivity" />
-        <activity android:name=".presenter.activities.EntranceRVActivityK" />
-        <activity android:name=".presenter.activities.TestActivityK" />
-        <activity android:name=".presenter.activities.LessonActivityK" />
-        <activity android:name=".presenter.activities.LessonRVActivityK" />
-        <activity android:name=".presenter.activities.OpenLessonActivityK" />
     </application>
 
 </manifest>

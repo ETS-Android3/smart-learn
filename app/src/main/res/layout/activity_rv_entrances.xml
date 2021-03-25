@@ -13,7 +13,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.EntranceRVActivityK"
         android:background="@color/background">
 
         <include

@@ -40,7 +40,7 @@ public class SimpleLoginActivity extends AppCompatActivity {
     }
 
     private void goToOpenLessonActivity(){
-        Intent intent = new Intent(this, OpenLessonActivityK.class);
+        Intent intent = new Intent(this, OpenLessonActivity.class);
         startActivity(intent);
     }
 

@@ -61,12 +61,12 @@ public class WordService extends BasicRoomService<Word> {
         }
 
         /* TODO: check word length
-         if(word.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_WORD){
+         if(word.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_WORD){
         Toast.makeText(activity, "This word is too big.",Toast.LENGTH_LONG).show()
         return false
         }
 
-        if(phonetic.length > DatabaseSchemaK.EntriesTable.DIMENSION_COLUMN_PHONETIC){
+        if(phonetic.length > DatabaseSchema.EntriesTable.DIMENSION_COLUMN_PHONETIC){
         Toast.makeText(activity, "This phonetic translation is too big.",
             Toast.LENGTH_LONG).show()
         return false

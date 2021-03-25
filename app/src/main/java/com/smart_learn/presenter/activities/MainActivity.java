@@ -24,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TestService.getTestServiceInstance().currentTestMode.set(TestService.REMOTE_MODE_TEST);
         //lessonActivity.startTestGenerationActivity()
-        //Intent intent = new Intent(this, OpenLessonActivity.class);
-        Intent intent = new Intent(this, OpenLessonActivityK.class);
+        Intent intent = new Intent(this, OpenLessonActivity.class);
         startActivity(intent);
     }
 }
