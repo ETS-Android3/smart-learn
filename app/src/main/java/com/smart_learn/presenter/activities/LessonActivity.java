@@ -110,7 +110,7 @@ public class LessonActivity extends AppCompatActivity {
 
         activityBinding.btnDisplayWords.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //lessonActivityK.startEntrancesRVActivity()
+                startLessonEntriesRVActivity();
             }
         });
 
@@ -178,8 +178,9 @@ public class LessonActivity extends AppCompatActivity {
 
 
     /** Show entries from the selected lesson */
-    private void startLessonEntranceRVActivity(){
-        //Intent intent = new Intent(this, EntranceRVActivity.class);
-        //startActivity(intent);
+    private void startLessonEntriesRVActivity(){
+        Intent intent = new Intent(this, LessonEntriesRVActivity.class);
+        intent.putExtra(LessonRVActivity.LESSON_ID,currentLessonId);
+        startActivity(intent);
     }
 }

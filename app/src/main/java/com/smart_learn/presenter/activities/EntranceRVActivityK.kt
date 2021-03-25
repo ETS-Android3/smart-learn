@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import com.smart_learn.R
 import com.smart_learn.core.general.showSettingsDialog
 import com.smart_learn.presenter.view_models.EntranceRVViewModelK

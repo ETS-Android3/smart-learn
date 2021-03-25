@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lessonCardView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="10dp"
-    app:cardPreventCornerOverlap="false">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="passedViewHolder"
+            type="com.smart_learn.presenter.recycler_view.adapters.LessonEntriesRVAdapter.WordViewHolder" />
+    </data>
 
     <LinearLayout
+        android:id="@+id/actionModeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@{passedViewHolder.liveWord.selected ? @color/white_selected : @color/white}">
 
         <TextView
             android:id="@+id/tvEntranceWord"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="word"
+            android:text="@{passedViewHolder.liveWord.word}"
             android:textSize="24sp" />
 
         <TextView
@@ -29,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="translation"
+            android:text="@{passedViewHolder.liveWord.translation.translation}"
             android:textSize="24sp" />
 
         <TextView
@@ -36,13 +38,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="phonetic"
+            android:text="@{passedViewHolder.liveWord.translation.phonetic}"
             android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/ivCheck"
             android:layout_width="match_parent"
             android:layout_height="47dp"
+            android:visibility="@{passedViewHolder.liveWord.selected ? View.VISIBLE : View.INVISIBLE}"
             app:srcCompat="@android:drawable/checkbox_on_background" />
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</layout>

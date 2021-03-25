@@ -11,6 +11,7 @@ import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.ResponseInfo;
 import com.smart_learn.data.repository.WordRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WordService extends BasicRoomService<Word> {
@@ -28,8 +29,21 @@ public class WordService extends BasicRoomService<Word> {
         return wordRepository.getSampleWord(word);
     }
 
-    public LiveData<List<Word>> getAllLiveWords(){
-        return wordRepository.getAllLiveWords();
+    public LiveData<List<Word>> getCurrentLessonLiveWords(long currentLessonId){
+        return wordRepository.getCurrentLessonLiveWords(currentLessonId);
+    }
+
+    @NonNull
+    public List<Word> getCurrentLessonSampleWords(long currentLessonId){
+        List<Word> tmp = wordRepository.getCurrentLessonLiveWords(currentLessonId).getValue();
+        if(tmp == null){
+            return new ArrayList<>();
+        }
+        return tmp;
+    }
+
+    public LiveData<Word> getSampleLiveWord(long wordId) {
+        return wordRepository.getSampleLiveWord(wordId);
     }
 
     boolean checkIfWordExist(String word){
@@ -99,5 +113,13 @@ public class WordService extends BasicRoomService<Word> {
 
         return responseInfo;
     }
+
+    public void deleteSelectedItems(long lessonId){ wordRepository.deleteSelectedItems(lessonId); }
+
+    public void updateSelectAll(boolean isSelected, long lessonId){ wordRepository.updateSelectAll(isSelected,lessonId); }
+
+    public LiveData<Integer> getLiveSelectedItemsCount(long lessonId){ return wordRepository.getLiveSelectedItemsCount(lessonId); }
+
+    public LiveData<Integer> getLiveItemsNumber(long lessonId){ return wordRepository.getLiveItemsNumber(lessonId); }
 
 }

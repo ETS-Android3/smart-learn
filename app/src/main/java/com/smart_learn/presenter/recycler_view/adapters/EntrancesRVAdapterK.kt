@@ -17,7 +17,8 @@ import com.smart_learn.core.general.showAddEntranceDialog
 import com.smart_learn.presenter.recycler_view.ActionModeCallbackK
 import com.smart_learn.presenter.view_models.EntranceRVViewModelK
 import kotlinx.android.synthetic.main.activity_rv_entrances.*
-import kotlinx.android.synthetic.main.layout_lesson_entrance_details.view.*
+import kotlinx.android.synthetic.main.layout_lesson_entry_details.view.*
+import kotlinx.android.synthetic.main.layout_lesson_entry_details_normal_mode.view.*
 import java.util.*
 
 class EntrancesRVAdapterK(
@@ -27,7 +28,7 @@ class EntrancesRVAdapterK(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return EntrancesViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.layout_lesson_entrance_details,
+                R.layout.layout_lesson_entry_details,
                 parent, false
             )
         )
