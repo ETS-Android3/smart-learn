@@ -43,7 +43,7 @@ public class LoginFragment extends Fragment {
         binding.setSharedViewModel(sharedViewModel);
 
         // set buttons listeners
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.btnLoginLoginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ResponseInfo responseInfo = sharedViewModel.getLiveLoginForm().getValue().goodLoginCredentials();
@@ -57,10 +57,10 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegisterLoginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_loginFragment_to_registerFragment);
+                navController.navigate(R.id.action_login_fragment_authentication_activity_to_register_fragment_authentication_activity);
             }
         });
 

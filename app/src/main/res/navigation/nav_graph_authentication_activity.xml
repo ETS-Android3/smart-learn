@@ -2,24 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_authentication"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/nav_graph_authentication_activity"
+    app:startDestination="@id/login_fragment_authentication_activity">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/login_fragment_authentication_activity"
         android:name="com.smart_learn.presenter.activities.authentication.fragments.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
+
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
+            android:id="@+id/action_login_fragment_authentication_activity_to_register_fragment_authentication_activity"
+            app:destination="@id/register_fragment_authentication_activity"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
-        android:id="@+id/registerFragment"
+        android:id="@+id/register_fragment_authentication_activity"
         android:name="com.smart_learn.presenter.activities.authentication.fragments.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />

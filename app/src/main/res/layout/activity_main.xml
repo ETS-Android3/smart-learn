@@ -8,7 +8,7 @@
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+        android:id="@+id/drawer_layout_main_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presenter.activities.main.MainActivity"
@@ -17,7 +17,7 @@
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/navigation_view"
+            android:id="@+id/navigation_view_main_activity"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
             app:headerLayout="@layout/nav_header"
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarMain"
+                android:id="@+id/toolbar_main_activity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"

@@ -18,71 +18,68 @@
         tools:context=".presenter.activities.authentication.fragments.register.RegisterFragment">
 
         <TextView
-            android:id="@+id/tvInfo_1"
+            android:id="@+id/tv_info_1_register_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
             android:text="Already have an account?"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_register_register_fragment" />
 
         <TextView
-            android:id="@+id/tvInfo_2"
+            android:id="@+id/tv_info_2_register_fragment"
             android:layout_width="0dp"
             android:layout_height="51dp"
-            android:layout_marginTop="32dp"
             android:text="Create a new account"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/etProfileLayout"
+            app:layout_constraintBottom_toTopOf="@+id/profile_layout_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btn_register_register_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="141dp"
             android:layout_marginEnd="182dp"
             android:text="Register"
-            app:layout_constraintBottom_toTopOf="@+id/tvInfo_1"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_1_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etRetypePasswordLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/retype_password_layout_register_fragment" />
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btn_login_register_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="141dp"
             android:layout_marginEnd="182dp"
-            android:layout_marginBottom="20dp"
             android:text="Login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvInfo_1" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_register_fragment" />
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etProfileLayout"
+            android:id="@+id/profile_layout_register_fragment"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginStart="54dp"
             android:layout_marginEnd="52dp"
             android:ems="10"
             android:hint="Profile name"
-            app:layout_constraintBottom_toTopOf="@+id/etEmailLayout"
+            app:layout_constraintBottom_toTopOf="@+id/email_address_layout_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvInfo_2" >
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_register_fragment" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -93,17 +90,17 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etEmailLayout"
+                android:id="@+id/email_address_layout_register_fragment"
                 android:layout_width="305dp"
                 android:layout_height="54dp"
                 android:layout_marginStart="54dp"
                 android:layout_marginEnd="52dp"
                 android:ems="10"
                 android:hint="Email"
-                app:layout_constraintBottom_toTopOf="@+id/etPasswordLayout"
+                app:layout_constraintBottom_toTopOf="@+id/password_layout_register_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etProfileLayout" >
+                app:layout_constraintTop_toBottomOf="@+id/profile_layout_register_fragment" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -114,17 +111,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPasswordLayout"
+            android:id="@+id/password_layout_register_fragment"
             android:layout_width="307dp"
             android:layout_height="54dp"
             android:layout_marginStart="54dp"
             android:layout_marginEnd="52dp"
             android:ems="10"
             android:hint="Password"
-            app:layout_constraintBottom_toTopOf="@+id/etRetypePasswordLayout"
+            app:layout_constraintBottom_toTopOf="@+id/retype_password_layout_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmailLayout"
+            app:layout_constraintTop_toBottomOf="@+id/email_address_layout_register_fragment"
             app:passwordToggleEnabled="true" >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -136,17 +133,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etRetypePasswordLayout"
+            android:id="@+id/retype_password_layout_register_fragment"
             android:layout_width="305dp"
             android:layout_height="54dp"
             android:layout_marginStart="54dp"
             android:layout_marginEnd="52dp"
             android:ems="10"
             android:hint="Retype password"
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+            app:layout_constraintBottom_toTopOf="@+id/btn_register_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPasswordLayout"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout_register_fragment"
             app:passwordToggleEnabled="true" >
 
             <com.google.android.material.textfield.TextInputEditText

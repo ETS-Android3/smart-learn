@@ -40,7 +40,7 @@ public class RegisterFragment extends Fragment {
         binding.setSharedViewModel(sharedViewModel);
         binding.setViewModel(registerViewModel);
 
-        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegisterRegisterFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ResponseInfo responseInfo = registerViewModel.getLiveRegisterForm().getValue().goodRegisterCredentials();
@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
                 GeneralUtilities.showShortToastMessage(requireContext(), responseInfo.getInfo());
             }
         });
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.btnLoginRegisterFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requireActivity().onBackPressed();

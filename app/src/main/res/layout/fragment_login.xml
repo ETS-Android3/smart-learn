@@ -15,30 +15,30 @@
         tools:context=".presenter.activities.authentication.fragments.login.LoginFragment">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_info_1_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Welcome back"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/emailAddressLayout"
+            app:layout_constraintBottom_toTopOf="@+id/email_address_layout_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailAddressLayout"
+            android:id="@+id/email_address_layout_login_fragment"
             android:layout_width="346dp"
             android:layout_height="63dp"
             android:layout_marginStart="39dp"
             android:layout_marginEnd="26dp"
             android:ems="10"
             android:hint="Email"
-            app:layout_constraintBottom_toTopOf="@+id/passwordLayout"
+            app:layout_constraintBottom_toTopOf="@+id/password_layout_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_login_fragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -49,17 +49,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordLayout"
+            android:id="@+id/password_layout_login_fragment"
             android:layout_width="344dp"
             android:layout_height="61dp"
             android:layout_marginStart="39dp"
             android:layout_marginEnd="26dp"
             android:ems="10"
             android:hint="Password"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailAddressLayout"
+            app:layout_constraintTop_toBottomOf="@+id/email_address_layout_login_fragment"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -71,31 +71,31 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btn_login_login_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
             android:layout_marginEnd="175dp"
             android:text="Login"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/password_layout_login_fragment" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_info_2_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Not have an account? "
             android:textAlignment="center"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+            app:layout_constraintBottom_toTopOf="@+id/btn_register_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_login_fragment" />
 
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btn_register_login_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
@@ -104,6 +104,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_login_fragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
