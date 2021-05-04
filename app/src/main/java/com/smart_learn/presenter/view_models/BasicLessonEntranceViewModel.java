@@ -18,7 +18,7 @@ import com.smart_learn.core.services.WordService;
 import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
-import com.smart_learn.data.models.room.entities.helpers.ResponseInfo;
+import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.databinding.DialogAddLessonWordBinding;
 import com.smart_learn.presenter.activities.dialogs.DialogActionsCallback;
 import com.smart_learn.presenter.activities.dialogs.DialogDismissCallback;

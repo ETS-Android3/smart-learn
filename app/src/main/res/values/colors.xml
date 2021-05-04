@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary_second">#0EA8ED</color>
+    <color name="colorPrimaryDark_second">#0EA8ED</color>
+    <color name="colorPrimary">#F2F2F2</color>
+    <color name="colorPrimaryDark">#F2F2F2</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorResult">#DA0303</color>
-    <color name="colorToolbar">#0EA8ED</color>
     <color name="white">#FFFFFF</color>
     <color name="white_closed">#AFAFAF</color>
     <color name="white_selected">#E6E6E6</color>
@@ -20,4 +21,6 @@
     <color name="purple">#b800e6</color>
     <color name="background">#f4f4f4</color>
     <color name="skyBlue">#2196F3</color>
+    <color name="transparent">#00000000</color>
+    <color name="toast_primary">#7C7B7B</color>
 </resources>

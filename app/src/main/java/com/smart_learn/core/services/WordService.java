@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.models.room.entities.Word;
-import com.smart_learn.data.models.room.entities.helpers.ResponseInfo;
+import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.data.repository.WordRepository;
 
 import java.util.ArrayList;

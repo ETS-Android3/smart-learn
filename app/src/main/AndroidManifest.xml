@@ -7,18 +7,20 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".presenter.helpers.ApplicationController"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".presenter.activities.authentication.AuthenticationActivity"></activity>
         <activity android:name=".presenter.activities.TestLocalActivity" />
         <activity android:name=".presenter.activities.LessonEntriesRVActivity" />
         <activity android:name=".presenter.activities.LessonActivity" />
         <activity android:name=".presenter.activities.LessonRVActivity" />
         <activity android:name=".presenter.activities.OpenLessonActivity" />
         <activity android:name=".presenter.activities.SimpleLoginActivity" />
-        <activity android:name=".presenter.activities.MainActivity">
+        <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

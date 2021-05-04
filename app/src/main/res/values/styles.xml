@@ -6,6 +6,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!-- status bar appearance -->
+        <!--https://imstudio.medium.com/android-change-status-bar-text-color-659680fce49b-->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- app activities/fragments animations -->
+        <item name="android:windowAnimationStyle">@style/AppTheme.CustomActivityAnimation</item>
+
         <!-- toolbar options menu appearance -->
         <item name="android:itemBackground">@color/colorAccent</item>
 
@@ -27,5 +35,32 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- app activities/fragments animations -->
+    <style name="AppTheme.CustomActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="AppTheme.BlackStyleToolbar" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <!-- For custom toast messages -->
+    <style name="AppTheme.CustomToast">
+        <item name="stTextColor">@color/white</item>
+        <item name="stColorBackground">@color/toast_primary</item>
+    </style>
+
+    <!-- For navigation drawer -->
+    <!-- In xml files call it: 'AppTheme.NavigationView'
+         In java files call it: 'R.style.AppTheme_CustomToast' -->
+    <style name="AppTheme.NavigationView">
+        <item name="colorPrimary">@color/skyBlue</item> <!-- color for the selected item -->
+        <item name="android:textColorSecondary">@color/black</item>
+    </style>
 
 </resources>

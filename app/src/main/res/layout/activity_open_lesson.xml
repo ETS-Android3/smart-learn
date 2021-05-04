@@ -29,7 +29,7 @@
             android:layout_height="?attr/actionBarSize"
             app:titleMarginStart="40dp"
             android:textDirection="locale"
-            android:background="@color/colorToolbar"
+            android:background="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:title="@string/app_name" />

@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.muddzdev.styleabletoast.StyleableToast;
+import com.smart_learn.R;
 import com.smart_learn.core.config.CurrentConfig;
 
 public interface GeneralUtilities {
@@ -16,6 +18,12 @@ public interface GeneralUtilities {
                 .currentActivity.runOnUiThread(() -> Toast.makeText(
                 CurrentConfig.getCurrentConfigInstance().currentActivity.getApplicationContext(),
                 message,Toast.LENGTH_LONG).show());
+    }
+
+    static void showShortToastMessage(final android.content.Context context, final String message){
+        // https://www.youtube.com/watch?v=fq8TDVqpmZ0
+        // https://github.com/Muddz/StyleableToast
+        StyleableToast.makeText(context, message, Toast.LENGTH_LONG, R.style.AppTheme_CustomToast).show();
     }
 
     static void notImplemented() {
