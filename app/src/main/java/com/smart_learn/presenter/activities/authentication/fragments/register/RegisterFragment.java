@@ -15,6 +15,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentRegisterBinding;
+import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 
@@ -94,8 +95,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // reset toolbar name
-        sharedViewModel.setLiveToolbarTitle(getResources().getString(R.string.register));
+        ((AuthenticationActivity)requireActivity()).resetToolbar(getResources().getString(R.string.register));
         // update register form if data were passing
         registerViewModel.getLiveRegisterForm().getValue().updateFromLoginForm(sharedViewModel.getLiveLoginForm().getValue());
     }

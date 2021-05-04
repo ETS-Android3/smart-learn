@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="sharedViewModel"
-            type="com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +22,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@{sharedViewModel.liveToolbarTitle}"
             app:theme="@style/AppTheme.BlackStyleToolbar" />
 
         <androidx.fragment.app.FragmentContainerView

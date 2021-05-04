@@ -17,15 +17,9 @@ public class AuthenticationSharedViewModel extends AndroidViewModel {
 
     @Getter
     private final MutableLiveData<LoginForm> liveLoginForm = new MutableLiveData<>(new LoginForm(null, null));
-    private final MutableLiveData<String> liveToolbarTitle = new MutableLiveData<>("");
 
     public AuthenticationSharedViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<String> getLiveToolbarTitle() {return liveToolbarTitle;}
-
-    public void setLiveToolbarTitle(String name){
-        liveToolbarTitle.setValue(name);
-    }
 }

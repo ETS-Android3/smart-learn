@@ -17,6 +17,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentLoginBinding;
+import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -75,8 +76,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // reset toolbar name
-        sharedViewModel.setLiveToolbarTitle(getResources().getString(R.string.login));
+        ((AuthenticationActivity)requireActivity()).resetToolbar(getResources().getString(R.string.login));
     }
 
     private void setViewModel(){
