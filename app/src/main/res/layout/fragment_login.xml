@@ -18,48 +18,57 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:text="Welcome back"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/emailAddressLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etEmailAddress"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailAddressLayout"
             android:layout_width="346dp"
             android:layout_height="63dp"
             android:layout_marginStart="39dp"
-            android:layout_marginTop="48dp"
             android:layout_marginEnd="26dp"
-            android:layout_marginBottom="22dp"
             android:ems="10"
             android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:text="@={sharedViewModel.liveLoginForm.email}"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword"
+            app:layout_constraintBottom_toTopOf="@+id/passwordLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <EditText
-            android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:text="@={sharedViewModel.liveLoginForm.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordLayout"
             android:layout_width="344dp"
             android:layout_height="61dp"
             android:layout_marginStart="39dp"
             android:layout_marginEnd="26dp"
-            android:layout_marginBottom="67dp"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:text="@={sharedViewModel.liveLoginForm.password}"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmailAddress"
-            app:passwordToggleEnabled="true" />
+            app:layout_constraintTop_toBottomOf="@+id/emailAddressLayout"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:text="@={sharedViewModel.liveLoginForm.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnLogin"
@@ -67,18 +76,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="148dp"
             android:layout_marginEnd="175dp"
-            android:layout_marginBottom="55dp"
             android:text="Login"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="45dp"
             android:text="Not have an account? "
             android:textAlignment="center"
             android:textSize="24sp"

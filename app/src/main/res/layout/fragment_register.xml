@@ -40,7 +40,7 @@
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/etProfile"
+            app:layout_constraintBottom_toTopOf="@+id/etProfileLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvInfo_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etRetypePassword" />
+            app:layout_constraintTop_toBottomOf="@+id/etRetypePasswordLayout" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -70,65 +70,92 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvInfo_1" />
 
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="305dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
-            android:ems="10"
-            android:hint="Email"
-            android:text="@={sharedViewModel.liveLoginForm.email}"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/etPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etProfile" />
 
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="307dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:text="@={sharedViewModel.liveLoginForm.password}"
-            app:layout_constraintBottom_toTopOf="@+id/etRetypePassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etEmail" />
-
-        <EditText
-            android:id="@+id/etRetypePassword"
-            android:layout_width="305dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
-            android:ems="10"
-            android:hint="Retype password"
-            android:inputType="textPassword"
-            android:text="@={viewModel.liveRegisterForm.retypedPassword}"
-            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
-
-        <EditText
-            android:id="@+id/etProfile"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etProfileLayout"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginStart="54dp"
             android:layout_marginEnd="52dp"
             android:ems="10"
             android:hint="Profile name"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.liveRegisterForm.profile}"
-            app:layout_constraintBottom_toTopOf="@+id/etEmail"
+            app:layout_constraintBottom_toTopOf="@+id/etEmailLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvInfo_2" />
+            app:layout_constraintTop_toBottomOf="@+id/tvInfo_2" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.liveRegisterForm.profile}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etEmailLayout"
+                android:layout_width="305dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="54dp"
+                android:layout_marginEnd="52dp"
+                android:ems="10"
+                android:hint="Email"
+                app:layout_constraintBottom_toTopOf="@+id/etPasswordLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etProfileLayout" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                android:text="@={sharedViewModel.liveLoginForm.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswordLayout"
+            android:layout_width="307dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="54dp"
+            android:layout_marginEnd="52dp"
+            android:ems="10"
+            android:hint="Password"
+            app:layout_constraintBottom_toTopOf="@+id/etRetypePasswordLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etEmailLayout"
+            app:passwordToggleEnabled="true" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:text="@={sharedViewModel.liveLoginForm.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etRetypePasswordLayout"
+            android:layout_width="305dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="54dp"
+            android:layout_marginEnd="52dp"
+            android:ems="10"
+            android:hint="Retype password"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPasswordLayout"
+            app:passwordToggleEnabled="true" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:text="@={viewModel.liveRegisterForm.retypedPassword}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
