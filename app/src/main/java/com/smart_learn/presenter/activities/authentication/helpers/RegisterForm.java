@@ -1,10 +1,6 @@
 package com.smart_learn.presenter.activities.authentication.helpers;
 
-import android.text.TextUtils;
-
-import com.smart_learn.R;
-import com.smart_learn.core.helpers.ResponseInfo;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import java.util.regex.Pattern;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,32 +9,26 @@ import lombok.Setter;
 @Setter
 public class RegisterForm extends BasicForm {
 
+    public final static int MAX_PROFILE_LENGTH = 20;
+
+    // TODO: make a regex for emails (email is verified by firebase but check it before also)
+    //public final static Pattern EMAIL_REGEX_PATTERN = Pattern.compile("^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    public final static Pattern EMAIL_REGEX_PATTERN = Pattern.compile("^(.+)@(.+)$", Pattern.CASE_INSENSITIVE);
+
+    // TODO: make a regex for password
+    // at least one letter and one number
+    //public final static Pattern PASSWORD_REGEX_PATTERN = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]$", Pattern.CASE_INSENSITIVE);
+    public final static Pattern PASSWORD_REGEX_PATTERN = Pattern.compile("^(.+)$", Pattern.CASE_INSENSITIVE);
+
     private String profile;
+    private String retypedEmail;
     private String retypedPassword;
 
-    public RegisterForm(String profile, String email, String password, String retypedPassword) {
+    public RegisterForm(String profile, String email, String retypedEmail, String password, String retypedPassword) {
         super(email, password);
         this.profile = profile == null? null : profile.trim();
+        this.retypedEmail = retypedEmail == null? null : retypedEmail.trim();
         this.retypedPassword = retypedPassword == null? null : retypedPassword.trim();
-    }
-
-    public ResponseInfo goodRegisterCredentials(){
-        if(!TextUtils.isEmpty(profile) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) &&
-                !TextUtils.isEmpty(retypedPassword)){
-            ResponseInfo emailStatus = super.goodEmail(email);
-            ResponseInfo passwordStatus = super.goodPassword(password);
-            if(!emailStatus.isOk()){
-                return emailStatus;
-            }
-            if(!passwordStatus.isOk()){
-                return passwordStatus;
-            }
-            if(!password.equals(retypedPassword)){
-                return new ResponseInfo(false, ApplicationController.getInstance().getString(R.string.passwords_not_matching));
-            }
-            return new ResponseInfo(true, "");
-        }
-        return new ResponseInfo(false, ApplicationController.getInstance().getString(R.string.empty_credentials));
     }
 
     public void updateFromLoginForm(LoginForm loginForm){

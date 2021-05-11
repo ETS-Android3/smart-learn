@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presenter.activities.authentication.AuthenticationActivity"></activity>
+        <activity android:name=".presenter.activities.guest.GuestActivity"></activity>
+        <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
         <activity android:name=".presenter.activities.TestLocalActivity" />
         <activity android:name=".presenter.activities.LessonEntriesRVActivity" />
         <activity android:name=".presenter.activities.LessonActivity" />

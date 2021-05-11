@@ -8,20 +8,20 @@
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout_main_activity"
+        android:id="@+id/drawer_layout_guest_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.main.MainActivity"
+        tools:context=".presenter.activities.guest.GuestActivity"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/navigation_view_main_activity"
+            android:id="@+id/navigation_view_guest_activity"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
-            app:headerLayout="@layout/nav_header_main_activity"
-            app:menu="@menu/menu_main_activity">
+            app:headerLayout="@layout/nav_header_guest_activity"
+            app:menu="@menu/menu_guest_activity">
 
         </com.google.android.material.navigation.NavigationView>
 
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_main_activity"
+                android:id="@+id/toolbar_guest_activity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
@@ -40,23 +40,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/ic_baseline_menu_24"
-                app:title="Home"
+                app:title="Home Guest"
                 app:theme="@style/AppTheme.BlackStyleToolbar" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="177dp"
-                android:layout_marginTop="220dp"
-                android:layout_marginEnd="176dp"
-                android:layout_marginBottom="436dp"
-                android:text="Main"
+                android:layout_marginStart="163dp"
+                android:layout_marginTop="157dp"
+                android:layout_marginEnd="190dp"
+                android:layout_marginBottom="499dp"
+                android:text="Guest"
                 android:textSize="34sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_main_activity" />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_guest_activity" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

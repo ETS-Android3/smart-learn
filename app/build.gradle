@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
+// for firebase
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
@@ -117,8 +119,17 @@ dependencies {
     // https://www.youtube.com/watch?v=fq8TDVqpmZ0
     implementation 'com.muddzdev:styleabletoast:2.3.0'
 
+    /* START Firebase */
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
 
+    // Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics'
 
+    // Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
+
+    /* END Firebase */
 
     // for debugging with SQLite on phone
     // https://stackoverflow.com/questions/19194576/how-do-i-view-the-sqlite-database-on-an-android-device

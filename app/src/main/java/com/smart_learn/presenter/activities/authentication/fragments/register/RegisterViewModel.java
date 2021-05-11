@@ -1,27 +1,292 @@
 package com.smart_learn.presenter.activities.authentication.fragments.register;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.smart_learn.R;
+import com.smart_learn.core.utilities.NetworkUtilities;
+import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
+import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 
 import lombok.Getter;
+import timber.log.Timber;
 
+@Getter
 public class RegisterViewModel extends BasicAndroidViewModel {
 
-    @Getter
+    // used in fragment for checking field length
+    private final int maxProfileNameLength;
+
     private final MutableLiveData<RegisterForm> liveRegisterForm;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        liveRegisterForm = new MutableLiveData<>(new RegisterForm(null, null, null, null));
+        maxProfileNameLength = RegisterForm.MAX_PROFILE_LENGTH;
+        liveRegisterForm = new MutableLiveData<>(new RegisterForm(null, null, null,
+                null, null));
     }
 
-    public void register(RegisterForm registerForm){
+    public void register(RegisterFragment fragment){
 
+        if(!NetworkUtilities.goodConnection()){
+            liveToastMessage.setValue(fragment.getString(R.string.no_network));
+            return;
+        }
+
+        // this never should be null but double check it
+        if(liveRegisterForm.getValue() == null){
+            liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+            Timber.e("liveRegisterForm.getValue() is null");
+            return;
+        }
+
+        // update register with shared info`s and check if the current register form config is ok
+        liveRegisterForm.getValue().updateFromLoginForm(fragment.getSharedViewModel().getLiveLoginForm().getValue());
+        if(!goodRegisterCredentials(fragment, liveRegisterForm.getValue())){
+            return;
+        }
+
+        // register form config is good
+        // show a loading dialog while registering
+        ((AuthenticationActivity)fragment.requireActivity()).showLoadingDialog("RegisterFragment",
+                fragment.getString(R.string.registering_user));
+
+        // register user
+        registerUser(fragment, liveRegisterForm.getValue());
+    }
+
+    private boolean goodRegisterCredentials(RegisterFragment fragment, RegisterForm form){
+        // leave these here because we need to call all 3 functions in order to set proper errors
+        boolean goodProfile = goodProfile(fragment, form);
+        boolean goodEmailConfiguration = goodEmailConfiguration(fragment, form);
+        boolean goodPasswordConfiguration = goodPasswordConfiguration(fragment, form);
+
+        return goodProfile && goodEmailConfiguration && goodPasswordConfiguration;
+    }
+
+    private boolean goodProfile(RegisterFragment fragment, RegisterForm form){
+        if(TextUtils.isEmpty(form.getProfile())){
+            fragment.getBinding().etProfileRegisterFragment.setError(fragment.getString(R.string.error_required));
+            return false;
+        }
+
+        // This check is already made in edit text field and never should enter here, but double check it.
+        if(form.getProfile().length() > RegisterForm.MAX_PROFILE_LENGTH){
+            fragment.getBinding().etProfileRegisterFragment.setError(fragment.getString(R.string.error_profile_too_long));
+            return false;
+        }
+
+        fragment.getBinding().etProfileRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodEmail(RegisterFragment fragment, RegisterForm form){
+        if(TextUtils.isEmpty(form.getEmail())){
+            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_required));
+            return false;
+        }
+
+        // This check is already made in edit text field and never should enter here, but double check it.
+        if(form.getEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
+            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            return false;
+        }
+
+        if(!RegisterForm.EMAIL_REGEX_PATTERN.matcher(form.getEmail()).matches()) {
+            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.email_not_valid));
+            return false;
+        }
+
+        fragment.getBinding().etEmailAddressRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodRetypedEmail(RegisterFragment fragment, RegisterForm form){
+        if(TextUtils.isEmpty(form.getRetypedEmail())){
+            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_required));
+            return false;
+        }
+
+        // This check is already made in edit text field and never should enter here, but double check it.
+        if(form.getRetypedEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
+            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            return false;
+        }
+
+        fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodEmailConfiguration(RegisterFragment fragment, RegisterForm form){
+        // leave these here because we need to call both functions in order to set proper errors
+        boolean goodEmail = goodEmail(fragment, form);
+        boolean goodRetypedEmail = goodRetypedEmail(fragment, form);
+        if(!goodEmail && !goodRetypedEmail){
+            return false;
+        }
+
+        if(!form.getEmail().equals(form.getRetypedEmail())){
+            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
+            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
+            return false;
+        }
+
+        fragment.getBinding().etEmailAddressRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodPassword(RegisterFragment fragment, RegisterForm form){
+        if(TextUtils.isEmpty(form.getPassword())){
+            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.error_required));
+            return false;
+        }
+
+        if(form.getPassword().length() < RegisterForm.MIN_PASSWORD_LENGTH){
+            String error = fragment.getString(R.string.password_too_short) + " " + RegisterForm.MIN_PASSWORD_LENGTH + " " +
+                    fragment.getString(R.string.characters);
+            fragment.getBinding().etPasswordRegisterFragment.setError(error);
+            return false;
+        }
+
+        // This check is already made in edit text field and never should enter here, but double check it.
+        if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
+            String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
+                    fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
+            fragment.getBinding().etPasswordRegisterFragment.setError(error);
+            return false;
+        }
+
+        if(!RegisterForm.PASSWORD_REGEX_PATTERN.matcher(form.getPassword()).matches()) {
+            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.error_weak_password));
+            return false;
+        }
+
+        fragment.getBinding().etPasswordRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodRetypedPassword(RegisterFragment fragment, RegisterForm form){
+        if(TextUtils.isEmpty(form.getRetypedPassword())){
+            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(fragment.getString(R.string.error_required));
+            return false;
+        }
+
+        // This check is already made in edit text field and never should enter here, but double check it.
+        if(form.getRetypedPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
+            String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
+                    fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
+            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(error);
+            return false;
+        }
+
+        fragment.getBinding().etRetypedPasswordRegisterFragment.setError(null);
+        return true;
+    }
+
+    private boolean goodPasswordConfiguration(RegisterFragment fragment, RegisterForm form){
+        // leave these here because we need to call both functions in order to set proper errors
+        boolean goodPassword = goodPassword(fragment, form);
+        boolean goodRetypedPassword = goodRetypedPassword(fragment, form);
+        if(!goodPassword && !goodRetypedPassword){
+            return false;
+        }
+
+        if(!form.getPassword().equals(form.getRetypedPassword())){
+            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
+            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
+            return false;
+        }
+
+        fragment.getBinding().etPasswordRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedPasswordRegisterFragment.setError(null);
+        return true;
+    }
+
+    private void registerUser(RegisterFragment fragment, RegisterForm form){
+        FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
+        firebaseAuthInstance.createUserWithEmailAndPassword(form.getEmail(), form.getPassword())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // register was made ==> update user profile and send verification email
+                            updateUserProfile(form);
+                            fragment.getSharedViewModel().sendVerificationEmail();
+
+                            fragment.requireActivity().onBackPressed();
+                            liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.register_successfully));
+
+                            // User is registered and that means use is logged in, but email is not verified.
+                            // Sign out user in order to force him to validate email and login properly.
+                            FirebaseAuth.getInstance().signOut();
+                        }
+                        else {
+                            // here register failed
+                            ((AuthenticationActivity)fragment.requireActivity()).dismissLoadingDialog();
+                            if(task.getException() == null){
+                                liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+                                Timber.e("task.getException() is null");
+                                return;
+                            }
+
+                            // task exception was not null ==> try to exit gracefully
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthWeakPasswordException e) {
+                                liveToastMessage.setValue(fragment.getString(R.string.error_weak_password));
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                liveToastMessage.setValue(fragment.getString(R.string.error_invalid_email));
+                            } catch(FirebaseAuthUserCollisionException e) {
+                                liveToastMessage.setValue(fragment.getString(R.string.error_user_exists));
+                            } catch(FirebaseNetworkException e) {
+                                liveToastMessage.setValue(fragment.getString(R.string.no_internet_connection));
+                            } catch(Exception e) {
+                                liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+                                Timber.e(e);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void updateUserProfile(RegisterForm form){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser == null){
+            Timber.e("firebaseUser is null");
+            return;
+        }
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(form.getProfile())
+                .build();
+
+        firebaseUser.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Timber.i("Profile updated [" + firebaseUser.getDisplayName() + "]");
+                            return;
+                        }
+                        Timber.e(task.getException(), "Profile was NOT updated for account [" + firebaseUser.getEmail() + "]");
+                    }
+                });
     }
 
 }

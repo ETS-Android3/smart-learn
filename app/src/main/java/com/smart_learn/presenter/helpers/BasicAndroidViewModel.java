@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 public class BasicAndroidViewModel extends AndroidViewModel {
 
     // Leave this with no initial value. If you put an initial value it will trigger setValue().
-    private final MutableLiveData<String> liveToastMessage = new MutableLiveData<>();
+    protected final MutableLiveData<String> liveToastMessage = new MutableLiveData<>();
 
     public BasicAndroidViewModel(@NonNull Application application) {
         super(application);

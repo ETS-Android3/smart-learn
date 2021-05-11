@@ -5,13 +5,16 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:4.2.0'
         classpath 'org.projectlombok:lombok:1.18.16'
 
         // SafeArgs for Jetpack navigation
         // https://developer.android.com/guide/navigation/navigation-getting-started#java
         def nav_version = "2.3.5"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+
+        // for firebase
+        classpath 'com.google.gms:google-services:4.3.5'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

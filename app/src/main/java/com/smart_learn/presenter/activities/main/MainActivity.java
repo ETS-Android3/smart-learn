@@ -1,7 +1,9 @@
 package com.smart_learn.presenter.activities.main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
@@ -13,9 +15,11 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityMainBinding;
-import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
+import com.smart_learn.presenter.activities.guest.GuestActivity;
+import com.smart_learn.presenter.helpers.ApplicationController;
 
 import timber.log.Timber;
 
@@ -26,6 +30,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // check if user is already logged in
+        SharedPreferences preferences = getSharedPreferences(ApplicationController.LOGIN_STATUS_KEY, Context.MODE_PRIVATE);
+        if (!preferences.getBoolean(ApplicationController.LOGGED_IN,false)){
+            // user is not logged in ==> redirect it to the guest activity
+            goToGuestActivity();
+            return;
+        }
+
+        // user is logged in ==> do the normal stuff for this activity
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setLifecycleOwner(this);
 
@@ -37,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // main activity is home activity so check 'Home' from the navigation menu
-        binding.navigationViewMainActivity.setCheckedItem(R.id.nav_home);
+        binding.navigationViewMainActivity.setCheckedItem(R.id.nav_home_main_activity);
     }
 
     @Override
     public void onBackPressed() {
-        // on back pressed is disabled for main activity
+        // disable back from main activity because is not necessary
         // super.onBackPressed();
         if(binding.drawerLayoutMainActivity.isDrawerOpen(GravityCompat.START)){
             binding.drawerLayoutMainActivity.closeDrawer(GravityCompat.START);
@@ -68,17 +82,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_home:
+                    case R.id.nav_home_main_activity:
                         break;
-                    case R.id.nav_login:
-                        startActivity(new Intent(MainActivity.this, AuthenticationActivity.class));
+                    case R.id.nav_logout_main_activity:
+                        signOut();
                         break;
-                    case R.id.nav_account:
-                    case R.id.nav_community:
-                    case R.id.nav_lessons:
-                    case R.id.nav_test:
-                    case R.id.nav_settings:
-                    case R.id.nav_help:
+                    case R.id.nav_account_main_activity:
+                    case R.id.nav_community_main_activity:
+                    case R.id.nav_lessons_main_activity:
+                    case R.id.nav_test_main_activity:
+                    case R.id.nav_settings_main_activity:
+                    case R.id.nav_help_main_activity:
                         break;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");
@@ -89,4 +103,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void goToGuestActivity(){
+        startActivity(new Intent(this, GuestActivity.class));
+        this.finish();
+    }
+
+    private void signOut(){
+        FirebaseAuth.getInstance().signOut();
+        goToGuestActivity();
+    }
 }

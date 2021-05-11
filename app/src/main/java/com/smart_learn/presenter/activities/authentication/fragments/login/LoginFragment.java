@@ -16,16 +16,22 @@ import androidx.navigation.Navigation;
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.core.utilities.NetworkUtilities;
 import com.smart_learn.databinding.FragmentLoginBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import lombok.Getter;
+
 public class LoginFragment extends Fragment {
 
     private LoginViewModel loginViewModel;
+    @Getter
     private AuthenticationSharedViewModel sharedViewModel;
+    @Getter
+    private FragmentLoginBinding binding;
 
     private NavController navController;
 
@@ -38,7 +44,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentLoginBinding binding = FragmentLoginBinding.inflate(inflater);
+        binding = FragmentLoginBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         binding.setSharedViewModel(sharedViewModel);
 
@@ -46,14 +52,14 @@ public class LoginFragment extends Fragment {
         binding.btnLoginLoginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ResponseInfo responseInfo = sharedViewModel.getLiveLoginForm().getValue().goodLoginCredentials();
-                if(responseInfo.isOk()){
-                    loginViewModel.login(sharedViewModel.getLiveLoginForm().getValue());
-                    return;
-                }
+                loginViewModel.login(LoginFragment.this);
+            }
+        });
 
-                // login credentials are not good
-                GeneralUtilities.showShortToastMessage(requireContext(), responseInfo.getInfo());
+        binding.btnGoogleLoginFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -61,6 +67,13 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_login_fragment_authentication_activity_to_register_fragment_authentication_activity);
+            }
+        });
+
+        binding.btnForgotPasswordLoginFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.sendPasswordResetEmail(LoginFragment.this);
             }
         });
 
@@ -79,6 +92,12 @@ public class LoginFragment extends Fragment {
         ((AuthenticationActivity)requireActivity()).resetToolbar(getResources().getString(R.string.login));
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((AuthenticationActivity)requireActivity()).dismissLoadingDialog();
+    }
+
     private void setViewModel(){
         // set shared view model for passing data
         sharedViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationSharedViewModel.class);
@@ -91,6 +110,5 @@ public class LoginFragment extends Fragment {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
             }
         });
-
     }
 }

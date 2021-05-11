@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <item-->
+<!--        android:title="Home">-->
+<!--        <menu>-->
+<!--            <group android:checkableBehavior="single">-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_home_main_activity"-->
+<!--                    android:title="@string/home"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_account_main_activity"-->
+<!--                    android:title="@string/account"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_community_main_activity"-->
+<!--                    android:title="@string/community"/>-->
+<!--            </group>-->
+<!--        </menu>-->
+<!--     </item>-->
+
+<!--    <item-->
+<!--        android:title="App">-->
+<!--        <menu>-->
+<!--            <group android:checkableBehavior="single">-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_lessons_main_activity"-->
+<!--                    android:title="@string/lessons"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_test_main_activity"-->
+<!--                    android:title="@string/test"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_settings_main_activity"-->
+<!--                    android:title="@string/settings"/>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_help_main_activity"-->
+<!--                    android:title="@string/help"/>-->
+<!--            </group>-->
+<!--        </menu>-->
+<!--    </item>-->
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_main_activity"
+            android:title="@string/home"
+            android:icon="@drawable/ic_baseline_home_24"/>
+        <item
+            android:id="@+id/nav_account_main_activity"
+            android:title="@string/account"
+            android:icon="@drawable/ic_baseline_profile_24"/>
+        <item
+            android:id="@+id/nav_community_main_activity"
+            android:title="@string/community"
+            android:icon="@drawable/ic_baseline_community_24"/>
+        <item
+            android:id="@+id/nav_logout_main_activity"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_baseline_logout_24"/>
+    </group>
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_lessons_main_activity"
+            android:title="@string/lessons"
+            android:icon="@drawable/ic_baseline_lessons_24"/>
+        <item
+            android:id="@+id/nav_test_main_activity"
+            android:title="@string/test"
+            android:icon="@drawable/ic_baseline_test_24"/>
+        <item
+            android:id="@+id/nav_settings_main_activity"
+            android:title="@string/settings"
+            android:icon="@drawable/ic_baseline_settings_24"/>
+        <item
+            android:id="@+id/nav_help_main_activity"
+            android:title="@string/help"
+            android:icon="@drawable/ic_baseline_help_24"/>
+    </group>
+
+
+</menu>

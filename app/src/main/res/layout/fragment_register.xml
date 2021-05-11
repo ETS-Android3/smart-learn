@@ -20,139 +20,192 @@
         <TextView
             android:id="@+id/tv_info_1_register_fragment"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Already have an account?"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_register_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_register_register_fragment" />
-
-        <TextView
-            android:id="@+id/tv_info_2_register_fragment"
-            android:layout_width="0dp"
             android:layout_height="51dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="24dp"
             android:text="Create a new account"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/profile_layout_register_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/et_profile_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_register_register_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="141dp"
-            android:layout_marginEnd="182dp"
-            android:text="Register"
-            app:layout_constraintBottom_toTopOf="@+id/tv_info_1_register_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/retype_password_layout_register_fragment" />
-
-        <Button
-            android:id="@+id/btn_login_register_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="141dp"
-            android:layout_marginEnd="182dp"
-            android:text="Login"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_register_fragment" />
-
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/profile_layout_register_fragment"
+            android:id="@+id/et_profile_register_fragment"
             android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:ems="10"
             android:hint="Profile name"
-            app:layout_constraintBottom_toTopOf="@+id/email_address_layout_register_fragment"
+            app:counterEnabled="true"
+            app:counterMaxLength="@{viewModel.maxProfileNameLength}"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:startIconDrawable="@drawable/ic_baseline_profile_24"
+            app:layout_constraintBottom_toTopOf="@+id/et_email_address_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_register_fragment" >
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_register_fragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textPersonName"
+                android:maxLength="@{viewModel.maxProfileNameLength}"
                 android:text="@={viewModel.liveRegisterForm.profile}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_address_layout_register_fragment"
-                android:layout_width="305dp"
-                android:layout_height="54dp"
-                android:layout_marginStart="54dp"
-                android:layout_marginEnd="52dp"
-                android:ems="10"
-                android:hint="Email"
-                app:layout_constraintBottom_toTopOf="@+id/password_layout_register_fragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_layout_register_fragment" >
+            android:id="@+id/et_email_address_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:ems="10"
+            android:hint="Email"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            app:layout_constraintBottom_toTopOf="@+id/et_retyped_email_address_register_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_profile_register_fragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textEmailAddress"
+                android:maxLength="@{sharedViewModel.maxEmailLength}"
                 android:text="@={sharedViewModel.liveLoginForm.email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_layout_register_fragment"
-            android:layout_width="307dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
+            android:id="@+id/et_retyped_email_address_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:ems="10"
-            android:hint="Password"
-            app:layout_constraintBottom_toTopOf="@+id/retype_password_layout_register_fragment"
+            android:hint="Retype Email"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            app:layout_constraintBottom_toTopOf="@+id/et_password_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_address_layout_register_fragment"
-            app:passwordToggleEnabled="true" >
+            app:layout_constraintTop_toBottomOf="@+id/et_email_address_register_fragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:inputType="textEmailAddress"
+                android:maxLength="@{sharedViewModel.maxEmailLength}"
+                android:text="@={viewModel.liveRegisterForm.retypedEmail}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:ems="10"
+            android:hint="Password"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_baseline_password_24"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:layout_constraintBottom_toTopOf="@+id/et_retyped_password_register_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_retyped_email_address_register_fragment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textPassword"
+                android:maxLength="@{sharedViewModel.maxPasswordLength}"
                 android:text="@={sharedViewModel.liveLoginForm.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/retype_password_layout_register_fragment"
-            android:layout_width="305dp"
-            android:layout_height="54dp"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="52dp"
+            android:id="@+id/et_retyped_password_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:ems="10"
             android:hint="Retype password"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:startIconDrawable="@drawable/ic_baseline_password_24"
             app:layout_constraintBottom_toTopOf="@+id/btn_register_register_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_layout_register_fragment"
-            app:passwordToggleEnabled="true" >
+            app:layout_constraintTop_toBottomOf="@+id/et_password_register_fragment">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textPassword"
+                android:maxLength="@{sharedViewModel.maxPasswordLength}"
                 android:text="@={viewModel.liveRegisterForm.retypedPassword}" />
-
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_register_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Register"
+            app:layout_constraintBottom_toTopOf="@+id/btn_google_register_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_retyped_password_register_fragment" />
+
+        <Button
+            android:id="@+id/btn_google_register_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Register with Google"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_register_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_register_register_fragment" />
+
+        <Button
+            android:id="@+id/btn_login_register_fragment"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="64dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Already have an account?"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_google_register_fragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

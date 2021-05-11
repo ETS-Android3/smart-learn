@@ -56,7 +56,10 @@ public class LessonService extends BasicRoomService<Lesson> {
     private ResponseInfo lessonDetailsCheck(Lesson lesson){
 
         if (lesson.getName().isEmpty()) {
-            return new ResponseInfo(false,"Enter a name");
+            return new ResponseInfo.Builder()
+                    .setIsOk(false)
+                    .setInfo("Enter a name")
+                    .build();
         }
 
         /* TODO: check name length
@@ -68,17 +71,24 @@ public class LessonService extends BasicRoomService<Lesson> {
 
         // Add lesson only if this does not exist (should have a unique name).
         if (checkIfLessonExist(lesson.getName())) {
-            return new ResponseInfo(false,"Lesson " + lesson.getName() + " already exists. Choose other name");
+            return new ResponseInfo.Builder()
+                    .setIsOk(false)
+                    .setInfo("Lesson " + lesson.getName() + " already exists. Choose other name")
+                    .build();
         }
-
-        return new ResponseInfo(true,"");
+        return new ResponseInfo.Builder()
+                .setIsOk(true)
+                .build();
     }
 
     /** Try to add new lesson using results from lesson dialog */
     public ResponseInfo tryToAddOrUpdateNewLesson(@NonNull Lesson lesson, boolean update){
         if(lesson == null){
             Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewLesson] lesson is null");
-            return new ResponseInfo(false,"[Internal error. The modification was not saved.]");
+            return new ResponseInfo.Builder()
+                    .setIsOk(false)
+                    .setInfo("[Internal error. The modification was not saved.]")
+                    .build();
         }
 
         // make some general checks

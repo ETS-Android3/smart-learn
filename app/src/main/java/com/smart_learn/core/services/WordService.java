@@ -57,7 +57,10 @@ public class WordService extends BasicRoomService<Word> {
     private ResponseInfo wordDetailsCheck(Word word){
 
         if(word.getWord().isEmpty()){
-            return new ResponseInfo(false,"Enter a word");
+            return new ResponseInfo.Builder()
+                            .setIsOk(false)
+                            .setInfo("Enter a word")
+                            .build();
         }
 
         /* TODO: check word length
@@ -84,14 +87,19 @@ public class WordService extends BasicRoomService<Word> {
 
         // TODO: check if translation exists in lesson
 
-        return new ResponseInfo(true,"");
+        return new ResponseInfo.Builder()
+                        .setIsOk(true)
+                        .build();
     }
 
     /** Try to add new Word using results from lesson entrance dialog */
     public ResponseInfo tryToAddOrUpdateNewWord(@NonNull Word word, boolean update){
         if(word == null){
             Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewWord] word is null");
-            return new ResponseInfo(false,"[Internal error. The modification was not saved.]");
+            return new ResponseInfo.Builder()
+                    .setIsOk(false)
+                    .setInfo("[Internal error. The modification was not saved.]")
+                    .build();
         }
 
         // make some general checks

@@ -17,93 +17,144 @@
         <TextView
             android:id="@+id/tv_info_1_login_fragment"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Welcome back"
+            android:layout_height="166dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Welcome back "
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/email_address_layout_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/et_email_address_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_address_layout_login_fragment"
-            android:layout_width="346dp"
-            android:layout_height="63dp"
-            android:layout_marginStart="39dp"
-            android:layout_marginEnd="26dp"
+            android:id="@+id/et_email_address_login_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:ems="10"
             android:hint="Email"
-            app:layout_constraintBottom_toTopOf="@+id/password_layout_login_fragment"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:layout_constraintBottom_toTopOf="@+id/et_password_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_login_fragment">
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_login_fragment"
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textEmailAddress"
+                android:maxLength="@{sharedViewModel.maxEmailLength}"
                 android:text="@={sharedViewModel.liveLoginForm.email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_layout_login_fragment"
-            android:layout_width="344dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="39dp"
-            android:layout_marginEnd="26dp"
+            android:id="@+id/et_password_login_fragment"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:ems="10"
             android:hint="Password"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_login_fragment"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/red"
+            app:layout_constraintBottom_toTopOf="@+id/btn_forgot_password_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_address_layout_login_fragment"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/et_email_address_login_fragment"
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_baseline_password_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:inputType="textPassword"
+                android:maxLength="@{sharedViewModel.maxPasswordLength}"
                 android:text="@={sharedViewModel.liveLoginForm.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_login_login_fragment"
+            android:id="@+id/btn_forgot_password_login_fragment"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginStart="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Forgot password?"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_login_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password_login_fragment" />
+
+        <Button
+            android:id="@+id/btn_login_login_fragment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
-            android:layout_marginEnd="175dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:text="Login"
-            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_google_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_layout_login_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_forgot_password_login_fragment" />
+
+        <Button
+            android:id="@+id/btn_google_login_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="Continue with Google"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_login_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.53"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_login_fragment" />
 
         <TextView
             android:id="@+id/tv_info_2_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
             android:text="Not have an account? "
             android:textAlignment="center"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_register_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_login_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_google_login_fragment" />
 
         <Button
             android:id="@+id/btn_register_login_fragment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
-            android:layout_marginEnd="175dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:text="Register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_info_2_login_fragment" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
