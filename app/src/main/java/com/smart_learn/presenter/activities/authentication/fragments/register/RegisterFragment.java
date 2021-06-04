@@ -52,7 +52,7 @@ public class RegisterFragment extends Fragment {
         binding.btnGoogleRegisterFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((AuthenticationActivity)requireActivity()).signInWithGoogle();
             }
         });
 

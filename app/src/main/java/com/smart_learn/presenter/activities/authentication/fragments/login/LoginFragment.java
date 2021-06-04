@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
         binding.btnGoogleLoginFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((AuthenticationActivity)requireActivity()).signInWithGoogle();
             }
         });
 

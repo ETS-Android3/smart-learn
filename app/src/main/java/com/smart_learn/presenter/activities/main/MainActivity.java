@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.smart_learn.R;
@@ -109,7 +113,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signOut(){
+        // Firebase sign out
         FirebaseAuth.getInstance().signOut();
+
+        // If login provider was google, then sign out from Google client also. This is necessary for
+        // showing the dialog with google accounts every time when login is made.
+        // https://developers.google.com/identity/sign-in/android/sign-in
+        // https://stackoverflow.com/questions/38707133/google-firebase-sign-out-and-forget-user-in-android-app
+        if (GoogleSignIn.getLastSignedInAccount(this) != null){
+            GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut()
+                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Timber.i("GoogleSignInClient signed out successfully");
+                                return;
+                            }
+
+                            Timber.w(task.getException());
+                        }
+                    });
+        }
+
         goToGuestActivity();
     }
 }

@@ -1,17 +1,24 @@
 package com.smart_learn.presenter.activities.authentication;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.smart_learn.R;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
+import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 
 import lombok.Getter;
 import timber.log.Timber;
@@ -19,7 +26,7 @@ import timber.log.Timber;
 /** This SharedViewModel will be used to share login credentials between
  * LoginFragment and RegisterFragment for a better user experience. */
 @Getter
-public class AuthenticationSharedViewModel extends AndroidViewModel {
+public class AuthenticationSharedViewModel extends BasicAndroidViewModel {
 
     // used in fragments for checking fields length
     private final int maxPasswordLength;
@@ -50,6 +57,30 @@ public class AuthenticationSharedViewModel extends AndroidViewModel {
                             return;
                         }
                         Timber.e(task.getException(), "Verification email NOT sent to [" + firebaseUser.getEmail() + "]");
+                    }
+                });
+    }
+
+    public void signInWithGoogle(String idToken, AuthenticationActivity activity) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // everything is ok so mark login
+                            SharedPreferences preferences = activity.getSharedPreferences(ApplicationController.LOGIN_STATUS_KEY, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putBoolean(ApplicationController.LOGGED_IN, true);
+                            editor.apply();
+
+                            activity.goToMainActivity();
+                            return;
+                        }
+
+                        // some error occurred
+                        liveToastMessage.setValue(activity.getString(R.string.google_login_failed));
+                        Timber.e(task.getException());
                     }
                 });
     }

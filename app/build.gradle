@@ -129,7 +129,14 @@ dependencies {
     // Firebase Authentication library
     implementation 'com.google.firebase:firebase-auth'
 
+    // Dependency for the Google Play services library
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
     /* END Firebase */
+
+    // for a custom Google Sign in button
+    // https://stackoverflow.com/questions/18040815/can-i-edit-the-text-of-sign-in-button-on-google/46213682#46213682
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.1.0'
 
     // for debugging with SQLite on phone
     // https://stackoverflow.com/questions/19194576/how-do-i-view-the-sqlite-database-on-an-android-device

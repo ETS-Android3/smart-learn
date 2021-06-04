@@ -102,28 +102,33 @@
 
         <Button
             android:id="@+id/btn_login_login_fragment"
+            style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
+            android:background="@drawable/rounded_shape_button_login"
             android:text="Login"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_google_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_forgot_password_login_fragment" />
 
-        <Button
+        <!--  For a custom Google Sign in button
+              https://stackoverflow.com/questions/18040815/can-i-edit-the-text-of-sign-in-button-on-google/46213682#46213682
+         -->
+        <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/btn_google_login_fragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:text="Continue with Google"
+            android:layout_marginEnd="20dp"
+            android:text="Sign in with Google"
             app:layout_constraintBottom_toTopOf="@+id/tv_info_2_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.53"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login_login_fragment" />
 
@@ -144,13 +149,16 @@
 
         <Button
             android:id="@+id/btn_register_login_fragment"
+            style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
+            android:background="@drawable/rounded_shape_button_login"
             android:text="Register"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
