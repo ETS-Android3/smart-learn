@@ -84,4 +84,10 @@
     <string name="not_have_an_account">Not have an account?</string>
     <string name="register_with_email">Register with email</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="profile_name">Profile name</string>
+    <string name="retype_email">Retype Email</string>
+    <string name="retype_password">Retype password</string>
 </resources>
