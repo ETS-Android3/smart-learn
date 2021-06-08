@@ -35,13 +35,13 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
     public void login(EmailLoginFragment fragment){
 
         if(!NetworkUtilities.goodConnection()){
-            liveToastMessage.setValue(fragment.getString(R.string.no_network));
+            liveToastMessage.setValue(fragment.getString(R.string.error_no_network));
             return;
         }
 
         LoginForm loginForm = fragment.getSharedViewModel().getLiveLoginForm().getValue();
         if(loginForm == null){
-            liveToastMessage.setValue(fragment.getString(R.string.login_failed));
+            liveToastMessage.setValue(fragment.getString(R.string.error_login_failed));
             Timber.e("loginForm is null");
             return;
         }
@@ -69,7 +69,7 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
                             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             // This never should happen. If login is successfully user must not be null.
                             if(firebaseUser == null){
-                                liveToastMessage.setValue(fragment.getString(R.string.login_failed));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_login_failed));
                                 Timber.e("firebaseUser is null");
                                 return;
                             }
@@ -102,7 +102,7 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
                             // here login failed
                             ((AuthenticationActivity)fragment.requireActivity()).dismissLoadingDialog();
                             if(task.getException() == null){
-                                liveToastMessage.setValue(fragment.getString(R.string.login_failed));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_login_failed));
                                 Timber.e("task.getException() is null");
                                 return;
                             }
@@ -115,11 +115,11 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
                             } catch(FirebaseAuthInvalidUserException e) {
                                 liveToastMessage.setValue(fragment.getString(R.string.error_user_not_exist));
                             } catch(FirebaseNetworkException e) {
-                                liveToastMessage.setValue(fragment.getString(R.string.no_internet_connection));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_no_internet_connection));
                             } catch(FirebaseTooManyRequestsException e) {
                                 liveToastMessage.setValue(fragment.getString(R.string.error_to_many_login_requests));
                             } catch(Exception e) {
-                                liveToastMessage.setValue(fragment.getString(R.string.login_failed));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_login_failed));
                                 Timber.e(e);
                             }
                         }
@@ -131,7 +131,7 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
     public void sendPasswordResetEmail(EmailLoginFragment fragment){
         LoginForm loginForm = fragment.getSharedViewModel().getLiveLoginForm().getValue();
         if(loginForm == null){
-            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email_failure));
+            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email));
             Timber.e("loginForm is null");
             return;
         }
@@ -146,14 +146,14 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            liveToastMessage.setValue(fragment.getString(R.string.send_password_reset_email_successfully));
+                            liveToastMessage.setValue(fragment.getString(R.string.success_send_password_reset_email));
                             return;
                         }
 
                         // reset email failed
                         ((AuthenticationActivity)fragment.requireActivity()).dismissLoadingDialog();
                         if(task.getException() == null){
-                            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email_failure));
+                            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email));
                             Timber.e("task.getException() is null");
                             return;
                         }
@@ -164,9 +164,9 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
                         } catch(FirebaseAuthInvalidCredentialsException e) {
                             liveToastMessage.setValue(fragment.getString(R.string.error_invalid_email));
                         } catch(FirebaseNetworkException e) {
-                            liveToastMessage.setValue(fragment.getString(R.string.no_internet_connection));
+                            liveToastMessage.setValue(fragment.getString(R.string.error_no_internet_connection));
                         } catch(Exception e) {
-                            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email_failure));
+                            liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email));
                             Timber.e(e);
                         }
                     }
@@ -211,7 +211,7 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
-            String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
+            String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
             fragment.getBinding().etPasswordEmailLoginFragment.setError(error);
             return false;

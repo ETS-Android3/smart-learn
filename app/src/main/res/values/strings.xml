@@ -4,7 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
     <string name="new_lesson" translatable="false">New lesson</string>
     <string name="open_lesson" translatable="false">Open lesson</string>
     <string name="help" translatable="false">Help</string>
@@ -32,8 +31,8 @@
     <string name="add_entrance">Add Entrance</string>
     <string name="update_entrance">Update Entrance</string>
     <string name="save">Save</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- NavigationDrawer -->
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="community">Community</string>
@@ -41,40 +40,44 @@
     <string name="settings">Settings</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="empty_credentials">Empty credentials</string>
-    <string name="email_not_valid">Email address is not valid</string>
-    <string name="password_too_short">Password is too short. Use minimum</string>
-    <string name="passwords_not_matching">Passwords not matching.</string>
-    <string name="authentication_failed">Authentication failed</string>
-    <string name="register_successfully">Register successfully, please verify your email address.</string>
-    <string name="register_failed">Register failed.</string>
-    <string name="verify_email">Please verify your email address.</string>
-    <string name="verify_email_send_success">Verification email was sent.</string>
-    <string name="verify_email_send_failure">Verification email was not sent. Please try again later.</string>
-    <string name="registering_user">Register is made.</string>
-    <string name="sign_in_user">Sign in is made.</string>
-    <string name="no_network">Device is not connected to a network.</string>
-    <string name="no_internet_connection">Internet is not available.</string>
+
+    <!-- AuthenticationActivity -->
+    <string name="error_empty_credentials">Empty credentials</string>
+    <string name="error_email_not_valid">Email address is not valid</string>
+    <string name="error_password_too_short">Password is too short. Use minimum</string>
+    <string name="error_passwords_not_matching">Passwords not matching.</string>
+    <string name="error_authentication_failed">Authentication failed</string>
+    <string name="error_register_failed">Register failed.</string>
+    <string name="error_verify_email_send">Verification email was not sent. Please try again later.</string>
+    <string name="error_no_network">Device is not connected to a network.</string>
+    <string name="error_no_internet_connection">Internet is not available.</string>
     <string name="error_weak_password">Password is too weak. Use at least one letter and one number.</string>
     <string name="error_invalid_email">Email is not valid</string>
     <string name="error_user_exists">This email already exists.</string>
-    <string name="login_failed">Login failed</string>
+    <string name="error_login_failed">Login failed</string>
     <string name="error_user_not_exist">This account does not exist</string>
     <string name="error_invalid_login_credentials">Invalid login credentials</string>
     <string name="error_to_many_login_requests">To many login requests. Account is temporally blocked. Try to reset password or try to login later.</string>
     <string name="error_email_not_verified">"Email is not verified. We`ve sent you a verification email."</string>
-    <string name="emails_not_matching">Emails not matching</string>
+    <string name="error_emails_not_matching">Emails not matching</string>
     <string name="error_required">Required</string>
     <string name="error_profile_too_long">Choose a shorter profile name</string>
     <string name="error_email_is_required">Email is required</string>
-    <string name="password_too_long">Password is too long. Maxim</string>
+    <string name="error_password_too_long">Password is too long. Maxim</string>
+    <string name="error_email_too_long">Email is too long</string>
+    <string name="error_send_password_reset_email">Reset email was not send. Please try again later.</string>
+    <string name="error_google_login_failed">Google authentication failed</string>
+
+    <string name="success_register_successfully">Register successfully, please verify your email address.</string>
+    <string name="success_verify_email_send">Verification email was sent.</string>
+    <string name="success_send_password_reset_email">"Reset email was send. "</string>
+
+    <string name="verify_email">Please verify your email address.</string>
+    <string name="registering_user">Register is made.</string>
+    <string name="sign_in_user">Sign in is made.</string>
     <string name="characters">characters</string>
     <string name="are_allowed">are allowed</string>
-    <string name="error_email_too_long">Email is too long</string>
-    <string name="error_send_password_reset_email_failure">Reset email was not send. Please try again later.</string>
-    <string name="send_password_reset_email_successfully">"Reset email was send. "</string>
     <string name="logout">Logout</string>
-    <string name="google_login_failed">Google authentication failed</string>
     <string name="intro">Welcome</string>
     <string name="continue_with_email">Continue with email</string>
     <string name="sign_in_with_google">Sign in with Google</string>

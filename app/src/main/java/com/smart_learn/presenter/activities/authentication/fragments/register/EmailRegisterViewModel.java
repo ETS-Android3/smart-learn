@@ -44,13 +44,13 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
     public void register(EmailRegisterFragment fragment){
 
         if(!NetworkUtilities.goodConnection()){
-            liveToastMessage.setValue(fragment.getString(R.string.no_network));
+            liveToastMessage.setValue(fragment.getString(R.string.error_no_network));
             return;
         }
 
         // this never should be null but double check it
         if(liveRegisterForm.getValue() == null){
-            liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+            liveToastMessage.setValue(fragment.getString(R.string.error_register_failed));
             Timber.e("liveRegisterForm.getValue() is null");
             return;
         }
@@ -108,7 +108,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!RegisterForm.EMAIL_REGEX_PATTERN.matcher(form.getEmail()).matches()) {
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.email_not_valid));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_not_valid));
             return false;
         }
 
@@ -141,8 +141,8 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getEmail().equals(form.getRetypedEmail())){
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
-            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_emails_not_matching));
+            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_emails_not_matching));
             return false;
         }
 
@@ -158,7 +158,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(form.getPassword().length() < RegisterForm.MIN_PASSWORD_LENGTH){
-            String error = fragment.getString(R.string.password_too_short) + " " + RegisterForm.MIN_PASSWORD_LENGTH + " " +
+            String error = fragment.getString(R.string.error_password_too_short) + " " + RegisterForm.MIN_PASSWORD_LENGTH + " " +
                     fragment.getString(R.string.characters);
             fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
             return false;
@@ -166,7 +166,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
-            String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
+            String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
             fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
             return false;
@@ -189,7 +189,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getRetypedPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
-            String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
+            String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
             fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(error);
             return false;
@@ -208,8 +208,8 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getPassword().equals(form.getRetypedPassword())){
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
-            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_passwords_not_matching));
+            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_passwords_not_matching));
             return false;
         }
 
@@ -230,7 +230,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
                             fragment.getSharedViewModel().sendVerificationEmail();
 
                             fragment.requireActivity().onBackPressed();
-                            liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.register_successfully));
+                            liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.success_register_successfully));
 
                             // User is registered and that means use is logged in, but email is not verified.
                             // Sign out user in order to force him to validate email and login properly.
@@ -240,7 +240,7 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
                             // here register failed
                             ((AuthenticationActivity)fragment.requireActivity()).dismissLoadingDialog();
                             if(task.getException() == null){
-                                liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_register_failed));
                                 Timber.e("task.getException() is null");
                                 return;
                             }
@@ -255,9 +255,9 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
                             } catch(FirebaseAuthUserCollisionException e) {
                                 liveToastMessage.setValue(fragment.getString(R.string.error_user_exists));
                             } catch(FirebaseNetworkException e) {
-                                liveToastMessage.setValue(fragment.getString(R.string.no_internet_connection));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_no_internet_connection));
                             } catch(Exception e) {
-                                liveToastMessage.setValue(fragment.getString(R.string.register_failed));
+                                liveToastMessage.setValue(fragment.getString(R.string.error_register_failed));
                                 Timber.e(e);
                             }
                         }

@@ -79,7 +79,7 @@ public class AuthenticationSharedViewModel extends BasicAndroidViewModel {
                         }
 
                         // some error occurred
-                        liveToastMessage.setValue(activity.getString(R.string.google_login_failed));
+                        liveToastMessage.setValue(activity.getString(R.string.error_google_login_failed));
                         Timber.e(task.getException());
                     }
                 });

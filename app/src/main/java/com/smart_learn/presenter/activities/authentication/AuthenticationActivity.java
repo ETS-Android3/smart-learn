@@ -89,7 +89,7 @@ public class AuthenticationActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if(account == null){
-                    GeneralUtilities.showShortToastMessage(this, getString(R.string.google_login_failed));
+                    GeneralUtilities.showShortToastMessage(this, getString(R.string.error_google_login_failed));
                     return;
                 }
 
@@ -97,7 +97,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                 sharedViewModel.signInWithGoogle(account.getIdToken(), this);
 
             } catch (ApiException e) {
-                GeneralUtilities.showShortToastMessage(this, getString(R.string.google_login_failed));
+                GeneralUtilities.showShortToastMessage(this, getString(R.string.error_google_login_failed));
                 Timber.e(e);
             }
         }
@@ -134,7 +134,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                             }
 
                             // previous account can not be signed out ==> abort connexion
-                            GeneralUtilities.showShortToastMessage(AuthenticationActivity.this, getString(R.string.google_login_failed));
+                            GeneralUtilities.showShortToastMessage(AuthenticationActivity.this, getString(R.string.error_google_login_failed));
                             Timber.w(task.getException());
                         }
                     });
