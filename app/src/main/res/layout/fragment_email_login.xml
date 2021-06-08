@@ -15,7 +15,7 @@
         tools:context=".presenter.activities.authentication.fragments.login.EmailLoginFragment">
 
         <TextView
-            android:id="@+id/tv_info_1_email_bottom_sheet_authentication_activity"
+            android:id="@+id/tv_info_1_email_login_fragment"
             android:layout_width="0dp"
             android:layout_height="166dp"
             android:layout_marginStart="24dp"
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toTopOf="@+id/et_password_email_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_email_bottom_sheet_authentication_activity"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_email_login_fragment"
             app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText

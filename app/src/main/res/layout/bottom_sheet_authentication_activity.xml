@@ -35,7 +35,7 @@
             android:text="@{viewModel.btnGoogleOption}" />
 
         <TextView
-            android:id="@+id/tv_info_1_email_bottom_sheet_authentication_activity"
+            android:id="@+id/tv_info_1_bottom_sheet_authentication_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
