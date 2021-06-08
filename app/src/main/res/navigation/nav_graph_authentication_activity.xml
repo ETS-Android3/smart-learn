@@ -20,21 +20,12 @@
         android:id="@+id/intro_fragment_authentication_activity"
         android:name="com.smart_learn.presenter.activities.authentication.fragments.intro.IntroFragment"
         android:label="intro_fragment"
-        tools:layout="@layout/fragment_intro"
-        >
+        tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_intro_fragment_authentication_activity_to_email_login_fragment_authentication_activity"
-            app:destination="@id/email_login_fragment_authentication_activity"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/email_login_fragment_authentication_activity"/>
         <action
             android:id="@+id/action_intro_fragment_authentication_activity_to_email_register_fragment_authentication_activity"
-            app:destination="@id/email_register_fragment_authentication_activity"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:destination="@id/email_register_fragment_authentication_activity"/>
     </fragment>
 </navigation>

@@ -20,6 +20,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.BottomSheetAuthenticationActivityBinding;
 import com.smart_learn.databinding.FragmentIntroBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
+import com.smart_learn.presenter.activities.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -97,10 +98,12 @@ public class IntroFragment extends Fragment {
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
                 if(login){
-                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_login_fragment_authentication_activity);
+                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_login_fragment_authentication_activity, null,
+                            Utilities.getNavOptions());
                 }
                 else{
-                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_register_fragment_authentication_activity);
+                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_register_fragment_authentication_activity, null,
+                            Utilities.getNavOptions());
                 }
             }
         });
