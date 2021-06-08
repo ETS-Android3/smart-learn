@@ -17,18 +17,35 @@
         <TextView
             android:id="@+id/tv_info_1_email_login_fragment"
             android:layout_width="0dp"
-            android:layout_height="166dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="Welcome back "
+            android:text="Welcome back!"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/et_email_address_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_email_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.49" />
+
+        <TextView
+            android:id="@+id/tv_info_2_email_login_fragment"
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Add message here"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/et_email_address_email_login_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_email_login_fragment" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_email_address_email_login_fragment"
@@ -44,7 +61,7 @@
             app:layout_constraintBottom_toTopOf="@+id/et_password_email_login_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_email_login_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_email_login_fragment"
             app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText

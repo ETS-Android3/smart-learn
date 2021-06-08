@@ -15,19 +15,35 @@
         <TextView
             android:id="@+id/tv_info_1_intro_fragment"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
-            android:text="                Smart-learn                 \n\n\n\nJoin us "
+            android:text="Smart-learn"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_intro_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_info_2_intro_fragment"
+            android:layout_width="0dp"
+            android:layout_height="330dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="Add message here "
+            android:textAlignment="center"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/btn_login_intro_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_intro_fragment" />
 
         <Button
             android:id="@+id/btn_login_intro_fragment"
@@ -42,7 +58,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_intro_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_intro_fragment" />
 
         <Button
             android:id="@+id/btn_register_intro_fragment"
