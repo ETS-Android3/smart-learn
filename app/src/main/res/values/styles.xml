@@ -63,4 +63,24 @@
         <item name="android:textColorSecondary">@color/black</item>
     </style>
 
+    <!-- Modal bottom sheet for for Authentication Activity -->
+    <style name="AuthenticationActivityBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AuthenticationActivityBottomSheetStyle</item>
+    </style>
+
+    <style  name="AuthenticationActivityBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <!-- This will make corners transparent and will be shown as a rounded corners -->
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- For buttons from AuthenticationActivity -->
+    <style name="AuthenticationActivityButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:background">@drawable/rounded_shape_authentication_activity</item>
+    </style>
+
+
+
 </resources>

@@ -26,13 +26,13 @@ import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 
 import timber.log.Timber;
 
-public class LoginViewModel extends BasicAndroidViewModel {
+public class EmailLoginViewModel extends BasicAndroidViewModel {
 
-    public LoginViewModel(@NonNull Application application) {
+    public EmailLoginViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void login(LoginFragment fragment){
+    public void login(EmailLoginFragment fragment){
 
         if(!NetworkUtilities.goodConnection()){
             liveToastMessage.setValue(fragment.getString(R.string.no_network));
@@ -53,13 +53,13 @@ public class LoginViewModel extends BasicAndroidViewModel {
 
         // current config is ok ==> try to login
         // show a loading dialog while login
-        ((AuthenticationActivity)fragment.requireActivity()).showLoadingDialog("LoginFragment", fragment.getString(R.string.sign_in_user));
+        ((AuthenticationActivity)fragment.requireActivity()).showLoadingDialog("EmailLoginFragment", fragment.getString(R.string.sign_in_user));
 
         // login user
         loginUser(fragment, loginForm.getEmail(), loginForm.getPassword());
     }
 
-    private void loginUser(LoginFragment fragment, String email, String password){
+    private void loginUser(EmailLoginFragment fragment, String email, String password){
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         firebaseAuthInstance.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -128,7 +128,7 @@ public class LoginViewModel extends BasicAndroidViewModel {
                 });
     }
 
-    public void sendPasswordResetEmail(LoginFragment fragment){
+    public void sendPasswordResetEmail(EmailLoginFragment fragment){
         LoginForm loginForm = fragment.getSharedViewModel().getLiveLoginForm().getValue();
         if(loginForm == null){
             liveToastMessage.setValue(fragment.getString(R.string.error_send_password_reset_email_failure));
@@ -173,7 +173,7 @@ public class LoginViewModel extends BasicAndroidViewModel {
                 });
     }
 
-    private boolean goodLoginCredentials(LoginFragment fragment, LoginForm form){
+    private boolean goodLoginCredentials(EmailLoginFragment fragment, LoginForm form){
         // leave these here because we need to call both functions in order to set proper errors
         boolean goodPassword = goodPassword(fragment, form);
         boolean goodEmail = goodEmail(fragment, form);
@@ -181,31 +181,31 @@ public class LoginViewModel extends BasicAndroidViewModel {
         return goodPassword && goodEmail;
     }
 
-    private boolean goodEmail(LoginFragment fragment, LoginForm form){
-        // These checks are different from 'RegisterFragment' because we don`t need to check everything.
+    private boolean goodEmail(EmailLoginFragment fragment, LoginForm form){
+        // These checks are different from 'EmailRegisterFragment' because we don`t need to check everything.
         // Check only for null value and if length is too big. Firebase will handle the rest.
 
         if(TextUtils.isEmpty(form.getEmail())){
-            fragment.getBinding().etEmailAddressLoginFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etEmailAddressEmailLoginFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etEmailAddressLoginFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etEmailAddressEmailLoginFragment.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressLoginFragment.setError(null);
+        fragment.getBinding().etEmailAddressEmailLoginFragment.setError(null);
         return true;
     }
 
-    private boolean goodPassword(LoginFragment fragment, LoginForm form){
-        // These checks are different from 'RegisterFragment' because we don`t need to check everything.
+    private boolean goodPassword(EmailLoginFragment fragment, LoginForm form){
+        // These checks are different from 'EmailRegisterFragment' because we don`t need to check everything.
         // Check only for null value and if length is too big. Firebase will handle the rest.
 
         if(TextUtils.isEmpty(form.getPassword())){
-            fragment.getBinding().etPasswordLoginFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etPasswordEmailLoginFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
@@ -213,11 +213,11 @@ public class LoginViewModel extends BasicAndroidViewModel {
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etPasswordLoginFragment.setError(error);
+            fragment.getBinding().etPasswordEmailLoginFragment.setError(error);
             return false;
         }
 
-        fragment.getBinding().etPasswordLoginFragment.setError(null);
+        fragment.getBinding().etPasswordEmailLoginFragment.setError(null);
         return true;
     }
 }

@@ -27,21 +27,21 @@ import lombok.Getter;
 import timber.log.Timber;
 
 @Getter
-public class RegisterViewModel extends BasicAndroidViewModel {
+public class EmailRegisterViewModel extends BasicAndroidViewModel {
 
     // used in fragment for checking field length
     private final int maxProfileNameLength;
 
     private final MutableLiveData<RegisterForm> liveRegisterForm;
 
-    public RegisterViewModel(@NonNull Application application) {
+    public EmailRegisterViewModel(@NonNull Application application) {
         super(application);
         maxProfileNameLength = RegisterForm.MAX_PROFILE_LENGTH;
         liveRegisterForm = new MutableLiveData<>(new RegisterForm(null, null, null,
                 null, null));
     }
 
-    public void register(RegisterFragment fragment){
+    public void register(EmailRegisterFragment fragment){
 
         if(!NetworkUtilities.goodConnection()){
             liveToastMessage.setValue(fragment.getString(R.string.no_network));
@@ -63,14 +63,14 @@ public class RegisterViewModel extends BasicAndroidViewModel {
 
         // register form config is good
         // show a loading dialog while registering
-        ((AuthenticationActivity)fragment.requireActivity()).showLoadingDialog("RegisterFragment",
+        ((AuthenticationActivity)fragment.requireActivity()).showLoadingDialog("EmailRegisterFragment",
                 fragment.getString(R.string.registering_user));
 
         // register user
         registerUser(fragment, liveRegisterForm.getValue());
     }
 
-    private boolean goodRegisterCredentials(RegisterFragment fragment, RegisterForm form){
+    private boolean goodRegisterCredentials(EmailRegisterFragment fragment, RegisterForm form){
         // leave these here because we need to call all 3 functions in order to set proper errors
         boolean goodProfile = goodProfile(fragment, form);
         boolean goodEmailConfiguration = goodEmailConfiguration(fragment, form);
@@ -79,60 +79,60 @@ public class RegisterViewModel extends BasicAndroidViewModel {
         return goodProfile && goodEmailConfiguration && goodPasswordConfiguration;
     }
 
-    private boolean goodProfile(RegisterFragment fragment, RegisterForm form){
+    private boolean goodProfile(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getProfile())){
-            fragment.getBinding().etProfileRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etProfileEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getProfile().length() > RegisterForm.MAX_PROFILE_LENGTH){
-            fragment.getBinding().etProfileRegisterFragment.setError(fragment.getString(R.string.error_profile_too_long));
+            fragment.getBinding().etProfileEmailRegisterFragment.setError(fragment.getString(R.string.error_profile_too_long));
             return false;
         }
 
-        fragment.getBinding().etProfileRegisterFragment.setError(null);
+        fragment.getBinding().etProfileEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodEmail(RegisterFragment fragment, RegisterForm form){
+    private boolean goodEmail(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getEmail())){
-            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
         if(!RegisterForm.EMAIL_REGEX_PATTERN.matcher(form.getEmail()).matches()) {
-            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.email_not_valid));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.email_not_valid));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressRegisterFragment.setError(null);
+        fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodRetypedEmail(RegisterFragment fragment, RegisterForm form){
+    private boolean goodRetypedEmail(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getRetypedEmail())){
-            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getRetypedEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
-        fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodEmailConfiguration(RegisterFragment fragment, RegisterForm form){
+    private boolean goodEmailConfiguration(EmailRegisterFragment fragment, RegisterForm form){
         // leave these here because we need to call both functions in order to set proper errors
         boolean goodEmail = goodEmail(fragment, form);
         boolean goodRetypedEmail = goodRetypedEmail(fragment, form);
@@ -141,26 +141,26 @@ public class RegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getEmail().equals(form.getRetypedEmail())){
-            fragment.getBinding().etEmailAddressRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
-            fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
+            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
+            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.emails_not_matching));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressRegisterFragment.setError(null);
-        fragment.getBinding().etRetypedEmailAddressRegisterFragment.setError(null);
+        fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodPassword(RegisterFragment fragment, RegisterForm form){
+    private boolean goodPassword(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getPassword())){
-            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         if(form.getPassword().length() < RegisterForm.MIN_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.password_too_short) + " " + RegisterForm.MIN_PASSWORD_LENGTH + " " +
                     fragment.getString(R.string.characters);
-            fragment.getBinding().etPasswordRegisterFragment.setError(error);
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
             return false;
         }
 
@@ -168,22 +168,22 @@ public class RegisterViewModel extends BasicAndroidViewModel {
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etPasswordRegisterFragment.setError(error);
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
             return false;
         }
 
         if(!RegisterForm.PASSWORD_REGEX_PATTERN.matcher(form.getPassword()).matches()) {
-            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.error_weak_password));
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_weak_password));
             return false;
         }
 
-        fragment.getBinding().etPasswordRegisterFragment.setError(null);
+        fragment.getBinding().etPasswordEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodRetypedPassword(RegisterFragment fragment, RegisterForm form){
+    private boolean goodRetypedPassword(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getRetypedPassword())){
-            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
@@ -191,15 +191,15 @@ public class RegisterViewModel extends BasicAndroidViewModel {
         if(form.getRetypedPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(error);
+            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(error);
             return false;
         }
 
-        fragment.getBinding().etRetypedPasswordRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private boolean goodPasswordConfiguration(RegisterFragment fragment, RegisterForm form){
+    private boolean goodPasswordConfiguration(EmailRegisterFragment fragment, RegisterForm form){
         // leave these here because we need to call both functions in order to set proper errors
         boolean goodPassword = goodPassword(fragment, form);
         boolean goodRetypedPassword = goodRetypedPassword(fragment, form);
@@ -208,17 +208,17 @@ public class RegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getPassword().equals(form.getRetypedPassword())){
-            fragment.getBinding().etPasswordRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
-            fragment.getBinding().etRetypedPasswordRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
+            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
+            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.passwords_not_matching));
             return false;
         }
 
-        fragment.getBinding().etPasswordRegisterFragment.setError(null);
-        fragment.getBinding().etRetypedPasswordRegisterFragment.setError(null);
+        fragment.getBinding().etPasswordEmailRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(null);
         return true;
     }
 
-    private void registerUser(RegisterFragment fragment, RegisterForm form){
+    private void registerUser(EmailRegisterFragment fragment, RegisterForm form){
         FirebaseAuth firebaseAuthInstance = FirebaseAuth.getInstance();
         firebaseAuthInstance.createUserWithEmailAndPassword(form.getEmail(), form.getPassword())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

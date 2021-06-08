@@ -75,4 +75,10 @@
     <string name="send_password_reset_email_successfully">"Reset email was send. "</string>
     <string name="logout">Logout</string>
     <string name="google_login_failed">Google authentication failed</string>
+    <string name="intro">Welcome</string>
+    <string name="continue_with_email">Continue with email</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="not_have_an_account">Not have an account?</string>
+    <string name="register_with_email">Register with email</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>

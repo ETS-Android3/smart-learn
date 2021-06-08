@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.smart_learn.presenter.activities.authentication.fragments.intro.IntroViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_sheet_authentication_activity"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_email_option_bottom_sheet_authentication_activity"
+            style="@style/AuthenticationActivityButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:text="@{viewModel.btnEmailOption}" />
+
+        <Button
+            android:id="@+id/btn_google_option_bottom_sheet_authentication_activity"
+            style="@style/AuthenticationActivityButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/img_google_light_normal_24"
+            android:text="@{viewModel.btnGoogleOption}" />
+
+        <TextView
+            android:id="@+id/tv_info_1_email_bottom_sheet_authentication_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:text="@{viewModel.tv1Option}" />
+
+        <Button
+            android:id="@+id/btn_change_option_bottom_sheet_authentication_activity"
+            style="@style/AuthenticationActivityButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@{viewModel.btnChangeOption}"
+            android:drawableStart="@drawable/ic_baseline_app_registration_24" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

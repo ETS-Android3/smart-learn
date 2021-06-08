@@ -3,25 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_authentication_activity"
-    app:startDestination="@id/login_fragment_authentication_activity">
+    app:startDestination="@id/intro_fragment_authentication_activity">
 
     <fragment
-        android:id="@+id/login_fragment_authentication_activity"
-        android:name="com.smart_learn.presenter.activities.authentication.fragments.login.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-
+        android:id="@+id/email_login_fragment_authentication_activity"
+        android:name="com.smart_learn.presenter.activities.authentication.fragments.login.EmailLoginFragment"
+        android:label="fragment_email_login"
+        tools:layout="@layout/fragment_email_login" >
+    </fragment>
+    <fragment
+        android:id="@+id/email_register_fragment_authentication_activity"
+        android:name="com.smart_learn.presenter.activities.authentication.fragments.register.EmailRegisterFragment"
+        android:label="fragment_email_register"
+        tools:layout="@layout/fragment_email_register" />
+    <fragment
+        android:id="@+id/intro_fragment_authentication_activity"
+        android:name="com.smart_learn.presenter.activities.authentication.fragments.intro.IntroFragment"
+        android:label="intro_fragment"
+        tools:layout="@layout/fragment_intro"
+        >
         <action
-            android:id="@+id/action_login_fragment_authentication_activity_to_register_fragment_authentication_activity"
-            app:destination="@id/register_fragment_authentication_activity"
+            android:id="@+id/action_intro_fragment_authentication_activity_to_email_login_fragment_authentication_activity"
+            app:destination="@id/email_login_fragment_authentication_activity"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_intro_fragment_authentication_activity_to_email_register_fragment_authentication_activity"
+            app:destination="@id/email_register_fragment_authentication_activity"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
     </fragment>
-    <fragment
-        android:id="@+id/register_fragment_authentication_activity"
-        android:name="com.smart_learn.presenter.activities.authentication.fragments.register.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
 </navigation>

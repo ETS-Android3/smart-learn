@@ -24,7 +24,7 @@ import lombok.Getter;
 import timber.log.Timber;
 
 /** This SharedViewModel will be used to share login credentials between
- * LoginFragment and RegisterFragment for a better user experience. */
+ * EmailLoginFragment and EmailRegisterFragment for a better user experience. */
 @Getter
 public class AuthenticationSharedViewModel extends BasicAndroidViewModel {
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.databinding.FragmentRegisterBinding;
+import com.smart_learn.databinding.FragmentEmailRegisterBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
 
@@ -20,13 +20,13 @@ import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public class RegisterFragment extends Fragment {
+public class EmailRegisterFragment extends Fragment {
 
-    private RegisterViewModel registerViewModel;
+    private EmailRegisterViewModel emailRegisterViewModel;
     @Getter
     private AuthenticationSharedViewModel sharedViewModel;
     @Getter
-    private FragmentRegisterBinding binding;
+    private FragmentEmailRegisterBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,29 +37,15 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRegisterBinding.inflate(inflater);
+        binding = FragmentEmailRegisterBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         binding.setSharedViewModel(sharedViewModel);
-        binding.setViewModel(registerViewModel);
+        binding.setViewModel(emailRegisterViewModel);
 
-        binding.btnRegisterRegisterFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegisterEmailRegisterFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerViewModel.register(RegisterFragment.this);
-            }
-        });
-
-        binding.btnGoogleRegisterFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((AuthenticationActivity)requireActivity()).signInWithGoogle();
-            }
-        });
-
-        binding.btnLoginRegisterFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requireActivity().onBackPressed();
+                emailRegisterViewModel.register(EmailRegisterFragment.this);
             }
         });
 
@@ -71,8 +57,8 @@ public class RegisterFragment extends Fragment {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationSharedViewModel.class);
 
         // set fragment view model
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
-        registerViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
+        emailRegisterViewModel = new ViewModelProvider(this).get(EmailRegisterViewModel.class);
+        emailRegisterViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
