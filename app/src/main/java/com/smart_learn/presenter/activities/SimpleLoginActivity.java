@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.smart_learn.R;
 import com.smart_learn.core.config.CurrentConfig;
+import com.smart_learn.presenter.activities.lesson.OpenLessonActivity;
 
 public class SimpleLoginActivity extends AppCompatActivity {
 

@@ -16,10 +16,10 @@
         <activity android:name=".presenter.activities.guest.GuestActivity"></activity>
         <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
         <activity android:name=".presenter.activities.TestLocalActivity" />
-        <activity android:name=".presenter.activities.LessonEntriesRVActivity" />
-        <activity android:name=".presenter.activities.LessonActivity" />
-        <activity android:name=".presenter.activities.LessonRVActivity" />
-        <activity android:name=".presenter.activities.OpenLessonActivity" />
+        <activity android:name=".presenter.activities.lesson.LessonEntriesRVActivity" />
+        <activity android:name=".presenter.activities.lesson.LessonActivity" />
+        <activity android:name=".presenter.activities.lesson.LessonRVActivity" />
+        <activity android:name=".presenter.activities.lesson.OpenLessonActivity" />
         <activity android:name=".presenter.activities.SimpleLoginActivity" />
         <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>

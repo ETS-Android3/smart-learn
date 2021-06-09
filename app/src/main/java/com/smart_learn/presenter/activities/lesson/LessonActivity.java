@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities;
+package com.smart_learn.presenter.activities.lesson;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.databinding.ActivityLessonBinding;
+import com.smart_learn.presenter.activities.TestLocalActivity;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
 import com.smart_learn.presenter.view_models.BasicLessonEntranceViewModel;
 import com.smart_learn.presenter.view_models.LessonViewModel;

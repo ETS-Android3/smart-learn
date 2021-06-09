@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities;
+package com.smart_learn.presenter.activities.lesson;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,40 +24,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
 import com.smart_learn.core.config.CurrentConfig;
-import com.smart_learn.data.models.room.entities.Word;
-import com.smart_learn.databinding.ActivityRvEntrancesBinding;
+import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.databinding.ActivityRvLessonsBinding;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
 import com.smart_learn.presenter.recycler_view.ActionModeRVCallback;
 import com.smart_learn.presenter.recycler_view.adapters.ItemDecoration;
-import com.smart_learn.presenter.recycler_view.adapters.LessonEntriesRVAdapter;
+import com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapter;
 import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
-import com.smart_learn.presenter.view_models.LessonEntriesRVViewModel;
+import com.smart_learn.presenter.view_models.LessonRVViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class LessonEntriesRVActivity extends AppCompatActivity {
+public class LessonRVActivity extends AppCompatActivity {
 
-    private long currentLessonId;
-    private LessonEntriesRVViewModel lessonEntriesRVViewModel;
-    private LessonEntriesRVAdapter lessonEntriesRVAdapter;
+    public static final String LESSON_ID = "LESSON_ID";
+
+    private LessonRVViewModel lessonRVViewModel;
+    private LessonRVAdapter lessonRVAdapter;
     private RecyclerView recyclerView;
 
-    private ActionModeRVCallback<Word> actionModeRVCallback;
+    private ActionModeRVCallback<Lesson> actionModeRVCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get transmitted lesson id from the previous activity
-        Intent intent = getIntent();
-        currentLessonId = intent.getLongExtra(LessonRVActivity.LESSON_ID,0);
-
         // set data binding
-        ActivityRvEntrancesBinding activityBinding = DataBindingUtil.setContentView(this,
-                R.layout.activity_rv_entrances);
+        ActivityRvLessonsBinding activityBinding = DataBindingUtil.setContentView(this,
+                R.layout.activity_rv_lessons);
         activityBinding.setLifecycleOwner(this);
 
         // TODO: check this in order to avoid using findViewById
@@ -65,7 +61,7 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbarLessons));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
-            actionBar.setTitle("Lesson entries");
+            actionBar.setTitle("Lessons");
 
             // show back button on toolbar
             // on back button press, it will navigate to parent activity
@@ -80,7 +76,7 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
         setViewModel();
 
         // link data binding with view model
-        activityBinding.setViewModel(lessonEntriesRVViewModel);
+        activityBinding.setViewModel(lessonRVViewModel);
     }
 
     @Override
@@ -93,7 +89,7 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
-                lessonEntriesRVAdapter.getFilter().filter(newText);
+                lessonRVAdapter.getFilter().filter(newText);
                 return true;
             }
             @Override
@@ -125,80 +121,86 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
 
     private void showSettingsDialog(){
         DialogFragment dialogFragment = new SettingsDialog(true, R.string.settings, R.layout.dialog_settings);
-        dialogFragment.show(getSupportFragmentManager(), "LessonEntriesActivity");
+        dialogFragment.show(getSupportFragmentManager(), "LessonRVActivity");
     }
 
-    private void setListeners(ActivityRvEntrancesBinding activityBinding){
-        activityBinding.btnAddEntrance.setOnClickListener(new View.OnClickListener() {
+    public void startLessonActivity(long lessonId){
+        Intent intent = new Intent(this, LessonActivity.class);
+        intent.putExtra(LESSON_ID,lessonId);
+        startActivity(intent);
+    }
+
+    private void setListeners(ActivityRvLessonsBinding activityBinding){
+        activityBinding.btnAddLessonRV.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showAddEntryDialog();
+                showAddLessonDialog();
             }
         });
     }
 
     private void initRecyclerView(){
-        recyclerView = findViewById(R.id.rvEntrance);
+        recyclerView = findViewById(R.id.rvLessons);
         LinearLayoutManager manager = new LinearLayoutManager(CurrentConfig.getCurrentConfigInstance().currentContext,
                 RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.addItemDecoration(new ItemDecoration(10));
 
-        lessonEntriesRVAdapter = new LessonEntriesRVAdapter(new ActivityRVUtilitiesCallback<Word>() {
+        lessonRVAdapter = new LessonRVAdapter(new ActivityRVUtilitiesCallback<Lesson>() {
             @NotNull
             @Override
             public AppCompatActivity getActivity() {
-                return LessonEntriesRVActivity.this;
+                return LessonRVActivity.this;
             }
 
             @NonNull
             @Override
             public AndroidViewModel getViewModel() {
-                return lessonEntriesRVViewModel;
+                return lessonRVViewModel;
             }
 
             @NotNull
             @Override
-            public List<Word> getAllItemsFromDatabase() {
-                return lessonEntriesRVViewModel.getCurrentLessonSampleWords(currentLessonId);
+            public List<Lesson> getAllItemsFromDatabase() {
+                return lessonRVViewModel.getAllSampleLesson();
             }
 
             @Override
             public void startActionMode() {
 
                 // set this to true in order to load another layout
-                lessonEntriesRVAdapter.setActionMode(true);
+                lessonRVAdapter.setActionMode(true);
 
-                actionModeRVCallback = new ActionModeRVCallback<>(new ActivityRVUtilitiesCallback<Word>() {
+                actionModeRVCallback = new ActionModeRVCallback<>(new ActivityRVUtilitiesCallback<Lesson>() {
                     @Override
                     public void setToastMessage(@NonNull String message) {
-                        Toast.makeText(LessonEntriesRVActivity.this, message, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LessonRVActivity.this, message, Toast.LENGTH_LONG).show();
                     }
 
                     @NotNull
                     @Override
                     public LiveData<Integer> getLiveSelectedItemsCount() {
-                        return lessonEntriesRVViewModel.getLiveSelectedItemsCount(currentLessonId);
+                        return lessonRVViewModel.getLiveSelectedItemsCount();
                     }
 
                     @NotNull
                     @Override
                     public LiveData<Integer> getLiveItemsNumber() {
-                        return lessonEntriesRVViewModel.getLiveItemsNumber(currentLessonId);
+                        return lessonRVViewModel.getLiveItemsNumber();
                     }
 
                     @Override
                     public void selectAll() {
-                        lessonEntriesRVViewModel.updateSelectAll(true,currentLessonId);
+                        lessonRVViewModel.updateSelectAll(true);
                     }
 
                     @Override
                     public void deselectAll() {
-                        lessonEntriesRVViewModel.updateSelectAll(false,currentLessonId);
+                        lessonRVViewModel.updateSelectAll(false);
                     }
 
                     @Override
                     public void deleteSelectedItems() {
-                        lessonEntriesRVViewModel.deleteSelectedItems(currentLessonId);
+                        lessonRVViewModel.deleteSelectedItems();
                     }
 
                     @Override
@@ -208,15 +210,15 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
                         actionModeRVCallback = null;
 
                         // set this to false in order to load another layout
-                        lessonEntriesRVAdapter.setActionMode(false);
+                        lessonRVAdapter.setActionMode(false);
                     }
 
                     @Override
                     public void notifyToChange() {
-                        lessonEntriesRVAdapter.notifyDataSetChanged();
+                        lessonRVAdapter.notifyDataSetChanged();
                     }
                 },
-                        LessonEntriesRVActivity.this, recyclerView, R.menu.action_mode_menu, "Selected", "");
+                        LessonRVActivity.this, recyclerView, R.menu.action_mode_menu, "Selected", "");
             }
 
             @Nullable
@@ -226,58 +228,57 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
             }
 
             @Override
-            public void update(Word item) {
-                lessonEntriesRVViewModel.update(item);
+            public void update(Lesson item) {
+                lessonRVViewModel.update(item);
             }
 
             @Override
-            public void delete(Word item) {
-                lessonEntriesRVViewModel.delete(item);
+            public void delete(Lesson item) {
+                lessonRVViewModel.delete(item);
             }
 
             @Override
-            public void onSwipeForUpdate(Word item) {
-                showUpdateEntryDialog(item);
+            public void onSwipeForUpdate(Lesson item) {
+                showUpdateLessonDialog(item);
             }
 
             @Override
-            public void onSwipeForDelete(Word item) {
-                lessonEntriesRVViewModel.delete(item);
+            public void onSwipeForDelete(Lesson item) {
+                lessonRVViewModel.delete(item);
             }
         });
 
-        recyclerView.setAdapter(lessonEntriesRVAdapter);
+        recyclerView.setAdapter(lessonRVAdapter);
     }
 
     private void setViewModel(){
         // set ViewModel
-        lessonEntriesRVViewModel = new ViewModelProvider(this).get(LessonEntriesRVViewModel.class);
+        lessonRVViewModel = new ViewModelProvider(this).get(LessonRVViewModel.class);
 
         // set observers
-        lessonEntriesRVViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
+        lessonRVViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(LessonEntriesRVActivity.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(LessonRVActivity.this, s, Toast.LENGTH_LONG).show();
             }
         });
 
-        lessonEntriesRVViewModel.getCurrentLessonLiveWords(currentLessonId).observe(this, new Observer<List<Word>>() {
+        lessonRVViewModel.getAllLiveSampleLessons().observe(this, new Observer<List<Lesson>>() {
             @Override
-            public void onChanged(List<Word> words) {
-                lessonEntriesRVAdapter.setItems(words);
-                lessonEntriesRVViewModel.checkEmptyMode(new ArrayList<>(words));
+            public void onChanged(List<Lesson> lessons) {
+                lessonRVAdapter.setItems(lessons);
+                lessonRVViewModel.checkEmptyMode(lessons);
             }
         });
     }
 
-    private void showAddEntryDialog(){
-        DialogFragment dialogFragment = lessonEntriesRVViewModel.prepareEntranceDialog(false,
-                null, currentLessonId);
-        dialogFragment.show(getSupportFragmentManager(), "LessonEntriesRVActivity");
+    private void showAddLessonDialog(){
+        DialogFragment dialogFragment = lessonRVViewModel.prepareLessonDialog(false, null);
+        dialogFragment.show(getSupportFragmentManager(), "LessonRVActivity");
     }
 
-    private void showUpdateEntryDialog(Word word){
-        DialogFragment dialogFragment = lessonEntriesRVViewModel.prepareEntranceDialog(true, word, currentLessonId);
-        dialogFragment.show(getSupportFragmentManager(), "LessonEntriesRVActivity");
+    private void showUpdateLessonDialog(Lesson lesson){
+        DialogFragment dialogFragment = lessonRVViewModel.prepareLessonDialog(true,lesson);
+        dialogFragment.show(getSupportFragmentManager(), "LessonRVActivity");
     }
 }

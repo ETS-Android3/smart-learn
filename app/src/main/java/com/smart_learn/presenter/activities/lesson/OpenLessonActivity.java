@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities;
+package com.smart_learn.presenter.activities.lesson;
 
 import android.content.Intent;
 import android.os.Bundle;
