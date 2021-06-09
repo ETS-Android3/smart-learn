@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.view_models;
+package com.smart_learn.presenter.helpers;
 
 import android.view.ActionMode;
 

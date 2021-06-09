@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.helpers;
+package com.smart_learn.presenter.helpers;
 
 import androidx.navigation.NavOptions;
 

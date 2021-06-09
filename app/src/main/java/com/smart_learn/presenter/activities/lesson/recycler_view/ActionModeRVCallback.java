@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
 import com.smart_learn.R;
-import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
+import com.smart_learn.presenter.helpers.ActivityRVUtilitiesCallback;
 
 /**
  * Here is the action mode which will be started on recycler view lists

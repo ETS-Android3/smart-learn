@@ -25,7 +25,7 @@ import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.IndexRange;
 import com.smart_learn.data.models.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutLessonEntryDetailsBinding;
-import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
+import com.smart_learn.presenter.helpers.ActivityRVUtilitiesCallback;
 
 import java.util.ArrayList;
 import java.util.List;

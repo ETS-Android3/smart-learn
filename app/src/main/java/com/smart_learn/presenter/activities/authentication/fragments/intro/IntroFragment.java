@@ -20,7 +20,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.BottomSheetAuthenticationActivityBinding;
 import com.smart_learn.databinding.FragmentIntroBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
-import com.smart_learn.presenter.activities.helpers.Utilities;
+import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
