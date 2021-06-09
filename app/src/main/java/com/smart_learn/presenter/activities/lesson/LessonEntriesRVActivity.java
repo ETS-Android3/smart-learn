@@ -27,9 +27,9 @@ import com.smart_learn.core.config.CurrentConfig;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.databinding.ActivityRvEntrancesBinding;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
-import com.smart_learn.presenter.recycler_view.ActionModeRVCallback;
-import com.smart_learn.presenter.recycler_view.adapters.ItemDecoration;
-import com.smart_learn.presenter.recycler_view.adapters.LessonEntriesRVAdapter;
+import com.smart_learn.presenter.activities.lesson.recycler_view.ActionModeRVCallback;
+import com.smart_learn.presenter.activities.lesson.recycler_view.adapters.ItemDecoration;
+import com.smart_learn.presenter.activities.lesson.recycler_view.adapters.LessonEntriesRVAdapter;
 import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
 import com.smart_learn.presenter.view_models.LessonEntriesRVViewModel;
 

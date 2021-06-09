@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.recycler_view.adapters;
+package com.smart_learn.presenter.activities.lesson.recycler_view.adapters;
 
 import android.text.Html;
 import android.text.Spanned;
@@ -21,17 +21,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.entities.helpers.IndexRange;
-import com.smart_learn.data.models.room.entities.helpers.Translation;
-import com.smart_learn.databinding.LayoutLessonEntryDetailsBinding;
+import com.smart_learn.databinding.LayoutLessonDetailsBinding;
+import com.smart_learn.presenter.activities.lesson.LessonRVActivity;
 import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAdapter.WordViewHolder> implements Filterable {
+/**
+ * For ListAdapter https://www.youtube.com/watch?v=xPPMygGxiEo
+ * */
+public class LessonRVAdapter extends ListAdapter <Lesson, LessonRVAdapter.LessonViewHolder> implements Filterable {
 
     // used for showing different layouts
     private final MutableLiveData<Boolean> liveActionModeIsActive = new MutableLiveData<>(false);
@@ -41,65 +44,63 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
     // https://www.youtube.com/watch?v=hnuMyuCWwwU&t
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    protected final ActivityRVUtilitiesCallback<Word> activityCallback;
+    protected final ActivityRVUtilitiesCallback<Lesson> activityCallback;
 
-    private static final DiffUtil.ItemCallback<Word> DIFF_UTIL_CALLBACK = new DiffUtil.ItemCallback<Word>(){
+    private static final DiffUtil.ItemCallback<Lesson> DIFF_UTIL_CALLBACK = new DiffUtil.ItemCallback<Lesson>(){
         @Override
-        public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem.getWordId() == newItem.getWordId();
+        public boolean areItemsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
+            return oldItem.getLessonId() == newItem.getLessonId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem.getWord().equals(newItem.getWord()) &&
-                    oldItem.getTranslation().getTranslation().equals(newItem.getTranslation().getTranslation()) &&
-                    oldItem.getTranslation().getPhonetic().equals(newItem.getTranslation().getPhonetic()) &&
+        public boolean areContentsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
+            return oldItem.getName().equals(newItem.getName()) &&
                     oldItem.getCreatedAt() == newItem.getCreatedAt() &&
                     oldItem.getModifiedAt() == newItem.getModifiedAt() &&
                     oldItem.isSelected() == newItem.isSelected();
         }
     };
 
-    public LessonEntriesRVAdapter(ActivityRVUtilitiesCallback<Word> activityCallback) {
+    public LessonRVAdapter(ActivityRVUtilitiesCallback<Lesson> activityCallback) {
         super(DIFF_UTIL_CALLBACK);
         this.activityCallback = activityCallback;
         viewBinderHelper.setOpenOnlyOne(true);
     }
 
     /** Load initial data in recycler view */
-    public void setItems(List<Word> items) {
+    public void setItems(List<Lesson> items) {
         submitList(items);
     }
 
     @NonNull
     @Override
-    public LessonEntriesRVAdapter.WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LessonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // View itemView = LayoutInflater.from(parent.getContext())
-        //.inflate(R.layout.layout_lesson_details,parent,false);
+                //.inflate(R.layout.layout_lesson_details,parent,false);
 
         // make data binding
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        LayoutLessonEntryDetailsBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater,
-                R.layout.layout_lesson_entry_details, parent, false);
+        LayoutLessonDetailsBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater,
+                R.layout.layout_lesson_details, parent, false);
         viewHolderBinding.setLifecycleOwner(activityCallback.getActivity());
 
         // link data binding layout with view holder
-        LessonEntriesRVAdapter.WordViewHolder wordViewHolder = new LessonEntriesRVAdapter.WordViewHolder(viewHolderBinding);
-        viewHolderBinding.setViewHolder(wordViewHolder);
+        LessonViewHolder lessonViewHolder = new LessonViewHolder(viewHolderBinding);
+        viewHolderBinding.setViewHolder(lessonViewHolder);
 
-        return wordViewHolder;
+        return lessonViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LessonEntriesRVAdapter.WordViewHolder holder, int position) {
-        Word word = getItem(position);
+    public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
+        Lesson lesson = getItem(position);
 
-        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(word.getWordId()));
-        // Set this in order to close automatically secondary layout after item update.
-        viewBinderHelper.closeLayout(String.valueOf(word.getWordId()));
+        viewBinderHelper.bind(holder.swipeRevealLayout, String.valueOf(lesson.getLessonId()));
+         // Set this in order to close automatically secondary layout after item update.
+         viewBinderHelper.closeLayout(String.valueOf(lesson.getLessonId()));
 
-        holder.bind(word);
+        holder.bind(lesson);
     }
 
 
@@ -117,26 +118,26 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
                 String searchValue = constraint.toString();
 
                 // For filtering mode we search always in all db.
-                List<Word> allItems = activityCallback.getAllItemsFromDatabase();
+                List<Lesson> allItems = activityCallback.getAllItemsFromDatabase();
                 // reset search indexes and spanned name for all items
                 allItems.forEach(it -> {
                     it.setSearchIndexes(new ArrayList<>());
-                    it.resetSpannedWord();
+                    it.resetSpannedName();
                 });
 
-                List<Word> filteredItems;
+                List<Lesson> filteredItems;
 
                 if (searchValue.isEmpty()) {
                     filteredItems = allItems;
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getWord().toLowerCase().contains(searchValue.toLowerCase()))
+                            .filter(it -> it.getName().toLowerCase().contains(searchValue.toLowerCase()))
                             .collect(Collectors.toList());
 
                     // these indexes are used to show a background color for searchValue while filtering
                     filteredItems.forEach(it -> {
-                        int start = it.getWord().toLowerCase().indexOf(searchValue.toLowerCase());
+                        int start = it.getName().toLowerCase().indexOf(searchValue.toLowerCase());
                         int end = start + searchValue.length();
                         it.addIndexRange(new IndexRange(start,end));
                     });
@@ -167,7 +168,7 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
                  */
 
                 // FIXME: make a check for this cast
-                submitList((List<Word>) results.values);
+                submitList((List<Lesson>) results.values);
 
                 // this call is made in order to show a colorful spanned text
                 notifyDataSetChanged();
@@ -181,16 +182,15 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
     /**
      * Class to specific how an element from recycler view will be shown
      * */
-    public final class WordViewHolder extends RecyclerView.ViewHolder {
+    public final class LessonViewHolder extends RecyclerView.ViewHolder {
 
         // avoid a null value for liveLesson.getValue()
-        private final MutableLiveData<Word> liveWord =
-                new MutableLiveData<>(new Word(0,0,0,false,
-                        new Translation("",""),""));
+        private final MutableLiveData<Lesson> liveLesson =
+                new MutableLiveData<>(new Lesson("",0,0,false));
 
         private final SwipeRevealLayout swipeRevealLayout;
 
-        public WordViewHolder(LayoutLessonEntryDetailsBinding viewHolderBinding) {
+        public LessonViewHolder(LayoutLessonDetailsBinding viewHolderBinding) {
             // this will set itemView in ViewHolder class
             super(viewHolderBinding.getRoot());
 
@@ -204,7 +204,7 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
             // FIXME: Find a better way to get 'swipeRevealLayout'
             //  Why findViewById() does not work?
             //  https://stackoverflow.com/questions/51418503/findviewbyid-not-working-for-specific-view/51420912
-            swipeRevealLayout = itemView.findViewWithTag("WORD_SWIPE_REVEAL_LAYOUT_TAG");
+            swipeRevealLayout = itemView.findViewWithTag("LESSON_SWIPE_REVEAL_LAYOUT_TAG");
 
             TextView tvDelete = viewHolderBinding.includeNormalModeLayout.getRoot().findViewById(R.id.tvDelete);
             TextView tvUpdate = viewHolderBinding.includeNormalModeLayout.getRoot().findViewById(R.id.tvUpdate);
@@ -216,7 +216,7 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
                 public void onClick(View v) {
                     if(activityCallback.getActionModeCallback() != null) {
                         int itemPosition = getAdapterPosition();
-                        Word item = getItem(itemPosition);
+                        Lesson item = getItem(itemPosition);
                         // If item is selected deselect it, otherwise select it.
                         markItem(item,!item.isSelected(),itemPosition);
                     }
@@ -228,8 +228,8 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
                 @Override
                 public void onClick(View v) {
                     // if action mode is not set then set selected lesson and launch LessonActivity
-                    //Word item = getItem(getAdapterPosition());
-                    //((LessonEntriesRVActivity)activityCallback.getActivity()).startLessonActivity(item.getWordId());
+                    Lesson item = getItem(getAdapterPosition());
+                    ((LessonRVActivity)activityCallback.getActivity()).startLessonActivity(item.getLessonId());
                 }
             });
 
@@ -260,27 +260,27 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
             });
         }
 
-        public LiveData<Word> getLiveWord(){ return liveWord; }
+        public LiveData<Lesson> getLiveLesson(){ return liveLesson; }
 
         public LiveData<Boolean> getLiveLiveActionModeIsActive(){ return liveActionModeIsActive; }
 
 
         /** this is how single elements are displayed in recycler view */
-        private void bind(Word word){
+        private void bind(Lesson lesson){
 
-            if(!word.getSearchIndexes().isEmpty()) {
-                word.setSpannedWord(createSpannedText(word.getSearchIndexes(), word.getWord()));
+            if(!lesson.getSearchIndexes().isEmpty()) {
+                lesson.setSpannedName(createSpannedText(lesson.getSearchIndexes(), lesson.getName()));
             }
             else {
                 // This reset will be made also when a new filtering is made, but to avoid to keep
                 // irrelevant info linked to lesson if no filtering will be made, make reset here
                 // too.
-                word.setSearchIndexes(new ArrayList<>());
-                word.resetSpannedWord();
+                lesson.setSearchIndexes(new ArrayList<>());
+                lesson.resetSpannedName();
             }
 
             // this will notify view to change with new values
-            liveWord.setValue(word);
+            liveLesson.setValue(lesson);
         }
     }
 
@@ -301,7 +301,7 @@ public class LessonEntriesRVAdapter extends ListAdapter<Word, LessonEntriesRVAda
         return Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY);
     }
 
-    protected void markItem(Word item, boolean isSelected, int itemPosition) {
+    protected void markItem(Lesson item, boolean isSelected, int itemPosition) {
         item.setSelected(isSelected);
         // Keep info about selected in db also
         activityCallback.update(item);

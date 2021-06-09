@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.recycler_view.adapters;
+package com.smart_learn.presenter.activities.lesson.recycler_view.adapters;
 
 import android.graphics.Rect;
 import android.view.View;

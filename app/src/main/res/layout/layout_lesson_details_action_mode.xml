@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="passedViewHolder"
-            type="com.smart_learn.presenter.recycler_view.adapters.LessonRVAdapter.LessonViewHolder" />
+            type="com.smart_learn.presenter.activities.lesson.recycler_view.adapters.LessonRVAdapter.LessonViewHolder" />
     </data>
 
     <LinearLayout
