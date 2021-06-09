@@ -20,7 +20,6 @@
         <activity android:name=".presenter.activities.lesson.LessonActivity" />
         <activity android:name=".presenter.activities.lesson.LessonRVActivity" />
         <activity android:name=".presenter.activities.lesson.OpenLessonActivity" />
-        <activity android:name=".presenter.activities.SimpleLoginActivity" />
         <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
