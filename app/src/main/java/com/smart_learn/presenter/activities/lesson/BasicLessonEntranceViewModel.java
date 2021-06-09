@@ -20,9 +20,9 @@ import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.databinding.DialogAddLessonWordBinding;
-import com.smart_learn.presenter.activities.dialogs.DialogActionsCallback;
-import com.smart_learn.presenter.activities.dialogs.DialogDismissCallback;
-import com.smart_learn.presenter.activities.dialogs.LessonEntranceDialog;
+import com.smart_learn.presenter.helpers.dialogs.DialogActionsCallback;
+import com.smart_learn.presenter.helpers.dialogs.DialogDismissCallback;
+import com.smart_learn.presenter.helpers.dialogs.LessonEntranceDialog;
 
 public class BasicLessonEntranceViewModel extends AndroidViewModel {
 

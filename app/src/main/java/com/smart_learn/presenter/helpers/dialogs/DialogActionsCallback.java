@@ -1,8 +1,6 @@
-package com.smart_learn.presenter.activities.dialogs;
+package com.smart_learn.presenter.helpers.dialogs;
 
 import android.content.DialogInterface;
-
-import com.smart_learn.databinding.DialogNewLessonBinding;
 
 public interface DialogActionsCallback <T> {
     void onShowDialog(DialogInterface dialogInterface, T dialogBinding);

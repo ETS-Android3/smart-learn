@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityTestBinding;
-import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
+import com.smart_learn.presenter.helpers.dialogs.SettingsDialog;
 import com.smart_learn.presenter.view_models.TestLocalViewModel;
 
 public class TestLocalActivity extends AppCompatActivity {

@@ -19,9 +19,9 @@ import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.databinding.DialogNewLessonBinding;
-import com.smart_learn.presenter.activities.dialogs.DialogActionsCallback;
-import com.smart_learn.presenter.activities.dialogs.DialogDismissCallback;
-import com.smart_learn.presenter.activities.dialogs.LessonDialog;
+import com.smart_learn.presenter.helpers.dialogs.DialogActionsCallback;
+import com.smart_learn.presenter.helpers.dialogs.DialogDismissCallback;
+import com.smart_learn.presenter.helpers.dialogs.LessonDialog;
 
 /** https://developer.android.com/codelabs/android-room-with-a-view#9 */
 public class BasicLessonViewModel extends AndroidViewModel {
