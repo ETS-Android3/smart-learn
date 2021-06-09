@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityOpenLessonBinding;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
-import com.smart_learn.presenter.view_models.OpenLessonViewModel;
 
 public class OpenLessonActivity extends AppCompatActivity {
 

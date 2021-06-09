@@ -8,20 +8,14 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.databinding.ActivityLessonBinding;
 import com.smart_learn.databinding.ActivityTestBinding;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
-import com.smart_learn.presenter.view_models.BasicLessonEntranceViewModel;
-import com.smart_learn.presenter.view_models.LessonViewModel;
 import com.smart_learn.presenter.view_models.TestLocalViewModel;
 
 public class TestLocalActivity extends AppCompatActivity {

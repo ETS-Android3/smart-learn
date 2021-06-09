@@ -20,8 +20,6 @@ import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.databinding.ActivityLessonBinding;
 import com.smart_learn.presenter.activities.TestLocalActivity;
 import com.smart_learn.presenter.activities.dialogs.SettingsDialog;
-import com.smart_learn.presenter.view_models.BasicLessonEntranceViewModel;
-import com.smart_learn.presenter.view_models.LessonViewModel;
 
 public class LessonActivity extends AppCompatActivity {
 

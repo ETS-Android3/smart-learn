@@ -31,7 +31,6 @@ import com.smart_learn.presenter.activities.lesson.recycler_view.ActionModeRVCal
 import com.smart_learn.presenter.activities.lesson.recycler_view.adapters.ItemDecoration;
 import com.smart_learn.presenter.activities.lesson.recycler_view.adapters.LessonEntriesRVAdapter;
 import com.smart_learn.presenter.view_models.ActivityRVUtilitiesCallback;
-import com.smart_learn.presenter.view_models.LessonEntriesRVViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

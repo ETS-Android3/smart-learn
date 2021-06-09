@@ -16,7 +16,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
 import com.smart_learn.databinding.DialogAddLessonWordBinding;
-import com.smart_learn.presenter.view_models.LessonEntranceDialogViewModel;
+import com.smart_learn.presenter.activities.lesson.LessonEntranceDialogViewModel;
 
 public class LessonEntranceDialog extends DialogFragment {
 
