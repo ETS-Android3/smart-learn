@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.lesson.LessonDialogViewModel" />
+            type="com.smart_learn.presenter.activities.lesson.old.LessonDialogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
