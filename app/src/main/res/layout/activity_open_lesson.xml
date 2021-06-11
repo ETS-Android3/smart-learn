@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.lesson.old.OpenLessonViewModel" />
+            type="com.smart_learn.presenter.activities.notebook.old.OpenLessonViewModel" />
 
     </data>
 

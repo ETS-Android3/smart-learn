@@ -69,7 +69,7 @@ public class LessonService extends BasicRoomService<Lesson> {
         }
          */
 
-        // Add lesson only if this does not exist (should have a unique name).
+        // Add notebook only if this does not exist (should have a unique name).
         if (checkIfLessonExist(lesson.getName())) {
             return new ResponseInfo.Builder()
                     .setIsOk(false)
@@ -81,10 +81,10 @@ public class LessonService extends BasicRoomService<Lesson> {
                 .build();
     }
 
-    /** Try to add new lesson using results from lesson dialog */
+    /** Try to add new notebook using results from notebook dialog */
     public ResponseInfo tryToAddOrUpdateNewLesson(@NonNull Lesson lesson, boolean update){
         if(lesson == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewLesson] lesson is null");
+            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewLesson] notebook is null");
             return new ResponseInfo.Builder()
                     .setIsOk(false)
                     .setInfo("[Internal error. The modification was not saved.]")
@@ -97,7 +97,7 @@ public class LessonService extends BasicRoomService<Lesson> {
             return responseInfo;
         }
 
-        // here lesson is valid
+        // here notebook is valid
         if(update){
             lesson.setModifiedAt(System.currentTimeMillis());
             update(lesson);

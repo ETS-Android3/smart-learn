@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.databinding.DialogNewLessonBinding;
-import com.smart_learn.presenter.activities.lesson.old.LessonDialogViewModel;
+import com.smart_learn.presenter.activities.notebook.old.LessonDialogViewModel;
 
 /** https://developer.android.com/guide/topics/ui/dialogs */
 public class LessonDialog extends DialogFragment {

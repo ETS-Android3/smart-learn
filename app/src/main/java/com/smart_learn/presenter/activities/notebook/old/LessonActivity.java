@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old;
+package com.smart_learn.presenter.activities.notebook.old;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class LessonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get transmitted lesson id from the previous activity
+        // get transmitted notebook id from the previous activity
         Intent intent = getIntent();
         currentLessonId = intent.getLongExtra(LessonRVActivity.LESSON_ID,0);
 
@@ -115,7 +115,7 @@ public class LessonActivity extends AppCompatActivity {
 
         activityBinding.btnDeleteLesson.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // delete current lesson
+                // delete current notebook
                 lessonViewModel.deleteCurrentLesson();
 
                 // go to previous activity which already exist on stack
@@ -131,12 +131,12 @@ public class LessonActivity extends AppCompatActivity {
     }
 
     private void setViewModel(){
-        // view model to open lesson entrance dialog
+        // view model to open notebook entrance dialog
         basicLessonEntranceViewModel = new ViewModelProvider(this).get(BasicLessonEntranceViewModel.class);
 
         lessonViewModel = new ViewModelProvider(this).get(LessonViewModel.class);
 
-        // set current lesson
+        // set current notebook
         lessonViewModel.setLiveCurrentLesson(currentLessonId);
 
         // set observers
@@ -170,7 +170,7 @@ public class LessonActivity extends AppCompatActivity {
         dialogFragment.show(getSupportFragmentManager(), "LessonActivity");
     }
 
-    /** Show entries from the selected lesson */
+    /** Show entries from the selected notebook */
     private void startLessonEntriesRVActivity(){
         Intent intent = new Intent(this, LessonEntriesRVActivity.class);
         intent.putExtra(LessonRVActivity.LESSON_ID,currentLessonId);

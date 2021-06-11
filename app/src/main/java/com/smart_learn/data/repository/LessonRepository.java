@@ -34,18 +34,18 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
         sampleLiveLessonList = lessonDao.getAllLiveSampleLessons();
     }
 
-    /** Get a sample LiveData wrapped lesson based on lessonId. */
+    /** Get a sample LiveData wrapped notebook based on lessonId. */
     public LiveData<Lesson> getSampleLiveLesson(long lessonId) {
         return lessonDao.getSampleLiveLesson(lessonId);
     }
 
-    /** Get a sample LiveData wrapped lesson based on lessonName. */
+    /** Get a sample LiveData wrapped notebook based on lessonName. */
     public LiveData<Lesson> getSampleLiveLesson(String lessonName) {
         return lessonDao.getSampleLiveLesson(lessonName);
     }
 
 
-    /** Get all entries for a specific lesson. */
+    /** Get all entries for a specific notebook. */
     public LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId) {
         return lessonDao.getFullLiveLessonInfo(lessonId);
     }

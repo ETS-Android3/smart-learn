@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old;
+package com.smart_learn.presenter.activities.notebook.old;
 
 import android.app.Application;
 import android.content.DialogInterface;
@@ -48,7 +48,7 @@ public class BasicLessonViewModel extends AndroidViewModel {
             return;
         }
 
-        // here lesson was added so close the dialog
+        // here notebook was added so close the dialog
         dialogDismissCallback.onDismiss();
     }
 
@@ -74,7 +74,7 @@ public class BasicLessonViewModel extends AndroidViewModel {
 
             @Override
             public void onPositiveButtonPressed(DialogInterface dialog, DialogNewLessonBinding dialogBinding) {
-                // get lesson from data binding and view model
+                // get notebook from data binding and view model
                 Lesson dialogViewModelLesson = dialogBinding.getViewModel().getLiveLessonInfo().getValue();
                 if(dialogViewModelLesson == null){
                     Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[dialogViewModelLesson] Lesson is null");
@@ -83,7 +83,7 @@ public class BasicLessonViewModel extends AndroidViewModel {
 
                 Lesson tmpLesson;
                 if(!update){
-                    // If no update is made lesson from data binding and view model
+                    // If no update is made notebook from data binding and view model
                     // will be added if current configuration will be valid.
                     tmpLesson = dialogViewModelLesson;
                 }

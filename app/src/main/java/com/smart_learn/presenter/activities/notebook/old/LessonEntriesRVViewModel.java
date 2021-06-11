@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old;
+package com.smart_learn.presenter.activities.notebook.old;
 
 import android.app.Application;
 

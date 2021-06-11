@@ -50,7 +50,7 @@ public class WordRepository extends BasicRoomRepository<Word> {
         return wordDao.getSampleWord(word) == null;
     }
 
-    /** Check if Word already exists in a specific lesson. */
+    /** Check if Word already exists in a specific notebook. */
     public boolean checkIfWordExist(String word, long lessonId){
         return wordDao.getSampleWord(word,lessonId) == null;
     }

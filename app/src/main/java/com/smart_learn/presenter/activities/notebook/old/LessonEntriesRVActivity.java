@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old;
+package com.smart_learn.presenter.activities.notebook.old;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,9 +27,9 @@ import com.smart_learn.core.config.CurrentConfig;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.databinding.ActivityRvEntrancesBinding;
 import com.smart_learn.presenter.helpers.dialogs.SettingsDialog;
-import com.smart_learn.presenter.activities.lesson.old.recycler_view.ActionModeRVCallback;
-import com.smart_learn.presenter.activities.lesson.old.recycler_view.adapters.ItemDecoration;
-import com.smart_learn.presenter.activities.lesson.old.recycler_view.adapters.LessonEntriesRVAdapter;
+import com.smart_learn.presenter.activities.notebook.old.recycler_view.ActionModeRVCallback;
+import com.smart_learn.presenter.activities.notebook.old.recycler_view.adapters.ItemDecoration;
+import com.smart_learn.presenter.activities.notebook.old.recycler_view.adapters.LessonEntriesRVAdapter;
 import com.smart_learn.presenter.helpers.ActivityRVUtilitiesCallback;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +50,7 @@ public class LessonEntriesRVActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get transmitted lesson id from the previous activity
+        // get transmitted notebook id from the previous activity
         Intent intent = getIntent();
         currentLessonId = intent.getLongExtra(LessonRVActivity.LESSON_ID,0);
 

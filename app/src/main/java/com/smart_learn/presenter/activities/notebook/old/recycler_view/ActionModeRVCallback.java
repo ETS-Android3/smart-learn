@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old.recycler_view;
+package com.smart_learn.presenter.activities.notebook.old.recycler_view;
 
 
 import android.annotation.SuppressLint;

@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="passedViewHolder"
-            type="com.smart_learn.presenter.activities.lesson.old.recycler_view.adapters.LessonEntriesRVAdapter.WordViewHolder" />
+            type="com.smart_learn.presenter.activities.notebook.old.recycler_view.adapters.LessonEntriesRVAdapter.WordViewHolder" />
     </data>
 
     <!--

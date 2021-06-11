@@ -78,21 +78,21 @@ public class WordService extends BasicRoomService<Word> {
          */
 
         /*
-        // TODO: check to see if word exist in all database not only in one lesson
-        // add word only if this does not exists in current lesson
+        // TODO: check to see if word exist in all database not only in one notebook
+        // add word only if this does not exists in current notebook
         if (checkIfWordExist(word.getWord())) {
-            return new ResponseInfo(false,"Word " + word.getWord() + " already exists in this lesson. Choose other word");
+            return new ResponseInfo(false,"Word " + word.getWord() + " already exists in this notebook. Choose other word");
         }
          */
 
-        // TODO: check if translation exists in lesson
+        // TODO: check if translation exists in notebook
 
         return new ResponseInfo.Builder()
                         .setIsOk(true)
                         .build();
     }
 
-    /** Try to add new Word using results from lesson entrance dialog */
+    /** Try to add new Word using results from notebook entrance dialog */
     public ResponseInfo tryToAddOrUpdateNewWord(@NonNull Word word, boolean update){
         if(word == null){
             Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[tryToAddOrUpdateNewWord] word is null");

@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old.recycler_view.adapters;
+package com.smart_learn.presenter.activities.notebook.old.recycler_view.adapters;
 
 import android.text.Html;
 import android.text.Spanned;
@@ -24,7 +24,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutLessonDetailsBinding;
-import com.smart_learn.presenter.activities.lesson.old.LessonRVActivity;
+import com.smart_learn.presenter.activities.notebook.old.LessonRVActivity;
 import com.smart_learn.presenter.helpers.ActivityRVUtilitiesCallback;
 
 import java.util.ArrayList;
@@ -223,11 +223,11 @@ public class LessonRVAdapter extends ListAdapter <Lesson, LessonRVAdapter.Lesson
                 }
             });
 
-            // simple click in normal mode is used for launching LessonActivity with selected lesson
+            // simple click in normal mode is used for launching LessonActivity with selected notebook
             normalModeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // if action mode is not set then set selected lesson and launch LessonActivity
+                    // if action mode is not set then set selected notebook and launch LessonActivity
                     Lesson item = getItem(getAdapterPosition());
                     ((LessonRVActivity)activityCallback.getActivity()).startLessonActivity(item.getLessonId());
                 }
@@ -273,7 +273,7 @@ public class LessonRVAdapter extends ListAdapter <Lesson, LessonRVAdapter.Lesson
             }
             else {
                 // This reset will be made also when a new filtering is made, but to avoid to keep
-                // irrelevant info linked to lesson if no filtering will be made, make reset here
+                // irrelevant info linked to notebook if no filtering will be made, make reset here
                 // too.
                 lesson.setSearchIndexes(new ArrayList<>());
                 lesson.resetSpannedName();

@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.lesson.old;
+package com.smart_learn.presenter.activities.notebook.old;
 
 import android.app.Application;
 import android.content.DialogInterface;
@@ -48,7 +48,7 @@ public class BasicLessonEntranceViewModel extends AndroidViewModel {
             return;
         }
 
-        // here lesson was added so close the dialog
+        // here notebook was added so close the dialog
         dialogDismissCallback.onDismiss();
     }
 
@@ -74,19 +74,19 @@ public class BasicLessonEntranceViewModel extends AndroidViewModel {
 
             @Override
             public void onPositiveButtonPressed(DialogInterface dialog, DialogAddLessonWordBinding dialogBinding) {
-                // get lesson entrance from data binding and view model
+                // get notebook entrance from data binding and view model
                 LessonEntrance dialogLessonEntrance = dialogBinding.getViewModel().getLiveLessonEntranceInfo().getValue();
                 if(dialogLessonEntrance == null){
                     Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[dialogViewModelLessonEntrance] LessonEntrance is null");
                     return;
                 }
 
-                // link entrance with current lesson
+                // link entrance with current notebook
                 dialogLessonEntrance.setFkLessonId(currentLessonId);
 
                 LessonEntrance tmpLesson;
                 if(!update){
-                    // If no update is made lesson entrance from data binding and view model
+                    // If no update is made notebook entrance from data binding and view model
                     // will be added if current configuration will be valid.
                     tmpLesson = dialogLessonEntrance;
                 }
