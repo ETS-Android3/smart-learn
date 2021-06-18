@@ -42,7 +42,7 @@ public class EmailRegisterFragment extends Fragment {
         binding.setSharedViewModel(sharedViewModel);
         binding.setViewModel(emailRegisterViewModel);
 
-        binding.btnRegisterEmailRegisterFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegisterFragmentEmailRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 emailRegisterViewModel.register(EmailRegisterFragment.this);

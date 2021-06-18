@@ -13,11 +13,11 @@
         tools:context=".presenter.activities.authentication.AuthenticationActivity">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_authentication_activity"
+            android:id="@+id/toolbar_activity_authentication"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
-            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_authentication_activity"
+            app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_activity_authentication"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +25,7 @@
             app:theme="@style/AppTheme.BlackStyleToolbar" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_fragment_authentication_activity"
+            android:id="@+id/nav_host_fragment_activity_authentication"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -34,9 +34,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_authentication_activity"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_authentication"
             app:layout_constraintVertical_bias="0.455"
-            app:navGraph="@navigation/nav_graph_authentication_activity" />
+            app:navGraph="@navigation/nav_graph_activity_authentication" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

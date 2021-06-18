@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         binding.setLifecycleOwner(this);
 
-        setSupportActionBar(binding.toolbarMainActivity);
+        setSupportActionBar(binding.toolbarActivityMain);
         setNavigationDrawer();
     }
 
@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // main activity is home activity so check 'Home' from the navigation menu
-        binding.navigationViewMainActivity.setCheckedItem(R.id.nav_home_main_activity);
+        binding.navigationViewActivityMain.setCheckedItem(R.id.nav_home_menu_activity_main);
     }
 
     @Override
     public void onBackPressed() {
         // disable back from main activity because is not necessary
         // super.onBackPressed();
-        if(binding.drawerLayoutMainActivity.isDrawerOpen(GravityCompat.START)){
-            binding.drawerLayoutMainActivity.closeDrawer(GravityCompat.START);
+        if(binding.drawerLayoutActivityMain.isDrawerOpen(GravityCompat.START)){
+            binding.drawerLayoutActivityMain.closeDrawer(GravityCompat.START);
         }
     }
 
@@ -74,34 +74,34 @@ public class MainActivity extends AppCompatActivity {
 
         // set navigation drawer
         // https://www.youtube.com/watch?v=HwYENW0RyY4
-        binding.navigationViewMainActivity.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayoutMainActivity, binding.toolbarMainActivity,
+        binding.navigationViewActivityMain.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawerLayoutActivityMain, binding.toolbarActivityMain,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        binding.drawerLayoutMainActivity.addDrawerListener(toggle);
+        binding.drawerLayoutActivityMain.addDrawerListener(toggle);
         toggle.syncState();
 
         // set on menu item listener
-        binding.navigationViewMainActivity.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        binding.navigationViewActivityMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_home_main_activity:
+                    case R.id.nav_home_menu_activity_main:
                         break;
-                    case R.id.nav_logout_main_activity:
+                    case R.id.nav_logout_menu_activity_main:
                         signOut();
                         break;
-                    case R.id.nav_account_main_activity:
-                    case R.id.nav_community_main_activity:
-                    case R.id.nav_lessons_main_activity:
-                    case R.id.nav_test_main_activity:
-                    case R.id.nav_settings_main_activity:
-                    case R.id.nav_help_main_activity:
+                    case R.id.nav_account_menu_activity_main:
+                    case R.id.nav_community_menu_activity_main:
+                    case R.id.nav_lessons_menu_activity_main:
+                    case R.id.nav_test_menu_activity_main:
+                    case R.id.nav_settings_menu_activity_main:
+                    case R.id.nav_help_menu_activity_main:
                         break;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");
                 }
-                binding.drawerLayoutMainActivity.closeDrawer(GravityCompat.START);
+                binding.drawerLayoutActivityMain.closeDrawer(GravityCompat.START);
                 return true;
             }
         });

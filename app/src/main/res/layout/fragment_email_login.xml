@@ -15,7 +15,7 @@
         tools:context=".presenter.activities.authentication.fragments.login.EmailLoginFragment">
 
         <TextView
-            android:id="@+id/tv_info_1_email_login_fragment"
+            android:id="@+id/tv_info_1_fragment_email_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -25,14 +25,14 @@
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_fragment_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49" />
 
         <TextView
-            android:id="@+id/tv_info_2_email_login_fragment"
+            android:id="@+id/tv_info_2_fragment_email_login"
             android:layout_width="0dp"
             android:layout_height="125dp"
             android:layout_marginStart="24dp"
@@ -41,14 +41,14 @@
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/et_email_address_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/et_email_address_fragment_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_email_login_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_fragment_email_login" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_email_address_email_login_fragment"
+            android:id="@+id/et_email_address_fragment_email_login"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="24dp"
@@ -58,10 +58,10 @@
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:errorTextColor="@color/red"
-            app:layout_constraintBottom_toTopOf="@+id/et_password_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/et_password_fragment_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_email_login_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_fragment_email_login"
             app:startIconDrawable="@drawable/ic_baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +74,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_password_email_login_fragment"
+            android:id="@+id/et_password_fragment_email_login"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="24dp"
@@ -83,10 +83,10 @@
             android:hint="@string/password"
             app:errorEnabled="true"
             app:errorTextColor="@color/red"
-            app:layout_constraintBottom_toTopOf="@+id/btn_forgot_password_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_forgot_password_fragment_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_email_address_email_login_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/et_email_address_fragment_email_login"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_baseline_password_24">
 
@@ -100,7 +100,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_forgot_password_email_login_fragment"
+            android:id="@+id/btn_forgot_password_fragment_email_login"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
@@ -111,14 +111,14 @@
             android:textAlignment="viewStart"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_email_login_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_fragment_email_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_password_email_login_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/et_password_fragment_email_login" />
 
         <Button
-            android:id="@+id/btn_login_email_login_fragment"
+            android:id="@+id/btn_login_fragment_email_login"
             style="@style/AuthenticationActivityButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_forgot_password_email_login_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_forgot_password_fragment_email_login" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

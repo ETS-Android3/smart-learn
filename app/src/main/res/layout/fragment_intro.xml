@@ -13,7 +13,7 @@
         tools:context=".presenter.activities.authentication.fragments.intro.IntroFragment">
 
         <TextView
-            android:id="@+id/tv_info_1_intro_fragment"
+            android:id="@+id/tv_info_1_fragment_intro"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -24,14 +24,14 @@
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_intro_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/tv_info_2_fragment_intro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_info_2_intro_fragment"
+            android:id="@+id/tv_info_2_fragment_intro"
             android:layout_width="0dp"
             android:layout_height="330dp"
             android:layout_marginStart="24dp"
@@ -40,13 +40,13 @@
             android:text="Add message here "
             android:textAlignment="center"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login_intro_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_fragment_intro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_intro_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_1_fragment_intro" />
 
         <Button
-            android:id="@+id/btn_login_intro_fragment"
+            android:id="@+id/btn_login_fragment_intro"
             style="@style/AuthenticationActivityButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -54,14 +54,14 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:text="@string/login"
-            app:layout_constraintBottom_toTopOf="@+id/btn_register_intro_fragment"
+            app:layout_constraintBottom_toTopOf="@+id/btn_register_fragment_intro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_intro_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_2_fragment_intro" />
 
         <Button
-            android:id="@+id/btn_register_intro_fragment"
+            android:id="@+id/btn_register_fragment_intro"
             style="@style/AuthenticationActivityButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_intro_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_fragment_intro" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

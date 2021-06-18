@@ -43,14 +43,14 @@ public class EmailLoginFragment extends Fragment {
         binding.setSharedViewModel(sharedViewModel);
 
         // set buttons listeners
-        binding.btnLoginEmailLoginFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnLoginFragmentEmailLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 emailLoginViewModel.login(EmailLoginFragment.this);
             }
         });
 
-        binding.btnForgotPasswordEmailLoginFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnForgotPasswordFragmentEmailLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 emailLoginViewModel.sendPasswordResetEmail(EmailLoginFragment.this);

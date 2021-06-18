@@ -37,7 +37,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         ActivityAuthenticationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_authentication);
         binding.setLifecycleOwner(this);
 
-        setSupportActionBar(binding.toolbarAuthenticationActivity);
+        setSupportActionBar(binding.toolbarActivityAuthentication);
 
         setViewModel();
     }

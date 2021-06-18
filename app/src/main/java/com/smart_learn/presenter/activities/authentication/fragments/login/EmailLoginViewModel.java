@@ -186,17 +186,17 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
         // Check only for null value and if length is too big. Firebase will handle the rest.
 
         if(TextUtils.isEmpty(form.getEmail())){
-            fragment.getBinding().etEmailAddressEmailLoginFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etEmailAddressFragmentEmailLogin.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etEmailAddressEmailLoginFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etEmailAddressFragmentEmailLogin.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressEmailLoginFragment.setError(null);
+        fragment.getBinding().etEmailAddressFragmentEmailLogin.setError(null);
         return true;
     }
 
@@ -205,7 +205,7 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
         // Check only for null value and if length is too big. Firebase will handle the rest.
 
         if(TextUtils.isEmpty(form.getPassword())){
-            fragment.getBinding().etPasswordEmailLoginFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etPasswordFragmentEmailLogin.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
@@ -213,11 +213,11 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etPasswordEmailLoginFragment.setError(error);
+            fragment.getBinding().etPasswordFragmentEmailLogin.setError(error);
             return false;
         }
 
-        fragment.getBinding().etPasswordEmailLoginFragment.setError(null);
+        fragment.getBinding().etPasswordFragmentEmailLogin.setError(null);
         return true;
     }
 }

@@ -8,7 +8,7 @@
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout_guest_activity"
+        android:id="@+id/drawer_layout_activity_guest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presenter.activities.guest.GuestActivity"
@@ -17,11 +17,11 @@
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/navigation_view_guest_activity"
+            android:id="@+id/navigation_view_activity_guest"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
-            app:headerLayout="@layout/nav_header_guest_activity"
-            app:menu="@menu/menu_guest_activity">
+            app:headerLayout="@layout/nav_header_activity_guest"
+            app:menu="@menu/menu_activity_guest">
 
         </com.google.android.material.navigation.NavigationView>
 
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_guest_activity"
+                android:id="@+id/toolbar_activity_guest"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
@@ -56,7 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_guest_activity" />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_guest" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

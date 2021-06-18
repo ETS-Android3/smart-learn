@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.databinding.BottomSheetAuthenticationActivityBinding;
+import com.smart_learn.databinding.BottomSheetActivityAuthenticationBinding;
 import com.smart_learn.databinding.FragmentIntroBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -42,14 +42,14 @@ public class IntroFragment extends Fragment {
         binding.setLifecycleOwner(this);
 
         // set buttons listeners
-        binding.btnLoginIntroFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnLoginFragmentIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showOptionDialog(true);
             }
         });
 
-        binding.btnRegisterIntroFragment.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegisterFragmentIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showOptionDialog(false);
@@ -84,8 +84,8 @@ public class IntroFragment extends Fragment {
         // create dialog and load layout
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.AuthenticationActivityBottomSheetDialogTheme);
 
-        BottomSheetAuthenticationActivityBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.bottom_sheet_authentication_activity,null, false);
+        BottomSheetActivityAuthenticationBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.bottom_sheet_activity_authentication,null, false);
         bottomSheetBinding.setLifecycleOwner(IntroFragment.this);
 
         bottomSheetBinding.setViewModel(introViewModel);
@@ -93,22 +93,22 @@ public class IntroFragment extends Fragment {
         bottomSheetDialog.show();
 
         // set button listeners
-        bottomSheetBinding.btnEmailOptionBottomSheetAuthenticationActivity.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnEmailOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
                 if(login){
-                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_login_fragment_authentication_activity, null,
+                    navController.navigate(R.id.action_intro_fragment_nav_graph_activity_authentication_to_email_login_fragment_nav_graph_activity_authentication, null,
                             Utilities.getNavOptions());
                 }
                 else{
-                    navController.navigate(R.id.action_intro_fragment_authentication_activity_to_email_register_fragment_authentication_activity, null,
+                    navController.navigate(R.id.action_intro_fragment_nav_graph_activity_authentication_to_email_register_fragment_nav_graph_activity_authentication, null,
                             Utilities.getNavOptions());
                 }
             }
         });
 
-        bottomSheetBinding.btnGoogleOptionBottomSheetAuthenticationActivity.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnGoogleOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -116,7 +116,7 @@ public class IntroFragment extends Fragment {
             }
         });
 
-        bottomSheetBinding.btnChangeOptionBottomSheetAuthenticationActivity.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnChangeOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();

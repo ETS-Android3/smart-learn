@@ -81,54 +81,54 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
 
     private boolean goodProfile(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getProfile())){
-            fragment.getBinding().etProfileEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etProfileFragmentEmailRegister.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getProfile().length() > RegisterForm.MAX_PROFILE_LENGTH){
-            fragment.getBinding().etProfileEmailRegisterFragment.setError(fragment.getString(R.string.error_profile_too_long));
+            fragment.getBinding().etProfileFragmentEmailRegister.setError(fragment.getString(R.string.error_profile_too_long));
             return false;
         }
 
-        fragment.getBinding().etProfileEmailRegisterFragment.setError(null);
+        fragment.getBinding().etProfileFragmentEmailRegister.setError(null);
         return true;
     }
 
     private boolean goodEmail(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getEmail())){
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
         if(!RegisterForm.EMAIL_REGEX_PATTERN.matcher(form.getEmail()).matches()) {
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_not_valid));
+            fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_email_not_valid));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(null);
+        fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(null);
         return true;
     }
 
     private boolean goodRetypedEmail(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getRetypedEmail())){
-            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etRetypedEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(form.getRetypedEmail().length() > RegisterForm.MAX_EMAIL_LENGTH){
-            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_email_too_long));
+            fragment.getBinding().etRetypedEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_email_too_long));
             return false;
         }
 
-        fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedEmailAddressFragmentEmailRegister.setError(null);
         return true;
     }
 
@@ -141,26 +141,26 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getEmail().equals(form.getRetypedEmail())){
-            fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_emails_not_matching));
-            fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(fragment.getString(R.string.error_emails_not_matching));
+            fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_emails_not_matching));
+            fragment.getBinding().etRetypedEmailAddressFragmentEmailRegister.setError(fragment.getString(R.string.error_emails_not_matching));
             return false;
         }
 
-        fragment.getBinding().etEmailAddressEmailRegisterFragment.setError(null);
-        fragment.getBinding().etRetypedEmailAddressEmailRegisterFragment.setError(null);
+        fragment.getBinding().etEmailAddressFragmentEmailRegister.setError(null);
+        fragment.getBinding().etRetypedEmailAddressFragmentEmailRegister.setError(null);
         return true;
     }
 
     private boolean goodPassword(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getPassword())){
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etPasswordFragmentEmailRegister.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
         if(form.getPassword().length() < RegisterForm.MIN_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.error_password_too_short) + " " + RegisterForm.MIN_PASSWORD_LENGTH + " " +
                     fragment.getString(R.string.characters);
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
+            fragment.getBinding().etPasswordFragmentEmailRegister.setError(error);
             return false;
         }
 
@@ -168,22 +168,22 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         if(form.getPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(error);
+            fragment.getBinding().etPasswordFragmentEmailRegister.setError(error);
             return false;
         }
 
         if(!RegisterForm.PASSWORD_REGEX_PATTERN.matcher(form.getPassword()).matches()) {
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_weak_password));
+            fragment.getBinding().etPasswordFragmentEmailRegister.setError(fragment.getString(R.string.error_weak_password));
             return false;
         }
 
-        fragment.getBinding().etPasswordEmailRegisterFragment.setError(null);
+        fragment.getBinding().etPasswordFragmentEmailRegister.setError(null);
         return true;
     }
 
     private boolean goodRetypedPassword(EmailRegisterFragment fragment, RegisterForm form){
         if(TextUtils.isEmpty(form.getRetypedPassword())){
-            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_required));
+            fragment.getBinding().etRetypedPasswordFragmentEmailRegister.setError(fragment.getString(R.string.error_required));
             return false;
         }
 
@@ -191,11 +191,11 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         if(form.getRetypedPassword().length() > RegisterForm.MAX_PASSWORD_LENGTH){
             String error = fragment.getString(R.string.error_password_too_long) + " " + RegisterForm.MAX_PASSWORD_LENGTH +
                     fragment.getString(R.string.characters) + " " + fragment.getString(R.string.are_allowed);
-            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(error);
+            fragment.getBinding().etRetypedPasswordFragmentEmailRegister.setError(error);
             return false;
         }
 
-        fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(null);
+        fragment.getBinding().etRetypedPasswordFragmentEmailRegister.setError(null);
         return true;
     }
 
@@ -208,13 +208,13 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
         }
 
         if(!form.getPassword().equals(form.getRetypedPassword())){
-            fragment.getBinding().etPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_passwords_not_matching));
-            fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(fragment.getString(R.string.error_passwords_not_matching));
+            fragment.getBinding().etPasswordFragmentEmailRegister.setError(fragment.getString(R.string.error_passwords_not_matching));
+            fragment.getBinding().etRetypedPasswordFragmentEmailRegister.setError(fragment.getString(R.string.error_passwords_not_matching));
             return false;
         }
 
-        fragment.getBinding().etPasswordEmailRegisterFragment.setError(null);
-        fragment.getBinding().etRetypedPasswordEmailRegisterFragment.setError(null);
+        fragment.getBinding().etPasswordFragmentEmailRegister.setError(null);
+        fragment.getBinding().etRetypedPasswordFragmentEmailRegister.setError(null);
         return true;
     }
 

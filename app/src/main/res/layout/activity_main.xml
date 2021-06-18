@@ -8,7 +8,7 @@
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout_main_activity"
+        android:id="@+id/drawer_layout_activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presenter.activities.main.MainActivity"
@@ -17,11 +17,11 @@
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/navigation_view_main_activity"
+            android:id="@+id/navigation_view_activity_main"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
-            app:headerLayout="@layout/nav_header_main_activity"
-            app:menu="@menu/menu_main_activity">
+            app:headerLayout="@layout/nav_header_activity_main"
+            app:menu="@menu/menu_activity_main">
 
         </com.google.android.material.navigation.NavigationView>
 
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_main_activity"
+                android:id="@+id/toolbar_activity_main"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
@@ -56,7 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_main_activity" />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_main" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
