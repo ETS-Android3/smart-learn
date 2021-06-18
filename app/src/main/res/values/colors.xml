@@ -3,9 +3,10 @@
     <color name="colorPrimary_second">#0EA8ED</color>
     <color name="colorPrimaryDark_second">#0EA8ED</color>
     <color name="colorPrimary">#F3F4F6</color>
-    <color name="colorPrimaryDark">#F3F4F6</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimaryDark">#EBEBEB</color>
+    <color name="colorAccent">#0EA8ED</color>
     <color name="colorResult">#DA0303</color>
+    <color name="colorToolbarTextLightTheme">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="white_closed">#AFAFAF</color>
     <color name="white_selected">#E6E6E6</color>
@@ -23,4 +24,7 @@
     <color name="skyBlue">#2196F3</color>
     <color name="transparent">#00000000</color>
     <color name="toast_primary">#7C7B7B</color>
+    <color name="tint_unchecked_icon_action_mode">@color/black</color>
+    <color name="tint_checked_icon_action_mode">@color/colorAccent</color>
+    <color name="text_color_no_item_recycler_view_primary">@color/black</color>
 </resources>

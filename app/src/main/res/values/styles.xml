@@ -1,10 +1,25 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+    <!-- 'AppTheme' is base application theme.
+
+      If you do not know what to choose between 'Theme.*.ActionBar' and 'Theme.*.NoActionBar' check this link.
+      https://stackoverflow.com/questions/44516512/what-is-exact-difference-between-appbar-toolbar-actionbar-and-when-to-use-th/44516767
+
+      Seems that 'Toolbar' also known as 'AppBar' should be used, because was added after 'ActionBar' and is more flexible.
+      That means 'Theme.*.NoActionBar' should be used. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- color for the app bar and other primary UI elements -->
         <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- a darker variant of the primary color, used for the status bar (on Android 5.0+) and contextual app bars -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- a secondary color for controls like checkboxes and text fields -->
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- applied for all activities background color -->
+        <item name="android:windowBackground">@color/colorPrimary</item>
 
         <!-- status bar appearance -->
         <!--https://imstudio.medium.com/android-change-status-bar-text-color-659680fce49b-->
@@ -14,16 +29,10 @@
         <!-- app activities/fragments animations -->
         <item name="android:windowAnimationStyle">@style/AppTheme.CustomActivityAnimation</item>
 
-        <!-- toolbar options menu appearance -->
-        <item name="android:itemBackground">@color/colorAccent</item>
-
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
         <!-- style action mode -->
-        <item name="android:actionModeBackground">@color/colorPrimary</item>
+        <!-- https://stackoverflow.com/questions/28374774/unable-to-style-action-mode-when-using-toolbar -->
         <item name="windowActionModeOverlay">true</item>
-
+        <item name="actionModeStyle">@style/AppTheme.ActionModeStyle</item>
 
     </style>
 
@@ -32,9 +41,74 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- TODO: delete this because was replaced with AppTheme.AppBarOverlay.PrimaryToolbarStyle -->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                                   Toolbar style                                         -->
+    <!--  =====================================================================================  -->
+
+
+    <!-- Primary style for Toolbar. It will be applied to the Toolbar using command:
+                    android:theme="@style/AppTheme.BlackStyleToolbar"  -->
+    <style name="AppTheme.AppBarOverlay.ToolbarStyle" parent="ThemeOverlay.AppCompat.Light">
+
+        <!-- This will change title color for Toolbar.
+             Also for changing toolbar title color you can use:
+                - app:titleTextColor="" in XML file
+                - toolbar_item.setTitleTextColor(here use a color , e.g. Color.RED) in java file
+
+            Obs:
+                This is available only for 'parent="ThemeOverlay.AppCompat.Light"'
+
+                For example, if you use 'parent="ThemeOverlay.AppCompat.Dark.ActionBar"',
+                this will change color of icons, title and items menus for toolbar. -->
+        <item name="android:textColorPrimary">@color/colorToolbarTextLightTheme</item>
+
+        <!-- This will change text size for items from the toolbar menu. Title is NOT affected. -->
+        <item name="android:textSize">18sp</item>
+
+        <!-- This will change text color for items from the toolbar menu. Title is NOT affected. -->
+        <item name="android:textColor">@color/colorToolbarTextLightTheme</item>
+
+        <!-- This will change text color for toolbar icons, menu icons and items from the toolbar menu.
+             Title is NOT affected. -->
+        <item name="android:textColorSecondary">@color/colorToolbarTextLightTheme</item>
+
+        <!-- This will change background of the toolbar and menu items dialog.
+             Also this will disable focus effect for item menu click. -->
+        <!--<item name="android:background">@color/colorPrimary</item>-->
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay.ToolbarStyle.CardView" parent="AppTheme.AppBarOverlay.ToolbarStyle">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay.ToolbarStyle.OptionEdit" parent="AppTheme.AppBarOverlay.ToolbarStyle">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
+
+
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                                   Action mode style                                     -->
+    <!--  =====================================================================================  -->
+    <!-- https://stackoverflow.com/questions/28374774/unable-to-style-action-mode-when-using-toolbar -->
+    <style name="AppTheme.ActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/colorPrimary</item>
+        <item name="height">?attr/actionBarSize</item>
+    </style>
+
+
 
     <!-- app activities/fragments animations -->
     <style name="AppTheme.CustomActivityAnimation" parent="@android:style/Animation.Activity">
@@ -44,6 +118,7 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
+    <!-- TODO: delete this because was replaced with AppTheme.AppBarOverlay.PrimaryToolbarStyle -->
     <style name="AppTheme.BlackStyleToolbar" parent="AppTheme">
         <item name="android:textColorSecondary">@color/black</item>
         <item name="android:background">@color/colorPrimary</item>
@@ -63,7 +138,25 @@
         <item name="android:textColorSecondary">@color/black</item>
     </style>
 
-    <!-- Modal bottom sheet for for Authentication Activity -->
+
+
+    <!--  =====================================================================================  -->
+    <!--                             Modal bottom sheets dialog style                            -->
+    <!--  =====================================================================================  -->
+
+    <!-- Modal bottom sheet with primary color background -->
+    <style name="AppTheme.BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppTheme.BottomSheetDialogStyle</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
+        <!-- This will make corners transparent and will be shown as a rounded corners -->
+        <item name="android:background">@drawable/background_bottom_sheet_primary</item>
+    </style>
+
+
+    <!-- TODO: delete this and replace it with 'AppTheme.BottomSheetDialogTheme' -->
+    <!-- Modal bottom sheet for Authentication Activity -->
     <style name="AuthenticationActivityBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AuthenticationActivityBottomSheetStyle</item>
     </style>
@@ -73,6 +166,26 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+
+
+
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                                 Buttons styles                                          -->
+    <!--  =====================================================================================  -->
+
+    <!-- Use for custom buttons when normal state background color is colorPrimary  -->
+    <style name="AppTheme.ButtonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/background_button_primary</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- TODO: change this style with AppTheme.... -->
     <!-- For buttons from AuthenticationActivity -->
     <style name="AuthenticationActivityButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:textSize">16sp</item>
@@ -81,6 +194,62 @@
         <item name="android:background">@drawable/rounded_shape_authentication_activity</item>
     </style>
 
+    <!-- For action buttons when ActionMode is on -->
+    <style name="AppTheme.ButtonStyle.ActionModeButton" parent="AppTheme.ButtonStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
 
+    <!-- For filter options from bottom modal sheets -->
+    <style name="AppTheme.ButtonStyle.FilterButton" parent="@style/AppTheme.ButtonStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <!-- For floating buttons -->
+    <style name="AppTheme.ButtonStyle.FloatingButton.Primary" parent="@style/Widget.Design.FloatingActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">end|bottom</item>
+    </style>
+
+
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                                 Recycler view styles                                    -->
+    <!--  =====================================================================================  -->
+    <style name="AppTheme.RecyclerView.Primary" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/background_recycler_view_primary</item>
+    </style>
+
+
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                                   Card views style                                      -->
+    <!--  =====================================================================================  -->
+
+    <!-- This will work only for 'com.google.android.material.card.MaterialCardView' -->
+    <style name="AppTheme.CardView.MaterialDesign" parent="Theme.MaterialComponents.Light">
+        <!-- this will change color for checked icon and card view background when item is selected -->
+        <item name="colorPrimary">@color/colorAccent</item>
+
+        <!-- this will change color for background when item is NOT selected -->
+        <item name="colorSurface">@color/white</item>
+
+        <!-- this will change color for background when item is clicked -->
+        <item name="colorOnSurface">@color/green</item>
+
+        <!-- this will change color for the element inside the checked icon -->
+        <item name="checkedIconTint">@color/rose</item>
+
+        <!-- this will change checked icon -->
+        <item name="checkedIcon">@drawable/ic_baseline_checked_circle_24</item>
+    </style>
 
 </resources>
