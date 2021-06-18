@@ -27,4 +27,5 @@
     <color name="tint_unchecked_icon_action_mode">@color/black</color>
     <color name="tint_checked_icon_action_mode">@color/colorAccent</color>
     <color name="text_color_no_item_recycler_view_primary">@color/black</color>
+    <color name="colorError">#B00404</color>
 </resources>
