@@ -90,4 +90,19 @@
     <string name="profile_name">Profile name</string>
     <string name="retype_email">Retype Email</string>
     <string name="retype_password">Retype password</string>
+
+
+    <!-- NotebookActivity -->
+    <string name="error_loading_screen">Error while loading screen</string>
+    <string name="error_lesson_can_not_be_opened">Lesson can not be opened</string>
+    <string name="error_selected_item_can_not_be_opened">Selected item can not be opened</string>
+    <string name="error_lesson_name_too_long">Lesson name is too long</string>
+    <string name="error_word_can_not_be_opened">Word can not pe loaded.</string>
+    <string name="error_lesson_name_is_same">Lesson name is same.</string>
+
+    <string name="add_new">Add new</string>
+    <string name="selected">Selected:</string>
+    <string name="words">Words</string>
+    <string name="lesson_name">Lesson name</string>
+
 </resources>

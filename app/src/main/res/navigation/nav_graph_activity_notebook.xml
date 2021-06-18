@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_activity_notebook"
+    app:startDestination="@id/lessons_fragment_nav_graph_activity_notebook">
+
+    <fragment
+        android:id="@+id/lessons_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment"
+        android:label="lessons_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_lessons">
+        <action
+            android:id="@+id/action_lessons_fragment_to_lesson_home_fragment_nav_graph_activity_notebook"
+            app:destination="@id/home_lesson_fragment_nav_graph_activity_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_lesson_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.fragments.home_lesson.HomeLessonFragment"
+        android:label="home_lesson_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_home_lesson"/>
+    <fragment
+        android:id="@+id/words_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.fragments.words.WordsFragment"
+        android:label="words_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_words">
+        <action
+            android:id="@+id/action_words_fragment_nav_graph_activity_notebook_to_home_word_fragment_nav_graph_activity_notebook"
+            app:destination="@id/home_word_fragment_nav_graph_activity_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/home_word_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.fragments.home_word.HomeWordFragment"
+        android:label="home_word_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_home_word" />
+</navigation>

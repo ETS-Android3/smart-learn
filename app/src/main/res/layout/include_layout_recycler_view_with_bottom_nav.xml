@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/parent_layout_include_layout_recycler_view_with_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_btn_add_include_layout_recycler_view_with_bottom_nav"
+            style="@style/AppTheme.ButtonStyle.FloatingButton.Primary"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="20dp"
+            app:fabSize="normal"
+            android:src="@drawable/ic_baseline_plus_24"
+            android:contentDescription="@string/add_new" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_include_layout_recycler_view_with_bottom_nav"
+            style="@style/AppTheme.RecyclerView.Primary">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_no_item_include_layout_recycler_view_with_bottom_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/text_color_no_item_recycler_view_primary"
+            android:text="Nothing here.\nPlease add a item."/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
