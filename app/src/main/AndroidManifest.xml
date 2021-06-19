@@ -17,10 +17,6 @@
         <activity android:name=".presenter.activities.guest.GuestActivity" />
         <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
         <activity android:name=".presenter.activities.TestLocalActivity" />
-        <activity android:name=".presenter.activities.notebook.old.LessonEntriesRVActivity" />
-        <activity android:name=".presenter.activities.notebook.old.LessonActivity" />
-        <activity android:name=".presenter.activities.notebook.old.LessonRVActivity" />
-        <activity android:name=".presenter.activities.notebook.old.OpenLessonActivity" />
         <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
