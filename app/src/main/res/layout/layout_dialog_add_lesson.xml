@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_lesson_name_dialog_add_lesson"
+            android:id="@+id/et_lesson_name_layout_dialog_add_lesson"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="24dp"

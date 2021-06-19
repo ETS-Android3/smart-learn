@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // main activity is home activity so check 'Home' from the navigation menu
-        binding.navigationViewActivityMain.setCheckedItem(R.id.nav_home_menu_activity_main);
+        binding.navigationViewActivityMain.setCheckedItem(R.id.nav_home_menu_nav_drawer_activity_main);
     }
 
     @Override
@@ -86,17 +86,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_home_menu_activity_main:
+                    case R.id.nav_home_menu_nav_drawer_activity_main:
                         break;
-                    case R.id.nav_logout_menu_activity_main:
+                    case R.id.nav_logout_menu_nav_drawer_activity_main:
                         signOut();
                         break;
-                    case R.id.nav_account_menu_activity_main:
-                    case R.id.nav_community_menu_activity_main:
-                    case R.id.nav_lessons_menu_activity_main:
-                    case R.id.nav_test_menu_activity_main:
-                    case R.id.nav_settings_menu_activity_main:
-                    case R.id.nav_help_menu_activity_main:
+                    case R.id.nav_account_menu_nav_drawer_activity_main:
+                    case R.id.nav_community_menu_nav_drawer_activity_main:
+                    case R.id.nav_lessons_menu_nav_drawer_activity_main:
+                    case R.id.nav_test_menu_nav_drawer_activity_main:
+                    case R.id.nav_settings_menu_nav_drawer_activity_main:
+                    case R.id.nav_help_menu_nav_drawer_activity_main:
                         break;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");

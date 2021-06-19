@@ -12,7 +12,7 @@
         android:padding="20dp">
 
         <Button
-            android:id="@+id/btn_filter_date_new_bottom_sheet_filter_options"
+            android:id="@+id/btn_filter_date_new_layout_bottom_sheet_filter_options"
             style="@style/AppTheme.ButtonStyle.FilterButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
 
 
         <Button
-            android:id="@+id/btn_filter_date_old_bottom_sheet_filter_options"
+            android:id="@+id/btn_filter_date_old_layout_bottom_sheet_filter_options"
             style="@style/AppTheme.ButtonStyle.FilterButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:text="By date (oldest first)"/>
 
         <Button
-            android:id="@+id/btn_filter_a_z_bottom_sheet_filter_options"
+            android:id="@+id/btn_filter_a_z_layout_bottom_sheet_filter_options"
             style="@style/AppTheme.ButtonStyle.FilterButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:text="By name (from A to Z)"/>
 
         <Button
-            android:id="@+id/btn_filter_z_a_bottom_sheet_filter_options"
+            android:id="@+id/btn_filter_z_a_layout_bottom_sheet_filter_options"
             style="@style/AppTheme.ButtonStyle.FilterButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

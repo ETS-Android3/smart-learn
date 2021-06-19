@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <group android:id="@+id/first_group_normal_mode_fragment_lessons">
+    <group android:id="@+id/first_group_menu_layout_with_recycler_view">
         <item
-            android:id="@+id/action_search_normal_mode_fragment_lessons"
+            android:id="@+id/action_search_menu_layout_with_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:icon="@drawable/ic_baseline_search_24"
@@ -14,9 +14,9 @@
             app:showAsAction="ifRoom|collapseActionView" />
     </group>
 
-    <group android:id="@+id/secondary_group_normal_mode_fragment_lessons">
+    <group android:id="@+id/secondary_group_menu_layout_with_recycler_view">
         <item
-            android:id="@+id/action_filter_normal_mode_fragment_lessons"
+            android:id="@+id/action_filter_menu_layout_with_recycler_view"
             android:title="Filter"
             app:showAsAction="never"/>
     </group>

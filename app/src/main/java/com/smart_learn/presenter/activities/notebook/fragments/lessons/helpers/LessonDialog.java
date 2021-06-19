@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.databinding.DialogAddLessonBinding;
+import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 
 /** https://developer.android.com/guide/topics/ui/dialogs */
 public class LessonDialog extends DialogFragment {
@@ -36,8 +36,8 @@ public class LessonDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // set data binding
-        DialogAddLessonBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.dialog_add_lesson,null, false);
+        LayoutDialogAddLessonBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.layout_dialog_add_lesson,null, false);
         dialogBinding.setLifecycleOwner(this);
 
         setViewModel();

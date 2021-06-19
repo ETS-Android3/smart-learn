@@ -6,13 +6,13 @@
 <!--        <menu>-->
 <!--            <group android:checkableBehavior="single">-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_home_menu_activity_main"-->
+<!--                    android:id="@+id/nav_home_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/home"/>-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_account_menu_activity_main"-->
+<!--                    android:id="@+id/nav_account_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/account"/>-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_community_menu_activity_main"-->
+<!--                    android:id="@+id/nav_community_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/community"/>-->
 <!--            </group>-->
 <!--        </menu>-->
@@ -23,16 +23,16 @@
 <!--        <menu>-->
 <!--            <group android:checkableBehavior="single">-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_lessons_menu_activity_main"-->
+<!--                    android:id="@+id/nav_lessons_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/lessons"/>-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_test_menu_activity_main"-->
+<!--                    android:id="@+id/nav_test_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/test"/>-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_settings_menu_activity_main"-->
+<!--                    android:id="@+id/nav_settings_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/settings"/>-->
 <!--                <item-->
-<!--                    android:id="@+id/nav_help_menu_activity_main"-->
+<!--                    android:id="@+id/nav_help_menu_nav_drawer_activity_main"-->
 <!--                    android:title="@string/help"/>-->
 <!--            </group>-->
 <!--        </menu>-->
@@ -40,19 +40,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home_menu_activity_main"
+            android:id="@+id/nav_home_menu_nav_drawer_activity_main"
             android:title="@string/home"
             android:icon="@drawable/ic_baseline_home_24"/>
         <item
-            android:id="@+id/nav_account_menu_activity_main"
+            android:id="@+id/nav_account_menu_nav_drawer_activity_main"
             android:title="@string/account"
             android:icon="@drawable/ic_baseline_profile_24"/>
         <item
-            android:id="@+id/nav_community_menu_activity_main"
+            android:id="@+id/nav_community_menu_nav_drawer_activity_main"
             android:title="@string/community"
             android:icon="@drawable/ic_baseline_community_24"/>
         <item
-            android:id="@+id/nav_logout_menu_activity_main"
+            android:id="@+id/nav_logout_menu_nav_drawer_activity_main"
             android:title="@string/logout"
             android:icon="@drawable/ic_baseline_logout_24"/>
     </group>
@@ -60,19 +60,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_lessons_menu_activity_main"
+            android:id="@+id/nav_lessons_menu_nav_drawer_activity_main"
             android:title="@string/lessons"
             android:icon="@drawable/ic_baseline_lessons_24"/>
         <item
-            android:id="@+id/nav_test_menu_activity_main"
+            android:id="@+id/nav_test_menu_nav_drawer_activity_main"
             android:title="@string/test"
             android:icon="@drawable/ic_baseline_test_24"/>
         <item
-            android:id="@+id/nav_settings_menu_activity_main"
+            android:id="@+id/nav_settings_menu_nav_drawer_activity_main"
             android:title="@string/settings"
             android:icon="@drawable/ic_baseline_settings_24"/>
         <item
-            android:id="@+id/nav_help_menu_activity_main"
+            android:id="@+id/nav_help_menu_nav_drawer_activity_main"
             android:title="@string/help"
             android:icon="@drawable/ic_baseline_help_24"/>
     </group>

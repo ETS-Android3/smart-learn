@@ -470,16 +470,18 @@ public final class Utilities {
          * LessonHomeWord ...  for details).
          *
          * In editable mode:
-         *      - Toolbar menu group R.id.group_edit_options_custom_editable_layout will become HIDDEN and R.id.group_update_options_custom_editable_layout will
+         *      - Toolbar menu group R.id.group_edit_menu_options_custom_editable_layout will become
+         *        HIDDEN and R.id.group_update_menu_options_custom_editable_layout will
          *        become VISIBLE.
          *      - EditText will be VISIBLE and label will be GONE.
          *
          * In non-editable mode:
-         *      - Toolbar menu group R.id.group_edit_options_custom_editable_layout will become VISIBLE and R.id.group_update_options_custom_editable_layout will
+         *      - Toolbar menu group R.id.group_edit_menu_options_custom_editable_layout will become
+         *        VISIBLE and R.id.group_update_menu_options_custom_editable_layout will
          *         become HIDDEN.
          *      - EditText will be GONE and label will be VISIBLE.
          *
-         * @param toolbar Toolbar where R.menu.options_custom_editable_layout is inflated.
+         * @param toolbar Toolbar where R.menu.menu_options_custom_editable_layout is inflated.
          * @param textInputLayout The TextInputLayout which will contain the EditText.
          * @param textView TextView object which will represent label.
          * @param callback Callback which will manage actions.
@@ -499,17 +501,17 @@ public final class Utilities {
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
                     switch (id){
-                        case R.id.action_edit_options_custom_editable_layout:
+                        case R.id.action_edit_menu_options_custom_editable_layout:
                             callback.savePreviousValue();
                             enableCustomEditableLayout(toolbar,textInputLayout,textView);
                             return true;
-                        case R.id.action_cancel_options_custom_editable_layout:
+                        case R.id.action_cancel_menu_options_custom_editable_layout:
                             callback.revertToPreviousValue();
                             disableCustomEditableLayout(toolbar,textInputLayout,textView);
                             // reset field error
                             textInputLayout.setError(null);
                             return true;
-                        case R.id.action_update_options_custom_editable_layout:
+                        case R.id.action_update_menu_options_custom_editable_layout:
                             if(callback.isCurrentValueOk()){
                                 callback.saveCurrentValue();
                                 disableCustomEditableLayout(toolbar,textInputLayout,textView);
@@ -528,15 +530,17 @@ public final class Utilities {
          * must be shown as disabled and if necessary this must be shown as enabled
          * (see LessonHomeFragment, LessonHomeWord ...  for details).
          *
-         * @param toolbar Toolbar where R.menu.options_custom_editable_layout is inflated. R.id.group_edit_options_custom_editable_layout will
-         *                become HIDDEN and R.id.group_update_options_custom_editable_layout will become VISIBLE.
+         * @param toolbar Toolbar where R.menu.menu_options_custom_editable_layout is inflated.
+         *                R.id.group_edit_menu_options_custom_editable_layout will
+         *                become HIDDEN and R.id.group_update_menu_options_custom_editable_layout
+         *                will become VISIBLE.
          * @param textInputLayout The TextInputLayout which will become VISIBLE.
          * @param textView TextView object which will become GONE.
          * */
         private static void enableCustomEditableLayout(@NonNull Toolbar toolbar, @NonNull TextInputLayout textInputLayout,
                                                        @NonNull TextView textView){
-            toolbar.getMenu().setGroupVisible(R.id.group_edit_options_custom_editable_layout, false);
-            toolbar.getMenu().setGroupVisible(R.id.group_update_options_custom_editable_layout, true);
+            toolbar.getMenu().setGroupVisible(R.id.group_edit_menu_options_custom_editable_layout, false);
+            toolbar.getMenu().setGroupVisible(R.id.group_update_menu_options_custom_editable_layout, true);
             textView.setVisibility(View.GONE);
             textInputLayout.setVisibility(View.VISIBLE);
         }
@@ -547,15 +551,17 @@ public final class Utilities {
          * must be shown as disabled and if necessary this must be shown as enabled
          * (see LessonHomeFragment, LessonHomeWord ...  for details).
          *
-         * @param toolbar Toolbar where R.menu.options_custom_editable_layout is inflated. R.id.group_edit_options_custom_editable_layout will
-         *                become VISIBLE and R.id.group_update_options_custom_editable_layout will become HIDDEN.
+         * @param toolbar Toolbar where R.menu.menu_options_custom_editable_layout is inflated.
+         *                R.id.group_edit_menu_options_custom_editable_layout will
+         *                become VISIBLE and R.id.group_update_menu_options_custom_editable_layout
+         *                will become HIDDEN.
          * @param textInputLayout The TextInputLayout which will become GONE.
          * @param textView TextView object which will become VISIBLE.
          * */
         private static void disableCustomEditableLayout(@NonNull Toolbar toolbar, @NonNull TextInputLayout textInputLayout,
                                                         @NonNull TextView textView){
-            toolbar.getMenu().setGroupVisible(R.id.group_edit_options_custom_editable_layout, true);
-            toolbar.getMenu().setGroupVisible(R.id.group_update_options_custom_editable_layout, false);
+            toolbar.getMenu().setGroupVisible(R.id.group_edit_menu_options_custom_editable_layout, true);
+            toolbar.getMenu().setGroupVisible(R.id.group_update_menu_options_custom_editable_layout, false);
             textInputLayout.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);
         }

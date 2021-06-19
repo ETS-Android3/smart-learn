@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.databinding.BottomSheetActivityAuthenticationBinding;
+import com.smart_learn.databinding.LayoutBottomSheetAuthOptionsBinding;
 import com.smart_learn.databinding.FragmentIntroBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -84,8 +84,8 @@ public class IntroFragment extends Fragment {
         // create dialog and load layout
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.AuthenticationActivityBottomSheetDialogTheme);
 
-        BottomSheetActivityAuthenticationBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
-                R.layout.bottom_sheet_activity_authentication,null, false);
+        LayoutBottomSheetAuthOptionsBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
+                R.layout.layout_bottom_sheet_auth_options,null, false);
         bottomSheetBinding.setLifecycleOwner(IntroFragment.this);
 
         bottomSheetBinding.setViewModel(introViewModel);
@@ -93,7 +93,7 @@ public class IntroFragment extends Fragment {
         bottomSheetDialog.show();
 
         // set button listeners
-        bottomSheetBinding.btnEmailOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnEmailOptionLayoutBottomSheetAuthOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -108,7 +108,7 @@ public class IntroFragment extends Fragment {
             }
         });
 
-        bottomSheetBinding.btnGoogleOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnGoogleOptionLayoutBottomSheetAuthOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
@@ -116,7 +116,7 @@ public class IntroFragment extends Fragment {
             }
         });
 
-        bottomSheetBinding.btnChangeOptionBottomSheetActivityAuthentication.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnChangeOptionLayoutBottomSheetAuthOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();

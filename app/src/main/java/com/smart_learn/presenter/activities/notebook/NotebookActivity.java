@@ -25,7 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityNotebookBinding;
-import com.smart_learn.databinding.BottomSheetFilterOptionsBinding;
+import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -199,15 +199,15 @@ public class NotebookActivity extends AppCompatActivity {
         // create dialog and load layout
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragment.requireContext(), R.style.AppTheme_BottomSheetDialogTheme);
 
-        BottomSheetFilterOptionsBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(fragment.requireContext()),
-                R.layout.bottom_sheet_filter_options,null, false);
+        LayoutBottomSheetFilterOptionsBinding bottomSheetBinding = DataBindingUtil.inflate(LayoutInflater.from(fragment.requireContext()),
+                R.layout.layout_bottom_sheet_filter_options,null, false);
         bottomSheetBinding.setLifecycleOwner(fragment);
 
         bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
         bottomSheetDialog.show();
 
         // set button listeners
-        bottomSheetBinding.btnFilterAZBottomSheetFilterOptions.setOnClickListener(new View.OnClickListener() {
+        bottomSheetBinding.btnFilterAZLayoutBottomSheetFilterOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentCallback.onAZFilter();

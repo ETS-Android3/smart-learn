@@ -20,8 +20,8 @@
             android:id="@+id/navigation_view_activity_guest"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
-            app:headerLayout="@layout/nav_header_activity_guest"
-            app:menu="@menu/menu_activity_guest">
+            app:headerLayout="@layout/layout_nav_header_activity_guest"
+            app:menu="@menu/menu_nav_drawer_activity_guest">
 
         </com.google.android.material.navigation.NavigationView>
 

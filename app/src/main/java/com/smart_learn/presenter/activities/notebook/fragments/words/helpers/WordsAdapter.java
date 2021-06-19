@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.Translation;
-import com.smart_learn.databinding.CardViewWordBinding;
+import com.smart_learn.databinding.LayoutCardViewWordBinding;
 import com.smart_learn.presenter.activities.notebook.fragments.words.WordsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -63,7 +63,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
     public WordsAdapter.WordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // set data binding
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        CardViewWordBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.card_view_word, parent, false);
+        LayoutCardViewWordBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.layout_card_view_word, parent, false);
         viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
 
         // link data binding layout with view holder
@@ -108,10 +108,10 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
      * */
     public final class WordViewHolder extends RecyclerView.ViewHolder {
 
-        private final CardViewWordBinding viewHolderBinding;
+        private final LayoutCardViewWordBinding viewHolderBinding;
         private final MutableLiveData<Word> liveWord;
 
-        public WordViewHolder(@NonNull CardViewWordBinding viewHolderBinding) {
+        public WordViewHolder(@NonNull LayoutCardViewWordBinding viewHolderBinding) {
             // this will set itemView in ViewHolder class
             super(viewHolderBinding.getRoot());
             this.viewHolderBinding = viewHolderBinding;
@@ -165,13 +165,13 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             }
 
             if (fragmentCallback.getFragment().getActionMode() != null) {
-                viewHolderBinding.toolbarCardViewWord.setVisibility(View.GONE);
+                viewHolderBinding.toolbarLayoutCardViewWord.setVisibility(View.GONE);
                 viewHolderBinding.cvLayoutCardViewWord.setChecked(word.isSelected());
                 liveWord.setValue(word);
                 return;
             }
 
-            viewHolderBinding.toolbarCardViewWord.setVisibility(View.VISIBLE);
+            viewHolderBinding.toolbarLayoutCardViewWord.setVisibility(View.VISIBLE);
 
             if(!word.getSearchIndexes().isEmpty()) {
                 word.setSpannedWord(Utilities.Activities.createSpannedText(word.getSearchIndexes(), word.getWord()));

@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.entities.helpers.IndexRange;
-import com.smart_learn.databinding.CardViewLessonBinding;
+import com.smart_learn.databinding.LayoutCardViewLessonBinding;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -65,7 +65,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
     public LessonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // set data binding
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        CardViewLessonBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.card_view_lesson, parent, false);
+        LayoutCardViewLessonBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.layout_card_view_lesson, parent, false);
         viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
 
         // link data binding layout with view holder
@@ -159,10 +159,10 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
      * */
     public final class LessonViewHolder extends RecyclerView.ViewHolder {
 
-        private final CardViewLessonBinding viewHolderBinding;
+        private final LayoutCardViewLessonBinding viewHolderBinding;
         private final MutableLiveData<Lesson> liveLesson;
 
-        public LessonViewHolder(@NonNull CardViewLessonBinding viewHolderBinding) {
+        public LessonViewHolder(@NonNull LayoutCardViewLessonBinding viewHolderBinding) {
             // this will set itemView in ViewHolder class
             super(viewHolderBinding.getRoot());
             this.viewHolderBinding = viewHolderBinding;
@@ -216,13 +216,13 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             }
 
             if (fragmentCallback.getFragment().getActionMode() != null) {
-                viewHolderBinding.toolbarCardViewLesson.setVisibility(View.GONE);
+                viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.GONE);
                 viewHolderBinding.cvLayoutCardViewLesson.setChecked(lesson.isSelected());
                 liveLesson.setValue(lesson);
                 return;
             }
 
-            viewHolderBinding.toolbarCardViewLesson.setVisibility(View.VISIBLE);
+            viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.VISIBLE);
 
             if(!lesson.getSearchIndexes().isEmpty()) {
                 lesson.setSpannedName(Utilities.Activities.createSpannedText(lesson.getSearchIndexes(), lesson.getName()));

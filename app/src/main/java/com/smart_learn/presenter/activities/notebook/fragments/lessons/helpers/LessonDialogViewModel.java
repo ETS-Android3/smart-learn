@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.databinding.DialogAddLessonBinding;
+import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 
@@ -29,20 +29,20 @@ public class LessonDialogViewModel extends BasicAndroidViewModel {
         MAX_LESSON_NAME = 50;
     }
 
-    public Lesson getDialogSubmittedLesson(DialogAddLessonBinding dialogBinding){
+    public Lesson getDialogSubmittedLesson(LayoutDialogAddLessonBinding dialogBinding){
         Lesson lesson = liveLessonInfo.getValue();
         if(lesson == null || TextUtils.isEmpty(lesson.getName())){
-            dialogBinding.etLessonNameDialogAddLesson.setError(ApplicationController.getInstance().getString(R.string.error_required));
+            dialogBinding.etLessonNameLayoutDialogAddLesson.setError(ApplicationController.getInstance().getString(R.string.error_required));
             return null;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
         if(lesson.getName().length() > MAX_LESSON_NAME){
-            dialogBinding.etLessonNameDialogAddLesson.setError(ApplicationController.getInstance().getString(R.string.error_lesson_name_too_long));
+            dialogBinding.etLessonNameLayoutDialogAddLesson.setError(ApplicationController.getInstance().getString(R.string.error_lesson_name_too_long));
             return null;
         }
 
-        dialogBinding.etLessonNameDialogAddLesson.setError(null);
+        dialogBinding.etLessonNameLayoutDialogAddLesson.setError(null);
         return lesson;
     }
 }

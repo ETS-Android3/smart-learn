@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/main_group_bottom_navigation_activity_notebook">
+        android:id="@+id/main_group_menu_bottom_navigation_activity_notebook">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
         <item
             android:id="@+id/home_lesson_fragment_nav_graph_activity_notebook"
             android:icon="@drawable/ic_baseline_email_24"

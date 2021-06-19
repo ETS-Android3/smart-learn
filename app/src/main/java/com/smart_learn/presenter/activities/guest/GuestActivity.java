@@ -38,7 +38,7 @@ public class GuestActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // guest activity is home activity so check 'Home' from the navigation menu
-        binding.navigationViewActivityGuest.setCheckedItem(R.id.nav_home_menu_activity_guest);
+        binding.navigationViewActivityGuest.setCheckedItem(R.id.nav_home_menu_nav_drawer_activity_guest);
     }
 
     @Override
@@ -69,15 +69,15 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_home_menu_activity_guest:
+                    case R.id.nav_home_menu_nav_drawer_activity_guest:
                         break;
-                    case R.id.nav_login_menu_activity_guest:
+                    case R.id.nav_login_menu_nav_drawer_activity_guest:
                         startActivity(new Intent(GuestActivity.this, AuthenticationActivity.class));
                         break;
-                    case R.id.nav_lessons_menu_activity_guest:
-                    case R.id.nav_test_menu_activity_guest:
-                    case R.id.nav_settings_menu_activity_guest:
-                    case R.id.nav_help_menu_activity_guest:
+                    case R.id.nav_lessons_menu_nav_drawer_activity_guest:
+                    case R.id.nav_test_menu_nav_drawer_activity_guest:
+                    case R.id.nav_settings_menu_nav_drawer_activity_guest:
+                    case R.id.nav_help_menu_nav_drawer_activity_guest:
                         break;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");

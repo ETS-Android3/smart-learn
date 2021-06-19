@@ -20,8 +20,8 @@
             android:id="@+id/navigation_view_activity_main"
             android:layout_gravity="start"
             android:theme="@style/AppTheme.NavigationView"
-            app:headerLayout="@layout/nav_header_activity_main"
-            app:menu="@menu/menu_activity_main">
+            app:headerLayout="@layout/layout_nav_header_activity_main"
+            app:menu="@menu/menu_nav_drawer_activity_main">
 
         </com.google.android.material.navigation.NavigationView>
 

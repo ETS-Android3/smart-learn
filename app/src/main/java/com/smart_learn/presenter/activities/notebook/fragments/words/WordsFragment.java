@@ -88,9 +88,9 @@ public class WordsFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-        inflater.inflate(R.menu.normal_mode_fragment_lessons, menu);
-        Utilities.Activities.setSearchMenuItem(requireActivity(), menu, R.id.action_search_normal_mode_fragment_lessons,
-                R.id.secondary_group_normal_mode_fragment_lessons, new Callbacks.SearchActionCallback() {
+        inflater.inflate(R.menu.menu_layout_with_recycler_view, menu);
+        Utilities.Activities.setSearchMenuItem(requireActivity(), menu, R.id.action_search_menu_layout_with_recycler_view,
+                R.id.secondary_group_menu_layout_with_recycler_view, new Callbacks.SearchActionCallback() {
                     @Override
                     public void onQueryTextChange(String newText) {
                         if(wordsViewModel.getWordsAdapter() != null){
@@ -104,7 +104,7 @@ public class WordsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_filter_normal_mode_fragment_lessons){
+        if(id == R.id.action_filter_menu_layout_with_recycler_view){
             ((NotebookActivity)requireActivity()).showFilterOptionsDialog(WordsFragment.this, new Callbacks.FragmentFilterOptionsCallback() {
                 @Override
                 public void onAZFilter() {

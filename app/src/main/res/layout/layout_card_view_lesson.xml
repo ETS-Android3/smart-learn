@@ -8,11 +8,11 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.activities.notebook.fragments.words.helpers.WordsAdapter.WordViewHolder" />
+            type="com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonsAdapter.LessonViewHolder" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_layout_card_view_word"
+        android:id="@+id/cv_layout_card_view_lesson"
         android:theme="@style/AppTheme.CardView.MaterialDesign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,10 +36,10 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_lesson_name_card_view_word"
+                    android:id="@+id/tv_lesson_name_layout_card_view_lesson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewHolder.liveWord.spannedWord}"
+                    android:text="@{viewHolder.liveLesson.spannedName}"
                     android:textAppearance="?attr/textAppearanceHeadline6"/>
 
                 <!-- Use this to center the toolbar at right end
@@ -51,14 +51,14 @@
                     android:layout_weight="1"/>
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar_card_view_word"
+                    android:id="@+id/toolbar_layout_card_view_lesson"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:gravity="center"
                     android:padding="0dp"
                     android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle.CardView"
-                    app:menu="@menu/card_view_lesson" />
+                    app:menu="@menu/menu_card_view_lesson" />
 
             </LinearLayout>
 
