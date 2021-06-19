@@ -36,11 +36,16 @@ public class HomeLessonFragment extends Fragment {
     private NotebookSharedViewModel sharedViewModel;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setViewModel();
+    }
+
+    @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeLessonBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        setViewModel();
         binding.setViewModel(homeLessonViewModel);
         return binding.getRoot();
     }
@@ -92,14 +97,14 @@ public class HomeLessonFragment extends Fragment {
         homeLessonViewModel = new ViewModelProvider(this).get(HomeLessonViewModel.class);
 
         // set observers
-        homeLessonViewModel.getLiveToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        homeLessonViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
             }
         });
 
-        homeLessonViewModel.getLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(getViewLifecycleOwner(), new Observer<Lesson>() {
+        homeLessonViewModel.getLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
             @Override
             public void onChanged(Lesson lesson) {
                 homeLessonViewModel.setLiveLesson(lesson);

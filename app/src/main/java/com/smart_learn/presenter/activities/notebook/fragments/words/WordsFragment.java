@@ -61,6 +61,11 @@ public class WordsFragment extends Fragment {
     private LinearLayoutCompat userBottomSheetLayout;
     private BottomSheetBehavior<LinearLayoutCompat> userBottomSheetBehavior;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setViewModel();
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -70,8 +75,6 @@ public class WordsFragment extends Fragment {
         // use this to set toolbar menu inside fragment
         // https://stackoverflow.com/questions/15653737/oncreateoptionsmenu-inside-fragments/31360073#31360073
         setHasOptionsMenu(true);
-
-        setViewModel();
         return binding.getRoot();
     }
 
@@ -188,7 +191,7 @@ public class WordsFragment extends Fragment {
         }));
 
         // set observers
-        wordsViewModel.getLiveToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        wordsViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
@@ -196,7 +199,7 @@ public class WordsFragment extends Fragment {
         });
 
 
-        wordsViewModel.getWordsService().getLiveSelectedItemsCount(sharedViewModel.getSelectedLessonId()).observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        wordsViewModel.getWordsService().getLiveSelectedItemsCount(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(WordsFragment.this.getActionMode() != null){
@@ -205,7 +208,7 @@ public class WordsFragment extends Fragment {
             }
         });
 
-        wordsViewModel.getWordsService().getCurrentLessonLiveWords(sharedViewModel.getSelectedLessonId()).observe(getViewLifecycleOwner(), new Observer<List<Word>>() {
+        wordsViewModel.getWordsService().getCurrentLessonLiveWords(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
                 Utilities.Activities.changeTextViewStatus(words.isEmpty(), tvNoItem);

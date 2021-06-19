@@ -63,6 +63,12 @@ public class LessonsFragment extends Fragment {
     private BottomSheetBehavior<LinearLayoutCompat> userBottomSheetBehavior;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setViewModel();
+    }
+
+    @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLessonsBinding.inflate(inflater);
@@ -70,8 +76,6 @@ public class LessonsFragment extends Fragment {
         // use this to set toolbar menu inside fragment
         // https://stackoverflow.com/questions/15653737/oncreateoptionsmenu-inside-fragments/31360073#31360073
         setHasOptionsMenu(true);
-
-        setViewModel();
         return binding.getRoot();
     }
 
@@ -190,14 +194,14 @@ public class LessonsFragment extends Fragment {
         }));
 
         // set observers
-        lessonsViewModel.getLiveToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        lessonsViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
             }
         });
 
-        lessonsViewModel.getLessonService().getLiveSelectedItemsCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        lessonsViewModel.getLessonService().getLiveSelectedItemsCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(LessonsFragment.this.getActionMode() != null){
@@ -206,7 +210,7 @@ public class LessonsFragment extends Fragment {
             }
         });
 
-        lessonsViewModel.getLessonService().getAllLiveSampleLessons().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
+        lessonsViewModel.getLessonService().getAllLiveSampleLessons().observe(this, new Observer<List<Lesson>>() {
             @Override
             public void onChanged(List<Lesson> lessons) {
                 Utilities.Activities.changeTextViewStatus(lessons.isEmpty(), tvNoItem);

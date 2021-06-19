@@ -35,13 +35,17 @@ public class HomeWordFragment extends Fragment {
     @Getter
     private NotebookSharedViewModel sharedViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setViewModel();
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeWordBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        setViewModel();
         binding.setViewModel(homeWordViewModel);
         return binding.getRoot();
     }
@@ -93,14 +97,14 @@ public class HomeWordFragment extends Fragment {
         homeWordViewModel = new ViewModelProvider(this).get(HomeWordViewModel.class);
 
         // set observers
-        homeWordViewModel.getLiveToastMessage().observe(getViewLifecycleOwner(), new Observer<String>() {
+        homeWordViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 GeneralUtilities.showShortToastMessage(requireContext(), s);
             }
         });
 
-        homeWordViewModel.getWordsService().getSampleLiveWord(sharedViewModel.getSelectedWordId()).observe(getViewLifecycleOwner(), new Observer<Word>() {
+        homeWordViewModel.getWordsService().getSampleLiveWord(sharedViewModel.getSelectedWordId()).observe(this, new Observer<Word>() {
             @Override
             public void onChanged(Word word) {
                 homeWordViewModel.setLiveWord(word);
