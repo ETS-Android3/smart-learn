@@ -9,12 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.smart_learn.R;
 import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.databinding.DialogAddLessonBinding;
-import com.smart_learn.presenter.activities.notebook.old.BasicLessonViewModel;
 import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 
 import lombok.Getter;
 
-public class LessonDialogViewModel extends BasicLessonViewModel {
+public class LessonDialogViewModel extends BasicAndroidViewModel {
 
     @Getter
     private final MutableLiveData<Lesson> liveLessonInfo;
