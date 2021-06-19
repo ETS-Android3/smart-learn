@@ -349,8 +349,8 @@ public final class Utilities {
             // https://stackoverflow.com/questions/61541455/animation-for-bottomnavigation-fragments-with-architecture-navigation-components/65979864#65979864
             // https://betterprogramming.pub/everything-about-android-jetpacks-navigation-component-b550017c7354
             return new NavOptions.Builder()
-                    .setEnterAnim(R.anim.slide_in_right)
-                    .setExitAnim(R.anim.slide_out_left)
+                    .setEnterAnim(R.anim.anim_slide_in_right)
+                    .setExitAnim(R.anim.anim_slide_out_left)
                     .setPopEnterAnim(R.anim.popup_enter)
                     .setPopExitAnim(R.anim.popup_exit)
                     // This is used whether this navigation action should launch as single-top
@@ -601,10 +601,10 @@ public final class Utilities {
     public static NavOptions getNavOptions() {
         // https://stackoverflow.com/questions/50482095/how-do-i-define-default-animations-for-navigation-actions/52413868#52413868
         return new NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_right)
-                .setExitAnim(R.anim.slide_out_left)
-                .setPopEnterAnim(R.anim.slide_in_left)
-                .setPopExitAnim(R.anim.slide_out_right)
+                .setEnterAnim(R.anim.anim_slide_in_right)
+                .setExitAnim(R.anim.anim_slide_out_left)
+                .setPopEnterAnim(R.anim.anim_slide_in_left)
+                .setPopExitAnim(R.anim.anim_slide_out_right)
                 .build();
     }
 
