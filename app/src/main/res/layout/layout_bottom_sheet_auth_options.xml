@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bottom_sheet_activity_authentication"
+        android:background="@drawable/background_bottom_sheet_primary"
         android:orientation="vertical"
         android:padding="20dp">
 
