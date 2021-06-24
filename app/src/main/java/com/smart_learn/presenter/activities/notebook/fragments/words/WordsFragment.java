@@ -25,7 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.databinding.FragmentWordsBinding;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;

@@ -10,7 +10,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.core.services.LessonService;
 import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
 

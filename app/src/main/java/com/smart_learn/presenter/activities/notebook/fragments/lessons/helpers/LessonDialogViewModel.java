@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.BasicAndroidViewModel;

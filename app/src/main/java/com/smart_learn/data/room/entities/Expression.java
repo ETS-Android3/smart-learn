@@ -1,12 +1,12 @@
-package com.smart_learn.data.models.room.entities;
+package com.smart_learn.data.room.entities;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.core.config.RoomConfig;
-import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
-import com.smart_learn.data.models.room.entities.helpers.Translation;
+import com.smart_learn.data.room.entities.helpers.LessonEntrance;
+import com.smart_learn.data.room.entities.helpers.Translation;
 
 import lombok.Getter;
 import lombok.Setter;

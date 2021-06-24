@@ -16,7 +16,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 
 /** https://developer.android.com/guide/topics/ui/dialogs */

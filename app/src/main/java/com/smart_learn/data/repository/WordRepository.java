@@ -4,9 +4,9 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.data.models.room.dao.WordDao;
-import com.smart_learn.data.models.room.db.AppRoomDatabase;
-import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.room.dao.WordDao;
+import com.smart_learn.data.room.db.AppRoomDatabase;
+import com.smart_learn.data.room.entities.Word;
 
 import java.util.List;
 

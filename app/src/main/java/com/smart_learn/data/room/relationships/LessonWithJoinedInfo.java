@@ -1,11 +1,11 @@
-package com.smart_learn.data.models.room.relationships;
+package com.smart_learn.data.room.relationships;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import com.smart_learn.data.models.room.entities.Expression;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.entities.Word;
+import com.smart_learn.data.room.entities.Expression;
+import com.smart_learn.data.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Word;
 
 import java.util.List;
 

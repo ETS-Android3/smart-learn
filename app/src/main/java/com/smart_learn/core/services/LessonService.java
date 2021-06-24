@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.utilities.Logs;
-import com.smart_learn.data.models.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.data.repository.LessonRepository;
 

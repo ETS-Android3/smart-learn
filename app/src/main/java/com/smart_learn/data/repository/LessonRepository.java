@@ -4,10 +4,10 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.data.models.room.dao.LessonDao;
-import com.smart_learn.data.models.room.db.AppRoomDatabase;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.relationships.LessonWithJoinedInfo;
+import com.smart_learn.data.room.dao.LessonDao;
+import com.smart_learn.data.room.db.AppRoomDatabase;
+import com.smart_learn.data.room.entities.Lesson;
+import com.smart_learn.data.room.relationships.LessonWithJoinedInfo;
 
 import java.util.List;
 

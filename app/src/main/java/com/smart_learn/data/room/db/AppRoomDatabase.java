@@ -1,4 +1,4 @@
-package com.smart_learn.data.models.room.db;
+package com.smart_learn.data.room.db;
 
 import android.content.Context;
 
@@ -9,13 +9,13 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.smart_learn.core.config.RoomConfig;
-import com.smart_learn.data.models.room.dao.LessonDao;
-import com.smart_learn.data.models.room.dao.WordDao;
-import com.smart_learn.data.models.room.dao.ExpressionDao;
-import com.smart_learn.data.models.room.entities.Expression;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.entities.Word;
-import com.smart_learn.data.models.room.entities.helpers.Translation;
+import com.smart_learn.data.room.dao.LessonDao;
+import com.smart_learn.data.room.dao.WordDao;
+import com.smart_learn.data.room.dao.ExpressionDao;
+import com.smart_learn.data.room.entities.Expression;
+import com.smart_learn.data.room.entities.Lesson;
+import com.smart_learn.data.room.entities.Word;
+import com.smart_learn.data.room.entities.helpers.Translation;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

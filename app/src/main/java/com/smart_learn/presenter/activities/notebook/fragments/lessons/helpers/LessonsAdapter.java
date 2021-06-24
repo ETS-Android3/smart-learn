@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.entities.helpers.IndexRange;
+import com.smart_learn.data.room.entities.Lesson;
+import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;

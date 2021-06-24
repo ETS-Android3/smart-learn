@@ -15,8 +15,8 @@ import com.smart_learn.core.remote.test.config.StrictCodes;
 import com.smart_learn.core.services.TestService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.core.utilities.Logs;
-import com.smart_learn.data.models.room.entities.Word;
-import com.smart_learn.data.models.room.entities.helpers.LessonEntrance;
+import com.smart_learn.data.room.entities.Word;
+import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 
 import org.json.JSONArray;
 import org.json.JSONException;

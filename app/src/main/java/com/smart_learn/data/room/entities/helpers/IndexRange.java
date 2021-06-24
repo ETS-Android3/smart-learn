@@ -1,4 +1,4 @@
-package com.smart_learn.data.models.room.entities.helpers;
+package com.smart_learn.data.room.entities.helpers;
 
 import lombok.Getter;
 

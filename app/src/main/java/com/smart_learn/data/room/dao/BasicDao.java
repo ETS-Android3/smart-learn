@@ -1,4 +1,4 @@
-package com.smart_learn.data.models.room.dao;
+package com.smart_learn.data.room.dao;
 
 import androidx.room.Delete;
 import androidx.room.Insert;

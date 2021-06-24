@@ -2,8 +2,8 @@ package com.smart_learn.data.repository;
 
 import android.util.Log;
 
-import com.smart_learn.data.models.room.dao.BasicDao;
-import com.smart_learn.data.models.room.db.AppRoomDatabase;
+import com.smart_learn.data.room.dao.BasicDao;
+import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.core.utilities.Logs;
 
 public abstract class BasicRoomRepository <T> {

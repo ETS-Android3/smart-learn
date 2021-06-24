@@ -35,7 +35,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.data.models.room.entities.helpers.IndexRange;
+import com.smart_learn.data.room.entities.helpers.IndexRange;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package com.smart_learn.data.models.room.entities;
+package com.smart_learn.data.room.entities;
 
 import android.text.Html;
 import android.text.Spanned;
@@ -8,7 +8,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.core.config.RoomConfig;
-import com.smart_learn.data.models.room.entities.helpers.IndexRange;
+import com.smart_learn.data.room.entities.helpers.IndexRange;
 
 import java.util.ArrayList;
 import java.util.List;
