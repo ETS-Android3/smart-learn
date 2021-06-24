@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
+import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 
 import timber.log.Timber;
 
@@ -75,6 +76,8 @@ public class GuestActivity extends AppCompatActivity {
                         startActivity(new Intent(GuestActivity.this, AuthenticationActivity.class));
                         break;
                     case R.id.nav_lessons_menu_nav_drawer_activity_guest:
+                        startActivity(new Intent(GuestActivity.this, NotebookActivity.class));
+                        break;
                     case R.id.nav_test_menu_nav_drawer_activity_guest:
                     case R.id.nav_settings_menu_nav_drawer_activity_guest:
                     case R.id.nav_help_menu_nav_drawer_activity_guest:
