@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 
 import com.smart_learn.data.models.room.dao.WordDao;
 import com.smart_learn.data.models.room.db.AppRoomDatabase;
-import com.smart_learn.data.models.room.entities.Lesson;
 import com.smart_learn.data.models.room.entities.Word;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class WordRepository extends BasicRoomRepository<Word> {
         return wordDao.getSampleWord(word);
     }
 
-    public LiveData<List<Word>> getCurrentLessonLiveWords(long currentLessonId){
+    public LiveData<List<Word>> getCurrentLessonLiveWords(int currentLessonId){
         if (currentLessonLiveWordList == null){
             // one query is enough because LiveData is made i.e. to be automatically notified by room
             // when changes are made in db
@@ -41,7 +40,7 @@ public class WordRepository extends BasicRoomRepository<Word> {
     }
 
     /** Get a sample LiveData wrapped word based on wordId. */
-    public LiveData<Word> getSampleLiveWord(long wordId) {
+    public LiveData<Word> getSampleLiveWord(int wordId) {
         return wordDao.getSampleLiveWord(wordId);
     }
 
@@ -51,23 +50,23 @@ public class WordRepository extends BasicRoomRepository<Word> {
     }
 
     /** Check if Word already exists in a specific notebook. */
-    public boolean checkIfWordExist(String word, long lessonId){
+    public boolean checkIfWordExist(String word, int lessonId){
         return wordDao.getSampleWord(word,lessonId) == null;
     }
 
-    public void deleteSelectedItems(long lessonId){
+    public void deleteSelectedItems(int lessonId){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             wordDao.deleteSelectedItems(lessonId);
         });
     }
 
-    public void updateSelectAll(boolean isSelected, long lessonId){
+    public void updateSelectAll(boolean isSelected, int lessonId){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             wordDao.updateSelectAll(isSelected, lessonId);
         });
     }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(long lessonId){ return wordDao.getLiveSelectedItemsCount(lessonId); }
+    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return wordDao.getLiveSelectedItemsCount(lessonId); }
 
-    public LiveData<Integer> getLiveItemsNumber(long lessonId){ return wordDao.getLiveItemsNumber(lessonId); }
+    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return wordDao.getLiveItemsNumber(lessonId); }
 }

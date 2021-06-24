@@ -28,11 +28,11 @@ import lombok.Setter;
 public class Expression extends LessonEntrance {
 
     @PrimaryKey(autoGenerate = true)
-    private long expressionId;
+    private int expressionId;
 
     private String expression;
 
-    public Expression(long createdAt, long modifiedAt, long fkLessonId, boolean isSelected, Translation translation, String expression) {
+    public Expression(long createdAt, long modifiedAt, int fkLessonId, boolean isSelected, Translation translation, String expression) {
         super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
         this.expression = expression;
     }

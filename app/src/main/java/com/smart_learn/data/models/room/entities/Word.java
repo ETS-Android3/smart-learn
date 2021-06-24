@@ -36,7 +36,7 @@ import lombok.Setter;
 public class Word extends LessonEntrance {
 
     @PrimaryKey(autoGenerate = true)
-    private long wordId;
+    private int wordId;
 
     private String word;
 
@@ -48,7 +48,7 @@ public class Word extends LessonEntrance {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedWord;
 
-    public Word(long createdAt, long modifiedAt, long fkLessonId, boolean isSelected, Translation translation, String word) {
+    public Word(long createdAt, long modifiedAt, int fkLessonId, boolean isSelected, Translation translation, String word) {
         super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
         this.word = word;
     }

@@ -25,7 +25,7 @@ public class LessonService extends BasicRoomService<Lesson> {
         super.basicRoomRepository = lessonRepository;
     }
 
-    public LiveData<Lesson> getSampleLiveLesson(long lessonId) {
+    public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
         return lessonRepository.getSampleLiveLesson(lessonId);
     }
 

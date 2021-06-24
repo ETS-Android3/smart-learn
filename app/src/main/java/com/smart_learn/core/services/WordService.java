@@ -29,12 +29,12 @@ public class WordService extends BasicRoomService<Word> {
         return wordRepository.getSampleWord(word);
     }
 
-    public LiveData<List<Word>> getCurrentLessonLiveWords(long currentLessonId){
+    public LiveData<List<Word>> getCurrentLessonLiveWords(int currentLessonId){
         return wordRepository.getCurrentLessonLiveWords(currentLessonId);
     }
 
     @NonNull
-    public List<Word> getCurrentLessonSampleWords(long currentLessonId){
+    public List<Word> getCurrentLessonSampleWords(int currentLessonId){
         List<Word> tmp = wordRepository.getCurrentLessonLiveWords(currentLessonId).getValue();
         if(tmp == null){
             return new ArrayList<>();
@@ -42,7 +42,7 @@ public class WordService extends BasicRoomService<Word> {
         return tmp;
     }
 
-    public LiveData<Word> getSampleLiveWord(long wordId) {
+    public LiveData<Word> getSampleLiveWord(int wordId) {
         return wordRepository.getSampleLiveWord(wordId);
     }
 
@@ -50,7 +50,7 @@ public class WordService extends BasicRoomService<Word> {
         return wordRepository.checkIfWordExist(word);
     }
 
-    boolean checkIfWordExist(String word, long lessonId){
+    boolean checkIfWordExist(String word, int lessonId){
         return wordRepository.checkIfWordExist(word,lessonId);
     }
 
@@ -122,12 +122,12 @@ public class WordService extends BasicRoomService<Word> {
         return responseInfo;
     }
 
-    public void deleteSelectedItems(long lessonId){ wordRepository.deleteSelectedItems(lessonId); }
+    public void deleteSelectedItems(int lessonId){ wordRepository.deleteSelectedItems(lessonId); }
 
-    public void updateSelectAll(boolean isSelected, long lessonId){ wordRepository.updateSelectAll(isSelected,lessonId); }
+    public void updateSelectAll(boolean isSelected, int lessonId){ wordRepository.updateSelectAll(isSelected,lessonId); }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(long lessonId){ return wordRepository.getLiveSelectedItemsCount(lessonId); }
+    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return wordRepository.getLiveSelectedItemsCount(lessonId); }
 
-    public LiveData<Integer> getLiveItemsNumber(long lessonId){ return wordRepository.getLiveItemsNumber(lessonId); }
+    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return wordRepository.getLiveItemsNumber(lessonId); }
 
 }

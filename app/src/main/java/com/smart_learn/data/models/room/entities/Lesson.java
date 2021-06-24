@@ -24,7 +24,7 @@ import lombok.ToString;
 public class Lesson {
 
     @PrimaryKey(autoGenerate = true)
-    private long lessonId;
+    private int lessonId;
 
     private String name;
     private long createdAt;

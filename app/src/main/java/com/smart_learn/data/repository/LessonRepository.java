@@ -35,7 +35,7 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     }
 
     /** Get a sample LiveData wrapped notebook based on lessonId. */
-    public LiveData<Lesson> getSampleLiveLesson(long lessonId) {
+    public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
         return lessonDao.getSampleLiveLesson(lessonId);
     }
 

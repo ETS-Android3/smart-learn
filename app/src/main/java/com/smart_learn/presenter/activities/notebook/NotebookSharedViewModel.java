@@ -17,19 +17,19 @@ import lombok.Setter;
  * */
 public class NotebookSharedViewModel extends BasicAndroidViewModel {
 
-    public static long NO_ITEM_SELECTED = -1;
+    public static int NO_ITEM_SELECTED = -1;
 
     // Is set when a lesson is clicked in LessonsFragment and navigation to HomeFragment is made.
     // This will allow to the secondary fragments like WordsFragment to know from which lesson to
     // to load words.
     @Getter
     @Setter
-    private long selectedLessonId;
+    private int selectedLessonId;
     // Is set when a word is clicked in WordsFragment and navigation to WordHomeFragment is made.
     // This will allow the WordHomeFragment to know what word to load.
     @Getter
     @Setter
-    private long selectedWordId;
+    private int selectedWordId;
 
     public NotebookSharedViewModel(@NonNull @NotNull Application application) {
         super(application);

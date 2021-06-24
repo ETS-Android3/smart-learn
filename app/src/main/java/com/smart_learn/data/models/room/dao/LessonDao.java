@@ -15,7 +15,7 @@ import java.util.List;
 public interface LessonDao extends BasicDao<Lesson> {
 
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE lessonId = :lessonId")
-    LiveData<Lesson> getSampleLiveLesson(long lessonId);
+    LiveData<Lesson> getSampleLiveLesson(int lessonId);
 
     @Query("SELECT * FROM " + RoomConfig.LESSONS_TABLE + " WHERE name LIKE :lessonName")
     LiveData<Lesson> getSampleLiveLesson(String lessonName);

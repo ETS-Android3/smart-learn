@@ -66,11 +66,10 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 Lesson b = new Lesson("Lesson 2", System.currentTimeMillis(), System.currentTimeMillis(), false);
                 Lesson c = new Lesson("Lesson 3", System.currentTimeMillis(), System.currentTimeMillis(), false);
                 Lesson d = new Lesson("Lesson 4", System.currentTimeMillis(), System.currentTimeMillis(), false);
-                long id = dao.insert(b);
-                id = dao.insert(c);
-                id = dao.insert(d);
-                id = dao.insert(a);
-
+                int id =  Math.toIntExact(dao.insert(b));
+                id =  Math.toIntExact(dao.insert(c));
+                id =  Math.toIntExact(dao.insert(d));
+                id =  Math.toIntExact(dao.insert(a));
 
                 WordDao wordDao = instance.wordDao();
                 Word aa = new Word(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
