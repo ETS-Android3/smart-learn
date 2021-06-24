@@ -5,7 +5,6 @@ import androidx.room.Relation;
 
 import com.smart_learn.data.models.room.entities.Expression;
 import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.entities.Sentence;
 import com.smart_learn.data.models.room.entities.Word;
 
 import java.util.List;
@@ -26,10 +25,6 @@ public class LessonWithJoinedInfo {
     // one to-many relationship
     @Relation(parentColumn = "lessonId", entityColumn = "fkLessonId")
     private List<Word> wordList;
-
-    // one to-many relationship
-    @Relation(parentColumn = "lessonId", entityColumn = "fkLessonId")
-    private List<Sentence> sentenceList;
 
     // one to-many relationship
     @Relation(parentColumn = "lessonId", entityColumn = "fkLessonId")

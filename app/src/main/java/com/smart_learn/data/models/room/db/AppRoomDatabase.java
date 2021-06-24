@@ -12,10 +12,8 @@ import com.smart_learn.core.config.RoomConfig;
 import com.smart_learn.data.models.room.dao.LessonDao;
 import com.smart_learn.data.models.room.dao.WordDao;
 import com.smart_learn.data.models.room.dao.ExpressionDao;
-import com.smart_learn.data.models.room.dao.SentenceDao;
 import com.smart_learn.data.models.room.entities.Expression;
 import com.smart_learn.data.models.room.entities.Lesson;
-import com.smart_learn.data.models.room.entities.Sentence;
 import com.smart_learn.data.models.room.entities.Word;
 import com.smart_learn.data.models.room.entities.helpers.Translation;
 
@@ -28,14 +26,13 @@ import java.util.concurrent.Executors;
  * https://developer.android.com/codelabs/android-room-with-a-view#7
  * */
 @Database(
-        entities = {Lesson.class, Word.class, Sentence.class, Expression.class},
+        entities = {Lesson.class, Word.class, Expression.class},
         version = 1, exportSchema = false
 )
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     public abstract LessonDao lessonDao();
     public abstract WordDao wordDao();
-    public abstract SentenceDao sentenceDao();
     public abstract ExpressionDao expressionDao();
 
     private static volatile AppRoomDatabase instance;
@@ -96,16 +93,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
                 expDao.insert(aaa);
                 expDao.insert(bbb);
-
-                SentenceDao senDao = instance.sentenceDao();
-                Sentence aaaa = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
-                        new Translation("sen 1", "phon sen 1"),"sen 1");
-
-                Sentence bbbb = new Sentence(System.currentTimeMillis(),System.currentTimeMillis(),id,false,
-                        new Translation("sen 2", "phon sen 2"),"sen 2");
-
-                senDao.insert(aaaa);
-                senDao.insert(bbbb);
 
             });
         }
