@@ -69,4 +69,8 @@ public class WordRepository extends BasicRoomRepository<Word> {
     public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return wordDao.getLiveSelectedItemsCount(lessonId); }
 
     public LiveData<Integer> getLiveItemsNumber(int lessonId){ return wordDao.getLiveItemsNumber(lessonId); }
+
+    public LiveData<Integer> getLiveNumberOfWords(){
+        return wordDao.getLiveNumberOfWords();
+    }
 }

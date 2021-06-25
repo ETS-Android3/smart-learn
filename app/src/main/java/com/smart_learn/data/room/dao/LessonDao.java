@@ -45,4 +45,7 @@ public interface LessonDao extends BasicDao<Lesson> {
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.LESSONS_TABLE)
     LiveData<Integer> getLiveItemsNumber();
+
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE is_deleted == 0")
+    LiveData<Integer> getLiveNumberOfLessons();
 }

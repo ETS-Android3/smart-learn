@@ -83,4 +83,8 @@ public class LessonRepository extends BasicRoomRepository<Lesson> {
     public LiveData<Integer> getLiveSelectedItemsCount(){ return lessonDao.getLiveSelectedItemsCount(); }
 
     public LiveData<Integer> getLiveItemsNumber(){ return lessonDao.getLiveItemsNumber(); }
+
+    public LiveData<Integer> getLiveNumberOfLessons(){
+        return lessonDao.getLiveNumberOfLessons();
+    }
 }

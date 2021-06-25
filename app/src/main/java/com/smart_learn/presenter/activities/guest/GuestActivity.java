@@ -3,7 +3,6 @@ package com.smart_learn.presenter.activities.guest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,10 +10,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
@@ -24,6 +25,7 @@ import timber.log.Timber;
 public class GuestActivity extends AppCompatActivity {
 
     private ActivityGuestBinding binding;
+    private GuestViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class GuestActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbarActivityGuest);
         setNavigationDrawer();
+
+        setViewModel();
+        binding.setViewModel(viewModel);
     }
 
     @Override
@@ -52,10 +57,6 @@ public class GuestActivity extends AppCompatActivity {
     }
 
     private void setNavigationDrawer(){
-        // for this activity status bar should be transparent in order to show a full navigation drawer
-        getWindow().setStatusBarColor(getResources().getColor(R.color.transparent,
-                new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).getTheme()));
-
         // set navigation drawer
         // https://www.youtube.com/watch?v=HwYENW0RyY4
         binding.navigationViewActivityGuest.bringToFront();
@@ -87,6 +88,16 @@ public class GuestActivity extends AppCompatActivity {
                 }
                 binding.drawerLayoutActivityGuest.closeDrawer(GravityCompat.START);
                 return true;
+            }
+        });
+    }
+
+    private void setViewModel(){
+        viewModel = new ViewModelProvider(this).get(GuestViewModel.class);
+        viewModel.getLiveToastMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                GeneralUtilities.showShortToastMessage(GuestActivity.this, s);
             }
         });
     }

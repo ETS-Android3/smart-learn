@@ -131,4 +131,8 @@ public class WordService extends BasicRoomService<Word> {
 
     public LiveData<Integer> getLiveItemsNumber(int lessonId){ return wordRepository.getLiveItemsNumber(lessonId); }
 
+    public LiveData<Integer> getLiveNumberOfWords(){
+        return wordRepository.getLiveNumberOfWords();
+    }
+
 }

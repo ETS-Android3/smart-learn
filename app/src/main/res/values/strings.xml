@@ -41,6 +41,19 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
 
+
+    <!-- GuestActivity -->
+    <string name="notebook_summary">Notebook summary</string>
+    <string name="user_icon">User icon</string>
+    <string name="hi">Hi</string>
+    <string name="account_overview">Account overview</string>
+    <string name="expressions">Expressions</string>
+    <string name="tests_summary">Tests summary</string>
+    <string name="active">Active</string>
+    <string name="finished">Finished</string>
+    <string name="success_rate">Success Rate</string>
+
+
     <!-- AuthenticationActivity -->
     <string name="error_empty_credentials">Empty credentials</string>
     <string name="error_email_not_valid">Email address is not valid</string>

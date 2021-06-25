@@ -115,4 +115,8 @@ public class LessonService extends BasicRoomService<Lesson> {
         return responseInfo;
     }
 
+    public LiveData<Integer> getLiveNumberOfLessons(){
+        return lessonRepository.getLiveNumberOfLessons();
+    }
+
 }
