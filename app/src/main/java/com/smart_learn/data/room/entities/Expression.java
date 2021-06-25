@@ -1,5 +1,6 @@
 package com.smart_learn.data.room.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -34,8 +35,10 @@ import lombok.Setter;
 public class Expression extends LessonEntrance {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int expressionId;
 
+    @ColumnInfo(name = "expression")
     private String expression;
 
     public Expression(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
