@@ -5,7 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.smart_learn.core.config.RoomConfig;
+import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Expression;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public interface ExpressionDao extends BasicDao<Expression> {
 
     @Transaction
-    @Query("SELECT * FROM " + RoomConfig.EXPRESSIONS_TABLE)
+    @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE)
     LiveData<List<Expression>> getAllExpressions();
 }
 

@@ -3,13 +3,12 @@ package com.smart_learn.data.room.entities;
 import android.text.Html;
 import android.text.Spanned;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.smart_learn.core.config.RoomConfig;
+import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.NotebookCommon;
@@ -24,7 +23,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = RoomConfig.LESSONS_TABLE,
+@Entity(tableName = AppRoomDatabase.LESSONS_TABLE,
         foreignKeys = {
                         @ForeignKey(entity = Notification.class,
                                 parentColumns = "id",

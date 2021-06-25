@@ -8,7 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.smart_learn.core.config.RoomConfig;
+import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
@@ -26,7 +26,7 @@ import lombok.Setter;
  * */
 @Getter
 @Setter
-@Entity(tableName = RoomConfig.WORDS_TABLE,
+@Entity(tableName = AppRoomDatabase.WORDS_TABLE,
         foreignKeys = {
                     @ForeignKey(entity = Notification.class,
                                 parentColumns = "id",

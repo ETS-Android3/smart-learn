@@ -9,7 +9,6 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.smart_learn.core.config.RoomConfig;
 import com.smart_learn.data.room.converters.TranslationConverter;
 import com.smart_learn.data.room.dao.ExpressionDao;
 import com.smart_learn.data.room.dao.FriendDao;
@@ -41,6 +40,12 @@ import java.util.concurrent.Executors;
 @TypeConverters({TranslationConverter.class})
 public abstract class AppRoomDatabase extends RoomDatabase {
 
+    public static final String DATABASE_NAME = "app_room_db";
+    public static final String LESSONS_TABLE = "lessons";
+    public static final String WORDS_TABLE = "words";
+    public static final String SENTENCES_TABLE = "sentences";
+    public static final String EXPRESSIONS_TABLE = "expressions";
+    public static final String TRANSLATIONS_TABLE = "translations";
     public static final String FRIENDS_TABLE = "friends";
     public static final String NOTIFICATIONS_TABLE = "notifications";
 
@@ -62,7 +67,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppRoomDatabase.class, RoomConfig.DATABASE_NAME)
+                    AppRoomDatabase.class, DATABASE_NAME)
                     .addCallback(roomDatabaseCallback)
                     .build();
         }
