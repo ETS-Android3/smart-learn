@@ -25,8 +25,10 @@ public class HomeWordViewModel extends BasicAndroidViewModel {
     public HomeWordViewModel(@NonNull @NotNull Application application) {
         super(application);
         wordsService = new WordService(application);
-        liveWord = new MutableLiveData<>(new Word(0,0,0,false,
-                new Translation("",""),""));
+        // FIXME: get standard new word
+        //liveWord = new MutableLiveData<>(new Word(0,0,0,false,
+               // new Translation("",""),""));
+        liveWord = new MutableLiveData<>();
     }
 
     public void setLiveWord(Word word){

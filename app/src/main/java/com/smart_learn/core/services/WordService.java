@@ -110,14 +110,15 @@ public class WordService extends BasicRoomService<Word> {
 
         // here word is valid
         if(update){
-            word.setModifiedAt(System.currentTimeMillis());
+            word.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
             update(word);
             return responseInfo;
         }
 
-        Word newWord = new Word(System.currentTimeMillis(), System.currentTimeMillis(), word.getFkLessonId(),
-                false, word.getTranslation(), word.getWord());
-        insert(newWord);
+        // FIXME: fix adding a word
+        //Word newWord = new Word(System.currentTimeMillis(), System.currentTimeMillis(), word.getFkLessonId(),
+          //      false, word.getTranslation(), word.getWord());
+        //insert(newWord);
 
         return responseInfo;
     }

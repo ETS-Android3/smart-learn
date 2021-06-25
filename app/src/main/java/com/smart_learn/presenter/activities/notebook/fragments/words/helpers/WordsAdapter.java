@@ -42,11 +42,12 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             @Override
             public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
                 return oldItem.getWord().equals(newItem.getWord()) &&
-                        oldItem.getCreatedAt() == newItem.getCreatedAt() &&
-                        oldItem.getModifiedAt() == newItem.getModifiedAt() &&
-                        oldItem.isSelected() == newItem.isSelected() &&
-                        oldItem.getTranslation().getTranslation().equals(newItem.getTranslation().getTranslation()) &&
-                        oldItem.getTranslation().getPhonetic().equals(newItem.getTranslation().getPhonetic());
+                        oldItem.getDocumentMetadata().getCreatedAt() == newItem.getDocumentMetadata().getCreatedAt() &&
+                        oldItem.getDocumentMetadata().getModifiedAt() == newItem.getDocumentMetadata().getModifiedAt() &&
+                        oldItem.isSelected() == newItem.isSelected();
+                        // FIXME: fix this equality
+                        //oldItem.getTranslation().getTranslation().equals(newItem.getTranslation().getTranslation()) &&
+                        //oldItem.getTranslation().getPhonetic().equals(newItem.getTranslation().getPhonetic());
             }
         });
 
@@ -116,8 +117,10 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             super(viewHolderBinding.getRoot());
             this.viewHolderBinding = viewHolderBinding;
 
+            // FIXME: add a standard empty word
             // avoid a null value for liveLesson.getValue()
-            liveWord = new MutableLiveData<>(new Word(0,0,0,false,new Translation("",""),""));
+            //liveWord = new MutableLiveData<>(new Word(0,0,0,false,new Translation("",""),""));
+            liveWord = new MutableLiveData<>();
 
             setListeners();
         }
@@ -189,11 +192,12 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
     }
 
     private void markItem(Word word, boolean isSelected) {
-        Word tmp = new Word(word.getCreatedAt(),word.getModifiedAt(),word.getFkLessonId(),word.isSelected(),
-                new Translation(word.getTranslation().getTranslation(),word.getTranslation().getPhonetic()),word.getWord());
-        tmp.setWordId(word.getWordId());
-        tmp.setSelected(isSelected);
-        fragmentCallback.getFragment().getWordsViewModel().getWordsService().update(tmp);
+        // FIXME: add a standard empty word
+//        Word tmp = new Word(word.getCreatedAt(),word.getModifiedAt(),word.getFkLessonId(),word.isSelected(),
+//                new Translation(word.getTranslation().getTranslation(),word.getTranslation().getPhonetic()),word.getWord());
+//        tmp.setWordId(word.getWordId());
+//        tmp.setSelected(isSelected);
+//        fragmentCallback.getFragment().getWordsViewModel().getWordsService().update(tmp);
     }
 }
 

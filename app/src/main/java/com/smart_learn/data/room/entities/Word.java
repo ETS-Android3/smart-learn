@@ -9,6 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.core.config.RoomConfig;
+import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 import com.smart_learn.data.room.entities.helpers.Translation;
@@ -26,13 +27,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(tableName = RoomConfig.WORDS_TABLE,
-        foreignKeys = @ForeignKey(
-                                   entity = Lesson.class,
-                                   parentColumns = "lessonId",
-                                   childColumns = "fkLessonId",
-                                   onDelete = ForeignKey.CASCADE
-                        )
-)
+        foreignKeys = {
+                    @ForeignKey(entity = Notification.class,
+                                parentColumns = "id",
+                                childColumns = "fk_notification_id",
+                                onDelete = ForeignKey.CASCADE),
+                    @ForeignKey(entity = Lesson.class,
+                                parentColumns = "lessonId",
+                                childColumns = "fkLessonId",
+                                onDelete = ForeignKey.CASCADE)
+        })
 public class Word extends LessonEntrance {
 
     @PrimaryKey(autoGenerate = true)
@@ -48,8 +52,11 @@ public class Word extends LessonEntrance {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedWord;
 
-    public Word(long createdAt, long modifiedAt, int fkLessonId, boolean isSelected, Translation translation, String word) {
-        super(createdAt, modifiedAt, fkLessonId, isSelected, translation);
+    public Word(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+                DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite, String language,
+                ArrayList<Translation> translations, String word) {
+        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
+                language, translations);
         this.word = word;
     }
 

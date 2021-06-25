@@ -24,7 +24,9 @@ public class LessonDialogViewModel extends BasicAndroidViewModel {
     public LessonDialogViewModel(@NonNull Application application) {
         super(application);
         // this should be initialized in order to avoid null on getValue for live data
-        liveLessonInfo = new MutableLiveData<>(new Lesson("",0,0,false));
+        // FIXME: get standard new lesson
+        //liveLessonInfo = new MutableLiveData<>(new Lesson("",0,0,false));
+        liveLessonInfo = new MutableLiveData<>();
         // TODO: link this with database limit
         MAX_LESSON_NAME = 50;
     }

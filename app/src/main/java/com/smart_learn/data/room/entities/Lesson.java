@@ -3,12 +3,16 @@ package com.smart_learn.data.room.entities;
 import android.text.Html;
 import android.text.Spanned;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.core.config.RoomConfig;
+import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
+import com.smart_learn.data.room.entities.helpers.NotebookCommon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +24,19 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = RoomConfig.LESSONS_TABLE)
-public class Lesson {
+@Entity(tableName = RoomConfig.LESSONS_TABLE,
+        foreignKeys = {
+                        @ForeignKey(entity = Notification.class,
+                                parentColumns = "id",
+                                childColumns = "fk_notification_id",
+                                onDelete = ForeignKey.CASCADE)
+        })
+public class Lesson extends NotebookCommon {
 
     @PrimaryKey(autoGenerate = true)
     private int lessonId;
 
     private String name;
-    private long createdAt;
-    private long modifiedAt;
-    private boolean isSelected; // helper for recycler view
 
     @Ignore
     // this indexes are used for search value in recycler view for making the foreground color
@@ -39,11 +46,10 @@ public class Lesson {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedName;
 
-    public Lesson(String name, long createdAt, long modifiedAt, boolean isSelected) {
+    public Lesson(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+                  DocumentMetadata documentMetadata, String name) {
+        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata);
         this.name = name;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.isSelected = isSelected;
         this.spannedName = Html.fromHtml(this.name,Html.FROM_HTML_MODE_LEGACY);
     }
 

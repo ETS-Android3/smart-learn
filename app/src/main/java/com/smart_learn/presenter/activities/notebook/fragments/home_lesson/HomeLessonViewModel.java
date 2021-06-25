@@ -32,7 +32,9 @@ public class HomeLessonViewModel extends BasicAndroidViewModel {
     public HomeLessonViewModel(@NonNull @NotNull Application application) {
         super(application);
         lessonService = new LessonService(application);
-        liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
+        // FIXME: get standard new lesson
+        //liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
+        liveLesson = new MutableLiveData<>();
         // TODO: link this with database limit
         MAX_LESSON_NAME = 50;
     }

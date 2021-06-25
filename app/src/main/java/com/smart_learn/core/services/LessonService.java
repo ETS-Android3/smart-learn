@@ -6,10 +6,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.core.utilities.Logs;
-import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.core.helpers.ResponseInfo;
+import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.repository.LessonRepository;
+import com.smart_learn.data.room.entities.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,13 +99,18 @@ public class LessonService extends BasicRoomService<Lesson> {
 
         // here notebook is valid
         if(update){
-            lesson.setModifiedAt(System.currentTimeMillis());
+            lesson.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
             update(lesson);
             return responseInfo;
         }
 
+        /*
+        FIXME: fix adding a lesson
+        DocumentMetadata documentMetadata = new DocumentMetadata("",System.currentTimeMillis(), System.currentTimeMillis(),
+                new BackupStatus("",true, false,false,false));
         Lesson newLesson = new Lesson(lesson.getName(), System.currentTimeMillis(), System.currentTimeMillis(),false);
         insert(newLesson);
+         */
 
         return responseInfo;
     }

@@ -46,8 +46,8 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             @Override
             public boolean areContentsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
                 return oldItem.getName().equals(newItem.getName()) &&
-                        oldItem.getCreatedAt() == newItem.getCreatedAt() &&
-                        oldItem.getModifiedAt() == newItem.getModifiedAt() &&
+                        oldItem.getDocumentMetadata().getCreatedAt() == newItem.getDocumentMetadata().getCreatedAt() &&
+                        oldItem.getDocumentMetadata().getModifiedAt() == newItem.getDocumentMetadata().getModifiedAt() &&
                         oldItem.isSelected() == newItem.isSelected();
             }
         });
@@ -168,7 +168,9 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             this.viewHolderBinding = viewHolderBinding;
 
             // avoid a null value for liveLesson.getValue()
-            liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
+            // FIXME: add a standard new empty lesson
+            //liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
+            liveLesson = new MutableLiveData<>();
 
             setListeners();
         }
@@ -240,10 +242,11 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
     }
 
     private void markItem(Lesson lesson, boolean isSelected) {
-        Lesson tmp = new Lesson(lesson.getName(), lesson.getCreatedAt(), lesson.getModifiedAt(), lesson.isSelected());
-        tmp.setLessonId(lesson.getLessonId());
-        tmp.setSelected(isSelected);
-        fragmentCallback.getFragment().getLessonsViewModel().getLessonService().update(tmp);
+        // FIXME: add a standard new empty lesson
+        //Lesson tmp = new Lesson(lesson.getName(), lesson.getCreatedAt(), lesson.getModifiedAt(), lesson.isSelected());
+       // tmp.setLessonId(lesson.getLessonId());
+       // tmp.setSelected(isSelected);
+        //fragmentCallback.getFragment().getLessonsViewModel().getLessonService().update(tmp);
     }
 }
 

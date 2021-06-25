@@ -105,7 +105,7 @@ public class LoadingConnectionDialog {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put(StrictCodes.QUESTION_ID,i)
                             .put(StrictCodes.QUESTION, ((Word)lessonEntranceList.get(i)).getWord())
-                            .put(StrictCodes.RESPONSE, lessonEntranceList.get(i).getTranslation());
+                            .put(StrictCodes.RESPONSE, lessonEntranceList.get(i).getTranslations());
                     jsonArray.put(jsonObject);
                 }
 

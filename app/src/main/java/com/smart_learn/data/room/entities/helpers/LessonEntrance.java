@@ -1,29 +1,33 @@
 package com.smart_learn.data.room.entities.helpers;
 
-import androidx.room.Embedded;
+import androidx.room.ColumnInfo;
+
+import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class LessonEntrance {
+public abstract class LessonEntrance extends NotebookCommon {
 
-    private final long createdAt;
-    private long modifiedAt;
-    private int fkLessonId;
-    private boolean isSelected; // helper for recycler view
+    // use Integer because in some situations a null value for foreign key is needed
+    private Integer fkLessonId;
 
-    /** Leave this embedded in order to be decomposed in room_db */
-    @Embedded
-    private Translation translation;
+    private boolean isFavourite;
 
-    public LessonEntrance(long createdAt, long modifiedAt, int fkLessonId, boolean isSelected, Translation translation) {
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+    private String language;
+
+    // this will be actioned by type converter
+    protected ArrayList<Translation> translations;
+
+    public LessonEntrance(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+                          DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite,
+                          String language, ArrayList<Translation> translations) {
+        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata);
         this.fkLessonId = fkLessonId;
-        this.isSelected = isSelected;
-        this.translation = translation;
+        this.isFavourite = isFavourite;
+        this.language = language;
+        this.translations = translations;
     }
-
 }
