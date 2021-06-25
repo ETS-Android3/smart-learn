@@ -19,22 +19,22 @@ public interface WordDao extends BasicDao<Word>  {
     @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE word LIKE :word")
     Word getSampleWord(String word);
 
-    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE word LIKE :word AND fkLessonId = :lessonId")
+    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE word LIKE :word AND fk_lesson_id = :lessonId")
     Word getSampleWord(String word, int lessonId);
 
     @Transaction
-    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fkLessonId = :lessonId")
+    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id = :lessonId")
     LiveData<List<Word>> getLessonLiveWords(int lessonId);
 
-    @Query("DELETE FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fkLessonId = :lessonId")
+    @Query("DELETE FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fk_lesson_id = :lessonId")
     void deleteSelectedItems(int lessonId);
 
-    @Query("UPDATE " + AppRoomDatabase.WORDS_TABLE + " SET isSelected = :isSelected WHERE fkLessonId = :lessonId")
+    @Query("UPDATE " + AppRoomDatabase.WORDS_TABLE + " SET isSelected = :isSelected WHERE fk_lesson_id = :lessonId")
     void updateSelectAll(boolean isSelected, int lessonId);
 
-    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fkLessonId = :lessonId")
+    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fk_lesson_id = :lessonId")
     LiveData<Integer> getLiveSelectedItemsCount(int lessonId);
 
-    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fkLessonId = :lessonId")
+    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id = :lessonId")
     LiveData<Integer> getLiveItemsNumber(int lessonId);
 }

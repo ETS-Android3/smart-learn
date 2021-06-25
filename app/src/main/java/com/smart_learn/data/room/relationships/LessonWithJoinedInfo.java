@@ -23,11 +23,11 @@ public class LessonWithJoinedInfo {
     private Lesson lesson;
 
     // one to-many relationship
-    @Relation(parentColumn = "lessonId", entityColumn = "fkLessonId")
+    @Relation(parentColumn = "lessonId", entityColumn = "fk_lesson_id")
     private List<Word> wordList;
 
     // one to-many relationship
-    @Relation(parentColumn = "lessonId", entityColumn = "fkLessonId")
+    @Relation(parentColumn = "lessonId", entityColumn = "fk_lesson_id")
     private List<Expression> expressionList;
 
 }

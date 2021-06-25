@@ -34,7 +34,7 @@ import lombok.Setter;
                                 onDelete = ForeignKey.CASCADE),
                     @ForeignKey(entity = Lesson.class,
                                 parentColumns = "lessonId",
-                                childColumns = "fkLessonId",
+                                childColumns = "fk_lesson_id",
                                 onDelete = ForeignKey.CASCADE)
         })
 public class Word extends LessonEntrance {
