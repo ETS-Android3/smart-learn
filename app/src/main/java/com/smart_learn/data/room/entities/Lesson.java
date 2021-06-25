@@ -3,6 +3,7 @@ package com.smart_learn.data.room.entities;
 import android.text.Html;
 import android.text.Spanned;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -33,8 +34,10 @@ import lombok.ToString;
 public class Lesson extends NotebookCommon {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int lessonId;
 
+    @ColumnInfo(name = "name")
     private String name;
 
     @Ignore

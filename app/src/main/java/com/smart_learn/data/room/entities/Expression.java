@@ -27,7 +27,7 @@ import lombok.Setter;
                                 childColumns = "fk_notification_id",
                                 onDelete = ForeignKey.CASCADE),
                         @ForeignKey(entity = Lesson.class,
-                                parentColumns = "lessonId",
+                                parentColumns = "id",
                                 childColumns = "fk_lesson_id",
                                 onDelete = ForeignKey.CASCADE)
         })
