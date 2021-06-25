@@ -43,9 +43,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "app_room_db";
     public static final String LESSONS_TABLE = "lessons";
     public static final String WORDS_TABLE = "words";
-    public static final String SENTENCES_TABLE = "sentences";
     public static final String EXPRESSIONS_TABLE = "expressions";
-    public static final String TRANSLATIONS_TABLE = "translations";
     public static final String FRIENDS_TABLE = "friends";
     public static final String NOTIFICATIONS_TABLE = "notifications";
 
@@ -54,8 +52,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public abstract ExpressionDao expressionDao();
     public abstract FriendDao friendDao();
     public abstract NotificationDao notificationDao();
-
-    private static final String ADMIN_VALUE = "ADMIN_VALUE";
 
     private static volatile AppRoomDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
