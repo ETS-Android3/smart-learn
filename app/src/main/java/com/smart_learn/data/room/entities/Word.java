@@ -3,6 +3,7 @@ package com.smart_learn.data.room.entities;
 import android.text.Html;
 import android.text.Spanned;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -40,8 +41,10 @@ import lombok.Setter;
 public class Word extends LessonEntrance {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int wordId;
 
+    @ColumnInfo(name = "word")
     private String word;
 
     @Ignore

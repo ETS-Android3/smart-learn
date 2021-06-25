@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface WordDao extends BasicDao<Word>  {
 
-    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE wordId = :wordId")
+    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE id = :wordId")
     LiveData<Word> getSampleLiveWord(int wordId);
 
     @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE word LIKE :word")
@@ -32,9 +32,9 @@ public interface WordDao extends BasicDao<Word>  {
     @Query("UPDATE " + AppRoomDatabase.WORDS_TABLE + " SET isSelected = :isSelected WHERE fk_lesson_id = :lessonId")
     void updateSelectAll(boolean isSelected, int lessonId);
 
-    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fk_lesson_id = :lessonId")
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fk_lesson_id = :lessonId")
     LiveData<Integer> getLiveSelectedItemsCount(int lessonId);
 
-    @Query("SELECT COUNT(wordId) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id = :lessonId")
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id = :lessonId")
     LiveData<Integer> getLiveItemsNumber(int lessonId);
 }
