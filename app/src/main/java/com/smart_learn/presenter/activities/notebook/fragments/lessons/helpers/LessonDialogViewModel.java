@@ -10,7 +10,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
-import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import lombok.Getter;
 

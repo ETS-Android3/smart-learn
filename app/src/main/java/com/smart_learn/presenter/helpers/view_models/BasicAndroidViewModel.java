@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.presenter.helpers.view_models;
 
 import android.app.Application;
 

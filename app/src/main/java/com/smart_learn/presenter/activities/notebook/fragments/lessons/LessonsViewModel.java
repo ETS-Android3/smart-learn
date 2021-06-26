@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.smart_learn.core.services.LessonService;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonsAdapter;
-import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

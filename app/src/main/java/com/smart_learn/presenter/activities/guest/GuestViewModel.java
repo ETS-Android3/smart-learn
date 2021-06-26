@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.smart_learn.core.services.ExpressionService;
 import com.smart_learn.core.services.LessonService;
 import com.smart_learn.core.services.WordService;
-import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

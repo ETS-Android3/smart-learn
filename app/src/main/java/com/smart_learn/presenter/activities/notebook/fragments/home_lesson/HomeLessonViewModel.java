@@ -12,7 +12,7 @@ import com.smart_learn.core.services.LessonService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.helpers.ApplicationController;
-import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -18,7 +18,7 @@ import com.smart_learn.R;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.presenter.helpers.ApplicationController;
-import com.smart_learn.presenter.helpers.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import lombok.Getter;
 import timber.log.Timber;
