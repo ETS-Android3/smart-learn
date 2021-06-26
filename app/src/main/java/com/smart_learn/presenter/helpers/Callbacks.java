@@ -63,4 +63,12 @@ public interface Callbacks {
     interface FragmentFilterOptionsCallback {
         void onAZFilter();
     }
+
+
+    /**
+     * Used to manage positive button press on a simple AlertDialog.
+     * */
+    interface StandardAlertDialogCallback {
+        void onPositiveButtonPress();
+    }
 }

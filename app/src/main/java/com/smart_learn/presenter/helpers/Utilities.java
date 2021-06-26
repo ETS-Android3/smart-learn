@@ -2,6 +2,7 @@ package com.smart_learn.presenter.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spanned;
@@ -15,6 +16,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -586,6 +588,35 @@ public final class Utilities {
             }
 
             return Html.fromHtml(text,Html.FROM_HTML_MODE_LEGACY);
+        }
+
+
+        /**
+         * Use this in order to show a simple AlertDialog with callback on positive button pressed.
+         *
+         * @param context The context where the AlertDialog will be shown.
+         * @param title   Title of the AlertDialog.
+         * @param message Description of the AlertDialog. This can be a warning message, like
+         *                'Are you sure you want to .... ?'.
+         * @param standardAlertDialogCallback Callback which will manage the positive button press
+         *                                    action.
+         * */
+        public static void showStandardAlertDialog(@NonNull Context context, @NonNull String title,
+                                                   @NonNull String message, @NonNull Callbacks.StandardAlertDialogCallback standardAlertDialogCallback){
+            //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
+            new AlertDialog.Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            standardAlertDialogCallback.onPositiveButtonPress();
+                        }
+                    })
+                    // No need for a listener because no action will be done when BUTTON_NEGATIVE is pressed.
+                    // Dialog will be dismissed automatically.
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setIcon(R.drawable.ic_baseline_warning_24)
+                    .show();
         }
     }
 

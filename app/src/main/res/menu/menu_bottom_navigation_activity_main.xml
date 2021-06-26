@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/main_group_menu_bottom_navigation_activity_main">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
+        <item
+            android:id="@+id/user_profile_fragment_nav_graph_activity_main"
+            android:icon="@drawable/ic_baseline_profile_24"
+            android:title="@string/profile"/>
+    </group>
+</menu>

@@ -42,6 +42,26 @@
     <string name="register">Register</string>
 
 
+    <!-- MainActivity -->
+    <string name="error_profile_name_is_same">Profile name was not changed</string>
+    <string name="error_updating_user_display_name">Error while updating profile. Name was not changed</string>
+    <string name="error_deleting_user">Account can not be deleted.</string>
+    <string name="error_sensitive_deletion">This operation is sensitive and requires recent authentication. Log in again before retrying this request.</string>
+
+    <string name="success_display_name_updated">Profile name was changed.</string>
+    <string name="success_account_deleted">Account was deleted</string>
+
+    <string name="online">Online</string>
+    <string name="delete_account">Delete account</string>
+    <string name="email_and_password">Email and password</string>
+    <string name="delete_account_description">Are you sure you want to delete account? All your data will be deleted also!</string>
+    <string name="profile_name_point">Profile name:</string>
+    <string name="email_point">Email:</string>
+    <string name="register_provider_point">Register provider:</string>
+    <string name="register_time_point">Register time:</string>
+    <string name="profile">Profile</string>
+
+
     <!-- GuestActivity -->
     <string name="notebook_summary">Notebook summary</string>
     <string name="user_icon">User icon</string>
