@@ -48,7 +48,7 @@ public class NotebookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_notebook);
         binding.setLifecycleOwner(this);
-        setSupportActionBar(binding.toolbarNotebookActivity);
+        setSupportActionBar(binding.toolbarActivityNotebook);
 
        setLayoutUtilities();
 
@@ -66,11 +66,11 @@ public class NotebookActivity extends AppCompatActivity {
 
     private void setLayoutUtilities(){
         // set bottom sheet behaviour for bottom navigation menu layout
-        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationNotebookActivity);
+        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
 
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_notebook_activity,
-                binding.bottomNavigationNotebookActivity, new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_notebook,
+                binding.bottomNavigationActivityNotebook, new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {

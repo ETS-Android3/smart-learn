@@ -11,24 +11,24 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_main_constraint_notebook_activity"
+            android:id="@+id/layout_main_constraint_activity_notebook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".presenter.activities.notebook.NotebookActivity">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_notebook_activity"
+                android:id="@+id/toolbar_activity_notebook"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle"
-                app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_notebook_activity"
+                app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment_activity_notebook"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="?attr/homeAsUpIndicator" />
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/nav_host_fragment_notebook_activity"
+                android:id="@+id/nav_host_fragment_activity_notebook"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -36,27 +36,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_notebook_activity"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_notebook"
                 app:navGraph="@navigation/nav_graph_activity_notebook" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layout_linear_navigation_notebook_activity"
+            android:id="@+id/layout_linear_navigation_activity_notebook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_navigation_notebook_activity"
+                android:id="@+id/bottom_navigation_activity_notebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_notebook_activity"
+                app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_activity_notebook"
                 app:menu="@menu/menu_bottom_navigation_activity_notebook" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
