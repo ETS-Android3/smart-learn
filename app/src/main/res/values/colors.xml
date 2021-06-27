@@ -29,4 +29,6 @@
     <color name="text_color_no_item_recycler_view_primary">@color/black</color>
     <color name="colorError">#B00404</color>
     <color name="colorUserIcon">#9E9C9C</color>
+    <color name="navigationViewItemActive">#353535</color>
+    <color name="navigationViewItemInactive">#888787</color>
 </resources>

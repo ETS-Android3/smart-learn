@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://stackoverflow.com/questions/60147609/different-background-color-to-bottom-navigation-tab-selected-item-by-using-mater -->
+<!-- https://stackoverflow.com/questions/51579977/how-to-change-the-icon-color-selected-on-bottom-navigation-bar-in-android-studio/51580222#51580222 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"
+        android:color="@color/navigationViewItemActive" />
+    <item android:state_checked="false"
+        android:color="@color/navigationViewItemInactive"/>
+</selector>

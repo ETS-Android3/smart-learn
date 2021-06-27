@@ -261,4 +261,39 @@
         <item name="checkedIcon">@drawable/ic_baseline_checked_circle_24</item>
     </style>
 
+
+
+
+    <!--  =====================================================================================  -->
+    <!--                       Bottom navigation view style                                      -->
+    <!--  =====================================================================================  -->
+    <style name="AppTheme.BottomNavigationView.Primary" parent="AppTheme">
+        <!-- this will change all navigation view bar background -->
+        <item name="backgroundTint">@color/colorPrimary</item>
+
+        <!-- this will change icon label text color -->
+        <item name="itemTextColor">@color/colorToolbarTextLightTheme</item>
+
+        <!-- this will change icon fill color -->
+        <item name="itemIconTint">@drawable/style_bottom_navigation_selector</item>
+
+
+        <!--
+             This will change entire icon background (not icon fill color, but all clickable background).
+
+             Obs: This will not work here. If you want to used then do not use this theme and add all
+                  values directly to layout, like in the following example:
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                            ...
+                            app:backgroundTint="@color/..."
+                            app:itemTextColor="@color/..."
+                            app:itemIconTint="@color/..."
+                            app:itemBackground="@color/..."
+                            .../>
+        -->
+        <!-- <item name="itemBackground">@color/colorPrimary</item> -->
+    </style>
+
+
 </resources>
