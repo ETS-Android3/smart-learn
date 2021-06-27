@@ -10,8 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 
 import com.google.android.material.navigation.NavigationView;
 import com.smart_learn.R;
@@ -19,13 +18,14 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
+import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;
 
 public class GuestActivity extends AppCompatActivity {
 
     private ActivityGuestBinding binding;
-    private GuestViewModel viewModel;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,21 @@ public class GuestActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         setSupportActionBar(binding.toolbarActivityGuest);
-        setNavigationDrawer();
 
-        setViewModel();
-        binding.setViewModel(viewModel);
+        setLayoutUtilities();
+
+        // if navigation graph cannot be set, then stop activity
+        if(navController == null){
+            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            // If drawer cannot be opened finish activity and close application, because navigation
+            // cannot be done. I close application here because on this activity onBackPressed() is
+            // disabled. So this is the last point.
+            // https://stackoverflow.com/questions/17719634/how-to-exit-an-android-app-programmatically/40231289#40231289
+            this.finishAndRemoveTask();
+            return;
+        }
+
+        setNavigationDrawer();
     }
 
     @Override
@@ -54,6 +65,11 @@ public class GuestActivity extends AppCompatActivity {
         if(binding.drawerLayoutActivityGuest.isDrawerOpen(GravityCompat.START)){
             binding.drawerLayoutActivityGuest.closeDrawer(GravityCompat.START);
         }
+    }
+
+    private void setLayoutUtilities(){
+        // try to set navigation graph
+        navController = Utilities.Activities.setNavigationGraph(this, R.id.nav_host_fragment_activity_guest);
     }
 
     private void setNavigationDrawer(){
@@ -88,16 +104,6 @@ public class GuestActivity extends AppCompatActivity {
                 }
                 binding.drawerLayoutActivityGuest.closeDrawer(GravityCompat.START);
                 return true;
-            }
-        });
-    }
-
-    private void setViewModel(){
-        viewModel = new ViewModelProvider(this).get(GuestViewModel.class);
-        viewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(GuestActivity.this, s);
             }
         });
     }
