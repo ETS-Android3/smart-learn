@@ -90,6 +90,20 @@ public abstract class CoreUtilities {
                     .getSharedPreferences(ApplicationController.LOGIN_STATUS_KEY, Context.MODE_PRIVATE);
             return preferences.getBoolean(ApplicationController.LOGGED_IN, false);
         }
+
+
+        /**
+         * Use this in order to get user display name.
+         *
+         * @return User display name if user is logged in or "" is user is not logged in.
+         * */
+        public static String getUserDisplayName(){
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            if(firebaseUser == null){
+                return "";
+            }
+            return firebaseUser.getDisplayName();
+        }
     }
 
 }

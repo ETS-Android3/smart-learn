@@ -138,4 +138,9 @@
     <string name="words">Words</string>
     <string name="lesson_name">Lesson name</string>
 
+
+    <!-- AccountOverviewFragment -->
+    <string name="this_is_your_account_overview">Here is a short summary of your activity</string>
+    <string name="local">Local</string>
+
 </resources>
