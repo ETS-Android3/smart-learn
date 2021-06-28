@@ -33,10 +33,24 @@ public abstract class CoreUtilities {
          * Use this in order to convert millisecond in a standard locale date format.
          *
          * @param milliseconds Value to be converted.
+         *
+         * @return Format which will include only day, month and year.
          * */
         public static String longToDate(long milliseconds){
             //https://www.geeksforgeeks.org/program-to-convert-milliseconds-to-a-date-format-in-java/
             return DateFormat.getDateInstance().format(new Date(milliseconds));
+        }
+
+
+        /**
+         * Use this in order to convert millisecond in a standard locale date and time format.
+         *
+         * @param milliseconds Value to be converted.
+         *
+         * @return Format which will include day, month, year and time (hour, minutes, seconds, AM/PM).
+         * */
+        public static String longToDateTime(long milliseconds){
+            return DateFormat.getDateTimeInstance().format(new Date(milliseconds));
         }
     }
 
@@ -50,6 +64,8 @@ public abstract class CoreUtilities {
         public static final int PROVIDER_EMAIL = 1;
         // provider id to specific that a user is logged in with a Google account
         public static final int PROVIDER_GOOGLE = 2;
+        // used to set a UID string if user is not logged in
+        public static final String GUEST_UID = "guest_uid";
 
 
         /**
@@ -103,6 +119,21 @@ public abstract class CoreUtilities {
                 return "";
             }
             return firebaseUser.getDisplayName();
+        }
+
+
+        /**
+         * Use this in order to get user unique id (UID) .
+         *
+         * @return User UID if user is logged in, or CoreUtilities.Auth.GUEST_UID is user is not
+         *         logged in.
+         * */
+        public static String getUserUid(){
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            if(firebaseUser == null){
+                return GUEST_UID;
+            }
+            return firebaseUser.getUid();
         }
     }
 
