@@ -13,17 +13,17 @@ public interface BasicDao <T> {
     long insert(T value);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAll(List<T> values);
+    long[] insertAll(List<T> values);
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    void update(T value);
+    int update(T value);
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
-    void updateAll(List<T> items);
+    int updateAll(List<T> items);
 
     @Delete
-    void delete(T value);
+    int delete(T value);
 
     @Delete
-    void deleteAll(List<T> items);
+    int deleteAll(List<T> items);
 }
