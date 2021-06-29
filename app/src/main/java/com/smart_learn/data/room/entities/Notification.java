@@ -30,6 +30,9 @@ public class Notification {
     @ColumnInfo(name = "fk_friend_id")
     private Integer fkFriendId;
 
+    @ColumnInfo(name = "from")
+    private String from;
+
     @ColumnInfo(name = "type")
     private int type;
 
@@ -39,14 +42,20 @@ public class Notification {
     @ColumnInfo(name = "is_marked_as_read")
     private boolean isMarkedAsRead;
 
+    @ColumnInfo(name = "is_hidden")
+    private boolean isHidden;
+
     @Embedded
     private final DocumentMetadata documentMetadata;
 
-    public Notification(Integer fkFriendId, int type, String description, boolean isMarkedAsRead, DocumentMetadata documentMetadata) {
+    public Notification(Integer fkFriendId, String from, int type, String description, boolean isMarkedAsRead,
+                        boolean isHidden, DocumentMetadata documentMetadata) {
         this.fkFriendId = fkFriendId;
+        this.from = from;
         this.type = type;
         this.description = description;
         this.isMarkedAsRead = isMarkedAsRead;
+        this.isHidden = isHidden;
         this.documentMetadata = documentMetadata;
     }
 }
