@@ -13,5 +13,9 @@
             android:id="@+id/account_overview_fragment_nav_graph_activity_main"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/account_overview"/>
+        <item
+            android:id="@+id/notifications_fragment_nav_graph_activity_main"
+            android:icon="@drawable/ic_baseline_notifications_24"
+            android:title="@string/notifications"/>
     </group>
 </menu>

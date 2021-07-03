@@ -148,4 +148,23 @@
     <string name="no_items">There are no items</string>
     <string name="empty" > </string>
 
+    <!-- NotificationsFragment -->
+    <string name="no_notifications">There are no notifications</string>
+    <string name="hide_notification">Hide notification</string>
+    <string name="mark_as_read">Mark as read</string>
+    <string name="mark_as_unread">Mark as unread</string>
+    <string name="notifications">Notifications</string>
+    <string name="notification">Notification</string>
+    <string name="new_notification">New notification</string>
+    <string name="from_point">From:</string>
+    <string name="received_point">Received:</string>
+    <string name="description_point">Description:</string>
+    <string name="no_notification_info">No informations available</string>
+    <string name="new_received_lesson">New lesson</string>
+    <string name="new_shared_lesson">New shared lesson</string>
+    <string name="new_friend_request">New friend request</string>
+    <string name="new_received_word">New word</string>
+    <string name="new_received_expression">New expression</string>
+    <string name="nothing_here">Nothing here</string>
+
 </resources>

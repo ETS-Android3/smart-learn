@@ -15,4 +15,9 @@
         android:name="com.smart_learn.presenter.helpers.fragments.account_summary.AccountOverviewFragment"
         android:label="account_overview_fragment_nav_graph_activity_main"
         tools:layout="@layout/fragment_account_overview"/>
+    <fragment
+        android:id="@+id/notifications_fragment_nav_graph_activity_main"
+        android:name="com.smart_learn.presenter.activities.main.fragments.notifications.NotificationsFragment"
+        android:label="notifications_fragment_nav_graph_activity_main"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
 </navigation>
