@@ -41,7 +41,7 @@ public class NotificationDialog extends DialogFragment {
             dialogTitleResourceId = R.string.no_notification_info;
         }
         else {
-            dialogBinding.setFrom(notificationDocument.getFrom());
+            dialogBinding.setFrom(notificationDocument.getFromDisplayName());
             dialogBinding.setCreatedTime(CoreUtilities.General.longToDateTime(notificationDocument.getDocumentMetadata().getCreatedAt()));
             dialogBinding.setDescription(notificationDocument.getDescription());
             dialogTitleResourceId = NotificationDocument.generateNotificationTitle(notificationDocument.getType());

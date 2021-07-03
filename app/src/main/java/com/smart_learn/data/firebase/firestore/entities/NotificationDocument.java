@@ -6,7 +6,10 @@ import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataUtilities;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import timber.log.Timber;
 
@@ -14,7 +17,8 @@ import timber.log.Timber;
 @Setter
 public class NotificationDocument {
 
-    public static final String FROM_FIELD_NAME = "from";
+    public static final String FROM_UID_FIELD_NAME = "fromUid";
+    public static final String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
     public static final String TYPE_FIELD_NAME = "type";
     public static final String DESCRIPTION_FIELD_NAME = "description";
     public static final String MARKED_AS_READ_FIELD_NAME = "markedAsRead";
@@ -36,7 +40,11 @@ public class NotificationDocument {
 
     private DocumentMetadata documentMetadata;
 
-    private String from;
+    // these will be the UID of the user who sent the notifications
+    private String fromUid;
+    // These will be the display name of the user who sent the notifications. I use display name
+    // and UID in order do avoid a read for the user document with specific UID.
+    private String fromDisplayName;
     private int type;
     private String description;
     private boolean markedAsRead;
@@ -51,16 +59,17 @@ public class NotificationDocument {
         // needed for Firestore
     }
 
-    public NotificationDocument(DocumentMetadata documentMetadata, String from, int type, String description,
-                                boolean markedAsRead, boolean hidden) {
+    public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata,
+                                @NonNull @NotNull String fromUid, @NonNull @NotNull String fromDisplayName,
+                                int type, String description, boolean markedAsRead, boolean hidden) {
         this.documentMetadata = documentMetadata;
-        this.from = from;
+        this.fromUid = fromUid;
+        this.fromDisplayName = fromDisplayName;
         this.type = type;
         this.description = description;
         this.markedAsRead = markedAsRead;
         this.hidden = hidden;
     }
-
 
     /**
      * This getter must have this form in order to work with Firestore. If you leave getter generated
@@ -86,8 +95,13 @@ public class NotificationDocument {
         }
 
         // check if the provided documentSnapshot contains all fields from the notification document
-        if(!documentSnapshot.contains(FROM_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", FROM_FIELD_NAME);
+        if(!documentSnapshot.contains(FROM_UID_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", FROM_UID_FIELD_NAME);
+            return false;
+        }
+
+        if(!documentSnapshot.contains(FROM_DISPLAY_NAME_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", FROM_DISPLAY_NAME_FIELD_NAME);
             return false;
         }
 
