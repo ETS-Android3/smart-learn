@@ -143,4 +143,9 @@
     <string name="this_is_your_account_overview">Here is a short summary of your activity</string>
     <string name="local">Local</string>
 
+
+    <!-- BasicFragmentForRecyclerView -->
+    <string name="no_items">There are no items</string>
+    <string name="empty" > </string>
+
 </resources>

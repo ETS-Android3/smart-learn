@@ -31,4 +31,8 @@
     <color name="colorUserIcon">#9E9C9C</color>
     <color name="navigationViewItemActive">#353535</color>
     <color name="navigationViewItemInactive">#888787</color>
+    <color name="colorARefreshIcon">@color/colorAccent</color>
+    <color name="colorBRefreshIcon">#4CAF50</color>
+    <color name="colorCRefreshIcon">#CDDC39</color>
+    <color name="colorDRefreshIcon">#FF5722</color>
 </resources>

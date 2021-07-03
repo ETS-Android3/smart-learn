@@ -31,6 +31,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -207,6 +208,87 @@ public final class Utilities {
             // https://stackoverflow.com/questions/16161448/how-to-make-layout-with-rounded-corners/30692236#30692236
             //recyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
             recyclerView.setClipToOutline(true);
+        }
+
+
+        /**
+         * Used to initialize recycler view from fragments.
+         *
+         * @param context The context for which the recycler view must be set.
+         * @param recyclerView The recycler view to be set.
+         * @param itemDecoration ItemDecoration to be set to the recycler view.
+         * @param adapter Adapter which extends RecyclerView.ViewHolder in order to be set to the
+         *                recycler view.
+         * @param onScrollListener Listener to handle scroll action on the recycler view.
+         * */
+        public static void initializeRecyclerView(@NonNull @NotNull Context context,
+                                                  @NonNull @NotNull RecyclerView recyclerView,
+                                                  @Nullable ItemDecoration itemDecoration,
+                                                  @Nullable RecyclerView.Adapter<? extends RecyclerView.ViewHolder> adapter,
+                                                  @Nullable RecyclerView.OnScrollListener onScrollListener){
+
+            LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
+            recyclerView.setLayoutManager(manager);
+            if(itemDecoration != null){
+                recyclerView.addItemDecoration(itemDecoration);
+            }
+
+            // FIXME: on API 26 (Samsung galaxy S7 Edge) this is not working, but on API 30 is working
+            // this allows the cards to fit under the rounded corners of the layout
+            // https://stackoverflow.com/questions/5574212/android-view-clipping
+            // https://stackoverflow.com/questions/16161448/how-to-make-layout-with-rounded-corners/30692236#30692236
+            //recyclerView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+            recyclerView.setClipToOutline(true);
+
+            if(adapter != null){
+                recyclerView.setAdapter(adapter);
+            }
+
+            if(onScrollListener != null){
+                recyclerView.addOnScrollListener(onScrollListener);
+            }
+        }
+
+
+        /**
+         * Used to set a SwipeRefreshLayout which is parent for a recycler view.
+         *
+         * @param swipeRefreshLayout The layout which must be set.
+         * @param enabled If top pull for refresh will be enabled.
+         * @param initialRefreshStatus If refresh icon will be shown by default when activity/fragment
+         *                             starts.
+         * @param listener Listener to manage actions when refresh is done. This must be set only if
+         *                 enabled is true, otherwise will have no effect.
+         * */
+        public static void setSwipeRefreshLayout(@NonNull @NotNull SwipeRefreshLayout swipeRefreshLayout,
+                                                 boolean enabled, boolean initialRefreshStatus,
+                                                 @Nullable SwipeRefreshLayout.OnRefreshListener listener){
+            // top pull for refresh
+            swipeRefreshLayout.setEnabled(enabled);
+
+            // if refresh icon will be shown by default when activity/fragment starts
+            swipeRefreshLayout.setRefreshing(initialRefreshStatus);
+
+            // color scheme for refresh icon
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorARefreshIcon, R.color.colorBRefreshIcon,
+                    R.color.colorCRefreshIcon, R.color.colorDRefreshIcon);
+
+            // If pull for refresh is enabled and no listener exist a default one will be set, in order
+            // to show a refresh effect.
+            if(enabled && listener == null){
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+                return;
+            }
+
+            // setting listener will have effect only if enabled was true
+            if(listener != null){
+                swipeRefreshLayout.setOnRefreshListener(listener);
+            }
         }
 
 
