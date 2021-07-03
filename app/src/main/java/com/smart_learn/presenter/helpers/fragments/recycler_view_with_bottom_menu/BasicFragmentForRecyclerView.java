@@ -153,6 +153,10 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
+                // https://stackoverflow.com/questions/29024058/recyclerview-scrolled-up-down-listener
+                // https://stackoverflow.com/questions/40561474/recyclerview-onscrollstatechanged-and-onscrolled
+                // https://stackoverflow.com/questions/33454609/detect-start-scroll-and-end-scroll-in-recyclerview/33454785
+
                 // Check if user has reached the end of the list.
                 if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     // If so, then load more data.
@@ -181,6 +185,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
 
     @Override
     public void scrollToPosition(int position) {
+        // https://stackoverflow.com/questions/30805262/how-to-get-recyclerview-to-view-a-certain-position-without-scrolling/30805540#30805540
         recyclerView.scrollToPosition(position);
     }
 }

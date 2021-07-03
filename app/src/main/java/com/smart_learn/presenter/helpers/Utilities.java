@@ -263,6 +263,9 @@ public final class Utilities {
         public static void setSwipeRefreshLayout(@NonNull @NotNull SwipeRefreshLayout swipeRefreshLayout,
                                                  boolean enabled, boolean initialRefreshStatus,
                                                  @Nullable SwipeRefreshLayout.OnRefreshListener listener){
+            // https://stackoverflow.com/questions/44454797/pull-to-refresh-recyclerview-android
+
+            // https://stackoverflow.com/questions/30301451/how-to-disable-pull-to-refresh-action-and-use-only-indicator
             // top pull for refresh
             swipeRefreshLayout.setEnabled(enabled);
 
