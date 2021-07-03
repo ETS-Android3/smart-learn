@@ -123,8 +123,8 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
             viewHolderBinding.cvLayoutCardViewNotification.setChecked(!notification.getMarkedAsRead());
 
-            notification.setTypeDescription(fragmentCallback.getFragment()
-                    .getString(NotificationDocument.getNotificationTypeMessage(notification.getType())));
+            notification.setTitle(fragmentCallback.getFragment()
+                    .getString(NotificationDocument.generateNotificationTitle(notification.getType())));
 
             liveItemInfo.setValue(notification);
         }

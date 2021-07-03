@@ -42,10 +42,10 @@ public class NotificationDocument {
     private boolean markedAsRead;
     private boolean hidden;
 
-    // Not needed in firestore document. Used to describe the type using a string value, readable by
-    // the user.
+    // Not needed in firestore document. Used to set title of the notification based on type, in
+    // order to be readable for the user.
     @Exclude
-    private String typeDescription;
+    private String title;
 
     public NotificationDocument() {
         // needed for Firestore
@@ -120,16 +120,23 @@ public class NotificationDocument {
     }
 
     /**
-     * Field typeDescription is NOT needed in the firestore document.
+     * Field title is NOT needed in the firestore document.
      *
      * https://stackoverflow.com/questions/49865558/firestore-where-exactly-to-put-the-exclude-annotation
      * */
     @Exclude
-    public String getTypeDescription() {
-        return typeDescription;
+    public String getTitle() {
+        return title;
     }
 
-    public static int getNotificationTypeMessage(int type){
+    /**
+     * Use to generate a custom title based on the notification type.
+     *
+     * @param type The notification type.
+     *
+     * @return A resource string id of the custom title.
+     * */
+    public static int generateNotificationTitle(int type){
         switch (type){
             case TYPE_NEW_FRIEND_REQUEST:
                 return R.string.new_friend_request;
