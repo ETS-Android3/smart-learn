@@ -19,10 +19,16 @@
             android:src="@drawable/ic_baseline_plus_24"
             android:contentDescription="@string/add_new" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_include_layout_recycler_view_no_bottom_nav"
-            style="@style/AppTheme.RecyclerView.Primary">
-        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_recycler_view_no_bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_include_layout_recycler_view_no_bottom_nav"
+                style="@style/AppTheme.RecyclerView.Primary"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <TextView
             android:id="@+id/tv_no_item_include_layout_recycler_view_no_bottom_nav"

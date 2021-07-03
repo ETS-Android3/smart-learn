@@ -232,6 +232,7 @@
     <style name="AppTheme.RecyclerView.Primary" parent="AppTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:scrollbars">vertical</item>
         <item name="android:background">@drawable/background_recycler_view_primary</item>
     </style>
 
