@@ -155,16 +155,25 @@
     <string name="mark_as_unread">Mark as unread</string>
     <string name="notifications">Notifications</string>
     <string name="notification">Notification</string>
-    <string name="new_notification">New notification</string>
+    <string name="new_notification_title">New notification</string>
     <string name="from_point">From:</string>
     <string name="received_point">Received:</string>
     <string name="description_point">Description:</string>
     <string name="no_notification_info">No informations available</string>
-    <string name="new_received_lesson">New lesson</string>
-    <string name="new_shared_lesson">New shared lesson</string>
-    <string name="new_friend_request">New friend request</string>
-    <string name="new_received_word">New word</string>
-    <string name="new_received_expression">New expression</string>
+    <string name="new_received_lesson_title">New lesson</string>
+    <string name="new_shared_lesson_title">New shared lesson</string>
+    <string name="new_friend_request_title">New friend request</string>
+    <string name="new_received_word_title">New word</string>
+    <string name="new_received_expression_title">New expression</string>
     <string name="nothing_here">Nothing here</string>
+    <string name="new_friend_request_description">You`ve received a new friend request. You can find it in the pending friend requests from Community.</string>
+    <string name="new_received_lesson_description_1">You`ve received lesson</string>
+    <string name="new_received_lesson_description_2">You can find it at your received lessons.</string>
+    <string name="new_received_word_description_1">You`ve received word</string>
+    <string name="new_received_word_description_2">You can find it at your received words.</string>
+    <string name="new_received_expression_description_1">You`ve received expression</string>
+    <string name="new_received_expression_description_2">You can find it at your received expressions.</string>
+    <string name="new_shared_lesson_description_1">You`ve received access to the shared lesson</string>
+    <string name="new_shared_lesson_description_2">You can find it at your shared lessons.</string>
 
 </resources>

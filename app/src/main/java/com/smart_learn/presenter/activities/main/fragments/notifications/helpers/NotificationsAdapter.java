@@ -126,6 +126,9 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
             notification.setTitle(fragmentCallback.getFragment()
                     .getString(NotificationDocument.generateNotificationTitle(notification.getType())));
 
+            notification.setDescription(NotificationDocument.generateNotificationDescription(notification.getType(),
+                    notification.getExtraInfo()));
+
             liveItemInfo.setValue(notification);
         }
     }

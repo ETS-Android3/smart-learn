@@ -5,8 +5,10 @@ import com.google.firebase.firestore.Exclude;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataUtilities;
+import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -19,8 +21,8 @@ public class NotificationDocument {
 
     public static final String FROM_UID_FIELD_NAME = "fromUid";
     public static final String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
+    public static final String EXTRA_INFO_FIELD_NAME = "extraInfo";
     public static final String TYPE_FIELD_NAME = "type";
-    public static final String DESCRIPTION_FIELD_NAME = "description";
     public static final String MARKED_AS_READ_FIELD_NAME = "markedAsRead";
     public static final String HIDDEN_FIELD_NAME = "hidden";
 
@@ -42,13 +44,23 @@ public class NotificationDocument {
 
     // these will be the UID of the user who sent the notifications
     private String fromUid;
+
     // These will be the display name of the user who sent the notifications. I use display name
     // and UID in order do avoid a read for the user document with specific UID.
     private String fromDisplayName;
+
+    // Used to save Lesson name, Word or Expression if is a notification of that type. Otherwise
+    // it will be empty.
+    private String extraInfo;
+
     private int type;
-    private String description;
     private boolean markedAsRead;
     private boolean hidden;
+
+    // Not needed in firestore document. Used to set description of the notification based on type,
+    // in order to be readable for the user and to give more info`s than title.
+    @Exclude
+    private String description;
 
     // Not needed in firestore document. Used to set title of the notification based on type, in
     // order to be readable for the user.
@@ -59,14 +71,14 @@ public class NotificationDocument {
         // needed for Firestore
     }
 
-    public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata,
-                                @NonNull @NotNull String fromUid, @NonNull @NotNull String fromDisplayName,
-                                int type, String description, boolean markedAsRead, boolean hidden) {
+    public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata,  @NonNull @NotNull String fromUid,
+                                @NonNull @NotNull String fromDisplayName, @NonNull @NotNull String extraInfo,
+                                int type, boolean markedAsRead, boolean hidden) {
         this.documentMetadata = documentMetadata;
         this.fromUid = fromUid;
         this.fromDisplayName = fromDisplayName;
+        this.extraInfo = extraInfo;
         this.type = type;
-        this.description = description;
         this.markedAsRead = markedAsRead;
         this.hidden = hidden;
     }
@@ -94,7 +106,7 @@ public class NotificationDocument {
             return false;
         }
 
-        // check if the provided documentSnapshot contains all fields from the notification document
+        // check if the provided documentSnapshot contains all required fields from the notification document
         if(!documentSnapshot.contains(FROM_UID_FIELD_NAME)){
             Timber.w("documentSnapshot does not contain field %s", FROM_UID_FIELD_NAME);
             return false;
@@ -105,13 +117,13 @@ public class NotificationDocument {
             return false;
         }
 
-        if(!documentSnapshot.contains(TYPE_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", TYPE_FIELD_NAME);
+        if(!documentSnapshot.contains(EXTRA_INFO_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", EXTRA_INFO_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(DESCRIPTION_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", DESCRIPTION_FIELD_NAME);
+        if(!documentSnapshot.contains(TYPE_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", TYPE_FIELD_NAME);
             return false;
         }
 
@@ -131,6 +143,17 @@ public class NotificationDocument {
         }
 
         return true;
+    }
+
+
+    /**
+     * Field description is NOT needed in the firestore document.
+     *
+     * https://stackoverflow.com/questions/49865558/firestore-where-exactly-to-put-the-exclude-annotation
+     * */
+    @Exclude
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -153,18 +176,54 @@ public class NotificationDocument {
     public static int generateNotificationTitle(int type){
         switch (type){
             case TYPE_NEW_FRIEND_REQUEST:
-                return R.string.new_friend_request;
+                return R.string.new_friend_request_title;
             case TYPE_NEW_RECEIVED_LESSON:
-                return R.string.new_received_lesson;
+                return R.string.new_received_lesson_title;
             case TYPE_NEW_RECEIVED_WORD:
-                return R.string.new_received_word;
+                return R.string.new_received_word_title;
             case TYPE_NEW_RECEIVED_EXPRESSION:
-                return R.string.new_received_expression;
+                return R.string.new_received_expression_title;
             case TYPE_NEW_SHARED_LESSON:
-                return R.string.new_shared_lesson;
+                return R.string.new_shared_lesson_title;
             case TYPE_NONE:
             default:
-                return R.string.new_notification;
+                return R.string.new_notification_title;
+        }
+    }
+
+    /**
+     * Use to generate a custom description based on the notification type.
+     *
+     * @param type The notification type.
+     * @param extraInfo The notification extra info.
+     *
+     * @return A string which represents the custom description.
+     * */
+    public static String generateNotificationDescription(int type, @Nullable String extraInfo){
+        String tmp = "";
+        if(extraInfo != null){
+            tmp = extraInfo;
+        }
+
+        ApplicationController applicationController = ApplicationController.getInstance();
+        switch (type){
+            case TYPE_NEW_FRIEND_REQUEST:
+                return applicationController.getString(R.string.new_friend_request_description);
+            case TYPE_NEW_RECEIVED_LESSON:
+                return applicationController.getString(R.string.new_received_lesson_description_1) + " " + tmp + ". " +
+                        applicationController.getString(R.string.new_received_lesson_description_2);
+            case TYPE_NEW_RECEIVED_WORD:
+                return applicationController.getString(R.string.new_received_word_description_1) + " " + tmp + ". " +
+                        applicationController.getString(R.string.new_received_word_description_2);
+            case TYPE_NEW_RECEIVED_EXPRESSION:
+                return applicationController.getString(R.string.new_received_expression_description_1) + " " + tmp + ". " +
+                        applicationController.getString(R.string.new_received_expression_description_2);
+            case TYPE_NEW_SHARED_LESSON:
+                return applicationController.getString(R.string.new_shared_lesson_description_1) + " " + tmp + ". " +
+                        applicationController.getString(R.string.new_shared_lesson_description_2);
+            case TYPE_NONE:
+            default:
+                return applicationController.getString(R.string.empty);
         }
     }
 
