@@ -132,8 +132,9 @@ dependencies {
     // Dependency for the Google Play services library
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
-    // Cloud Firestore library
-    implementation 'com.google.firebase:firebase-firestore'
+    // FirebaseUI for Cloud Firestore. This contains also the Cloud Firestore library dependency.
+    // (implementation 'com.google.firebase:firebase-firestore')
+    implementation 'com.firebaseui:firebase-ui-firestore:7.2.0'
 
     /* END Firebase */
 
