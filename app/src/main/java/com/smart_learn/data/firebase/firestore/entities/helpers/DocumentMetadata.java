@@ -11,10 +11,12 @@ import timber.log.Timber;
 @Setter
 public class DocumentMetadata {
 
-    public static final String DOCUMENT_METADATA_FIELD_NAME = "documentMetadata";
-    public static final String OWNER_FIELD_NAME = "owner";
-    public static final String CREATED_AT_FIELD_NAME = "createdAt";
-    public static final String MODIFIED_AT_FIELD_NAME = "modifiedAt";
+    public interface Fields {
+        String DOCUMENT_METADATA_FIELD_NAME = "documentMetadata";
+        String OWNER_FIELD_NAME = "owner";
+        String CREATED_AT_FIELD_NAME = "createdAt";
+        String MODIFIED_AT_FIELD_NAME = "modifiedAt";
+    }
 
     // will be the user UID (UID from Firebase Authentication)
     private String owner;
@@ -46,18 +48,18 @@ public class DocumentMetadata {
         }
 
         // check if the provided documentSnapshot contains all fields from the document metadata document
-        if(!documentSnapshot.contains(DOCUMENT_METADATA_FIELD_NAME + "." + OWNER_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + DOCUMENT_METADATA_FIELD_NAME + "." + OWNER_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.OWNER_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.OWNER_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(DOCUMENT_METADATA_FIELD_NAME + "." + CREATED_AT_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + DOCUMENT_METADATA_FIELD_NAME + "." + CREATED_AT_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.CREATED_AT_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.CREATED_AT_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(DOCUMENT_METADATA_FIELD_NAME + "." + MODIFIED_AT_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + DOCUMENT_METADATA_FIELD_NAME + "." + MODIFIED_AT_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.MODIFIED_AT_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.MODIFIED_AT_FIELD_NAME);
             return false;
         }
 

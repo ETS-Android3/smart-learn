@@ -26,7 +26,8 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
                              @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.HIDDEN_FIELD_NAME, true);
-        data.put(DocumentMetadata.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
+                System.currentTimeMillis());
         repository.updateDocument(data, documentSnapshot, callback);
     }
 
@@ -34,7 +35,8 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
                            @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.MARKED_AS_READ_FIELD_NAME, true);
-        data.put(DocumentMetadata.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
+                System.currentTimeMillis());
         repository.updateDocument(data, documentSnapshot, callback);
     }
 

@@ -36,7 +36,8 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     public Query getQueryForAllVisibleNotifications(long limit) {
         return notificationsCollectionRef
                 .whereEqualTo(NotificationDocument.Fields.HIDDEN_FIELD_NAME, false)
-                .orderBy(DocumentMetadata.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.CREATED_AT_FIELD_NAME, Query.Direction.DESCENDING)
+                .orderBy(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.CREATED_AT_FIELD_NAME,
+                        Query.Direction.DESCENDING)
                 .limit(limit);
     }
 
