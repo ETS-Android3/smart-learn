@@ -175,5 +175,6 @@
     <string name="new_received_expression_description_2">You can find it at your received expressions.</string>
     <string name="new_shared_lesson_description_1">You`ve received access to the shared lesson</string>
     <string name="new_shared_lesson_description_2">You can find it at your shared lessons.</string>
+    <string name="message_point">Message:</string>
 
 </resources>

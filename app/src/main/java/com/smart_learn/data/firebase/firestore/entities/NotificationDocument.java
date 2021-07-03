@@ -19,26 +19,24 @@ import timber.log.Timber;
 @Setter
 public class NotificationDocument {
 
-    public static final String FROM_UID_FIELD_NAME = "fromUid";
-    public static final String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
-    public static final String EXTRA_INFO_FIELD_NAME = "extraInfo";
-    public static final String TYPE_FIELD_NAME = "type";
-    public static final String MARKED_AS_READ_FIELD_NAME = "markedAsRead";
-    public static final String HIDDEN_FIELD_NAME = "hidden";
+    public interface Fields {
+        String FROM_UID_FIELD_NAME = "fromUid";
+        String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
+        String EXTRA_INFO_FIELD_NAME = "extraInfo";
+        String MESSAGE_FIELD_NAME = "message";
+        String TYPE_FIELD_NAME = "type";
+        String MARKED_AS_READ_FIELD_NAME = "markedAsRead";
+        String HIDDEN_FIELD_NAME = "hidden";
+    }
 
-    // if notification is not set
-    public static final int TYPE_NONE = 0;
-    // used when user receives a new friend request
-    public static final int TYPE_NEW_FRIEND_REQUEST = 1;
-    // used when user received a lesson from a friend
-    public static final int TYPE_NEW_RECEIVED_LESSON = 2;
-    // used when user received a word from a friend
-    public static final int TYPE_NEW_RECEIVED_WORD = 3;
-    // used when user received a expression from a friend
-    public static final int TYPE_NEW_RECEIVED_EXPRESSION = 4;
-    // used when user is invited in a shared lesson by a friend
-    public static final int TYPE_NEW_SHARED_LESSON = 5;
-
+    public interface Types {
+        int TYPE_NONE = 0;                    // if notification is not set
+        int TYPE_NEW_FRIEND_REQUEST = 1;      // used when user receives a new friend request
+        int TYPE_NEW_RECEIVED_LESSON = 2;     // used when user received a lesson from a friend
+        int TYPE_NEW_RECEIVED_WORD = 3;       // used when user received a word from a friend
+        int TYPE_NEW_RECEIVED_EXPRESSION = 4; // used when user received a expression from a friend
+        int TYPE_NEW_SHARED_LESSON = 5;       // used when user is invited in a shared lesson by a friend
+    }
 
     private DocumentMetadata documentMetadata;
 
@@ -52,6 +50,9 @@ public class NotificationDocument {
     // Used to save Lesson name, Word or Expression if is a notification of that type. Otherwise
     // it will be empty.
     private String extraInfo;
+
+    // Used to store an optional message from the user who sends the notification, if necessary.
+    private String message;
 
     private int type;
     private boolean markedAsRead;
@@ -73,11 +74,12 @@ public class NotificationDocument {
 
     public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata,  @NonNull @NotNull String fromUid,
                                 @NonNull @NotNull String fromDisplayName, @NonNull @NotNull String extraInfo,
-                                int type, boolean markedAsRead, boolean hidden) {
+                                @NonNull @NotNull String message, int type, boolean markedAsRead, boolean hidden) {
         this.documentMetadata = documentMetadata;
         this.fromUid = fromUid;
         this.fromDisplayName = fromDisplayName;
         this.extraInfo = extraInfo;
+        this.message = message;
         this.type = type;
         this.markedAsRead = markedAsRead;
         this.hidden = hidden;
@@ -107,33 +109,38 @@ public class NotificationDocument {
         }
 
         // check if the provided documentSnapshot contains all required fields from the notification document
-        if(!documentSnapshot.contains(FROM_UID_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", FROM_UID_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.FROM_UID_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.FROM_UID_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(FROM_DISPLAY_NAME_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", FROM_DISPLAY_NAME_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.FROM_DISPLAY_NAME_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.FROM_DISPLAY_NAME_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(EXTRA_INFO_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", EXTRA_INFO_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.MESSAGE_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.MESSAGE_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(TYPE_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", TYPE_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.EXTRA_INFO_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.EXTRA_INFO_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(MARKED_AS_READ_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", MARKED_AS_READ_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.TYPE_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.TYPE_FIELD_NAME);
             return false;
         }
 
-        if(!documentSnapshot.contains(HIDDEN_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", HIDDEN_FIELD_NAME);
+        if(!documentSnapshot.contains(Fields.MARKED_AS_READ_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.MARKED_AS_READ_FIELD_NAME);
+            return false;
+        }
+
+        if(!documentSnapshot.contains(Fields.HIDDEN_FIELD_NAME)){
+            Timber.w("documentSnapshot does not contain field %s", Fields.HIDDEN_FIELD_NAME);
             return false;
         }
 
@@ -175,17 +182,17 @@ public class NotificationDocument {
      * */
     public static int generateNotificationTitle(int type){
         switch (type){
-            case TYPE_NEW_FRIEND_REQUEST:
+            case Types.TYPE_NEW_FRIEND_REQUEST:
                 return R.string.new_friend_request_title;
-            case TYPE_NEW_RECEIVED_LESSON:
+            case Types.TYPE_NEW_RECEIVED_LESSON:
                 return R.string.new_received_lesson_title;
-            case TYPE_NEW_RECEIVED_WORD:
+            case Types.TYPE_NEW_RECEIVED_WORD:
                 return R.string.new_received_word_title;
-            case TYPE_NEW_RECEIVED_EXPRESSION:
+            case Types.TYPE_NEW_RECEIVED_EXPRESSION:
                 return R.string.new_received_expression_title;
-            case TYPE_NEW_SHARED_LESSON:
+            case Types.TYPE_NEW_SHARED_LESSON:
                 return R.string.new_shared_lesson_title;
-            case TYPE_NONE:
+            case Types.TYPE_NONE:
             default:
                 return R.string.new_notification_title;
         }
@@ -207,21 +214,21 @@ public class NotificationDocument {
 
         ApplicationController applicationController = ApplicationController.getInstance();
         switch (type){
-            case TYPE_NEW_FRIEND_REQUEST:
+            case Types.TYPE_NEW_FRIEND_REQUEST:
                 return applicationController.getString(R.string.new_friend_request_description);
-            case TYPE_NEW_RECEIVED_LESSON:
+            case Types.TYPE_NEW_RECEIVED_LESSON:
                 return applicationController.getString(R.string.new_received_lesson_description_1) + " " + tmp + ". " +
                         applicationController.getString(R.string.new_received_lesson_description_2);
-            case TYPE_NEW_RECEIVED_WORD:
+            case Types.TYPE_NEW_RECEIVED_WORD:
                 return applicationController.getString(R.string.new_received_word_description_1) + " " + tmp + ". " +
                         applicationController.getString(R.string.new_received_word_description_2);
-            case TYPE_NEW_RECEIVED_EXPRESSION:
+            case Types.TYPE_NEW_RECEIVED_EXPRESSION:
                 return applicationController.getString(R.string.new_received_expression_description_1) + " " + tmp + ". " +
                         applicationController.getString(R.string.new_received_expression_description_2);
-            case TYPE_NEW_SHARED_LESSON:
+            case Types.TYPE_NEW_SHARED_LESSON:
                 return applicationController.getString(R.string.new_shared_lesson_description_1) + " " + tmp + ". " +
                         applicationController.getString(R.string.new_shared_lesson_description_2);
-            case TYPE_NONE:
+            case Types.TYPE_NONE:
             default:
                 return applicationController.getString(R.string.empty);
         }

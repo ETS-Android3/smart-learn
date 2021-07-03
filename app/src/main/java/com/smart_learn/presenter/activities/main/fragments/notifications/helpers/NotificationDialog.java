@@ -2,7 +2,9 @@ package com.smart_learn.presenter.activities.main.fragments.notifications.helper
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +40,7 @@ public class NotificationDialog extends DialogFragment {
             dialogBinding.setFrom("");
             dialogBinding.setCreatedTime("");
             dialogBinding.setDescription("");
+            dialogBinding.setMessage("");
             dialogTitleResourceId = R.string.no_notification_info;
         }
         else {
@@ -45,6 +48,12 @@ public class NotificationDialog extends DialogFragment {
             dialogBinding.setCreatedTime(CoreUtilities.General.longToDateTime(notificationDocument.getDocumentMetadata().getCreatedAt()));
             dialogBinding.setDescription(notificationDocument.getDescription());
             dialogTitleResourceId = NotificationDocument.generateNotificationTitle(notificationDocument.getType());
+
+            if(!TextUtils.isEmpty(notificationDocument.getMessage())){
+                dialogBinding.setMessage(notificationDocument.getMessage());
+                // by default if no message exists layout for this is set to View.GONE
+                dialogBinding.linearLayoutMessageLayoutDialogViewNotification.setVisibility(View.VISIBLE);
+            }
         }
 
         return new AlertDialog.Builder(requireActivity())

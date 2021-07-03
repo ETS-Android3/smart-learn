@@ -11,6 +11,9 @@
         <variable
             name="description"
             type="String" />
+        <variable
+            name="message"
+            type="String" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -89,6 +92,33 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:text="@{description}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_message_layout_dialog_view_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/message_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{message}"
                 android:textSize="16sp"
                 android:textAppearance="?attr/textAppearanceBody2"/>
 
