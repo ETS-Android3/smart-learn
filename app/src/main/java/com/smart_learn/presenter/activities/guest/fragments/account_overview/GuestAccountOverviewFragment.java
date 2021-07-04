@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.smart_learn.presenter.helpers.fragments.account_summary.AccountOverviewFragment;
+import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewFragment;
 
 import org.jetbrains.annotations.NotNull;
 

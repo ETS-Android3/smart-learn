@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers.fragments.account_summary;
+package com.smart_learn.presenter.helpers.fragments.account_overview;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

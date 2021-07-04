@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.CoreUtilities;
-import com.smart_learn.presenter.helpers.fragments.account_summary.AccountOverviewViewModel;
+import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
