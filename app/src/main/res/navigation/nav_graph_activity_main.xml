@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_activity_main"
-    app:startDestination="@id/account_overview_fragment_nav_graph_activity_main">
+    app:startDestination="@id/user_account_overview_fragment_nav_graph_activity_main">
 
     <fragment
         android:id="@+id/user_profile_fragment_nav_graph_activity_main"
@@ -11,9 +11,9 @@
         android:label="user_profile_fragment_nav_graph_activity_main"
         tools:layout="@layout/fragment_user_profile"/>
     <fragment
-        android:id="@+id/account_overview_fragment_nav_graph_activity_main"
-        android:name="com.smart_learn.presenter.helpers.fragments.account_summary.AccountOverviewFragment"
-        android:label="account_overview_fragment_nav_graph_activity_main"
+        android:id="@+id/user_account_overview_fragment_nav_graph_activity_main"
+        android:name="com.smart_learn.presenter.activities.main.fragments.account_overview.UserAccountOverviewFragment"
+        android:label="user_account_overview_fragment_nav_graph_activity_main"
         tools:layout="@layout/fragment_account_overview"/>
     <fragment
         android:id="@+id/notifications_fragment_nav_graph_activity_main"

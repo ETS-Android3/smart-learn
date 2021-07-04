@@ -10,7 +10,7 @@
             android:icon="@drawable/ic_baseline_profile_24"
             android:title="@string/profile"/>
         <item
-            android:id="@+id/account_overview_fragment_nav_graph_activity_main"
+            android:id="@+id/user_account_overview_fragment_nav_graph_activity_main"
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/account_overview"/>
         <item

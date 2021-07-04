@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_activity_guest"
-    app:startDestination="@id/account_overview_fragment_nav_graph_activity_guest">
-
+    app:startDestination="@id/guest_account_overview_fragment_nav_graph_activity_guest">
     <fragment
-        android:id="@+id/account_overview_fragment_nav_graph_activity_guest"
-        android:name="com.smart_learn.presenter.helpers.fragments.account_summary.AccountOverviewFragment"
-        android:label="account_overview_fragment_nav_graph_activity_guest"
+        android:id="@+id/guest_account_overview_fragment_nav_graph_activity_guest"
+        android:name="com.smart_learn.presenter.activities.guest.fragments.account_overview.GuestAccountOverviewFragment"
+        android:label="guest_account_overview_fragment_nav_graph_activity_guest"
         tools:layout="@layout/fragment_account_overview"/>
 </navigation>
