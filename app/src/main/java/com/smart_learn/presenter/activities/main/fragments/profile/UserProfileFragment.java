@@ -8,29 +8,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentUserProfileBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-public class UserProfileFragment extends Fragment {
+public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
 
     private FragmentUserProfileBinding binding;
-    private UserProfileViewModel userProfileViewModel;
 
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setViewModel();
+    protected @NotNull Class<UserProfileViewModel> getModelClassForViewModel() {
+        return UserProfileViewModel.class;
     }
 
     @Override
@@ -38,10 +34,10 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentUserProfileBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(userProfileViewModel);
+        binding.setViewModel(viewModel);
 
         // if is email-password provider display name can be changed, otherwise not
-        if(userProfileViewModel.getProviderId() == CoreUtilities.Auth.PROVIDER_GOOGLE){
+        if(viewModel.getProviderId() == CoreUtilities.Auth.PROVIDER_GOOGLE){
             binding.linearLayoutProfileGoogleProviderFragmentUserProfile.setVisibility(View.VISIBLE);
             binding.linearLayoutProfileEmailProviderFragmentUserProfile.setVisibility(View.GONE);
         }
@@ -77,7 +73,7 @@ public class UserProfileFragment extends Fragment {
                         title, description, new Callbacks.StandardAlertDialogCallback() {
                     @Override
                     public void onPositiveButtonPress() {
-                        userProfileViewModel.deleteAccount(UserProfileFragment.this);
+                        viewModel.deleteAccount(UserProfileFragment.this);
                     }
                 });
             }
@@ -88,36 +84,24 @@ public class UserProfileFragment extends Fragment {
                 binding.tvProfileNameFragmentUserProfile, new Callbacks.CustomEditableLayoutCallback() {
                     @Override
                     public void savePreviousValue() {
-                        userProfileViewModel.savePreviousProfileName();
+                        viewModel.savePreviousProfileName();
                     }
 
                     @Override
                     public void revertToPreviousValue() {
-                        userProfileViewModel.revertToPreviousProfileName();
+                        viewModel.revertToPreviousProfileName();
                     }
 
                     @Override
                     public boolean isCurrentValueOk() {
-                        return userProfileViewModel.goodProfileName(binding.layoutProfileNameFragmentUserProfile);
+                        return viewModel.goodProfileName(binding.layoutProfileNameFragmentUserProfile);
                     }
 
                     @Override
                     public void saveCurrentValue() {
-                        userProfileViewModel.saveProfileName();
+                        viewModel.saveProfileName();
                     }
                 });
-    }
-
-    private void setViewModel(){
-        userProfileViewModel = new ViewModelProvider(this).get(UserProfileViewModel.class);
-
-        // set observers
-        userProfileViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
-            }
-        });
     }
 
     protected void goToGuestActivity(){
