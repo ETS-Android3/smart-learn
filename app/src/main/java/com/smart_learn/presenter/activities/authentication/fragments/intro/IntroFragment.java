@@ -8,31 +8,27 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.databinding.LayoutBottomSheetAuthOptionsBinding;
 import com.smart_learn.databinding.FragmentIntroBinding;
+import com.smart_learn.databinding.LayoutBottomSheetAuthOptionsBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-public class IntroFragment extends Fragment {
+public class IntroFragment extends BasicFragment<IntroViewModel> {
 
     private NavController navController;
-    private IntroViewModel introViewModel;
 
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setViewModel();
+    protected @NotNull Class<IntroViewModel> getModelClassForViewModel() {
+        return IntroViewModel.class;
     }
 
     @Override
@@ -79,7 +75,7 @@ public class IntroFragment extends Fragment {
 
     private void showOptionDialog(boolean login){
         // set text attributes for fields
-        introViewModel.setOptions(IntroFragment.this, login);
+        viewModel.setOptions(IntroFragment.this, login);
 
         // create dialog and load layout
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext(), R.style.AuthenticationActivityBottomSheetDialogTheme);
@@ -88,7 +84,7 @@ public class IntroFragment extends Fragment {
                 R.layout.layout_bottom_sheet_auth_options,null, false);
         bottomSheetBinding.setLifecycleOwner(IntroFragment.this);
 
-        bottomSheetBinding.setViewModel(introViewModel);
+        bottomSheetBinding.setViewModel(viewModel);
         bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
         bottomSheetDialog.show();
 
@@ -121,17 +117,6 @@ public class IntroFragment extends Fragment {
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
                 showOptionDialog(!login);
-            }
-        });
-    }
-
-    private void setViewModel(){
-        // set fragment view model
-        introViewModel = new ViewModelProvider(this).get(IntroViewModel.class);
-        introViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
             }
         });
     }

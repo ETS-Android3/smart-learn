@@ -5,33 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentEmailRegisterBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
+import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public class EmailRegisterFragment extends Fragment {
+public class EmailRegisterFragment extends BasicFragment<EmailRegisterViewModel> {
 
-    private EmailRegisterViewModel emailRegisterViewModel;
     @Getter
     private AuthenticationSharedViewModel sharedViewModel;
     @Getter
     private FragmentEmailRegisterBinding binding;
 
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setViewModel();
+    protected @NotNull Class<EmailRegisterViewModel> getModelClassForViewModel() {
+        return EmailRegisterViewModel.class;
     }
 
     @Override
@@ -40,31 +37,23 @@ public class EmailRegisterFragment extends Fragment {
         binding = FragmentEmailRegisterBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         binding.setSharedViewModel(sharedViewModel);
-        binding.setViewModel(emailRegisterViewModel);
+        binding.setViewModel(viewModel);
 
         binding.btnRegisterFragmentEmailRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailRegisterViewModel.register(EmailRegisterFragment.this);
+                viewModel.register(EmailRegisterFragment.this);
             }
         });
 
         return binding.getRoot();
     }
 
-    private void setViewModel(){
+    @Override
+    protected void setViewModel(){
+        super.setViewModel();
         // set shared view model for passing data
         sharedViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationSharedViewModel.class);
-
-        // set fragment view model
-        emailRegisterViewModel = new ViewModelProvider(this).get(EmailRegisterViewModel.class);
-        emailRegisterViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
-            }
-        });
-
     }
 
     @Override

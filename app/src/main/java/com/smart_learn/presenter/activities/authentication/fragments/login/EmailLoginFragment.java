@@ -7,32 +7,29 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentEmailLoginBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel;
+import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public class EmailLoginFragment extends Fragment {
+public class EmailLoginFragment extends BasicFragment<EmailLoginViewModel> {
 
-    private EmailLoginViewModel emailLoginViewModel;
     @Getter
     private AuthenticationSharedViewModel sharedViewModel;
     @Getter
     private FragmentEmailLoginBinding binding;
 
+    @NonNull
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setViewModel();
+    protected @NotNull Class<EmailLoginViewModel> getModelClassForViewModel() {
+        return EmailLoginViewModel.class;
     }
 
     @Override
@@ -46,14 +43,14 @@ public class EmailLoginFragment extends Fragment {
         binding.btnLoginFragmentEmailLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailLoginViewModel.login(EmailLoginFragment.this);
+                viewModel.login(EmailLoginFragment.this);
             }
         });
 
         binding.btnForgotPasswordFragmentEmailLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailLoginViewModel.sendPasswordResetEmail(EmailLoginFragment.this);
+                viewModel.sendPasswordResetEmail(EmailLoginFragment.this);
             }
         });
 
@@ -77,17 +74,10 @@ public class EmailLoginFragment extends Fragment {
         ((AuthenticationActivity)requireActivity()).dismissLoadingDialog();
     }
 
-    private void setViewModel(){
+    @Override
+    protected void setViewModel(){
+        super.setViewModel();
         // set shared view model for passing data
         sharedViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationSharedViewModel.class);
-
-        // set fragment view model
-        emailLoginViewModel = new ViewModelProvider(this).get(EmailLoginViewModel.class);
-        emailLoginViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
-            }
-        });
     }
 }
