@@ -23,6 +23,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityMainBinding;
+import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
 import com.smart_learn.presenter.activities.guest.GuestActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -88,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNavigationDrawer(){
-        // for this activity status bar should be transparent in order to show a full navigation drawer
-        getWindow().setStatusBarColor(getResources().getColor(R.color.transparent,
-                new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).getTheme()));
-
         // set navigation drawer
         // https://www.youtube.com/watch?v=HwYENW0RyY4
         binding.navigationViewActivityMain.bringToFront();
@@ -99,6 +96,13 @@ public class MainActivity extends AppCompatActivity {
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         binding.drawerLayoutActivityMain.addDrawerListener(toggle);
         toggle.syncState();
+
+        // set binding for navigation drawer header
+        // https://stackoverflow.com/questions/33962548/how-to-data-bind-to-a-header/39741990#39741990
+        LayoutNavHeaderActivityMainBinding navBinding = DataBindingUtil.inflate(getLayoutInflater(),
+                R.layout.layout_nav_header_activity_main, binding.navigationViewActivityMain, false);
+        binding.navigationViewActivityMain.addHeaderView(navBinding.getRoot());
+        navBinding.setUserHelloMessage("Hi, " + CoreUtilities.Auth.getUserDisplayName());
 
         // set on menu item listener
         binding.navigationViewActivityMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
