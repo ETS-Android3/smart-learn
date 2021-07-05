@@ -72,14 +72,13 @@ public class NotificationDocument {
         // needed for Firestore
     }
 
-    public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata,  @NonNull @NotNull String fromUid,
-                                @NonNull @NotNull String fromDisplayName, @NonNull @NotNull String extraInfo,
-                                @NonNull @NotNull String message, int type, boolean markedAsRead, boolean hidden) {
+    public NotificationDocument(@NonNull @NotNull DocumentMetadata documentMetadata, String fromUid, String fromDisplayName,
+                                String extraInfo, String message, int type, boolean markedAsRead, boolean hidden) {
         this.documentMetadata = documentMetadata;
-        this.fromUid = fromUid;
-        this.fromDisplayName = fromDisplayName;
-        this.extraInfo = extraInfo;
-        this.message = message;
+        this.fromUid = fromUid == null ? "" : fromUid;
+        this.fromDisplayName = fromDisplayName == null ? "" : fromDisplayName;
+        this.extraInfo = extraInfo == null ? "" : extraInfo;
+        this.message = message == null ? "" : message;
         this.type = type;
         this.markedAsRead = markedAsRead;
         this.hidden = hidden;

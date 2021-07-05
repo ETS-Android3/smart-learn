@@ -30,13 +30,13 @@ public class DocumentMetadata {
     }
 
     public DocumentMetadata(String owner, long createdAt) {
-        this.owner = owner;
+        this.owner = owner == null ? "" : owner;
         this.createdAt = createdAt;
         this.modifiedAt = createdAt;
     }
 
     public DocumentMetadata(String owner, long createdAt, long modifiedAt) {
-        this.owner = owner;
+        this.owner = owner == null ? "" : owner;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
