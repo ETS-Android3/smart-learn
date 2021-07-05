@@ -56,6 +56,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
      * */
     public static CollectionReference getSpecificNotificationsCollection(@NonNull @NotNull String userUid){
         return FirebaseFirestore.getInstance()
-                .collection(COLLECTION_USERS + "/" + userUid + "/" + COLLECTION_NOTIFICATIONS);
+                .collection("/" + COLLECTION_USERS + "/" + userUid + "/" + COLLECTION_NOTIFICATIONS);
     }
 }
