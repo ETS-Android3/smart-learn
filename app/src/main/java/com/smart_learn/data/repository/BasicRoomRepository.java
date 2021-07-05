@@ -78,7 +78,7 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if insertion is made, or
      *                 onFailure() action if insertion failed.
      * */
-    public void insert(@NonNull T value, @Nullable DataCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void insert(@NonNull T value, @Nullable DataCallbacks.InsertCallback<T> callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             long rowId = basicDao.insert(value);
             if(callback == null){
@@ -105,7 +105,7 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if update is made, or
      *                 onFailure() action if update failed.
      * */
-    public void update(@NonNull T value, @Nullable DataCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void update(@NonNull T value, @Nullable DataCallbacks.UpdateCallback<T> callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             int numberOfAffectedRows = basicDao.update(value);
             if(callback == null){
@@ -133,7 +133,7 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if deletion is made, or
      *                 onFailure() action if deletion failed.
      * */
-    public void delete(@NonNull T value, @Nullable DataCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void delete(@NonNull T value, @Nullable DataCallbacks.DeleteCallback<T> callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             int numberOfAffectedRows = basicDao.delete(value);
             if(callback == null){

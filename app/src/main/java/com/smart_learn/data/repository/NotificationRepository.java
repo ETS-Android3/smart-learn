@@ -42,7 +42,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     }
 
     public void addDocument(@NonNull @NotNull NotificationDocument item,
-                            @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentReference> callback){
+                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
         super.addDocument(item, notificationsCollectionRef, callback);
     }
 

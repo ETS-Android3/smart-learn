@@ -23,7 +23,7 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
     }
 
     public void markAsHidden(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                             @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                             @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.HIDDEN_FIELD_NAME, true);
         data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
@@ -32,7 +32,7 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
     }
 
     public void markAsRead(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                           @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                           @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.MARKED_AS_READ_FIELD_NAME, true);
         data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
@@ -45,7 +45,7 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
     }
 
     public void addDocument(@NonNull @NotNull NotificationDocument item,
-                            @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentReference> callback){
+                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
         repository.addDocument(item, callback);
     }
 

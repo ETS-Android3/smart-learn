@@ -22,17 +22,17 @@ public abstract class BasicFirestoreService <T, R extends BasicFirestoreReposito
     }
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
-                            @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentReference> callback){
+                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
         repository.addDocument(item, collectionReference, callback);
     }
 
     public void updateDocument(@NonNull @NotNull Map<String,Object> updatedInfo, @NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                               @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
         repository.updateDocument(updatedInfo, documentSnapshot, callback);
     }
 
     public void deleteDocument(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                               @Nullable DataCallbacks.DeleteCallback<DocumentSnapshot> callback){
         repository.deleteDocument(documentSnapshot, callback);
     }
 

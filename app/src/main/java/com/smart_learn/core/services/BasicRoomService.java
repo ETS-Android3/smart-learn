@@ -149,7 +149,7 @@ public abstract class BasicRoomService <T> {
         ((BackupHelper)value).getDocumentMetadataObjectReference().getBackupStatus().setAdded(true);
 
         // and try to insert value in local db
-        basicRoomRepository.insert(value, new DataCallbacks.InsertUpdateDeleteCallback<T>() {
+        basicRoomRepository.insert(value, new DataCallbacks.InsertCallback<T>() {
             @Override
             public void onSuccess(@NonNull @NotNull T value) {
                 if(callback != null){
@@ -158,9 +158,11 @@ public abstract class BasicRoomService <T> {
             }
 
             @Override
-            public void onFailure(@NonNull @NotNull T value) {
+            public void onFailure(@Nullable T value) {
                 // reset flag, because insertion failed
-                ((BackupHelper)value).getDocumentMetadataObjectReference().getBackupStatus().setAdded(false);
+                if(value != null){
+                    ((BackupHelper)value).getDocumentMetadataObjectReference().getBackupStatus().setAdded(false);
+                }
 
                 if(callback != null){
                     callback.onFailure(value);
@@ -223,7 +225,7 @@ public abstract class BasicRoomService <T> {
         ((BackupHelper)value).getDocumentMetadataObjectReference().setModifiedAt(System.currentTimeMillis());
 
         // and try to update value
-        basicRoomRepository.update(value, new DataCallbacks.InsertUpdateDeleteCallback<T>() {
+        basicRoomRepository.update(value, new DataCallbacks.UpdateCallback<T>() {
             @Override
             public void onSuccess(@NonNull @NotNull T value) {
                 if(callback != null){
@@ -306,7 +308,7 @@ public abstract class BasicRoomService <T> {
         ((BackupHelper)value).getDocumentMetadataObjectReference().getBackupStatus().setDeleted(true);
 
         // Item will not be directly deleted from db. Only will be updated with new flags.
-        basicRoomRepository.update(value, new DataCallbacks.InsertUpdateDeleteCallback<T>() {
+        basicRoomRepository.update(value, new DataCallbacks.UpdateCallback<T>() {
             @Override
             public void onSuccess(@NonNull @NotNull T value) {
                 if(callback != null){
@@ -347,9 +349,9 @@ public abstract class BasicRoomService <T> {
             return;
         }
 
-        basicRoomRepository.delete(value, new DataCallbacks.InsertUpdateDeleteCallback<T>() {
+        basicRoomRepository.delete(value, new DataCallbacks.DeleteCallback<T>() {
             @Override
-            public void onSuccess(@NonNull @NotNull T value) {
+            public void onSuccess(@Nullable T value) {
                 if(callback != null){
                     callback.onSuccess(value);
                 }

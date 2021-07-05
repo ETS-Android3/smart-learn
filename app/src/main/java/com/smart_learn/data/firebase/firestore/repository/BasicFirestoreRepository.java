@@ -22,14 +22,14 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_USERS = "users";
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
-                            @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentReference> callback){
+                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
 
         collectionReference
                 .add(item)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                        if(task.isSuccessful()){
+                        if(task.isSuccessful() && task.getResult() != null){
                             if(callback != null){
                                 callback.onSuccess(task.getResult());
                             }
@@ -47,7 +47,7 @@ public abstract class BasicFirestoreRepository <T> {
 
 
     public void updateDocument(@NonNull @NotNull Map<String,Object> updatedInfo, @NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                               @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
 
         documentSnapshot.getReference()
                 .update(updatedInfo)
@@ -72,7 +72,7 @@ public abstract class BasicFirestoreRepository <T> {
 
 
     public void deleteDocument(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.InsertUpdateDeleteCallback<DocumentSnapshot> callback){
+                               @Nullable DataCallbacks.DeleteCallback<DocumentSnapshot> callback){
 
         documentSnapshot.getReference()
                 .delete()
