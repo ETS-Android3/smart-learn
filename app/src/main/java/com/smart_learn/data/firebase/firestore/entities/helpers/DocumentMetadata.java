@@ -1,11 +1,7 @@
 package com.smart_learn.data.firebase.firestore.entities.helpers;
 
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.smart_learn.data.helpers.DataUtilities;
-
 import lombok.Getter;
 import lombok.Setter;
-import timber.log.Timber;
 
 @Getter
 @Setter
@@ -41,28 +37,4 @@ public class DocumentMetadata {
         this.modifiedAt = modifiedAt;
     }
 
-    public static boolean isGoodDocumentMetadataConfiguration(DocumentSnapshot documentSnapshot){
-        if(!DataUtilities.Firestore.isGoodDocumentSnapshot(documentSnapshot)){
-            Timber.w("documentSnapshot is not valid");
-            return false;
-        }
-
-        // check if the provided documentSnapshot contains all fields from the document metadata document
-        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.OWNER_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.OWNER_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.CREATED_AT_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.CREATED_AT_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.MODIFIED_AT_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field " + Fields.DOCUMENT_METADATA_FIELD_NAME + "." + Fields.MODIFIED_AT_FIELD_NAME);
-            return false;
-        }
-
-        return true;
-    }
 }

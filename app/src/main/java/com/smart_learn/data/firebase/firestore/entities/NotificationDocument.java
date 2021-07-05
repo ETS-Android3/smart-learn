@@ -1,10 +1,8 @@
 package com.smart_learn.data.firebase.firestore.entities;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Exclude;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
-import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import timber.log.Timber;
 
 @Getter
 @Setter
@@ -99,56 +96,6 @@ public class NotificationDocument {
      * */
     public boolean getHidden() {
         return hidden;
-    }
-
-    public static boolean isGoodNotificationDocumentConfiguration(DocumentSnapshot documentSnapshot){
-        if(!DataUtilities.Firestore.isGoodDocumentSnapshot(documentSnapshot)){
-            Timber.w("documentSnapshot is not valid");
-            return false;
-        }
-
-        // check if the provided documentSnapshot contains all required fields from the notification document
-        if(!documentSnapshot.contains(Fields.FROM_UID_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.FROM_UID_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.FROM_DISPLAY_NAME_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.FROM_DISPLAY_NAME_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.MESSAGE_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.MESSAGE_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.EXTRA_INFO_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.EXTRA_INFO_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.TYPE_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.TYPE_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.MARKED_AS_READ_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.MARKED_AS_READ_FIELD_NAME);
-            return false;
-        }
-
-        if(!documentSnapshot.contains(Fields.HIDDEN_FIELD_NAME)){
-            Timber.w("documentSnapshot does not contain field %s", Fields.HIDDEN_FIELD_NAME);
-            return false;
-        }
-
-        if(!DocumentMetadata.isGoodDocumentMetadataConfiguration(documentSnapshot)){
-            Timber.w("documentSnapshot metadata is not correct");
-            return false;
-        }
-
-        return true;
     }
 
 
