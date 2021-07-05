@@ -119,7 +119,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
         }
 
         @Override
-        protected void bind(@NonNull @NotNull NotificationDocument notification){
+        protected void bind(@NonNull @NotNull NotificationDocument notification, int position){
 
             viewHolderBinding.cvLayoutCardViewNotification.setChecked(!notification.getMarkedAsRead());
 

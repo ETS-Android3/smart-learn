@@ -76,7 +76,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
     @Override
     protected void onBindViewHolder(@NonNull @NotNull VH holder, int position, @NonNull @NotNull T model) {
-        holder.bind(model);
+        holder.bind(model, position);
     }
 
     @Override

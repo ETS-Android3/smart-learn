@@ -55,6 +55,7 @@ public abstract class BasicViewHolder<T, BI extends ViewDataBinding> extends Rec
      *
      * @param item An object of type T, which contains the information for which the display will
      *             be made.
+     * @param position Position of item in the RecyclerView list.
      * */
-    protected abstract void bind(@NonNull @NotNull T item);
+    protected abstract void bind(@NonNull @NotNull T item, int position);
 }
