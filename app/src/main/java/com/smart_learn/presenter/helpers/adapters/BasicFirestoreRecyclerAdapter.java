@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
+
 /**
  * The main Adapter class from which all adapters of the application which extends from
  * FirestoreRecyclerAdapter <T,VH>, must be extended.
@@ -76,6 +78,11 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
     @Override
     protected void onBindViewHolder(@NonNull @NotNull VH holder, int position, @NonNull @NotNull T model) {
+        if(position == NO_POSITION){
+            Timber.w("position is set to NO_POSITION");
+            return;
+        }
+
         holder.bind(model, position);
     }
 
