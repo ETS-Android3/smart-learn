@@ -1,9 +1,7 @@
 package com.smart_learn.core.services;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
@@ -23,30 +21,30 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
     }
 
     public void markAsHidden(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                             @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
+                             @NotNull DataCallbacks.General callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.HIDDEN_FIELD_NAME, true);
         data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
                 System.currentTimeMillis());
-        repository.updateDocument(data, documentSnapshot, callback);
+        repositoryInstance.updateDocument(data, documentSnapshot, callback);
     }
 
     public void markAsRead(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                           @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
+                           @NotNull DataCallbacks.General callback){
         Map<String,Object> data = new HashMap<>();
         data.put(NotificationDocument.Fields.MARKED_AS_READ_FIELD_NAME, true);
         data.put(DocumentMetadata.Fields.DOCUMENT_METADATA_FIELD_NAME + "." + DocumentMetadata.Fields.MODIFIED_AT_FIELD_NAME,
                 System.currentTimeMillis());
-        repository.updateDocument(data, documentSnapshot, callback);
+        repositoryInstance.updateDocument(data, documentSnapshot, callback);
     }
 
     public Query getQueryForAllVisibleNotifications(long limit) {
-        return repository.getQueryForAllVisibleNotifications(limit);
+        return repositoryInstance.getQueryForAllVisibleNotifications(limit);
     }
 
     public void addDocument(@NonNull @NotNull NotificationDocument item,
-                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
-        repository.addDocument(item, callback);
+                            @NotNull DataCallbacks.General callback){
+        repositoryInstance.addDocument(item, callback);
     }
 
 }

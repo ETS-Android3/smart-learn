@@ -1,10 +1,8 @@
 package com.smart_learn.data.repository;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
@@ -42,7 +40,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     }
 
     public void addDocument(@NonNull @NotNull NotificationDocument item,
-                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
+                            @NotNull DataCallbacks.General callback){
         super.addDocument(item, notificationsCollectionRef, callback);
     }
 

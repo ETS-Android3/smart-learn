@@ -1,7 +1,6 @@
 package com.smart_learn.data.firebase.firestore.repository;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +21,7 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_USERS = "users";
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
-                            @Nullable DataCallbacks.InsertCallback<DocumentReference> callback){
+                            @NonNull @NotNull DataCallbacks.General callback){
 
         collectionReference
                 .add(item)
@@ -30,24 +29,19 @@ public abstract class BasicFirestoreRepository <T> {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
                         if(task.isSuccessful() && task.getResult() != null){
-                            if(callback != null){
-                                callback.onSuccess(task.getResult());
-                            }
+                            callback.onSuccess();
                             return;
                         }
 
                         // here add operation failed
                         Timber.w(task.getException());
-                        if(callback != null){
-                            callback.onFailure(null);
-                        }
+                        callback.onFailure();
                     }
                 });
     }
 
-
     public void updateDocument(@NonNull @NotNull Map<String,Object> updatedInfo, @NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.UpdateCallback<DocumentSnapshot> callback){
+                               @NonNull @NotNull DataCallbacks.General callback){
 
         documentSnapshot.getReference()
                 .update(updatedInfo)
@@ -55,24 +49,19 @@ public abstract class BasicFirestoreRepository <T> {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            if(callback != null){
-                                callback.onSuccess(documentSnapshot);
-                            }
+                            callback.onSuccess();
                             return;
                         }
 
                         // here update operation failed
                         Timber.w(task.getException());
-                        if(callback != null){
-                            callback.onFailure(documentSnapshot);
-                        }
+                        callback.onFailure();
                     }
                 });
     }
 
-
     public void deleteDocument(@NonNull @NotNull DocumentSnapshot documentSnapshot,
-                               @Nullable DataCallbacks.DeleteCallback<DocumentSnapshot> callback){
+                               @NonNull @NotNull DataCallbacks.General callback){
 
         documentSnapshot.getReference()
                 .delete()
@@ -80,17 +69,13 @@ public abstract class BasicFirestoreRepository <T> {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            if(callback != null){
-                                callback.onSuccess(null);
-                            }
+                            callback.onSuccess();
                             return;
                         }
 
                         // here delete operation failed
                         Timber.w(task.getException());
-                        if(callback != null){
-                            callback.onFailure(documentSnapshot);
-                        }
+                        callback.onFailure();
                     }
                 });
     }
