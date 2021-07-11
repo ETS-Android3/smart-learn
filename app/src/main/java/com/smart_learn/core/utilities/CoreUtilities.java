@@ -295,6 +295,7 @@ public abstract class CoreUtilities {
          *
          * @return User display name if user is logged in or "" is user is not logged in.
          * */
+        @Deprecated
         public static String getUserDisplayName(){
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             if(firebaseUser == null){
@@ -310,6 +311,7 @@ public abstract class CoreUtilities {
          * @return User UID if user is logged in, or CoreUtilities.Auth.GUEST_UID is user is not
          *         logged in.
          * */
+        @Deprecated
         public static String getUserUid(){
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             if(firebaseUser == null){
