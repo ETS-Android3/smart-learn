@@ -13,7 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
@@ -49,7 +51,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     }
 
     public CollectionReference getNotificationsCollection(){
-        return getSpecificNotificationsCollection(CoreUtilities.Auth.getUserUid());
+        return getSpecificNotificationsCollection(UserService.getInstance().getUserUid());
     }
 
     /**
@@ -107,7 +109,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
             Map<String,Object> userData = new HashMap<>();
             userData.put(UserDocument.Fields.NR_OF_UNREAD_NOTIFICATIONS_FIELD_NAME, FieldValue.increment(-1));
             userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
-            batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()), userData);
+            batch.update(UserService.getInstance().getUserDocumentReference(), userData);
         }
 
         // 3. Transaction is complete so commit.
@@ -132,7 +134,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         Map<String,Object> userData = new HashMap<>();
         userData.put(UserDocument.Fields.NR_OF_UNREAD_NOTIFICATIONS_FIELD_NAME, FieldValue.increment(-1));
         userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
-        batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()), userData);
+        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 3. Transaction is complete so commit.
         commitBatch(batch, callback);
@@ -169,9 +171,9 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
 
         // 2. Update user document counter for unread notifications if necessary
         if(cnt > 0){
-            batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()),
+            batch.update(UserService.getInstance().getUserDocumentReference(),
                     UserDocument.Fields.NR_OF_UNREAD_NOTIFICATIONS_FIELD_NAME, FieldValue.increment(cnt));
-            batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()),
+            batch.update(UserService.getInstance().getUserDocumentReference(),
                     DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
         }
 
@@ -215,7 +217,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         batch.update(notificationDocRef, NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
 
         // 2. Add UID in currentUser received list of UID
-        batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()),
+        batch.update(UserService.getInstance().getUserDocumentReference(),
                 UserDocument.Fields.RECEIVED_REQUESTS_FIELD_NAME, FieldValue.arrayUnion(notificationDocument.getFromUid()));
 
         // 3. Transaction is complete so commit.
@@ -247,10 +249,11 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         data.put(UserDocument.Fields.RECEIVED_REQUESTS_FIELD_NAME, FieldValue.arrayRemove(notificationDocument.getFromUid()));
         data.put(UserDocument.Fields.PENDING_FRIENDS_FIELD_NAME, FieldValue.arrayRemove(notificationDocument.getFromUid()));
         data.put(UserDocument.Fields.FRIENDS_FIELD_NAME, FieldValue.arrayUnion(notificationDocument.getFromUid()));
-        batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()), data);
+        batch.update(UserService.getInstance().getUserDocumentReference(), data);
 
         // 3. Add friend in currentUser friendsCollection if does not already exist
-        FirebaseFirestore.getInstance().collection(COLLECTION_FRIENDS)
+        FriendService.getInstance()
+                .getFriendsCollectionReference()
                 .whereEqualTo(FriendDocument.Fields.FRIEND_UID_FIELD_NAME, notificationDocument.getFromUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -305,7 +308,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
 
                                         // create friend
                                         FriendDocument newFriend = new FriendDocument(
-                                                new DocumentMetadata(CoreUtilities.Auth.getUserUid(), System.currentTimeMillis(), searchList),
+                                                new DocumentMetadata(UserService.getInstance().getUserUid(), System.currentTimeMillis(), searchList),
                                                 user.getEmail(),
                                                 user.getDisplayName(),
                                                 user.getProfilePhotoUrl(),
@@ -315,7 +318,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
                                         );
 
                                         // add friend
-                                        DocumentReference newFriendDocRef = FirebaseFirestore.getInstance().collection(COLLECTION_FRIENDS).document();
+                                        DocumentReference newFriendDocRef = FriendService.getInstance().getFriendsCollectionReference().document();
                                         batch.set(newFriendDocRef, FriendDocument.convertDocumentToHashMap(newFriend));
 
                                         // 4. Transaction is complete so commit
@@ -349,10 +352,11 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         data.put(UserDocument.Fields.RECEIVED_REQUESTS_FIELD_NAME, FieldValue.arrayRemove(notificationDocument.getFromUid()));
         data.put(UserDocument.Fields.PENDING_FRIENDS_FIELD_NAME, FieldValue.arrayRemove(notificationDocument.getFromUid()));
         data.put(UserDocument.Fields.FRIENDS_FIELD_NAME, FieldValue.arrayRemove(notificationDocument.getFromUid()));
-        batch.update(FirebaseFirestore.getInstance().collection(COLLECTION_USERS).document(CoreUtilities.Auth.getUserUid()), data);
+        batch.update(UserService.getInstance().getUserDocumentReference(), data);
 
         // 3. Remove friend from currentUser friendsCollection
-        FirebaseFirestore.getInstance().collection(COLLECTION_FRIENDS)
+        FriendService.getInstance()
+                .getFriendsCollectionReference()
                 .whereEqualTo(FriendDocument.Fields.FRIEND_UID_FIELD_NAME, notificationDocument.getFromUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
