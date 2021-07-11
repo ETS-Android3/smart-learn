@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
+import com.smart_learn.core.services.NotificationService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.databinding.LayoutCardViewNotificationBinding;
 import com.smart_learn.presenter.activities.main.fragments.notifications.NotificationsFragment;
@@ -59,14 +60,12 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
     @Override
     public void loadMoreData() {
-        Query query = fragmentCallback.getFragment().getViewModel().getNotificationService()
-                .getQueryForAllVisibleNotifications(currentLoad + loadingStep);
+        Query query = NotificationService.getInstance().getQueryForAllVisibleNotifications(currentLoad + loadingStep);
         super.loadData(query, NotificationDocument.class, fragmentCallback.getFragment());
     }
 
     public static FirestoreRecyclerOptions<NotificationDocument> getInitialAdapterOptions(@NonNull @NotNull NotificationsFragment fragment) {
-        Query query = fragment.getViewModel().getNotificationService()
-                .getQueryForAllVisibleNotifications(NotificationsAdapter.INITIAL_ADAPTER_CAPACITY);
+        Query query = NotificationService.getInstance().getQueryForAllVisibleNotifications(NotificationsAdapter.INITIAL_ADAPTER_CAPACITY);
         return new FirestoreRecyclerOptions.Builder<NotificationDocument>()
                 .setLifecycleOwner(fragment)
                 .setQuery(query, NotificationDocument.class)
@@ -98,8 +97,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                     }
 
                     if (id == R.id.action_hide_notification_menu_card_view_notification) {
-                        fragmentCallback.getFragment().getViewModel()
-                                .getNotificationService().markAsHidden(getSnapshots().getSnapshot(position),null);
+                        NotificationService.getInstance().markAsHidden(getSnapshots().getSnapshot(position),null);
                         return true;
                     }
                     return true;
@@ -119,8 +117,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                     fragmentCallback.getFragment().showNotificationDialog(notification);
                     if(!notification.getMarkedAsRead()){
                         // when is clicked notification is marked as read if was unread
-                        fragmentCallback.getFragment().getViewModel()
-                                .getNotificationService().markAsRead(getSnapshots().getSnapshot(position),null);
+                        NotificationService.getInstance().markAsRead(getSnapshots().getSnapshot(position),null);
                     }
                 }
             });

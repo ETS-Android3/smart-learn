@@ -1,7 +1,10 @@
 package com.smart_learn.core.services;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
@@ -16,8 +19,28 @@ import java.util.Map;
 
 public class NotificationService extends BasicFirestoreService<NotificationDocument, NotificationRepository> {
 
-    public NotificationService(@NonNull @NotNull String userUid){
-        super(new NotificationRepository(userUid));
+    private static NotificationService instance;
+
+    private NotificationService() {
+        super(NotificationRepository.getInstance());
+    }
+
+    public static NotificationService getInstance() {
+        if(instance == null){
+            instance = new NotificationService();
+        }
+        return instance;
+    }
+
+    public CollectionReference getNotificationsCollection(){
+        return repositoryInstance.getNotificationsCollection();
+    }
+
+    public CollectionReference getSpecificNotificationsCollection(String userUid){
+        if(TextUtils.isEmpty(userUid)){
+            throw new UnsupportedOperationException("userUid must not be null or empty");
+        }
+        return repositoryInstance.getSpecificNotificationsCollection(userUid);
     }
 
     public void markAsHidden(@NonNull @NotNull DocumentSnapshot documentSnapshot,
