@@ -114,7 +114,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                         return;
                     }
                     NotificationDocument notification = getItem(position);
-                    fragmentCallback.getFragment().showNotificationDialog(notification);
+                    fragmentCallback.getFragment().showNotificationDialog(getSnapshots().getSnapshot(position));
                     if(!notification.getMarkedAsRead()){
                         // when is clicked notification is marked as read if was unread
                         NotificationService.getInstance().markAsRead(getSnapshots().getSnapshot(position),null);

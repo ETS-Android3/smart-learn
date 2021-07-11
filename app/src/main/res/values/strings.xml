@@ -194,5 +194,11 @@
     <string name="shared_lesson_sent_description_1">You`ve sent shared lesson</string>
     <string name="shared_lesson_sent_description_2">.</string>
     <string name="message_point">Message:</string>
+    <string name="error_accept_request">Request can not be accepted. Please try again later.</string>
+    <string name="accepting_request">Accepting request</string>
+    <string name="close">Close</string>
+    <string name="request_accepted">Request accepted</string>
+    <string name="accept">Accept</string>
+    <string name="maybe_later">Maybe later</string>
 
 </resources>

@@ -124,5 +124,37 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <Button
+            android:id="@+id/btn_accept_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:text="@string/accept"/>
+
+        <Button
+            android:id="@+id/btn_maybe_later_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:text="@string/maybe_later"/>
+
+        <Button
+            android:id="@+id/btn_disabled_layout_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Info.Disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:drawableEnd="@drawable/ic_baseline_done_24"
+            android:drawablePadding="5dp"
+            android:text="@string/request_accepted"/>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
