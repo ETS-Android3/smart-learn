@@ -13,6 +13,7 @@ public abstract class NetworkUtilities {
      * TODO: check for internet access also (e.g. a device can be connected to a network,
      *    but network does not have internet access)
      * */
+    @Deprecated
     public static boolean goodConnection(){
         return isNetworkAvailable();
     }
