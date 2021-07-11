@@ -3,13 +3,20 @@ package com.smart_learn.core.utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -51,6 +58,181 @@ public abstract class CoreUtilities {
          * */
         public static String longToDateTime(long milliseconds){
             return DateFormat.getDateTimeInstance().format(new Date(milliseconds));
+        }
+
+
+        /**
+         * Use to remove spaces from a string.
+         *
+         * @param value String for which space removal is made.
+         *
+         * @return String without spaces.
+         * */
+        @NotNull
+        @NonNull
+        private static String removeSpaces(String value){
+            if(value == null || value.isEmpty()){
+                return "";
+            }
+
+            // https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
+            return value.replaceAll("\\s","");
+        }
+
+
+        /**
+         * Use to split a String in all possible substrings.
+         *
+         * @param value String to be split.
+         *
+         * @return ArrayList which will contain all substring, or an empty ArrayList if no substring
+         * is found.
+         * */
+        @NotNull
+        @NonNull
+        private static ArrayList<String> splitStringInSubstrings(String value){
+            /*
+             For example, string 'value' will be split as follows:
+                  v
+                  va
+                  val
+                  valu
+                  value
+                  a
+                  al
+                  alu
+                  alue
+                  l
+                  lu
+                  lue
+                  u
+                  ue
+                  e
+             */
+
+            if(value == null || value.isEmpty()){
+                return new ArrayList<>();
+            }
+
+            // https://www.geeksforgeeks.org/program-print-substrings-given-string/
+            // Use set`s to avoid duplicates
+            HashSet<String> hashSet = new HashSet<>();
+            int lim = value.length();
+            for(int i = 0; i < lim; i++){
+                for(int j = i + 1; j <= lim; j++){
+                    hashSet.add(value.substring(i,j));
+                }
+            }
+
+            return new ArrayList<>(hashSet);
+        }
+
+
+        /**
+         * Use to generate a search list array for a Firestore document.
+         *
+         * @param valueList The strings on the basis of which the generation will be made.
+         *
+         * @return An ArrayList which will contain search list.
+         * */
+        @NotNull
+        @NonNull
+        public static ArrayList<String> generateSearchListForFirestoreDocument(ArrayList<String> valueList){
+            if(valueList == null || valueList.isEmpty()){
+                return new ArrayList<>();
+            }
+
+            // Use set`s to avoid duplicates
+            HashSet<String> resultList = new HashSet<>();
+            for(String value : valueList){
+                value = removeSpaces(value);
+                value = value.toLowerCase();
+                resultList.addAll(splitStringInSubstrings(value));
+            }
+
+            // sort values in order to speed up debugging process if necessary
+            ArrayList<String> tmp = new ArrayList<>(resultList);
+            tmp.sort(String::compareTo);
+            return tmp;
+        }
+
+
+        /**
+         * Use to get all pairs of indexes for substring apparitions in fullString.
+         * Pair will be as (startPosition, finalPosition) with finalPosition exclusive and will
+         * contain all substring apparitions in the fullString.
+         *
+         * @param fullString String for which indexes will be calculated.
+         * @param substring Substring to be searched.
+         *
+         * @return An ArrayList of index pairs, or a empty ArrayList if substring does not appear in
+         *          fullString.
+         * */
+        @NotNull
+        @NonNull
+        public static ArrayList<Pair<Integer, Integer>> getSubstringIndexes(String fullString, String substring){
+
+            /*
+            * For example for fullString 'magic m mac' and substring 'ma' then the following indexes
+            * will be generated:
+            *       (0,2)  ==> 'ma' starts in position 0 on fullString and is finished on position
+            *                   1 (2 exclusive)
+            *      (8,10)  ==> 'ma' starts in position 8 on fullString and is finished on position
+            *                   9 (10 exclusive)
+            *
+            *       So pair (0,2) and (8,10) will be generated.
+            *
+            *   Position 6 where 'm' appear is ignored because after that 'm' does not came an 'a'
+            * */
+
+            if(fullString == null || fullString.isEmpty() || substring == null || substring.isEmpty()){
+                return new ArrayList<>();
+            }
+
+            ArrayList<Pair<Integer, Integer>> indexes = new ArrayList<>();
+
+            char[] charArrayFullString = fullString.toCharArray();
+            char[] charArraySubstring = substring.toCharArray();
+
+            int j = 0;
+            int start = 0;
+            for(int i = 0; i < charArrayFullString.length; i++){
+                // Here parts of 'substring' are contained in 'fullString'.
+                if(charArrayFullString[i] == charArraySubstring[j]){
+                    // If 'substring' starts in 'fullString' mark start index.
+                    if(j == 0){
+                        start = i;
+
+                        // special case if substring is formed from one single element
+                        if(charArraySubstring.length == 1){
+                            indexes.add(new Pair<>(start, start + 1));
+                            j = 0;
+                            continue;
+                        }
+
+                        j++;
+                        continue;
+                    }
+                    // If 'substring' is finished then is contained in the 'fullString' so add pair
+                    // and reset values for the next search.
+                    if(j == charArraySubstring.length - 1){
+                        indexes.add(new Pair<>(start, i + 1));
+                        start = 0;
+                        j = 0;
+                        continue;
+                    }
+
+                    // Here we progress in 'substring' because 'substring' is not finished.
+                    j++;
+                    continue;
+                }
+
+                // Reset values in order to keep searching on the rest of the 'fullString'.
+                start = 0;
+                j = 0;
+            }
+
+            return indexes;
         }
     }
 
