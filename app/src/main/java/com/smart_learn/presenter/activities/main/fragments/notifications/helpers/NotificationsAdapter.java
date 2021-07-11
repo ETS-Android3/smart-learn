@@ -23,6 +23,10 @@ import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
+import timber.log.Timber;
+
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
+
 public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<NotificationDocument, NotificationsAdapter.NotificationViewHolder> {
 
     private static final int INITIAL_ADAPTER_CAPACITY = 20;
@@ -88,6 +92,11 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                 public boolean onMenuItemClick(MenuItem item) {
                     int id = item.getItemId();
                     int position = getAdapterPosition();
+                    if(position == NO_POSITION){
+                        Timber.w("position is set to NO_POSITION");
+                        return true;
+                    }
+
                     if (id == R.id.action_hide_notification_menu_card_view_notification) {
                         fragmentCallback.getFragment().getViewModel()
                                 .getNotificationService().markAsHidden(getSnapshots().getSnapshot(position),null);
@@ -102,6 +111,10 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
+                    if(position == NO_POSITION){
+                        Timber.w("position is set to NO_POSITION");
+                        return;
+                    }
                     NotificationDocument notification = getItem(position);
                     fragmentCallback.getFragment().showNotificationDialog(notification);
                     if(!notification.getMarkedAsRead()){
