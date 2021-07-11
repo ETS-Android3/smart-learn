@@ -201,4 +201,42 @@
     <string name="accept">Accept</string>
     <string name="maybe_later">Maybe later</string>
 
+
+    <!-- CommunityActivity -->
+    <string name="no_friends">You have no friends</string>
+    <string name="friends">Friends</string>
+    <string name="no_users">There are no users</string>
+    <string name="users">Users</string>
+    <string name="search_users">Use search option to find users by their email</string>
+    <string name="name_point">Name:</string>
+    <string name="friends_since_point">Friends since:</string>
+    <string name="remove_friend">Remove friend</string>
+    <string name="friend_profile">Friend profile</string>
+    <string name="remove_friend_description">Are you sure you want to remove your friend?</string>
+    <string name="remove">Remove</string>
+    <string name="error_remove_friend">Unable to remove friend</string>
+    <string name="success_remove_friend">Friend was removed</string>
+    <string name="error_search_user">User was not found</string>
+    <string name="user_with_email">User with email</string>
+    <string name="not_found">not found!</string>
+    <string name="error_send_friend_request">Error while sending request. Try again later.</string>
+    <string name="succes_send_friend_request">Friend request sent</string>
+    <string name="send_friend_request">Send friend request</string>
+    <string name="friend_request_sent">Friend request was send"</string>
+    <string name="user_profile">User profile</string>
+    <string name="is_your_friend">Is your friend</string>
+    <string name="is_you_description">is you. If you want to see your profile please check your account page.</string>
+    <string name="search_user_by_email">Search user by email</string>
+    <string name="request_already_sent">Request was sent. Please wait until request is finished.</string>
+    <string name="decline">Decline</string>
+    <string name="request_declined">Request declined</string>
+    <string name="error_decline_request">Request cannot be declined. Please try again later.</string>
+    <string name="request_received">Accept friend request</string>
+    <string name="accept_friend_request">Accept friend request</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="sending_request">Sending request</string>
+    <string name="search_is_in_progress">Please wait until search is finished.</string>
+    <string name="removing_friend">Removing friend</string>
+    <string name="action_finished">Action finished</string>
+
 </resources>

@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".presenter.activities.notebook.NotebookActivity"></activity>
+        <activity android:name=".presenter.activities.community.CommunityActivity" />
         <activity android:name=".presenter.activities.guest.GuestActivity" />
         <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
         <activity android:name=".presenter.activities.TestLocalActivity" />

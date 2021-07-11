@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -332,6 +336,32 @@ public final class Utilities {
                 }
             });
 
+            setSearchView(menu, menuId, searchActionCallback);
+        }
+
+
+        /**
+         * Set search on the Activity ActionBar and define what to do when search is made.
+         *
+         * @param menu The menu where the search item is located.
+         * @param menuId Search item id.
+         * @param searchActionCallback Callback that will manage search.
+         * */
+        public static void setSearchMenuItem(@NonNull Menu menu, @IdRes int menuId,
+                                             @NonNull Callbacks.SearchActionCallback searchActionCallback){
+            setSearchView(menu, menuId, searchActionCallback);
+        }
+
+        /**
+         * Helper for setSearchMenuItem(...)
+         * */
+        private static void setSearchView(@NonNull Menu menu, @IdRes int menuId, @NonNull Callbacks.SearchActionCallback searchActionCallback){
+            MenuItem searchItem = menu.findItem(menuId);
+            if(searchItem == null){
+                Timber.w("searchItem is null ==> search is not functionally");
+                return;
+            }
+
             SearchView searchView = (SearchView) searchItem.getActionView();
             if(searchView == null){
                 Timber.w("searchView is null ==> search is not functionally");
@@ -452,6 +482,27 @@ public final class Utilities {
                     //      'startDestination' will be deleted from back stack and at back press
                     //      previous destination can NOT longer be reached.
                     .setPopUpTo(destinationId, false)
+                    .build();
+        }
+
+        /**
+         * Use this function in order to add predefined animations and options for NavigationGraph
+         * fragments when the NavigationGraph has a  bottom navigation view  attached, and this is
+         * VISIBLE on fragments.
+         *
+         * @return NavOptions object which will have the predefined options.
+         * */
+        public static NavOptions getVisibleBottomMenuNavOptions() {
+            // https://stackoverflow.com/questions/61541455/animation-for-bottomnavigation-fragments-with-architecture-navigation-components/65979864#65979864
+            // https://betterprogramming.pub/everything-about-android-jetpacks-navigation-component-b550017c7354
+            return new NavOptions.Builder()
+                    .setEnterAnim(R.anim.fragment_close_enter)
+                    .setExitAnim(R.anim.fragment_close_exit)
+                    .setPopEnterAnim(R.anim.popup_enter)
+                    .setPopExitAnim(R.anim.popup_exit)
+                    // This is used whether this navigation action should launch as single-top
+                    // (i.e., there will be at most one copy of a given destination on the top of the back stack)
+                    .setLaunchSingleTop(true)
                     .build();
         }
 
@@ -658,6 +709,7 @@ public final class Utilities {
          * TODO: enhance this function
          * Use this in order to mark Spanned text
          * */
+        @Deprecated
         public static Spanned createSpannedText(List<IndexRange> indexRangeList, String text){
 
             if(indexRangeList != null && !indexRangeList.isEmpty()){
@@ -677,6 +729,48 @@ public final class Utilities {
 
 
         /**
+         * Use to generate a spanned string based on index pairs.
+         *
+         * @param indexList Pair of indexes with format (startIndex, finalIndex) with startIndex
+         *                  inclusive and finalIndex exclusive.
+         * @param value String to be transformed in spanned string.
+         *
+         * @return SpannableString object created based on value and indexes.
+         * */
+        public static SpannableString generateSpannedString(List<Pair<Integer, Integer>> indexList, String value){
+            // https://developer.android.com/guide/topics/text/spans
+            SpannableString spannableString = new SpannableString(value);
+            if(indexList == null || indexList.isEmpty()){
+                return spannableString;
+            }
+
+            for(Pair<Integer, Integer> pair : indexList){
+                spannableString.setSpan(new ForegroundColorSpan(ApplicationController.getInstance().getColor(R.color.colorAccent)),
+                        pair.first, pair.second,
+                        // pair.first is an inclusive index and because pair.second is exclusive index
+                        Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
+            return spannableString;
+        }
+
+        /**
+         * Use to set a string as spanned.
+         *
+         * @param value String to be transformed in spanned string.
+         *
+         * @return SpannableString object created.
+         * */
+        public static SpannableString setStringAsSpanned(String value){
+            // https://developer.android.com/guide/topics/text/spans
+            SpannableString spannableString = new SpannableString(value);
+            spannableString.setSpan(new ForegroundColorSpan(ApplicationController.getInstance().getColor(R.color.colorAccent)),
+                    0, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            return spannableString;
+        }
+
+
+        /**
          * Use this in order to show a simple AlertDialog with callback on positive button pressed.
          *
          * @param context The context where the AlertDialog will be shown.
@@ -686,13 +780,44 @@ public final class Utilities {
          * @param standardAlertDialogCallback Callback which will manage the positive button press
          *                                    action.
          * */
+        @Deprecated
         public static void showStandardAlertDialog(@NonNull Context context, @NonNull String title,
                                                    @NonNull String message, @NonNull Callbacks.StandardAlertDialogCallback standardAlertDialogCallback){
             //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
             new AlertDialog.Builder(context)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                standardAlertDialogCallback.onPositiveButtonPress();
+                            }
+                        })
+                        // No need for a listener because no action will be done when BUTTON_NEGATIVE is pressed.
+                        // Dialog will be dismissed automatically.
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setIcon(R.drawable.ic_baseline_warning_24)
+                        .show();
+        }
+
+        /**
+         * Use this in order to show a simple AlertDialog with callback on positive button pressed.
+         *
+         * @param context The context where the AlertDialog will be shown.
+         * @param title   Title of the AlertDialog.
+         * @param message Description of the AlertDialog. This can be a warning message, like
+         *                'Are you sure you want to .... ?'.
+         * @param positiveButtonDescription Description for the positive button.
+         * @param standardAlertDialogCallback Callback which will manage the positive button press
+         *                                    action.
+         * */
+        public static void showStandardAlertDialog(@NonNull @NotNull Context context, @NonNull @NotNull String title,
+                                                   @NonNull @NotNull String message, @NonNull @NotNull String positiveButtonDescription,
+                                                   @NonNull Callbacks.StandardAlertDialogCallback standardAlertDialogCallback){
+            //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
+            new AlertDialog.Builder(context)
                     .setTitle(title)
                     .setMessage(message)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(positiveButtonDescription, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             standardAlertDialogCallback.onPositiveButtonPress();
                         }
@@ -704,7 +829,6 @@ public final class Utilities {
                     .show();
         }
     }
-
 
     /**
      * Use this function in order to add predefined animations for actions from NavigationGraph.

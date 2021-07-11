@@ -94,6 +94,9 @@
     </style>
 
 
+    <style name="AppTheme.AppBarOverlay.ToolbarStyle.CardView.Primary" parent="AppTheme.AppBarOverlay.ToolbarStyle.CardView">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 
 
 
@@ -281,6 +284,11 @@
     </style>
 
 
+    <!-- This will work only for 'com.google.android.material.card.MaterialCardView' -->
+    <style name="AppTheme.CardView.MaterialDesign.User" parent="AppTheme.CardView.MaterialDesign">
+        <!-- this will change color for background when item is NOT selected -->
+        <item name="colorSurface">@color/colorPrimary</item>
+    </style>
 
 
     <!--  =====================================================================================  -->
