@@ -136,13 +136,6 @@ dependencies {
     // (implementation 'com.google.firebase:firebase-firestore')
     implementation 'com.firebaseui:firebase-ui-firestore:7.2.0'
 
-    // !!! DO NOT CHANGE VERSION. For example if you put 'androidx.paging:paging-runtime:3.0.0'
-    // then using 'PagedList.Config' for creating 'FirestorePagingOptions', will not work.
-    //
-    // Check official documentation and if there version is change try to chang it here also.
-    // https://github.com/firebase/FirebaseUI-Android/tree/master/firestore
-    implementation 'androidx.paging:paging-runtime:2.1.1'
-
     /* END Firebase */
 
 
