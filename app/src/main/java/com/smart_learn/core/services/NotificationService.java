@@ -2,13 +2,18 @@ package com.smart_learn.core.services;
 
 import android.text.TextUtils;
 
+import androidx.core.util.Pair;
+
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.repository.NotificationRepository;
+
+import java.util.ArrayList;
 
 import timber.log.Timber;
 
@@ -79,6 +84,71 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
         }
 
         repositoryInstance.markAsRead(notificationSnapshot, callback);
+    }
+
+    public void setNotificationsAsCounted(ArrayList<Pair<NotificationDocument, DocumentReference>> notificationsList,
+                                          DataCallbacks.General callback) {
+        if(notificationsList == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("notificationsList is null");
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Notifications was set as counted\n " + notificationsList.toString(),
+                    "Notifications was NOT set as counted:\n " + notificationsList.toString());
+        }
+
+        repositoryInstance.setNotificationsAsCounted(notificationsList, callback);
+    }
+
+    public void processNotification(DocumentSnapshot notificationSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(notificationSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Notification with document snapshot ID [" +
+                    notificationSnapshot.getId() + " was processed",
+                    "Notification with document snapshot ID [" + notificationSnapshot.getId() + " was NOT processed");
+        }
+
+        NotificationDocument notification = notificationSnapshot.toObject(NotificationDocument.class);
+        if(notification == null){
+            callback.onFailure();
+            return;
+        }
+
+        switch (notification.getType()) {
+            case NotificationDocument.Types.TYPE_FRIEND_REQUEST_SENT:
+                repositoryInstance.processNotificationForFriendRequestSent(notificationSnapshot, callback);
+                break;
+            case NotificationDocument.Types.TYPE_FRIEND_REQUEST_RECEIVED:
+                repositoryInstance.processNotificationForFriendRequestReceived(notification, notificationSnapshot.getReference(), callback);
+                break;
+            case NotificationDocument.Types.TYPE_FRIEND_REQUEST_ACCEPTED:
+                repositoryInstance.processNotificationForFriendRequestAccepted(notification, notificationSnapshot.getReference(), callback);
+                break;
+
+            case NotificationDocument.Types.TYPE_YOU_REMOVED_FRIEND:
+                repositoryInstance.processNotificationForYouRemovedAFriend(notificationSnapshot, callback);
+                break;
+            case NotificationDocument.Types.TYPE_FRIEND_REMOVED_YOU:
+                repositoryInstance.processNotificationForFriendRemovedYou(notification, notificationSnapshot.getReference(), callback);
+                break;
+
+            case NotificationDocument.Types.TYPE_NONE:
+                Timber.e("type none");
+                break;
+            default:
+                Timber.e("default");
+                break;
+        }
     }
 
 }
