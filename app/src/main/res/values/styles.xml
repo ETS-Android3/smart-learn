@@ -222,8 +222,26 @@
         <item name="android:layout_gravity">end|bottom</item>
     </style>
 
+    <!-- For alert buttons -->
+    <style name="AppTheme.ButtonStyle.WithBorder.Alert" parent="AppTheme.ButtonStyle.WithBorder.White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_button_alert</item>
+    </style>
 
+    <!-- For info buttons -->
+    <style name="AppTheme.ButtonStyle.WithBorder.Info" parent="AppTheme.ButtonStyle.WithBorder.White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_button_info</item>
+    </style>
 
+    <!-- For info disabled buttons -->
+    <style name="AppTheme.ButtonStyle.WithBorder.Info.Disabled" parent="AppTheme.ButtonStyle.WithBorder.White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:enabled">false</item>
+        <item name="android:drawableTint">@color/white</item>
+        <item name="android:background">@drawable/background_button_info_disabled</item>
+    </style>
 
 
     <!--  =====================================================================================  -->

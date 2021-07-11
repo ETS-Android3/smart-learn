@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Use for info buttons -->
+<!-- https://stackoverflow.com/questions/11457164/using-standard-android-button-but-with-modifications/11457452#11457452 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  Non focused states-->
+    <item android:state_focused="false"
+        android:state_selected="false"
+        android:state_pressed="false"
+        android:drawable="@drawable/style_button_unfocused_info" />
+    <item android:state_focused="false"
+        android:state_selected="true"
+        android:state_pressed="false"
+        android:drawable="@drawable/style_button_unfocused_info" />
+
+    <!--  Focused states  -->
+    <item android:state_focused="true"
+        android:state_selected="false"
+        android:state_pressed="false"
+        android:drawable="@drawable/style_button_focus_info" />
+    <item android:state_focused="true"
+        android:state_selected="true"
+        android:state_pressed="false"
+        android:drawable="@drawable/style_button_focus_info" />
+
+    <!--  Pressed -->
+    <item android:state_pressed="true"
+        android:drawable="@drawable/style_button_press_info" />
+</selector>
