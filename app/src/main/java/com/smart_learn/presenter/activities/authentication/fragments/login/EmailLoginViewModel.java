@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.NetworkUtilities;
+import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
@@ -33,8 +33,8 @@ public class EmailLoginViewModel extends BasicAndroidViewModel {
     }
 
     public void login(EmailLoginFragment fragment){
-
-        if(!NetworkUtilities.goodConnection()){
+        // Network checking is enough because if internet is NOT available will handled at login time.
+        if(!ConnexionChecker.isNetworkAvailable()){
             liveToastMessage.setValue(fragment.getString(R.string.error_no_network));
             return;
         }

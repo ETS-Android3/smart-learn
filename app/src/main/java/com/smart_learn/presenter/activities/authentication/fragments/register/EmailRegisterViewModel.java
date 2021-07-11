@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.NetworkUtilities;
+import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.presenter.helpers.ApplicationController;
@@ -42,8 +42,8 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
     }
 
     public void register(EmailRegisterFragment fragment){
-
-        if(!NetworkUtilities.goodConnection()){
+        // Network checking is enough because if internet is NOT available will handled at register time.
+        if(!ConnexionChecker.isNetworkAvailable()){
             liveToastMessage.setValue(fragment.getString(R.string.error_no_network));
             return;
         }
