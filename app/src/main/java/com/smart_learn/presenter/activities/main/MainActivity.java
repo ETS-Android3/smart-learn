@@ -3,7 +3,6 @@ package com.smart_learn.presenter.activities.main;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityMainBinding;
 import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
+import com.smart_learn.presenter.activities.community.CommunityActivity;
 import com.smart_learn.presenter.activities.guest.GuestActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -115,8 +115,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_logout_menu_nav_drawer_activity_main:
                         signOut();
                         break;
-                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_community_menu_nav_drawer_activity_main:
+                        goToCommunityActivity();
+                        break;
+                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_lessons_menu_nav_drawer_activity_main:
                     case R.id.nav_test_menu_nav_drawer_activity_main:
                     case R.id.nav_settings_menu_nav_drawer_activity_main:
@@ -134,6 +136,10 @@ public class MainActivity extends AppCompatActivity {
     public void goToGuestActivity(){
         startActivity(new Intent(this, GuestActivity.class));
         this.finish();
+    }
+
+    private void goToCommunityActivity(){
+        startActivity(new Intent(this, CommunityActivity.class));
     }
 
     private void signOut(){
