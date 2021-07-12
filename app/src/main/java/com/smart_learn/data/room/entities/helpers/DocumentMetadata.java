@@ -27,14 +27,10 @@ public class DocumentMetadata {
     // timestamp to store when a document was modified last time
     private long modifiedAt;
 
-    @Embedded
-    private final BackupStatus backupStatus;
-
-    public DocumentMetadata(String owner, long createdAt, long modifiedAt, BackupStatus backupStatus) {
+    public DocumentMetadata(String owner, long createdAt, long modifiedAt) {
         this.owner = owner;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
-        this.backupStatus = backupStatus;
     }
 }
 

@@ -20,7 +20,6 @@ import com.smart_learn.data.room.entities.Friend;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.Notification;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.data.room.entities.helpers.BackupStatus;
 import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
@@ -80,7 +79,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
 
                 DocumentMetadata documentMetadata = new DocumentMetadata("", System.currentTimeMillis(),
-                        System.currentTimeMillis(), BackupStatus.getStandardAddedBackupStatus());
+                        System.currentTimeMillis());
 
                 Lesson lesson = new Lesson(null,"notes lectia 1",false,false, documentMetadata,"lectia 1");
                 int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));

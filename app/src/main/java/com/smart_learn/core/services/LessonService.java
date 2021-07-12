@@ -106,8 +106,7 @@ public class LessonService extends BasicRoomService<Lesson> {
 
         /*
         FIXME: fix adding a lesson
-        DocumentMetadata documentMetadata = new DocumentMetadata("",System.currentTimeMillis(), System.currentTimeMillis(),
-                new BackupStatus("",true, false,false,false));
+        DocumentMetadata documentMetadata = new DocumentMetadata("",System.currentTimeMillis(), System.currentTimeMillis());
         Lesson newLesson = new Lesson(lesson.getName(), System.currentTimeMillis(), System.currentTimeMillis(),false);
         insert(newLesson);
          */
