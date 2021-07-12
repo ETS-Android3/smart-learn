@@ -5,7 +5,6 @@ import android.text.Spanned;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -24,13 +23,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = AppRoomDatabase.LESSONS_TABLE,
-        foreignKeys = {
-                        @ForeignKey(entity = Notification.class,
-                                parentColumns = "id",
-                                childColumns = "fk_notification_id",
-                                onDelete = ForeignKey.CASCADE)
-        })
+@Entity(tableName = AppRoomDatabase.LESSONS_TABLE)
 public class Lesson extends NotebookCommon {
 
     @PrimaryKey(autoGenerate = true)
@@ -48,9 +41,9 @@ public class Lesson extends NotebookCommon {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedName;
 
-    public Lesson(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+    public Lesson(String notes, boolean isReceived, boolean isSelected,
                   DocumentMetadata documentMetadata, String name) {
-        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata);
+        super(notes, isReceived, isSelected, documentMetadata);
         this.name = name;
         this.spannedName = Html.fromHtml(this.name,Html.FROM_HTML_MODE_LEGACY);
     }

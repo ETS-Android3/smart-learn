@@ -23,10 +23,6 @@ import lombok.Setter;
 @Setter
 @Entity(tableName = AppRoomDatabase.EXPRESSIONS_TABLE,
         foreignKeys = {
-                        @ForeignKey(entity = Notification.class,
-                                parentColumns = "id",
-                                childColumns = "fk_notification_id",
-                                onDelete = ForeignKey.CASCADE),
                         @ForeignKey(entity = Lesson.class,
                                 parentColumns = "id",
                                 childColumns = "fk_lesson_id",
@@ -41,10 +37,10 @@ public class Expression extends LessonEntrance {
     @ColumnInfo(name = "expression")
     private String expression;
 
-    public Expression(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+    public Expression(String notes, boolean isReceived, boolean isSelected,
                       DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite, String language,
                       ArrayList<Translation> translations, String expression) {
-        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
+        super(notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
                 language, translations);
         this.expression = expression;
     }

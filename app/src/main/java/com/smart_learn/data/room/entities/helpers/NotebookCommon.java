@@ -13,10 +13,6 @@ import lombok.Setter;
 @Setter
 public abstract class NotebookCommon {
 
-    // use Integer because in some situations a null value for foreign key is needed
-    @ColumnInfo(name = "fk_notification_id")
-    private Integer fkNotificationId;
-
     @ColumnInfo(name = "notes")
     private String notes;
 
@@ -31,9 +27,8 @@ public abstract class NotebookCommon {
     @Embedded
     private final DocumentMetadata documentMetadata;
 
-    public NotebookCommon(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+    public NotebookCommon(String notes, boolean isReceived, boolean isSelected,
                           DocumentMetadata documentMetadata) {
-        this.fkNotificationId = fkNotificationId;
         this.notes = notes;
         this.isReceived = isReceived;
         this.isSelected = isSelected;

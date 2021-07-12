@@ -25,10 +25,10 @@ public abstract class LessonEntrance extends NotebookCommon {
     @ColumnInfo(name = "translations")
     protected ArrayList<Translation> translations;
 
-    public LessonEntrance(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+    public LessonEntrance(String notes, boolean isReceived, boolean isSelected,
                           DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite,
                           String language, ArrayList<Translation> translations) {
-        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata);
+        super(notes, isReceived, isSelected, documentMetadata);
         this.fkLessonId = fkLessonId;
         this.isFavourite = isFavourite;
         this.language = language;

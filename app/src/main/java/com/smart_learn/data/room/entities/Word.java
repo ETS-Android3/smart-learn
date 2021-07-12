@@ -29,10 +29,6 @@ import lombok.Setter;
 @Setter
 @Entity(tableName = AppRoomDatabase.WORDS_TABLE,
         foreignKeys = {
-                    @ForeignKey(entity = Notification.class,
-                                parentColumns = "id",
-                                childColumns = "fk_notification_id",
-                                onDelete = ForeignKey.CASCADE),
                     @ForeignKey(entity = Lesson.class,
                                 parentColumns = "id",
                                 childColumns = "fk_lesson_id",
@@ -55,10 +51,10 @@ public class Word extends LessonEntrance {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedWord;
 
-    public Word(Integer fkNotificationId, String notes, boolean isReceived, boolean isSelected,
+    public Word(String notes, boolean isReceived, boolean isSelected,
                 DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite, String language,
                 ArrayList<Translation> translations, String word) {
-        super(fkNotificationId, notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
+        super(notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
                 language, translations);
         this.word = word;
     }
