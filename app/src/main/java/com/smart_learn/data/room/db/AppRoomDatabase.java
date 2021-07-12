@@ -74,8 +74,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
 
-                BasicInfo basicInfo = new BasicInfo("", System.currentTimeMillis(),
-                        System.currentTimeMillis());
+                BasicInfo basicInfo = new BasicInfo(System.currentTimeMillis());
 
                 Lesson lesson = new Lesson("notes lectia 1",false, basicInfo,"lectia 1");
                 int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
