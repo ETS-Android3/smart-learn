@@ -51,11 +51,9 @@ public class Word extends LessonEntrance {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedWord;
 
-    public Word(String notes, boolean isReceived, boolean isSelected,
-                DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite, String language,
-                ArrayList<Translation> translations, String word) {
-        super(notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
-                language, translations);
+    public Word(String notes, boolean isSelected, DocumentMetadata documentMetadata, Integer fkLessonId,
+                boolean isFavourite, String language,  ArrayList<Translation> translations, String word) {
+        super(notes, isSelected, documentMetadata, fkLessonId, isFavourite, language, translations);
         this.word = word;
     }
 

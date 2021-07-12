@@ -77,33 +77,33 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 DocumentMetadata documentMetadata = new DocumentMetadata("", System.currentTimeMillis(),
                         System.currentTimeMillis());
 
-                Lesson lesson = new Lesson("notes lectia 1",false,false, documentMetadata,"lectia 1");
+                Lesson lesson = new Lesson("notes lectia 1",false, documentMetadata,"lectia 1");
                 int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
 
                 ArrayList<Translation> translations = new ArrayList<>();
                 translations.add(new Translation("trans 1","phon 1", ""));
                 translations.add(new Translation("trans 2","phon 2", ""));
-                Word word = new Word("word 1",false,false,
+                Word word = new Word("word 1",false,
                         documentMetadata,idLesson,false,"", translations,"word 1");
                 instance.wordDao().insert(word);
 
-                word = new Word("notes word 2",false,false,
+                word = new Word("notes word 2",false,
                         documentMetadata,idLesson,false,"", translations,"word 2");
                 instance.wordDao().insert(word);
 
-                word = new Word("notes word 3",false,false,
+                word = new Word("notes word 3",false,
                         documentMetadata,idLesson,false,"", translations,"word 3");
                 instance.wordDao().insert(word);
 
-                word = new Word("notes word 4",false,false,
+                word = new Word("notes word 4",false,
                         documentMetadata,idLesson,false,"", translations,"word 4");
                 instance.wordDao().insert(word);
 
-                lesson = new Lesson("notes lectia 2",false,false, documentMetadata,"lectia 2");
+                lesson = new Lesson("notes lectia 2",false, documentMetadata,"lectia 2");
                 instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 3",false,false, documentMetadata,"lectia 3");
+                lesson = new Lesson("notes lectia 3",false, documentMetadata,"lectia 3");
                 instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 4",false,false, documentMetadata,"lectia 4");
+                lesson = new Lesson("notes lectia 4",false, documentMetadata,"lectia 4");
                 instance.lessonDao().insert(lesson);
             });
         }

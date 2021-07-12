@@ -41,9 +41,8 @@ public class Lesson extends NotebookCommon {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedName;
 
-    public Lesson(String notes, boolean isReceived, boolean isSelected,
-                  DocumentMetadata documentMetadata, String name) {
-        super(notes, isReceived, isSelected, documentMetadata);
+    public Lesson(String notes, boolean isSelected, DocumentMetadata documentMetadata, String name) {
+        super(notes, isSelected, documentMetadata);
         this.name = name;
         this.spannedName = Html.fromHtml(this.name,Html.FROM_HTML_MODE_LEGACY);
     }

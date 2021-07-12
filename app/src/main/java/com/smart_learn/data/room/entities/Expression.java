@@ -37,11 +37,9 @@ public class Expression extends LessonEntrance {
     @ColumnInfo(name = "expression")
     private String expression;
 
-    public Expression(String notes, boolean isReceived, boolean isSelected,
-                      DocumentMetadata documentMetadata, Integer fkLessonId, boolean isFavourite, String language,
-                      ArrayList<Translation> translations, String expression) {
-        super(notes, isReceived, isSelected, documentMetadata, fkLessonId, isFavourite,
-                language, translations);
+    public Expression(String notes, boolean isSelected, DocumentMetadata documentMetadata, Integer fkLessonId,
+                      boolean isFavourite, String language, ArrayList<Translation> translations, String expression) {
+        super(notes, isSelected, documentMetadata, fkLessonId, isFavourite, language, translations);
         this.expression = expression;
     }
 }

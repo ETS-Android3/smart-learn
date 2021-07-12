@@ -16,10 +16,6 @@ public abstract class NotebookCommon {
     @ColumnInfo(name = "notes")
     private String notes;
 
-    // mark that a document is received from notification
-    @ColumnInfo(name = "is_received")
-    private boolean isReceived;
-
     // mark that a document is selected or not in recycler view
     @ColumnInfo(name = "isSelected")
     private boolean isSelected;
@@ -27,10 +23,8 @@ public abstract class NotebookCommon {
     @Embedded
     private final DocumentMetadata documentMetadata;
 
-    public NotebookCommon(String notes, boolean isReceived, boolean isSelected,
-                          DocumentMetadata documentMetadata) {
+    public NotebookCommon(String notes, boolean isSelected, DocumentMetadata documentMetadata) {
         this.notes = notes;
-        this.isReceived = isReceived;
         this.isSelected = isSelected;
         this.documentMetadata = documentMetadata;
     }
