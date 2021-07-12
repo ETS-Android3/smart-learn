@@ -3,7 +3,6 @@ package com.smart_learn.data.room.entities;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.data.room.db.AppRoomDatabase;
@@ -14,21 +13,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(tableName = AppRoomDatabase.NOTIFICATIONS_TABLE,
-        foreignKeys = {
-                        @ForeignKey(entity = Friend.class,
-                                    parentColumns = "id",
-                                    childColumns = "fk_friend_id",
-                                    onDelete = ForeignKey.CASCADE)
-        })
+@Entity(tableName = AppRoomDatabase.NOTIFICATIONS_TABLE)
 public class Notification {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int notificationId;
-
-    @ColumnInfo(name = "fk_friend_id")
-    private Integer fkFriendId;
 
     @ColumnInfo(name = "from")
     private String from;
@@ -48,9 +38,8 @@ public class Notification {
     @Embedded
     private final DocumentMetadata documentMetadata;
 
-    public Notification(Integer fkFriendId, String from, int type, String description, boolean isMarkedAsRead,
+    public Notification(String from, int type, String description, boolean isMarkedAsRead,
                         boolean isHidden, DocumentMetadata documentMetadata) {
-        this.fkFriendId = fkFriendId;
         this.from = from;
         this.type = type;
         this.description = description;

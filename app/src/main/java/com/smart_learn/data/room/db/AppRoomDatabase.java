@@ -11,12 +11,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.smart_learn.data.room.converters.TranslationConverter;
 import com.smart_learn.data.room.dao.ExpressionDao;
-import com.smart_learn.data.room.dao.FriendDao;
 import com.smart_learn.data.room.dao.LessonDao;
 import com.smart_learn.data.room.dao.NotificationDao;
 import com.smart_learn.data.room.dao.WordDao;
 import com.smart_learn.data.room.entities.Expression;
-import com.smart_learn.data.room.entities.Friend;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.Notification;
 import com.smart_learn.data.room.entities.Word;
@@ -33,7 +31,7 @@ import java.util.concurrent.Executors;
  * https://developer.android.com/codelabs/android-room-with-a-view#7
  * */
 @Database(
-        entities = {Lesson.class, Word.class, Expression.class, Friend.class, Notification.class},
+        entities = {Lesson.class, Word.class, Expression.class, Notification.class},
         version = 1, exportSchema = false
 )
 @TypeConverters({TranslationConverter.class})
@@ -43,13 +41,11 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public static final String LESSONS_TABLE = "lessons";
     public static final String WORDS_TABLE = "words";
     public static final String EXPRESSIONS_TABLE = "expressions";
-    public static final String FRIENDS_TABLE = "friends";
     public static final String NOTIFICATIONS_TABLE = "notifications";
 
     public abstract LessonDao lessonDao();
     public abstract WordDao wordDao();
     public abstract ExpressionDao expressionDao();
-    public abstract FriendDao friendDao();
     public abstract NotificationDao notificationDao();
 
     private static volatile AppRoomDatabase instance;
