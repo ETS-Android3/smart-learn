@@ -21,12 +21,12 @@ public abstract class NotebookCommon {
     private boolean isSelected;
 
     @Embedded
-    private final DocumentMetadata documentMetadata;
+    private final BasicInfo basicInfo;
 
-    public NotebookCommon(String notes, boolean isSelected, DocumentMetadata documentMetadata) {
+    public NotebookCommon(String notes, boolean isSelected, BasicInfo basicInfo) {
         this.notes = notes;
         this.isSelected = isSelected;
-        this.documentMetadata = documentMetadata;
+        this.basicInfo = basicInfo;
     }
 }
 

@@ -110,7 +110,7 @@ public class WordService extends BasicRoomService<Word> {
 
         // here word is valid
         if(update){
-            word.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
+            word.getBasicInfo().setModifiedAt(System.currentTimeMillis());
             update(word);
             return responseInfo;
         }

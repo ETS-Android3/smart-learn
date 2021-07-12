@@ -9,7 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.data.room.db.AppRoomDatabase;
-import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.NotebookCommon;
 
@@ -41,8 +41,8 @@ public class Lesson extends NotebookCommon {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedName;
 
-    public Lesson(String notes, boolean isSelected, DocumentMetadata documentMetadata, String name) {
-        super(notes, isSelected, documentMetadata);
+    public Lesson(String notes, boolean isSelected, BasicInfo basicInfo, String name) {
+        super(notes, isSelected, basicInfo);
         this.name = name;
         this.spannedName = Html.fromHtml(this.name,Html.FROM_HTML_MODE_LEGACY);
     }

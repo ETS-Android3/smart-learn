@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.data.room.db.AppRoomDatabase;
-import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,15 +36,15 @@ public class Notification {
     private boolean isHidden;
 
     @Embedded
-    private final DocumentMetadata documentMetadata;
+    private final BasicInfo basicInfo;
 
     public Notification(String from, int type, String description, boolean isMarkedAsRead,
-                        boolean isHidden, DocumentMetadata documentMetadata) {
+                        boolean isHidden, BasicInfo basicInfo) {
         this.from = from;
         this.type = type;
         this.description = description;
         this.isMarkedAsRead = isMarkedAsRead;
         this.isHidden = isHidden;
-        this.documentMetadata = documentMetadata;
+        this.basicInfo = basicInfo;
     }
 }

@@ -13,7 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class DocumentMetadata {
+public class BasicInfo {
 
     // will be the user UID (UID from Firebase Authentication)
     @ColumnInfo(name = "owner")
@@ -27,7 +27,7 @@ public class DocumentMetadata {
     // timestamp to store when a document was modified last time
     private long modifiedAt;
 
-    public DocumentMetadata(String owner, long createdAt, long modifiedAt) {
+    public BasicInfo(String owner, long createdAt, long modifiedAt) {
         this.owner = owner;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;

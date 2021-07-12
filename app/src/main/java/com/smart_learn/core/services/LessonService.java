@@ -99,14 +99,14 @@ public class LessonService extends BasicRoomService<Lesson> {
 
         // here notebook is valid
         if(update){
-            lesson.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
+            lesson.getBasicInfo().setModifiedAt(System.currentTimeMillis());
             update(lesson);
             return responseInfo;
         }
 
         /*
         FIXME: fix adding a lesson
-        DocumentMetadata documentMetadata = new DocumentMetadata("",System.currentTimeMillis(), System.currentTimeMillis());
+        BasicInfo basicInfo = new BasicInfo("",System.currentTimeMillis(), System.currentTimeMillis());
         Lesson newLesson = new Lesson(lesson.getName(), System.currentTimeMillis(), System.currentTimeMillis(),false);
         insert(newLesson);
          */

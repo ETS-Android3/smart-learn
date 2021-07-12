@@ -42,8 +42,8 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             @Override
             public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
                 return oldItem.getWord().equals(newItem.getWord()) &&
-                        oldItem.getDocumentMetadata().getCreatedAt() == newItem.getDocumentMetadata().getCreatedAt() &&
-                        oldItem.getDocumentMetadata().getModifiedAt() == newItem.getDocumentMetadata().getModifiedAt() &&
+                        oldItem.getBasicInfo().getCreatedAt() == newItem.getBasicInfo().getCreatedAt() &&
+                        oldItem.getBasicInfo().getModifiedAt() == newItem.getBasicInfo().getModifiedAt() &&
                         oldItem.isSelected() == newItem.isSelected();
                         // FIXME: fix this equality
                         //oldItem.getTranslation().getTranslation().equals(newItem.getTranslation().getTranslation()) &&

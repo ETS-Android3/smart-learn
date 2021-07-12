@@ -6,7 +6,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.data.room.db.AppRoomDatabase;
-import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
@@ -37,9 +37,9 @@ public class Expression extends LessonEntrance {
     @ColumnInfo(name = "expression")
     private String expression;
 
-    public Expression(String notes, boolean isSelected, DocumentMetadata documentMetadata, Integer fkLessonId,
+    public Expression(String notes, boolean isSelected, BasicInfo basicInfo, Integer fkLessonId,
                       boolean isFavourite, String language, ArrayList<Translation> translations, String expression) {
-        super(notes, isSelected, documentMetadata, fkLessonId, isFavourite, language, translations);
+        super(notes, isSelected, basicInfo, fkLessonId, isFavourite, language, translations);
         this.expression = expression;
     }
 }

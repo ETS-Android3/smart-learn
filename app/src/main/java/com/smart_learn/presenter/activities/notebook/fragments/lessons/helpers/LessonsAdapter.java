@@ -46,8 +46,8 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             @Override
             public boolean areContentsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
                 return oldItem.getName().equals(newItem.getName()) &&
-                        oldItem.getDocumentMetadata().getCreatedAt() == newItem.getDocumentMetadata().getCreatedAt() &&
-                        oldItem.getDocumentMetadata().getModifiedAt() == newItem.getDocumentMetadata().getModifiedAt() &&
+                        oldItem.getBasicInfo().getCreatedAt() == newItem.getBasicInfo().getCreatedAt() &&
+                        oldItem.getBasicInfo().getModifiedAt() == newItem.getBasicInfo().getModifiedAt() &&
                         oldItem.isSelected() == newItem.isSelected();
             }
         });

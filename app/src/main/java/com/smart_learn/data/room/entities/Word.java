@@ -10,7 +10,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.smart_learn.data.room.db.AppRoomDatabase;
-import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 import com.smart_learn.data.room.entities.helpers.Translation;
@@ -51,9 +51,9 @@ public class Word extends LessonEntrance {
     // this will be used for showing the foreground color using html tags for text between searchIndexes
     private Spanned spannedWord;
 
-    public Word(String notes, boolean isSelected, DocumentMetadata documentMetadata, Integer fkLessonId,
-                boolean isFavourite, String language,  ArrayList<Translation> translations, String word) {
-        super(notes, isSelected, documentMetadata, fkLessonId, isFavourite, language, translations);
+    public Word(String notes, boolean isSelected, BasicInfo basicInfo, Integer fkLessonId,
+                boolean isFavourite, String language, ArrayList<Translation> translations, String word) {
+        super(notes, isSelected, basicInfo, fkLessonId, isFavourite, language, translations);
         this.word = word;
     }
 

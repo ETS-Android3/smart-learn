@@ -18,7 +18,7 @@ import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.Notification;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.data.room.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
 import java.util.ArrayList;
@@ -74,36 +74,36 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
 
-                DocumentMetadata documentMetadata = new DocumentMetadata("", System.currentTimeMillis(),
+                BasicInfo basicInfo = new BasicInfo("", System.currentTimeMillis(),
                         System.currentTimeMillis());
 
-                Lesson lesson = new Lesson("notes lectia 1",false, documentMetadata,"lectia 1");
+                Lesson lesson = new Lesson("notes lectia 1",false, basicInfo,"lectia 1");
                 int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
 
                 ArrayList<Translation> translations = new ArrayList<>();
                 translations.add(new Translation("trans 1","phon 1", ""));
                 translations.add(new Translation("trans 2","phon 2", ""));
                 Word word = new Word("word 1",false,
-                        documentMetadata,idLesson,false,"", translations,"word 1");
+                        basicInfo,idLesson,false,"", translations,"word 1");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 2",false,
-                        documentMetadata,idLesson,false,"", translations,"word 2");
+                        basicInfo,idLesson,false,"", translations,"word 2");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 3",false,
-                        documentMetadata,idLesson,false,"", translations,"word 3");
+                        basicInfo,idLesson,false,"", translations,"word 3");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 4",false,
-                        documentMetadata,idLesson,false,"", translations,"word 4");
+                        basicInfo,idLesson,false,"", translations,"word 4");
                 instance.wordDao().insert(word);
 
-                lesson = new Lesson("notes lectia 2",false, documentMetadata,"lectia 2");
+                lesson = new Lesson("notes lectia 2",false, basicInfo,"lectia 2");
                 instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 3",false, documentMetadata,"lectia 3");
+                lesson = new Lesson("notes lectia 3",false, basicInfo,"lectia 3");
                 instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 4",false, documentMetadata,"lectia 4");
+                lesson = new Lesson("notes lectia 4",false, basicInfo,"lectia 4");
                 instance.lessonDao().insert(lesson);
             });
         }
