@@ -55,8 +55,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_activity_notebook"
-                app:menu="@menu/menu_bottom_navigation_activity_notebook" />
+                app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment_activity_notebook" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

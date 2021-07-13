@@ -49,6 +49,13 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
      */
     protected abstract int getNavigationGraphResource();
 
+    /**
+     *  Used to set a bottom menu for the navigation graph.
+     *
+     * @return Menu resource id.
+     */
+    protected abstract int getMenuResourceId();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,11 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
     }
 
     protected void setLayoutUtilities(){
+        // set specific bottom menu
+        // https://stackoverflow.com/questions/43084085/inflate-bottom-navigation-view-menu-programmatically
+        binding.bottomNavigationActivityNotebook.getMenu().clear();
+        binding.bottomNavigationActivityNotebook.inflateMenu(getMenuResourceId());
+
         // set bottom sheet behaviour for bottom navigation menu layout
         bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
     }
