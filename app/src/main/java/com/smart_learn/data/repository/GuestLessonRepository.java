@@ -8,6 +8,7 @@ import com.smart_learn.data.room.dao.LessonDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.relationships.LessonWithJoinedInfo;
+import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import java.util.List;
 

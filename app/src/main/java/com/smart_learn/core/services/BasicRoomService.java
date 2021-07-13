@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import com.smart_learn.core.utilities.CoreCallbacks;
 import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.helpers.DataCallbacks;
-import com.smart_learn.data.repository.BasicRoomRepository;
+import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import org.jetbrains.annotations.NotNull;
 

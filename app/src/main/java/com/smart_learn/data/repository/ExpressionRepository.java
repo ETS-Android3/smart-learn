@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.smart_learn.data.room.dao.ExpressionDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Expression;
+import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 public class ExpressionRepository extends BasicRoomRepository<Expression> {
 

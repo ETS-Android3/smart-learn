@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.smart_learn.data.room.dao.WordDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Word;
+import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import java.util.List;
 
