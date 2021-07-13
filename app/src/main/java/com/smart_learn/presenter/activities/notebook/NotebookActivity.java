@@ -123,8 +123,8 @@ public class NotebookActivity extends AppCompatActivity {
 
     /** Fragment has bottom navigation view HIDDEN. */
     public void goToHomeWordFragment(){
-        navController.navigate(R.id.action_words_fragment_nav_graph_activity_notebook_to_home_word_fragment_nav_graph_activity_notebook,null,
-                Utilities.Activities.getExitBottomMenuNavOptions(R.id.home_word_fragment_nav_graph_activity_notebook));
+        navController.navigate(R.id.action_guest_words_fragment_nav_graph_activity_notebook_to_guest_home_word_fragment_nav_graph_activity_notebook,null,
+                Utilities.Activities.getExitBottomMenuNavOptions(R.id.guest_home_word_fragment_nav_graph_activity_notebook));
     }
 
 
