@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.core.utilities.Logs;
-import com.smart_learn.data.repository.LessonRepository;
+import com.smart_learn.data.repository.GuestLessonRepository;
 import com.smart_learn.data.room.entities.Lesson;
 
 import java.util.ArrayList;
@@ -16,41 +16,41 @@ import java.util.List;
 
 public class GuestLessonService extends BasicRoomService<Lesson> {
 
-    private final LessonRepository lessonRepository;
+    private final GuestLessonRepository guestLessonRepository;
 
     public GuestLessonService(Application application){
-        lessonRepository = new LessonRepository(application);
+        guestLessonRepository = new GuestLessonRepository(application);
 
         // set super repository
-        super.basicRoomRepository = lessonRepository;
+        super.basicRoomRepository = guestLessonRepository;
     }
 
     public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
-        return lessonRepository.getSampleLiveLesson(lessonId);
+        return guestLessonRepository.getSampleLiveLesson(lessonId);
     }
 
     @NonNull
     public List<Lesson> getAllSampleLesson(){
-        List<Lesson> tmp = lessonRepository.getAllLiveSampleLessons().getValue();
+        List<Lesson> tmp = guestLessonRepository.getAllLiveSampleLessons().getValue();
         if(tmp == null){
             return new ArrayList<>();
         }
         return tmp;
     }
 
-    public LiveData<List<Lesson>> getAllLiveSampleLessons() { return lessonRepository.getAllLiveSampleLessons(); }
+    public LiveData<List<Lesson>> getAllLiveSampleLessons() { return guestLessonRepository.getAllLiveSampleLessons(); }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(){ return lessonRepository.getLiveSelectedItemsCount(); }
+    public LiveData<Integer> getLiveSelectedItemsCount(){ return guestLessonRepository.getLiveSelectedItemsCount(); }
 
-    public LiveData<Integer> getLiveItemsNumber(){ return lessonRepository.getLiveItemsNumber(); }
+    public LiveData<Integer> getLiveItemsNumber(){ return guestLessonRepository.getLiveItemsNumber(); }
 
-    public void deleteSelectedItems(){ lessonRepository.deleteSelectedItems(); }
+    public void deleteSelectedItems(){ guestLessonRepository.deleteSelectedItems(); }
 
-    public void updateSelectAll(boolean isSelected){ lessonRepository.updateSelectAll(isSelected); }
+    public void updateSelectAll(boolean isSelected){ guestLessonRepository.updateSelectAll(isSelected); }
 
 
     public boolean checkIfLessonExist(String lessonName) {
-        return lessonRepository.checkIfLessonExist(lessonName);
+        return guestLessonRepository.checkIfLessonExist(lessonName);
     }
 
     private ResponseInfo lessonDetailsCheck(Lesson lesson){
@@ -111,7 +111,7 @@ public class GuestLessonService extends BasicRoomService<Lesson> {
     }
 
     public LiveData<Integer> getLiveNumberOfLessons(){
-        return lessonRepository.getLiveNumberOfLessons();
+        return guestLessonRepository.getLiveNumberOfLessons();
     }
 
 }

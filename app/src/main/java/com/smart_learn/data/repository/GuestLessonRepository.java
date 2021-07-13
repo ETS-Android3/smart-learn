@@ -14,12 +14,12 @@ import java.util.List;
 /**
  * https://developer.android.com/codelabs/android-room-with-a-view#8
  * */
-public class LessonRepository extends BasicRoomRepository<Lesson> {
+public class GuestLessonRepository extends BasicRoomRepository<Lesson> {
 
     private final LessonDao lessonDao;
     private final LiveData<List<Lesson>> sampleLiveLessonList;
 
-    public LessonRepository(Application application) {
+    public GuestLessonRepository(Application application) {
         // no need for db instance in class because communication will be made using dao interface
         AppRoomDatabase db = AppRoomDatabase.getDatabaseInstance(application);
 
