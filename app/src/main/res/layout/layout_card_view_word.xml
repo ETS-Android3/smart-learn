@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.words.helpers.WordsAdapter.WordViewHolder" />
+            type="com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter.WordViewHolder" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

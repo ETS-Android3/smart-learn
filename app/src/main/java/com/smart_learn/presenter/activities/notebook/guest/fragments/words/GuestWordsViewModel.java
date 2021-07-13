@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.smart_learn.core.services.WordService;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsViewModel;
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.helpers.WordsAdapter;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
