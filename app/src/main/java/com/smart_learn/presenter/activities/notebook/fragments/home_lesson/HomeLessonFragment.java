@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.helpers.NotebookSharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

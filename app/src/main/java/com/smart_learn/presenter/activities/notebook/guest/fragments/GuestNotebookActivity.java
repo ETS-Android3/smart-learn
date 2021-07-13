@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smart_learn.R;
-import com.smart_learn.presenter.activities.notebook.NotebookActivity;
+import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;

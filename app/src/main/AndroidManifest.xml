@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".presenter.activities.notebook.user.fragments.UserNotebookActivity"></activity>
         <activity android:name=".presenter.activities.notebook.guest.fragments.GuestNotebookActivity" />
-        <activity android:name=".presenter.activities.notebook.NotebookActivity" />
+        <activity android:name=".presenter.activities.notebook.helpers.NotebookActivity" />
         <activity android:name=".presenter.activities.community.CommunityActivity" />
         <activity android:name=".presenter.activities.guest.GuestActivity" />
         <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />

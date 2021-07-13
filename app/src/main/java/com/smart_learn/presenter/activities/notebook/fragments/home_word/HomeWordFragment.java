@@ -6,21 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.databinding.FragmentHomeWordBinding;
-import com.smart_learn.presenter.activities.notebook.NotebookActivity;
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;

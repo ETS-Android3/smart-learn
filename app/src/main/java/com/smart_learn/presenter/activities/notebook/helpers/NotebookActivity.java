@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook;
+package com.smart_learn.presenter.activities.notebook.helpers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonsAdapter;
