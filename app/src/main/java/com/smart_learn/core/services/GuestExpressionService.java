@@ -4,21 +4,21 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.smart_learn.data.repository.ExpressionRepository;
+import com.smart_learn.data.repository.GuestExpressionRepository;
 import com.smart_learn.data.room.entities.Expression;
 
 public class GuestExpressionService extends BasicRoomService<Expression> {
 
-    private final ExpressionRepository expressionRepository;
+    private final GuestExpressionRepository guestExpressionRepository;
 
     public GuestExpressionService(Application application){
-        expressionRepository = new ExpressionRepository(application);
+        guestExpressionRepository = new GuestExpressionRepository(application);
 
         // set super repository
-        super.basicRoomRepository = expressionRepository;
+        super.basicRoomRepository = guestExpressionRepository;
     }
 
     public LiveData<Integer> getLiveNumberOfExpressions(){
-        return expressionRepository.getLiveNumberOfExpressions();
+        return guestExpressionRepository.getLiveNumberOfExpressions();
     }
 }
