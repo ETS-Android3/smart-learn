@@ -76,8 +76,8 @@ public class NotebookActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                         switch (item.getItemId()){
                             // fragment with bottom navigation view VISIBLE
-                            case R.id.home_lesson_fragment_nav_graph_activity_notebook:
-                                navController.navigate(R.id.home_lesson_fragment_nav_graph_activity_notebook,null,
+                            case R.id.guest_home_lesson_fragment_nav_graph_activity_notebook:
+                                navController.navigate(R.id.guest_home_lesson_fragment_nav_graph_activity_notebook,null,
                                         Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_notebook));
                                 return true;
                             // fragment with bottom navigation view VISIBLE
@@ -117,8 +117,8 @@ public class NotebookActivity extends AppCompatActivity {
 
     /** Fragment has bottom navigation view HIDDEN. */
     public void goToHomeLessonFragment(){
-        navController.navigate(R.id.action_lessons_fragment_to_lesson_home_fragment_nav_graph_activity_notebook,null,
-                Utilities.Activities.getEnterBottomMenuNavOptions(R.id.home_lesson_fragment_nav_graph_activity_notebook));
+        navController.navigate(R.id.action_guest_lessons_fragment_to_guest_home_lesson_fragment_nav_graph_activity_notebook,null,
+                Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_lesson_fragment_nav_graph_activity_notebook));
     }
 
     /** Fragment has bottom navigation view HIDDEN. */

@@ -6,110 +6,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
-import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
-import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public class HomeLessonFragment extends Fragment {
+public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extends BasicFragment<VM> {
 
     @Getter
-    private FragmentHomeLessonBinding binding;
+    protected FragmentHomeLessonBinding binding;
     @Getter
-    private HomeLessonViewModel homeLessonViewModel;
-    @Getter
-    private NotebookSharedViewModel sharedViewModel;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setViewModel();
-    }
+    protected NotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         binding = FragmentHomeLessonBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
-        binding.setViewModel(homeLessonViewModel);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setLayoutUtilities();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.home));
-        ((NotebookActivity)requireActivity()).showBottomNavigationMenu();
-    }
-
-
-    private void setLayoutUtilities(){
-        Utilities.Activities.setCustomEditableLayout(binding.toolbarFragmentHomeLesson, binding.layoutLessonNameFragmentHomeLesson,
-                binding.tvLessonNameFragmentHomeLesson, new Callbacks.CustomEditableLayoutCallback() {
-            @Override
-            public void savePreviousValue() {
-                homeLessonViewModel.savePreviousLessonName();
-            }
-
-            @Override
-            public void revertToPreviousValue() {
-                homeLessonViewModel.revertToPreviousLessonName();
-            }
-
-            @Override
-            public boolean isCurrentValueOk() {
-                return homeLessonViewModel.updateLessonName(binding.layoutLessonNameFragmentHomeLesson);
-            }
-
-            @Override
-            public void saveCurrentValue() {
-
-            }
-        });
-    }
-
-    private void setViewModel(){
-        // set shared view model
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(NotebookSharedViewModel.class);
-
-        // set fragment view model
-        homeLessonViewModel = new ViewModelProvider(this).get(HomeLessonViewModel.class);
-
-        // set observers
-        homeLessonViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
-            }
-        });
-
-        homeLessonViewModel.getLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
-            @Override
-            public void onChanged(Lesson lesson) {
-                homeLessonViewModel.setLiveLesson(lesson);
-            }
-        });
-    }
 }
 

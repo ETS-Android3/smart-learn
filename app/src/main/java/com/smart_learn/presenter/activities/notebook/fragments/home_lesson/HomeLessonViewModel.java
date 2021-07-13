@@ -18,68 +18,22 @@ import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public class HomeLessonViewModel extends BasicAndroidViewModel {
+public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
 
     @Getter
-    private final int MAX_LESSON_NAME;
+    protected final int MAX_LESSON_NAME;
     @Getter
-    private final LessonService lessonService;
+    protected String previousLessonName;
     @Getter
-    private final MutableLiveData<Lesson> liveLesson;
-    @Getter
-    private String previousLessonName;
+    protected final MutableLiveData<Lesson> liveLesson;
 
     public HomeLessonViewModel(@NonNull @NotNull Application application) {
         super(application);
-        lessonService = new LessonService(application);
+        // TODO: link this with database limit
+        MAX_LESSON_NAME = 50;
         // FIXME: get standard new lesson
         //liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
         liveLesson = new MutableLiveData<>();
-        // TODO: link this with database limit
-        MAX_LESSON_NAME = 50;
     }
 
-    public void setLiveLesson(Lesson lesson){
-            liveLesson.setValue(lesson);
-    }
-
-    public boolean updateLessonName(TextInputLayout textInputLayout) {
-        Lesson lesson = liveLesson.getValue();
-        if(lesson == null || TextUtils.isEmpty(lesson.getName())){
-            textInputLayout.setError(ApplicationController.getInstance().getString(R.string.error_required));
-            return false;
-        }
-
-        if(lesson.getName().equals(previousLessonName)){
-            textInputLayout.setError(ApplicationController.getInstance().getString(R.string.error_lesson_name_is_same));
-            return false;
-        }
-
-        // This check is already made in edit text field and never should enter here, but double check it.
-        if(lesson.getName().length() > MAX_LESSON_NAME){
-            textInputLayout.setError(ApplicationController.getInstance().getString(R.string.error_lesson_name_too_long));
-            return false;
-        }
-
-        textInputLayout.setError(null);
-        GeneralUtilities.showShortToastMessage(ApplicationController.getInstance(),lesson.getName());
-        return true;
-    }
-
-    public void savePreviousLessonName(){
-        Lesson lesson = liveLesson.getValue();
-        if(lesson == null){
-            return;
-        }
-        previousLessonName = lesson.getName();
-    }
-
-    public void revertToPreviousLessonName(){
-        Lesson lesson = liveLesson.getValue();
-        if(lesson == null){
-            return;
-        }
-        lesson.setName(previousLessonName);
-        liveLesson.setValue(lesson);
-    }
 }
