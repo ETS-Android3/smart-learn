@@ -3,33 +3,17 @@ package com.smart_learn.presenter.activities.notebook.fragments.words;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.smart_learn.core.services.WordService;
-import com.smart_learn.presenter.activities.notebook.fragments.words.helpers.WordsAdapter;
-import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
+import com.smart_learn.presenter.helpers.PresenterHelpers;
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicViewModelForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
 
-
-public class WordsViewModel extends BasicAndroidViewModel {
-
-    @Getter
-    private final WordService wordsService;
-    @Getter
-    @Setter
-    @Nullable
-    private WordsAdapter wordsAdapter;
-    @Getter
-    @Setter
-    private boolean allItemsAreSelected;
+public abstract class WordsViewModel <AD extends RecyclerView.Adapter<?> & PresenterHelpers.AdapterHelper> extends BasicViewModelForRecyclerView<AD> {
 
     public WordsViewModel(@NonNull @NotNull Application application) {
         super(application);
-        wordsService = new WordService(application);
-        allItemsAreSelected = false;
     }
 }

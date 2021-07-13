@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutCardViewWordBinding;
-import com.smart_learn.presenter.activities.notebook.fragments.words.WordsFragment;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.words.GuestWordsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder> implements Filterable {
+public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
 
-    private final Callbacks.FragmentGeneralCallback<WordsFragment> fragmentCallback;
+    private final Callbacks.FragmentGeneralCallback<GuestWordsFragment> fragmentCallback;
 
-    public WordsAdapter(@NonNull Callbacks.FragmentGeneralCallback<WordsFragment> fragmentCallback) {
+    public WordsAdapter(@NonNull Callbacks.FragmentGeneralCallback<GuestWordsFragment> fragmentCallback) {
         super(new DiffUtil.ItemCallback<Word>(){
             @Override
             public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
@@ -103,6 +103,11 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
         };
     }
 
+    @Override
+    public void loadMoreData() {
+        // no action needed here
+    }
+
 
     /**
      * Class to specific how an element from recycler view (lesson card) will be shown
@@ -150,7 +155,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
                 @Override
                 public boolean onLongClick(View v) {
                     if(fragmentCallback.getFragment().getActionMode() == null) {
-                        fragmentCallback.getFragment().startActionMode();
+                        fragmentCallback.getFragment().startFragmentActionMode();
                         // by default clicked item is selected
                         markItem(getItem(getAdapterPosition()),true);
                     }

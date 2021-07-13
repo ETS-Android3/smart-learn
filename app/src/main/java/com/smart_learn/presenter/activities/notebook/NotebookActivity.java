@@ -81,8 +81,8 @@ public class NotebookActivity extends AppCompatActivity {
                                         Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_notebook));
                                 return true;
                             // fragment with bottom navigation view VISIBLE
-                            case R.id.words_fragment_nav_graph_activity_notebook:
-                                navController.navigate(R.id.words_fragment_nav_graph_activity_notebook,null,
+                            case R.id.guest_words_fragment_nav_graph_activity_notebook:
+                                navController.navigate(R.id.guest_words_fragment_nav_graph_activity_notebook,null,
                                         Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_notebook));
                                 return true;
                         }

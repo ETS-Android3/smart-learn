@@ -20,10 +20,10 @@
         android:label="guest_home_lesson_fragment_nav_graph_activity_notebook"
         tools:layout="@layout/fragment_home_lesson"/>
     <fragment
-        android:id="@+id/words_fragment_nav_graph_activity_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.fragments.words.WordsFragment"
-        android:label="words_fragment_nav_graph_activity_notebook"
-        tools:layout="@layout/fragment_words">
+        android:id="@+id/guest_words_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.words.GuestWordsFragment"
+        android:label="guest_words_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
             android:id="@+id/action_words_fragment_nav_graph_activity_notebook_to_home_word_fragment_nav_graph_activity_notebook"
             app:destination="@id/home_word_fragment_nav_graph_activity_notebook" />
