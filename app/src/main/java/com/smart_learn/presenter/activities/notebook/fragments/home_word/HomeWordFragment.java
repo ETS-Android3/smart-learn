@@ -18,6 +18,7 @@ import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.databinding.FragmentHomeWordBinding;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
@@ -31,7 +32,7 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
     @Getter
     protected FragmentHomeWordBinding binding;
     @Getter
-    protected NotebookSharedViewModel sharedViewModel;
+    protected GuestNotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

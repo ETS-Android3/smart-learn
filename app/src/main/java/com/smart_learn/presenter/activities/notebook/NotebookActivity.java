@@ -1,27 +1,20 @@
 package com.smart_learn.presenter.activities.notebook;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityNotebookBinding;
@@ -31,17 +24,23 @@ import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
-import lombok.Getter;
+public abstract class NotebookActivity <VM extends NotebookSharedViewModel> extends AppCompatActivity {
 
-public class NotebookActivity extends AppCompatActivity {
+    protected ActivityNotebookBinding binding;
+    protected VM sharedViewModel;
 
-    private ActivityNotebookBinding binding;
-    private NotebookSharedViewModel sharedViewModel;
-    @Getter
-    private ActionMode actionMode;
-    private NavController navController;
+    protected NavController navController;
+    protected BottomSheetBehavior<LinearLayoutCompat> bottomSheetBehavior;
 
-    private BottomSheetBehavior<LinearLayoutCompat> bottomSheetBehavior;
+
+    /**
+     *  Used to instantiate ViewModel. ViewModelProvider needs something like 'ViewModelClassName.class'.
+     *
+     * @return ViewModelClassName.class
+     */
+    @NonNull
+    @NotNull
+    protected abstract Class <VM> getModelClassForViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,41 +63,19 @@ public class NotebookActivity extends AppCompatActivity {
     }
 
 
-    private void setLayoutUtilities(){
-        // set bottom sheet behaviour for bottom navigation menu layout
-        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
-
-        // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_notebook,
-                binding.bottomNavigationActivityNotebook, new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @SuppressLint("NonConstantResourceId")
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                        switch (item.getItemId()){
-                            // fragment with bottom navigation view VISIBLE
-                            case R.id.guest_home_lesson_fragment_nav_graph_activity_notebook:
-                                navController.navigate(R.id.guest_home_lesson_fragment_nav_graph_activity_notebook,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_notebook));
-                                return true;
-                            // fragment with bottom navigation view VISIBLE
-                            case R.id.guest_words_fragment_nav_graph_activity_notebook:
-                                navController.navigate(R.id.guest_words_fragment_nav_graph_activity_notebook,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_notebook));
-                                return true;
-                        }
-                        return false;
-                    }
-                }, null);
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
-    private void setViewModel(){
-        sharedViewModel = new ViewModelProvider(this).get(NotebookSharedViewModel.class);
+    protected void setLayoutUtilities(){
+        // set bottom sheet behaviour for bottom navigation menu layout
+        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
+    }
+
+    protected void setViewModel(){
+        sharedViewModel = new ViewModelProvider(this).get(getModelClassForViewModel());
         sharedViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -114,76 +91,6 @@ public class NotebookActivity extends AppCompatActivity {
     public void showBottomNavigationMenu(){
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
-
-    /** Fragment has bottom navigation view HIDDEN. */
-    public void goToHomeLessonFragment(){
-        navController.navigate(R.id.action_guest_lessons_fragment_to_guest_home_lesson_fragment_nav_graph_activity_notebook,null,
-                Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_lesson_fragment_nav_graph_activity_notebook));
-    }
-
-    /** Fragment has bottom navigation view HIDDEN. */
-    public void goToHomeWordFragment(){
-        navController.navigate(R.id.action_guest_words_fragment_nav_graph_activity_notebook_to_guest_home_word_fragment_nav_graph_activity_notebook,null,
-                Utilities.Activities.getExitBottomMenuNavOptions(R.id.guest_home_word_fragment_nav_graph_activity_notebook));
-    }
-
-
-    /**
-     * Define what to do when action mode is started from this activity fragments.
-     *
-     * Same behaviour is applied to fragments: LessonsFragment, WordsFragment ... TODO: complete this
-     *
-     * @param button The floating button for add action (this will be hidden in action mode).
-     * @param mainLayout The main layout which is shown where bottom sheet is HIDDEN.
-     * @param guestSheetLayout The layout for guest bottom sheet (shown when user is not logged in).
-     * @param userSheetLayout The layout for user bottom sheet (shown when user is logged in).
-     * @param guestSheetBehaviour The behaviour object for guest bottom sheet.
-     * @param userSheetBehaviour The behaviour object for user bottom sheet.
-     * @param actionModeCustomCallback Callback which will manage custom action mode actions.
-     * */
-    public void startActionMode(@NonNull FloatingActionButton button, @NonNull CoordinatorLayout mainLayout,
-                                @NonNull LinearLayoutCompat guestSheetLayout, @NonNull BottomSheetBehavior<LinearLayoutCompat> guestSheetBehaviour,
-                                @NonNull LinearLayoutCompat userSheetLayout, @NonNull BottomSheetBehavior<LinearLayoutCompat> userSheetBehaviour,
-                                @NonNull Callbacks.ActionModeCustomCallback actionModeCustomCallback){
-
-        actionMode = startSupportActionMode(new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                if(Utilities.Auth.isUserLoggedIn()){
-                    Utilities.Activities.showPersistentBottomSheet(button,mainLayout,userSheetLayout,userSheetBehaviour);
-                }
-                else{
-                    Utilities.Activities.showPersistentBottomSheet(button,mainLayout,guestSheetLayout,guestSheetBehaviour);
-                }
-                actionModeCustomCallback.onCreateActionMode();
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                mode.finish();
-                actionMode = null;
-                if(Utilities.Auth.isUserLoggedIn()){
-                    Utilities.Activities.hidePersistentBottomSheet(button,mainLayout,userSheetBehaviour);
-                }
-                else{
-                    Utilities.Activities.hidePersistentBottomSheet(button,mainLayout,guestSheetBehaviour);
-                }
-                actionModeCustomCallback.onDestroyActionMode();
-            }
-        });
-    }
-
 
 
     /**
@@ -214,6 +121,5 @@ public class NotebookActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }

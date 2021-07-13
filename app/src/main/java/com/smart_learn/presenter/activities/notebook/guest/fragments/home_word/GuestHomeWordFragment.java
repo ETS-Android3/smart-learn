@@ -12,8 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.fragments.home_word.HomeWordFragment;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -38,7 +39,7 @@ public class GuestHomeWordFragment extends HomeWordFragment<GuestHomeWordViewMod
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.home));
-        ((NotebookActivity)requireActivity()).hideBottomNavigationMenu();
+        ((GuestNotebookActivity)requireActivity()).hideBottomNavigationMenu();
     }
 
     private void setLayoutUtilities(){
@@ -73,7 +74,7 @@ public class GuestHomeWordFragment extends HomeWordFragment<GuestHomeWordViewMod
         super.setViewModel();
 
         // set shared view model
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(NotebookSharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
         viewModel.getWordsService().getSampleLiveWord(sharedViewModel.getSelectedWordId()).observe(this, new Observer<Word>() {
             @Override

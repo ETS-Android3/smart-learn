@@ -12,11 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -30,7 +31,7 @@ import lombok.Getter;
 public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel> {
 
     @Getter
-    private NotebookSharedViewModel sharedViewModel;
+    private GuestNotebookSharedViewModel sharedViewModel;
 
     @NonNull
     @Override
@@ -73,9 +74,9 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.lessons));
-        ((NotebookActivity)requireActivity()).hideBottomNavigationMenu();
-        sharedViewModel.setSelectedLessonId(NotebookSharedViewModel.NO_ITEM_SELECTED);
-        sharedViewModel.setSelectedWordId(NotebookSharedViewModel.NO_ITEM_SELECTED);
+        ((GuestNotebookActivity)requireActivity()).hideBottomNavigationMenu();
+        sharedViewModel.setSelectedLessonId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
+        sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         super.setViewModel();
 
         // set shared view model
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(NotebookSharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
         viewModel.setAdapter(new LessonsAdapter(new Callbacks.FragmentGeneralCallback<GuestLessonsFragment>() {
             @Override
@@ -164,7 +165,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
 
     public void goToHomeLessonFragment(Lesson lesson){
         // when navigation is made a valid lesson id must be set on shared view model
-        if(lesson == null || lesson.getLessonId() == NotebookSharedViewModel.NO_ITEM_SELECTED){
+        if(lesson == null || lesson.getLessonId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
@@ -172,7 +173,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         // First set current lesson id (lesson which is clicked) on the shared view model and
         // then you can navigate.
         sharedViewModel.setSelectedLessonId(lesson.getLessonId());
-        ((NotebookActivity)requireActivity()).goToHomeLessonFragment();
+        ((GuestNotebookActivity)requireActivity()).goToHomeLessonFragment();
     }
 
 }

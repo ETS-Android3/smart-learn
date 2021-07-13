@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
     @Getter
     protected FragmentHomeLessonBinding binding;
     @Getter
-    protected NotebookSharedViewModel sharedViewModel;
+    protected GuestNotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

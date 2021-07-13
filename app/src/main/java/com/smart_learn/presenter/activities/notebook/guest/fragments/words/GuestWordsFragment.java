@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.presenter.activities.notebook.NotebookActivity;
-import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.fragments.words.WordsFragment;
 import com.smart_learn.presenter.activities.notebook.fragments.words.helpers.WordsAdapter;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -27,7 +27,7 @@ import lombok.Getter;
 public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Getter
-    private NotebookSharedViewModel sharedViewModel;
+    private GuestNotebookSharedViewModel sharedViewModel;
 
     @NonNull
     @Override
@@ -54,7 +54,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Override
     protected void onActionModeCreate() {
-        ((NotebookActivity)requireActivity()).hideBottomNavigationMenu();
+        ((GuestNotebookActivity)requireActivity()).hideBottomNavigationMenu();
 
         // Use this to prevent any previous selection. If an error occurred and
         // action mode could not be closed then items could not be disabled and will
@@ -64,7 +64,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Override
     protected void onActionModeDestroy() {
-        ((NotebookActivity)requireActivity()).showBottomNavigationMenu();
+        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
 
         // use this to disable all selection
         viewModel.getWordsService().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
@@ -74,8 +74,8 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.words));
-        ((NotebookActivity)requireActivity()).showBottomNavigationMenu();
-        sharedViewModel.setSelectedWordId(NotebookSharedViewModel.NO_ITEM_SELECTED);
+        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
+        sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         super.setViewModel();
 
         // set shared view model
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(NotebookSharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
         // set fragment view model adapter
         viewModel.setAdapter(new WordsAdapter(new Callbacks.FragmentGeneralCallback<GuestWordsFragment>() {
@@ -154,7 +154,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
     }
 
     public void goToHomeWordFragment(Word word){
-        if(word == null || word.getWordId() == NotebookSharedViewModel.NO_ITEM_SELECTED){
+        if(word == null || word.getWordId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }
@@ -162,7 +162,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         // First set current lesson id (lesson which is clicked) on the shared view model and
         // then you can navigate.
         sharedViewModel.setSelectedWordId(word.getWordId());
-        ((NotebookActivity)requireActivity()).goToHomeWordFragment();
+        ((GuestNotebookActivity)requireActivity()).goToHomeWordFragment();
     }
 
 }

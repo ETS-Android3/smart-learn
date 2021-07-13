@@ -14,6 +14,8 @@ import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.NotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.fragments.home_lesson.HomeLessonFragment;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -38,7 +40,7 @@ public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonV
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.home));
-        ((NotebookActivity)requireActivity()).showBottomNavigationMenu();
+        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
     }
 
 
@@ -73,7 +75,7 @@ public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonV
         super.setViewModel();
 
         // set shared view model
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(NotebookSharedViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
         viewModel.getLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
             @Override
