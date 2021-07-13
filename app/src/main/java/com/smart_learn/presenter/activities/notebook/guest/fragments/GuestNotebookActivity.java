@@ -21,6 +21,11 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
     }
 
     @Override
+    protected int getNavigationGraphResource() {
+        return R.navigation.nav_graph_activity_notebook;
+    }
+
+    @Override
     protected void setLayoutUtilities(){
         super.setLayoutUtilities();
 

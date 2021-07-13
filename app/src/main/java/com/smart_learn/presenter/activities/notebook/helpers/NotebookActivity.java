@@ -42,6 +42,13 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
     @NotNull
     protected abstract Class <VM> getModelClassForViewModel();
 
+    /**
+     *  Used to set a navigation graph resource.
+     *
+     * @return Navigation resource id.
+     */
+    protected abstract int getNavigationGraphResource();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +65,10 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
             this.finish();
             return;
         }
+
+        // set specific navigation graph
+        // https://stackoverflow.com/questions/50898996/setting-navgraph-programmatically
+        navController.setGraph(getNavigationGraphResource());
 
         setViewModel();
     }
