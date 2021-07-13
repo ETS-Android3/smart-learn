@@ -27,7 +27,7 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
 
     @Override
     protected int getMenuResourceId() {
-        return R.menu.menu_bottom_navigation_activity_notebook;
+        return R.menu.menu_bottom_navigation_activity_guest_notebook;
     }
 
     @Override
