@@ -8,6 +8,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.core.helpers.ResponseInfo;

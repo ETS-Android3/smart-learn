@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;

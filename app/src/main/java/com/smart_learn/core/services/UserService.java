@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 import timber.log.Timber;
 
-public class UserService extends BasicFirestoreService<UserDocument, UserRepository>{
+public class UserService extends BasicFirestoreService<UserDocument, UserRepository> {
 
     private static UserService instance;
 
