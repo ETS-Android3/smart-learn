@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
-import com.smart_learn.core.services.ExpressionService;
+import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel;
@@ -20,13 +20,13 @@ public class GuestAccountOverviewViewModel extends AccountOverviewViewModel {
 
         guestLessonService = new GuestLessonService(application);
         guestWordService = new GuestWordService(application);
-        expressionService = new ExpressionService(application);
+        guestExpressionService = new GuestExpressionService(application);
 
         // Is enough to set this values once because will be linked with db using live data, so any
         // change in db will be propagated to the layout.
         liveNumberOfLessons = guestLessonService.getLiveNumberOfLessons();
         liveNumberOfWords = guestWordService.getLiveNumberOfWords();
-        liveNumberOfExpressions = expressionService.getLiveNumberOfExpressions();
+        liveNumberOfExpressions = guestExpressionService.getLiveNumberOfExpressions();
 
         // TODO: link this with correct values from db
         liveNumberOfLocalActiveTests = new MutableLiveData<>(0);
