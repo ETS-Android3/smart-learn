@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.smart_learn.core.services.LessonService;
+import com.smart_learn.data.room.entities.Lesson;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsViewModel;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers.LessonsAdapter;
 
@@ -29,7 +31,13 @@ public class GuestLessonsViewModel extends LessonsViewModel<LessonsAdapter> {
 
     @Override
     public void deleteSelectedItems(){
-        //FIXME: here should be launched a dialog if lessons contains word in order to alert user
         lessonService.deleteSelectedItems();
     }
+
+    @Override
+    public void addLessonByName(@NonNull @NotNull String lessonName) {
+        Lesson lesson = new Lesson("", false, new BasicInfo(System.currentTimeMillis()), lessonName);
+        lessonService.tryToAddOrUpdateNewLesson(lesson, false);
+    }
+
 }

@@ -104,12 +104,8 @@ public class LessonService extends BasicRoomService<Lesson> {
             return responseInfo;
         }
 
-        /*
-        FIXME: fix adding a lesson
-        BasicInfo basicInfo = new BasicInfo("",System.currentTimeMillis(), System.currentTimeMillis());
-        Lesson newLesson = new Lesson(lesson.getName(), System.currentTimeMillis(), System.currentTimeMillis(),false);
-        insert(newLesson);
-         */
+
+        insert(lesson);
 
         return responseInfo;
     }

@@ -19,6 +19,13 @@ public final class DataUtilities {
     }
 
     /**
+     * Fields limits related to data layer.
+     * */
+    public static final class Limits {
+            public static final int MAX_LESSON_NAME = 50;
+    }
+
+    /**
      * General utilities related to data layer.
      * */
     public static final class General {

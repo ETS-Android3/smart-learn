@@ -5,7 +5,7 @@
     <group
         android:id="@+id/main_group_menu_card_view_lesson">
         <item
-            android:id="@+id/action_mode_menu_card_view_lesson"
+            android:id="@+id/action_delete_menu_card_view_lesson"
             android:title="Delete"
             app:showAsAction="never"/>
     </group>

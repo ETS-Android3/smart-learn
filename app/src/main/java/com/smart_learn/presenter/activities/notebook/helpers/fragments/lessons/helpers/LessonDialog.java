@@ -16,7 +16,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutDialogAddLessonBinding;
 
 /** https://developer.android.com/guide/topics/ui/dialogs */
@@ -76,9 +75,9 @@ public class LessonDialog extends DialogFragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Lesson submittedLesson = lessonDialogViewModel.getDialogSubmittedLesson(dialogBinding);
-                        if(submittedLesson != null){
-                            dialogCallback.onAddLesson(submittedLesson);
+                        String submittedLessonName = lessonDialogViewModel.getDialogSubmittedLessonName(dialogBinding);
+                        if(submittedLessonName != null){
+                            dialogCallback.onAddLesson(submittedLessonName);
                             LessonDialog.this.dismiss();
                         }
                     }
@@ -94,7 +93,7 @@ public class LessonDialog extends DialogFragment {
     }
 
     public interface Callback {
-        void onAddLesson(@NonNull Lesson lesson);
+        void onAddLesson(@NonNull String lessonName);
     }
 
 }

@@ -1,39 +1,48 @@
 package com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers;
 
 
+import android.text.SpannableString;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
+
 /**
  * For ListAdapter https://www.youtube.com/watch?v=xPPMygGxiEo
  * */
 public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
+
+    private final MutableLiveData<Boolean> liveIsActionModeActive;
+    private boolean isFiltering;
+    private String filteringValue;
 
     private final Callbacks.FragmentGeneralCallback<GuestLessonsFragment> fragmentCallback;
 
@@ -41,24 +50,27 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
         super(new DiffUtil.ItemCallback<Lesson>(){
             @Override
             public boolean areItemsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
-                return oldItem.getLessonId() == newItem.getLessonId();
+                return oldItem.areItemsTheSame(newItem);
             }
-
             @Override
             public boolean areContentsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
-                return oldItem.getName().equals(newItem.getName()) &&
-                        oldItem.getBasicInfo().getCreatedAt() == newItem.getBasicInfo().getCreatedAt() &&
-                        oldItem.getBasicInfo().getModifiedAt() == newItem.getBasicInfo().getModifiedAt() &&
-                        oldItem.isSelected() == newItem.isSelected();
+                return oldItem.areContentsTheSame(newItem);
             }
         });
 
         this.fragmentCallback = fragmentCallback;
+
+        this.liveIsActionModeActive = new MutableLiveData<>(false);
+        this.isFiltering = false;
+        this.filteringValue = "";
     }
 
-    /** Load data in recycler view */
     public void setItems(List<Lesson> items) {
         submitList(items);
+    }
+
+    public void setLiveActionMode(boolean value) {
+         liveIsActionModeActive.setValue(value);
     }
 
     @NonNull
@@ -66,19 +78,30 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
     public LessonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // set data binding
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        LayoutCardViewLessonBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.layout_card_view_lesson, parent, false);
+        LayoutCardViewLessonBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater,
+                R.layout.layout_card_view_lesson, parent, false);
         viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
 
-        // link data binding layout with view holder
-        LessonViewHolder lessonViewHolder = new LessonViewHolder(viewHolderBinding);
-        viewHolderBinding.setViewHolder(lessonViewHolder);
+        // set binding variable
+        viewHolderBinding.setLiveIsActionModeActive(liveIsActionModeActive);
 
-        return lessonViewHolder;
+        return new LessonViewHolder(viewHolderBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LessonsAdapter.LessonViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        if(position == NO_POSITION){
+            Timber.w("position is set to NO_POSITION");
+            return;
+        }
+
+        Lesson lesson = getItem(position);
+        if(lesson == null){
+            Timber.w("item is null ==> can not create bind");
+            return;
+        }
+
+        holder.bind(lesson, position);
     }
 
     /**
@@ -92,33 +115,21 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             /** Run on background thread. Background thread is created automatically. */
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-
-                String searchValue = constraint.toString();
+                isFiltering = true;
+                filteringValue = constraint.toString();
 
                 // For filtering mode we search always in all db.
                 List<Lesson> allItems = fragmentCallback.getFragment().getViewModel().getLessonService().getAllSampleLesson();
-                // reset search indexes and spanned name for all items
-                allItems.forEach(it -> {
-                    it.setSearchIndexes(new ArrayList<>());
-                    it.resetSpannedName();
-                });
-
                 List<Lesson> filteredItems;
 
-                if (searchValue.isEmpty()) {
+                if (filteringValue.isEmpty()) {
+                    isFiltering = false;
                     filteredItems = allItems;
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getName().toLowerCase().contains(searchValue.toLowerCase()))
+                            .filter(it -> it.getName().toLowerCase().contains(filteringValue.toLowerCase()))
                             .collect(Collectors.toList());
-
-                    // these indexes are used to show a background color for searchValue while filtering
-                    filteredItems.forEach(it -> {
-                        int start = it.getName().toLowerCase().indexOf(searchValue.toLowerCase());
-                        int end = start + searchValue.length();
-                        it.addIndexRange(new IndexRange(start,end));
-                    });
                 }
 
                 FilterResults filterResults = new FilterResults();
@@ -156,39 +167,73 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
 
     @Override
     public void loadMoreData() {
-
+        // no action needed here
     }
 
 
-    /**
-     * Class to specific how an element from recycler view (lesson card) will be shown
-     * */
-    public final class LessonViewHolder extends RecyclerView.ViewHolder {
+    public final class LessonViewHolder extends BasicViewHolder<Lesson, LayoutCardViewLessonBinding> {
 
-        private final LayoutCardViewLessonBinding viewHolderBinding;
-        private final MutableLiveData<Lesson> liveLesson;
+        private final MutableLiveData<SpannableString> liveLessonSpannedName;
+        private final MutableLiveData<Boolean> liveIsSelected;
 
         public LessonViewHolder(@NonNull LayoutCardViewLessonBinding viewHolderBinding) {
-            // this will set itemView in ViewHolder class
-            super(viewHolderBinding.getRoot());
-            this.viewHolderBinding = viewHolderBinding;
+            super(viewHolderBinding);
+            liveLessonSpannedName = new MutableLiveData<>(new SpannableString(""));
+            liveIsSelected = new MutableLiveData<>(false);
 
-            // avoid a null value for liveLesson.getValue()
-            // FIXME: add a standard new empty lesson
-            //liveLesson = new MutableLiveData<>(new Lesson("",0,0,false));
-            liveLesson = new MutableLiveData<>();
+            // link binding with variables
+            viewHolderBinding.setLiveLessonSpannedName(liveLessonSpannedName);
+            viewHolderBinding.setLiveIsSelected(liveIsSelected);
 
             setListeners();
         }
 
-        public LiveData<Lesson> getLiveLesson(){ return liveLesson; }
+        @Override
+        protected Lesson getEmptyLiveItemInfo() {
+            return Lesson.generateEmptyObject();
+        }
+
+        @Override
+        protected void bind(@NonNull @NotNull Lesson item, int position) {
+            if(isFiltering){
+                liveLessonSpannedName.setValue(Utilities.Activities.generateSpannedString(
+                        CoreUtilities.General.getSubstringIndexes(item.getName(), filteringValue), item.getName()));
+            }
+            else {
+                liveLessonSpannedName.setValue(new SpannableString(item.getName()));
+            }
+
+            if (fragmentCallback.getFragment().getActionMode() != null) {
+                liveIsSelected.setValue(item.isSelected());
+                viewHolderBinding.cvLayoutCardViewLesson.setChecked(item.isSelected());
+                return;
+            }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewLesson.setChecked(false);
+        }
+
 
         private void setListeners(){
+
+            setToolbarListener();
+
             // simple click action
             viewHolderBinding.cvLayoutCardViewLesson.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Lesson lesson = getItem(getAdapterPosition());
+                    int position = getAdapterPosition();
+                    if(position == NO_POSITION){
+                        Timber.w("position is set to NO_POSITION");
+                        return;
+                    }
+
+                    Lesson lesson = getItem(position);
+                    if(lesson == null){
+                        Timber.w("lesson is null");
+                        return;
+                    }
+
                     // If action mode is on then user can select/deselect items.
                     if(fragmentCallback.getFragment().getActionMode() != null) {
                         markItem(lesson,!lesson.isSelected());
@@ -206,9 +251,21 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 @Override
                 public boolean onLongClick(View v) {
                     if(fragmentCallback.getFragment().getActionMode() == null) {
+                        int position = getAdapterPosition();
+                        if(position == NO_POSITION){
+                            Timber.w("position is set to NO_POSITION");
+                            return true;
+                        }
+
+                        Lesson lesson = getItem(position);
+                        if(lesson == null){
+                            Timber.w("lesson is null");
+                            return true;
+                        }
+
                         fragmentCallback.getFragment().startFragmentActionMode();
                         // by default clicked item is selected
-                        markItem(getItem(getAdapterPosition()),true);
+                        markItem(lesson,true);
                     }
                     return true;
                 }
@@ -216,43 +273,43 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
 
         }
 
-        /** this is how single elements are displayed in recycler view */
-        private void bind(Lesson lesson){
-            if(lesson == null){
-                Timber.w("lesson is null ==> can not create bind");
-                return;
-            }
+        private void setToolbarListener(){
+            viewHolderBinding.toolbarLayoutCardViewLesson.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int position = getAdapterPosition();
+                    if(position == NO_POSITION){
+                        Timber.w("position is set to NO_POSITION");
+                        return true;
+                    }
 
-            if (fragmentCallback.getFragment().getActionMode() != null) {
-                viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.GONE);
-                viewHolderBinding.cvLayoutCardViewLesson.setChecked(lesson.isSelected());
-                liveLesson.setValue(lesson);
-                return;
-            }
+                    Lesson lesson = getItem(position);
+                    if(lesson == null){
+                        Timber.w("lesson is null");
+                        return true;
+                    }
 
-            viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.VISIBLE);
-
-            if(!lesson.getSearchIndexes().isEmpty()) {
-                lesson.setSpannedName(Utilities.Activities.createSpannedText(lesson.getSearchIndexes(), lesson.getName()));
-            }
-            else {
-                // This reset will be made also when a new filtering is made, but to avoid to keep
-                // irrelevant info linked to lesson if no filtering will be made, make reset here
-                // too.
-                lesson.setSearchIndexes(new ArrayList<>());
-                lesson.resetSpannedName();
-            }
-
-            liveLesson.setValue(lesson);
+                    int id = item.getItemId();
+                    if(id == R.id.action_delete_menu_card_view_lesson){
+                        fragmentCallback.getFragment().deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
+                            @Override
+                            public void onPositiveButtonPress() {
+                                fragmentCallback.getFragment().getViewModel().getLessonService().delete(lesson);
+                            }
+                        });
+                        return true;
+                    }
+                    return true;
+                }
+            });
         }
     }
 
     private void markItem(Lesson lesson, boolean isSelected) {
-        // FIXME: add a standard new empty lesson
-        //Lesson tmp = new Lesson(lesson.getName(), lesson.getCreatedAt(), lesson.getModifiedAt(), lesson.isSelected());
-       // tmp.setLessonId(lesson.getLessonId());
-       // tmp.setSelected(isSelected);
-        //fragmentCallback.getFragment().getLessonsViewModel().getLessonService().update(tmp);
+        Lesson tmp = new Lesson(lesson.getNotes(), lesson.isSelected(), lesson.getBasicInfo(), lesson.getName());
+        tmp.setLessonId(lesson.getLessonId());
+        tmp.setSelected(isSelected);
+        fragmentCallback.getFragment().getViewModel().getLessonService().update(tmp);
     }
 }
 

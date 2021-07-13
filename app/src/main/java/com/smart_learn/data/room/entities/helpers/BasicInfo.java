@@ -21,5 +21,17 @@ public class BasicInfo {
         this.createdAt = createdAt;
         this.modifiedAt = createdAt;
     }
+
+    public boolean areContentsTheSame(BasicInfo newItem){
+        if(newItem == null){
+            return false;
+        }
+        return this.createdAt == newItem.getCreatedAt() &&
+                this.modifiedAt == newItem.getModifiedAt();
+    }
+
+    public static BasicInfo generateEmptyObject(){
+        return new BasicInfo(System.currentTimeMillis());
+    }
 }
 

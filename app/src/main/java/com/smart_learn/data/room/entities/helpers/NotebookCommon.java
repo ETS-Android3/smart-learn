@@ -3,7 +3,12 @@ package com.smart_learn.data.room.entities.helpers;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 
+import com.smart_learn.core.utilities.CoreUtilities;
+
+import org.jetbrains.annotations.NotNull;
+
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -23,10 +28,19 @@ public abstract class NotebookCommon {
     @Embedded
     private final BasicInfo basicInfo;
 
-    public NotebookCommon(String notes, boolean isSelected, BasicInfo basicInfo) {
+    public NotebookCommon(String notes, boolean isSelected, @NonNull @NotNull BasicInfo basicInfo) {
         this.notes = notes;
         this.isSelected = isSelected;
         this.basicInfo = basicInfo;
+    }
+
+    public boolean areContentsTheSame(NotebookCommon newItem){
+        if(newItem == null){
+            return false;
+        }
+        return CoreUtilities.General.areObjectsTheSame(this.notes, newItem.getNotes()) &&
+                this.isSelected == newItem.isSelected() &&
+                basicInfo.areContentsTheSame(newItem.getBasicInfo());
     }
 }
 

@@ -20,7 +20,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:ems="10"
-            android:hint="Lesson name"
+            android:hint="@string/lesson_name"
             app:counterEnabled="true"
             app:counterMaxLength="@{viewModel.MAX_LESSON_NAME}"
             app:endIconMode="clear_text"
@@ -39,7 +39,7 @@
                 android:layout_height="50dp"
                 android:inputType="textPersonName"
                 android:maxLength="@{viewModel.MAX_LESSON_NAME}"
-                android:text="@={viewModel.liveLessonInfo.name}" />
+                android:text="@={viewModel.liveLessonName}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

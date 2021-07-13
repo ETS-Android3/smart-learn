@@ -18,4 +18,5 @@ public abstract class LessonsViewModel<AD extends RecyclerView.Adapter<?> & Pres
     }
     
     public abstract void deleteSelectedItems();
+    public abstract void addLessonByName(@NonNull @NotNull String lessonName);
 }

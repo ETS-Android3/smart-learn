@@ -5,18 +5,16 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsFragment;
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonDialog;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers.LessonsAdapter;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -57,6 +55,11 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
 
     @Override
     protected void onActionModeCreate() {
+        // mark that action mode started
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setLiveActionMode(true);
+        }
+
         // Use this to prevent any previous selection. If an error occurred and
         // action mode could not be closed then items could not be disabled and will
         // hang as selected.  FIXME: try yo find a better way to do that
@@ -67,6 +70,11 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
     protected void onActionModeDestroy() {
         // use this to disable all selection
         viewModel.getLessonService().updateSelectAll(false);
+
+        // mark that action mode finished
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setLiveActionMode(false);
+        }
     }
 
     @Override
@@ -101,7 +109,12 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.deleteSelectedItems();
+                GuestLessonsFragment.super.deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
+                    @Override
+                    public void onPositiveButtonPress() {
+                        viewModel.deleteSelectedItems();
+                    }
+                });
             }
         });
 
@@ -150,16 +163,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         });
     }
 
-    protected void showAddLessonDialog(){
-        DialogFragment dialogFragment = new LessonDialog(new LessonDialog.Callback() {
-            @Override
-            public void onAddLesson(@NonNull @NotNull Lesson lesson) {
-                GeneralUtilities.showShortToastMessage(GuestLessonsFragment.this.requireContext(),
-                        viewModel.getLessonService().tryToAddOrUpdateNewLesson(lesson, false).getInfo());
-            }
-        });
-        dialogFragment.show(requireActivity().getSupportFragmentManager(), "LessonsActivity");
-    }
+
 
 
     public void goToHomeLessonFragment(Lesson lesson){

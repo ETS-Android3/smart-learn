@@ -234,6 +234,27 @@ public abstract class CoreUtilities {
 
             return indexes;
         }
+
+
+        /**
+         * Use to check if objects are the same. Object should have equals() implemented.
+         *
+         * @param objectA First object for comparison.
+         * @param objectB Second object for comparison.
+         *
+         * @return true if objectA has content the same as objectB, or false otherwise.
+         * */
+        public static boolean areObjectsTheSame(Object objectA, Object objectB){
+            if(objectA == null && objectB == null){
+                return true;
+            }
+
+            if(objectA == null || objectB == null){
+                return false;
+            }
+
+            return objectA.equals(objectB);
+        }
     }
 
 

@@ -238,5 +238,8 @@
     <string name="search_is_in_progress">Please wait until search is finished.</string>
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
+    <string name="delete_lesson">Delete lesson</string>
+    <string name="delete_lesson_description_1">If you delete lesson all words and expressions from this lesson will be deleted. Are you sure?</string>
+    <string name="delete">Delete</string>
 
 </resources>
