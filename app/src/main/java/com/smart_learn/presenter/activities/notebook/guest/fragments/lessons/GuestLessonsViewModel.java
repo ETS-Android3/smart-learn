@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.smart_learn.core.services.LessonService;
-import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsViewModel;
-import com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsViewModel;
+import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonsAdapter;
 
 import org.jetbrains.annotations.NotNull;
 

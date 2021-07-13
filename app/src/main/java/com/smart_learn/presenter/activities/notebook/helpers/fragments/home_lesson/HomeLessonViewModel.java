@@ -1,17 +1,11 @@
-package com.smart_learn.presenter.activities.notebook.fragments.home_lesson;
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.smart_learn.R;
-import com.smart_learn.core.services.LessonService;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;

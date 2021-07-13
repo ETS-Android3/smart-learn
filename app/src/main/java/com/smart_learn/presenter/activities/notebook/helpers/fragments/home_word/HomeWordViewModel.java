@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.fragments.home_word;
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word;
 
 
 import android.app.Application;

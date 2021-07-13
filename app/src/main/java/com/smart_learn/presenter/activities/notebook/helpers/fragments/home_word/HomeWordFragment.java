@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.fragments.home_lesson;
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word;
 
 
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.smart_learn.databinding.FragmentHomeLessonBinding;
+import com.smart_learn.databinding.FragmentHomeWordBinding;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
@@ -14,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
-public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extends BasicFragment<VM> {
+public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends BasicFragment<VM> {
 
     @Getter
-    protected FragmentHomeLessonBinding binding;
+    protected FragmentHomeWordBinding binding;
     @Getter
     protected GuestNotebookSharedViewModel sharedViewModel;
 
@@ -25,11 +25,9 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        binding = FragmentHomeLessonBinding.inflate(inflater);
+        binding = FragmentHomeWordBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }
-
 }
-

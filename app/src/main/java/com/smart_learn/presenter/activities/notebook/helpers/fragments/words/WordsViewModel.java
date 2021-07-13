@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.fragments.words;
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.words;
 
 import android.app.Application;
 

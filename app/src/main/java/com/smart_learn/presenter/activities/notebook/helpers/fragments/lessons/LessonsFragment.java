@@ -1,5 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.fragments.words;
-
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_men
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class WordsFragment <VM extends WordsViewModel<?>> extends BasicFragmentForRecyclerView<VM> {
+public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends BasicFragmentForRecyclerView<VM> {
 
     protected abstract void onFilter(String newText);
     protected abstract void onActionModeCreate();
@@ -34,6 +33,7 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
     protected boolean isBottomSheetUsed() {
         return true;
     }
+
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -63,7 +63,7 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if(id == R.id.action_filter_menu_layout_with_recycler_view){
-            ((NotebookActivity)requireActivity()).showFilterOptionsDialog(WordsFragment.this, new Callbacks.FragmentFilterOptionsCallback() {
+            ((NotebookActivity)requireActivity()).showFilterOptionsDialog(LessonsFragment.this, new Callbacks.FragmentFilterOptionsCallback() {
                 @Override
                 public void onAZFilter() {
 
@@ -75,7 +75,6 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
 
         return false;
     }
-
 
     public void startFragmentActionMode() {
         super.startActionMode(new Callbacks.ActionModeCustomCallback() {
@@ -89,18 +88,6 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
             }
         });
     }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.fragments.lessons.helpers;
+package com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers;
 
 
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
-import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;

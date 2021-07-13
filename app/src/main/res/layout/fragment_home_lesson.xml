@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.notebook.fragments.home_lesson.HomeLessonViewModel" />
+            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.notebook.fragments.home_lesson.HomeLessonFragment">
+        tools:context=".presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="0dp"
