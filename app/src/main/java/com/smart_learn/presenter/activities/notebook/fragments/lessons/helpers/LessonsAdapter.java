@@ -20,7 +20,9 @@ import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
 import com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import java.util.ArrayList;
@@ -32,11 +34,11 @@ import timber.log.Timber;
 /**
  * For ListAdapter https://www.youtube.com/watch?v=xPPMygGxiEo
  * */
-public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonViewHolder> implements Filterable {
+public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
 
-    private final Callbacks.FragmentGeneralCallback<LessonsFragment> fragmentCallback;
+    private final Callbacks.FragmentGeneralCallback<GuestLessonsFragment> fragmentCallback;
 
-    public LessonsAdapter(@NonNull Callbacks.FragmentGeneralCallback<LessonsFragment> fragmentCallback) {
+    public LessonsAdapter(@NonNull Callbacks.FragmentGeneralCallback<GuestLessonsFragment> fragmentCallback) {
         super(new DiffUtil.ItemCallback<Lesson>(){
             @Override
             public boolean areItemsTheSame(@NonNull Lesson oldItem, @NonNull Lesson newItem) {
@@ -95,7 +97,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 String searchValue = constraint.toString();
 
                 // For filtering mode we search always in all db.
-                List<Lesson> allItems = fragmentCallback.getFragment().getLessonsViewModel().getLessonService().getAllSampleLesson();
+                List<Lesson> allItems = fragmentCallback.getFragment().getViewModel().getLessonService().getAllSampleLesson();
                 // reset search indexes and spanned name for all items
                 allItems.forEach(it -> {
                     it.setSearchIndexes(new ArrayList<>());
@@ -153,6 +155,11 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
         };
     }
 
+    @Override
+    public void loadMoreData() {
+
+    }
+
 
     /**
      * Class to specific how an element from recycler view (lesson card) will be shown
@@ -200,7 +207,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 @Override
                 public boolean onLongClick(View v) {
                     if(fragmentCallback.getFragment().getActionMode() == null) {
-                        fragmentCallback.getFragment().startActionMode();
+                        fragmentCallback.getFragment().startFragmentActionMode();
                         // by default clicked item is selected
                         markItem(getItem(getAdapterPosition()),true);
                     }

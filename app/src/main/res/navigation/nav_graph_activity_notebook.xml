@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_activity_notebook"
-    app:startDestination="@id/lessons_fragment_nav_graph_activity_notebook">
+    app:startDestination="@id/guest_lessons_fragment_nav_graph_activity_notebook">
 
     <fragment
-        android:id="@+id/lessons_fragment_nav_graph_activity_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.fragments.lessons.LessonsFragment"
-        android:label="lessons_fragment_nav_graph_activity_notebook"
-        tools:layout="@layout/fragment_lessons">
+        android:id="@+id/guest_lessons_fragment_nav_graph_activity_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment"
+        android:label="guest_lessons_fragment_nav_graph_activity_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
             android:id="@+id/action_lessons_fragment_to_lesson_home_fragment_nav_graph_activity_notebook"
             app:destination="@id/home_lesson_fragment_nav_graph_activity_notebook" />
