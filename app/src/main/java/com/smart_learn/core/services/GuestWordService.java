@@ -14,11 +14,11 @@ import com.smart_learn.data.repository.WordRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordService extends BasicRoomService<Word> {
+public class GuestWordService extends BasicRoomService<Word> {
 
     private final WordRepository wordRepository;
 
-    public WordService(Application application){
+    public GuestWordService(Application application){
         wordRepository = new WordRepository(application);
 
         // set super repository

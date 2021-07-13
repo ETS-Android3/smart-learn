@@ -18,7 +18,7 @@ public class UserAccountOverviewViewModel extends AccountOverviewViewModel {
 
         // TODO: Link this values in a correct way for user. Get data from user document.
         //guestLessonService = new GuestLessonService(application);
-        //wordService = new WordService(application);
+        //guestWordService = new GuestWordService(application);
         //expressionService = new ExpressionService(application);
         liveNumberOfLessons =  new MutableLiveData<>(1);
         liveNumberOfWords =  new MutableLiveData<>(2);

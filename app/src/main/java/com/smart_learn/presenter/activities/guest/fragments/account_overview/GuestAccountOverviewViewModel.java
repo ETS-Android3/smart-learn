@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.smart_learn.R;
 import com.smart_learn.core.services.ExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
-import com.smart_learn.core.services.WordService;
+import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,13 +19,13 @@ public class GuestAccountOverviewViewModel extends AccountOverviewViewModel {
         super(application);
 
         guestLessonService = new GuestLessonService(application);
-        wordService = new WordService(application);
+        guestWordService = new GuestWordService(application);
         expressionService = new ExpressionService(application);
 
         // Is enough to set this values once because will be linked with db using live data, so any
         // change in db will be propagated to the layout.
         liveNumberOfLessons = guestLessonService.getLiveNumberOfLessons();
-        liveNumberOfWords = wordService.getLiveNumberOfWords();
+        liveNumberOfWords = guestWordService.getLiveNumberOfWords();
         liveNumberOfExpressions = expressionService.getLiveNumberOfExpressions();
 
         // TODO: link this with correct values from db

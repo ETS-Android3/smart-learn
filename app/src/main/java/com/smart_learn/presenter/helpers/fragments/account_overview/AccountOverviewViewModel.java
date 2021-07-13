@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.services.ExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
-import com.smart_learn.core.services.WordService;
+import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ import lombok.Getter;
 public abstract class AccountOverviewViewModel extends BasicAndroidViewModel {
 
     protected GuestLessonService guestLessonService;
-    protected WordService wordService;
+    protected GuestWordService guestWordService;
     protected ExpressionService expressionService;
 
     protected LiveData<Integer> liveNumberOfLessons;
