@@ -119,7 +119,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 filteringValue = constraint.toString();
 
                 // For filtering mode we search always in all db.
-                List<Lesson> allItems = fragmentCallback.getFragment().getViewModel().getLessonService().getAllSampleLesson();
+                List<Lesson> allItems = fragmentCallback.getFragment().getViewModel().getGuestLessonService().getAllSampleLesson();
                 List<Lesson> filteredItems;
 
                 if (filteringValue.isEmpty()) {
@@ -294,7 +294,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                         fragmentCallback.getFragment().deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
                             @Override
                             public void onPositiveButtonPress() {
-                                fragmentCallback.getFragment().getViewModel().getLessonService().delete(lesson);
+                                fragmentCallback.getFragment().getViewModel().getGuestLessonService().delete(lesson);
                             }
                         });
                         return true;
@@ -309,7 +309,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
         Lesson tmp = new Lesson(lesson.getNotes(), lesson.isSelected(), lesson.getBasicInfo(), lesson.getName());
         tmp.setLessonId(lesson.getLessonId());
         tmp.setSelected(isSelected);
-        fragmentCallback.getFragment().getViewModel().getLessonService().update(tmp);
+        fragmentCallback.getFragment().getViewModel().getGuestLessonService().update(tmp);
     }
 }
 

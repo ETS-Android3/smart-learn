@@ -14,11 +14,11 @@ import com.smart_learn.data.room.entities.Lesson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LessonService extends BasicRoomService<Lesson> {
+public class GuestLessonService extends BasicRoomService<Lesson> {
 
     private final LessonRepository lessonRepository;
 
-    public LessonService(Application application){
+    public GuestLessonService(Application application){
         lessonRepository = new LessonRepository(application);
 
         // set super repository

@@ -7,8 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.smart_learn.core.services.LessonService;
-
 public class TestLocalViewModel extends AndroidViewModel {
 
     //protected final TestService testService;

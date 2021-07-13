@@ -75,7 +75,7 @@ public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonV
         // set shared view model
         sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
-        viewModel.getLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
+        viewModel.getGuestLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
             @Override
             public void onChanged(Lesson lesson) {
                 viewModel.setLiveLesson(lesson);

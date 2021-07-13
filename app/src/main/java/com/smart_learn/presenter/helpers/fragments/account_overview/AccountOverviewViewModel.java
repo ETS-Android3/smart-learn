@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.services.ExpressionService;
-import com.smart_learn.core.services.LessonService;
+import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.services.WordService;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
@@ -21,7 +21,7 @@ import lombok.Getter;
 @Getter
 public abstract class AccountOverviewViewModel extends BasicAndroidViewModel {
 
-    protected LessonService lessonService;
+    protected GuestLessonService guestLessonService;
     protected WordService wordService;
     protected ExpressionService expressionService;
 

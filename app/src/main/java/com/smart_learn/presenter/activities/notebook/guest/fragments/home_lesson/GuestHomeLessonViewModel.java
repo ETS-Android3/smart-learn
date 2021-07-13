@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.core.services.LessonService;
+import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonViewModel;
@@ -20,11 +20,11 @@ import lombok.Getter;
 public class GuestHomeLessonViewModel extends HomeLessonViewModel {
 
     @Getter
-    private final LessonService lessonService;
+    private final GuestLessonService guestLessonService;
 
     public GuestHomeLessonViewModel(@NonNull @NotNull Application application) {
         super(application);
-        lessonService = new LessonService(application);
+        guestLessonService = new GuestLessonService(application);
     }
 
     public void setLiveLesson(Lesson lesson){
