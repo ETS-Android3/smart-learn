@@ -10,12 +10,12 @@ import com.smart_learn.data.room.entities.Word;
 
 import java.util.List;
 
-public class WordRepository extends BasicRoomRepository<Word> {
+public class GuestWordRepository extends BasicRoomRepository<Word> {
 
     private final WordDao wordDao;
     private LiveData<List<Word>> currentLessonLiveWordList;
 
-    public WordRepository(Application application) {
+    public GuestWordRepository(Application application) {
         // no need for db instance in class because communication will be made using dao interface
         AppRoomDatabase db = AppRoomDatabase.getDatabaseInstance(application);
 

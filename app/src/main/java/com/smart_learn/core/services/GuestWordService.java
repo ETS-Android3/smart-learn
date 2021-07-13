@@ -9,33 +9,33 @@ import androidx.lifecycle.LiveData;
 import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.core.helpers.ResponseInfo;
-import com.smart_learn.data.repository.WordRepository;
+import com.smart_learn.data.repository.GuestWordRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuestWordService extends BasicRoomService<Word> {
 
-    private final WordRepository wordRepository;
+    private final GuestWordRepository guestWordRepository;
 
     public GuestWordService(Application application){
-        wordRepository = new WordRepository(application);
+        guestWordRepository = new GuestWordRepository(application);
 
         // set super repository
-        super.basicRoomRepository = wordRepository;
+        super.basicRoomRepository = guestWordRepository;
     }
 
     public Word getSampleWord(String word){
-        return wordRepository.getSampleWord(word);
+        return guestWordRepository.getSampleWord(word);
     }
 
     public LiveData<List<Word>> getCurrentLessonLiveWords(int currentLessonId){
-        return wordRepository.getCurrentLessonLiveWords(currentLessonId);
+        return guestWordRepository.getCurrentLessonLiveWords(currentLessonId);
     }
 
     @NonNull
     public List<Word> getCurrentLessonSampleWords(int currentLessonId){
-        List<Word> tmp = wordRepository.getCurrentLessonLiveWords(currentLessonId).getValue();
+        List<Word> tmp = guestWordRepository.getCurrentLessonLiveWords(currentLessonId).getValue();
         if(tmp == null){
             return new ArrayList<>();
         }
@@ -43,15 +43,15 @@ public class GuestWordService extends BasicRoomService<Word> {
     }
 
     public LiveData<Word> getSampleLiveWord(int wordId) {
-        return wordRepository.getSampleLiveWord(wordId);
+        return guestWordRepository.getSampleLiveWord(wordId);
     }
 
     boolean checkIfWordExist(String word){
-        return wordRepository.checkIfWordExist(word);
+        return guestWordRepository.checkIfWordExist(word);
     }
 
     boolean checkIfWordExist(String word, int lessonId){
-        return wordRepository.checkIfWordExist(word,lessonId);
+        return guestWordRepository.checkIfWordExist(word,lessonId);
     }
 
     private ResponseInfo wordDetailsCheck(Word word){
@@ -123,16 +123,16 @@ public class GuestWordService extends BasicRoomService<Word> {
         return responseInfo;
     }
 
-    public void deleteSelectedItems(int lessonId){ wordRepository.deleteSelectedItems(lessonId); }
+    public void deleteSelectedItems(int lessonId){ guestWordRepository.deleteSelectedItems(lessonId); }
 
-    public void updateSelectAll(boolean isSelected, int lessonId){ wordRepository.updateSelectAll(isSelected,lessonId); }
+    public void updateSelectAll(boolean isSelected, int lessonId){ guestWordRepository.updateSelectAll(isSelected,lessonId); }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return wordRepository.getLiveSelectedItemsCount(lessonId); }
+    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return guestWordRepository.getLiveSelectedItemsCount(lessonId); }
 
-    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return wordRepository.getLiveItemsNumber(lessonId); }
+    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return guestWordRepository.getLiveItemsNumber(lessonId); }
 
     public LiveData<Integer> getLiveNumberOfWords(){
-        return wordRepository.getLiveNumberOfWords();
+        return guestWordRepository.getLiveNumberOfWords();
     }
 
 }
