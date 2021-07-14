@@ -21,19 +21,11 @@ import org.jetbrains.annotations.NotNull;
 public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends BasicFragmentForRecyclerView<VM> {
 
     protected abstract void onFilter(String newText);
-    protected abstract void onActionModeCreate();
-    protected abstract void onActionModeDestroy();
 
     @Override
     protected boolean showFloatingActionButton() {
         return true;
     }
-
-    @Override
-    protected boolean isBottomSheetUsed() {
-        return true;
-    }
-
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -61,22 +53,29 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
                 });
     }
 
-    public void startFragmentActionMode() {
-        super.startActionMode(new Callbacks.ActionModeCustomCallback() {
-            @Override
-            public void onCreateActionMode() {
-                onActionModeCreate();
-            }
-            @Override
-            public void onDestroyActionMode() {
-                onActionModeDestroy();
-            }
-        });
-    }
+    public void deleteLessonAlert(int wordsNr, int expressionsNr) {
+        if(wordsNr == 0 && expressionsNr == 0){
+            return;
+        }
 
-    public void deleteLessonAlert(Callbacks.StandardAlertDialogCallback callback) {
-        Utilities.Activities.showStandardAlertDialog(requireContext(), getString(R.string.delete_lesson),
-                getString(R.string.delete_lesson_description_1), getString(R.string.delete), callback);
+        String message = "";
+        if(wordsNr != 0 && expressionsNr != 0){
+            message = getString(R.string.delete_lesson_description_1) + " " + wordsNr + " " + getString(R.string.delete_lesson_description_2) + " " +
+                    getString(R.string.delete_lesson_description_3) + " " + expressionsNr + " " + getString(R.string.delete_lesson_description_4) + " " +
+                    getString(R.string.delete_lesson_description_5);
+        }
+        else{
+            if(wordsNr == 0){
+                message = getString(R.string.delete_lesson_description_1) + " " + expressionsNr + " " + getString(R.string.delete_lesson_description_4) + " " +
+                        getString(R.string.delete_lesson_description_5);
+            }
+            if(expressionsNr == 0){
+                message = getString(R.string.delete_lesson_description_1) + " " + wordsNr + " " + getString(R.string.delete_lesson_description_2) + " " +
+                        getString(R.string.delete_lesson_description_5);
+            }
+        }
+
+        Utilities.Activities.showStandardInfoDialog(requireContext(), getString(R.string.delete_lesson), message);
     }
 
     protected void showAddLessonDialog(){
@@ -86,7 +85,7 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
                 viewModel.addLessonByName(lessonName);
             }
         });
-        dialogFragment.show(requireActivity().getSupportFragmentManager(), "LessonsActivity");
+        dialogFragment.show(requireActivity().getSupportFragmentManager(), "LessonsFragment");
     }
 
 }

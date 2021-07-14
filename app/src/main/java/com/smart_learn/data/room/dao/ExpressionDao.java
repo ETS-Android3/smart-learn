@@ -19,5 +19,11 @@ public interface ExpressionDao extends BasicDao<Expression> {
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.EXPRESSIONS_TABLE)
     LiveData<Integer> getLiveNumberOfExpressions();
+
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
+    LiveData<Integer> getLiveNumberOfExpressionsForSpecificLesson(int lessonId);
+
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
+    int getNumberOfExpressionsForSpecificLesson(int lessonId);
 }
 

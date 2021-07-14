@@ -14,37 +14,19 @@ import java.util.List;
 @Dao
 public interface LessonDao extends BasicDao<Lesson> {
 
-    @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE id = :lessonId")
+    @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE id == :lessonId")
     LiveData<Lesson> getSampleLiveLesson(int lessonId);
-
-    @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE name LIKE :lessonName")
-    LiveData<Lesson> getSampleLiveLesson(String lessonName);
 
     /** Get all Lesson info`s (with objects relationship data).
      * This will make a join for objects relationship between Lesson and 'relationship object'
      * info`s from Lesson. */
     @Transaction
-    @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE id = :lessonId")
+    @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE id == :lessonId")
     LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId);
 
     /** Get only Lessons info`s without objects relationship data. */
     @Query("SELECT * FROM " + AppRoomDatabase.LESSONS_TABLE)
     LiveData<List<Lesson>> getAllLiveSampleLessons();
-
-    @Query("DELETE FROM " + AppRoomDatabase.LESSONS_TABLE)
-    void deleteAll();
-
-    @Query("DELETE FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE isSelected")
-    void deleteSelectedItems();
-
-    @Query("UPDATE " + AppRoomDatabase.LESSONS_TABLE + " set isSelected = :isSelected")
-    void updateSelectAll(boolean isSelected);
-
-    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.LESSONS_TABLE + " WHERE isSelected")
-    LiveData<Integer> getLiveSelectedItemsCount();
-
-    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.LESSONS_TABLE)
-    LiveData<Integer> getLiveItemsNumber();
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.LESSONS_TABLE)
     LiveData<Integer> getLiveNumberOfLessons();

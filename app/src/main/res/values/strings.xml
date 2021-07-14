@@ -239,7 +239,15 @@
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
     <string name="delete_lesson">Delete lesson</string>
-    <string name="delete_lesson_description_1">If you delete lesson all words and expressions from this lesson will be deleted. Are you sure?</string>
+    <string name="delete_lesson_description_1">This lesson has</string>
+    <string name="delete_lesson_description_2">words</string>
+    <string name="delete_lesson_description_3">and</string>
+    <string name="delete_lesson_description_4">expressions</string>
+    <string name="delete_lesson_description_5">. Please delete entries before deleting lesson.</string>
     <string name="delete">Delete</string>
+    <string name="error_deleting_lesson">Lesson can not be deleted. Please try again later.</string>
+    <string name="success_adding_lesson">Lesson was added</string>
+    <string name="error_adding_lesson">Lesson could not be added</string>
+    <string name="success_deleting_lesson">Lesson was deleted</string>
 
 </resources>

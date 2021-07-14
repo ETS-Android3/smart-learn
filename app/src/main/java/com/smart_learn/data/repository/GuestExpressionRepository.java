@@ -27,4 +27,12 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
     public LiveData<Integer> getLiveNumberOfExpressions(){
         return dao.getLiveNumberOfExpressions();
     }
+
+    public LiveData<Integer> getLiveNumberOfExpressionsForSpecificLesson(int lessonId){
+        return dao.getLiveNumberOfExpressionsForSpecificLesson(lessonId);
+    }
+
+    public int getNumberOfExpressionsForSpecificLesson(int lessonId){
+        return dao.getNumberOfExpressionsForSpecificLesson(lessonId);
+    }
 }

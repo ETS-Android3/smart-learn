@@ -75,4 +75,12 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
     public LiveData<Integer> getLiveNumberOfWords(){
         return dao.getLiveNumberOfWords();
     }
+
+    public LiveData<Integer> getLiveNumberOfWordsForSpecificLesson(int lessonId){
+        return dao.getLiveNumberOfWordsForSpecificLesson(lessonId);
+    }
+
+    public int getNumberOfWordsForSpecificLesson(int lessonId){
+        return dao.getNumberOfWordsForSpecificLesson(lessonId);
+    }
 }

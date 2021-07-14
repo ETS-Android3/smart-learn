@@ -143,6 +143,14 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
         return repositoryInstance.getLiveNumberOfWords();
     }
 
+    public LiveData<Integer> getLiveNumberOfWordsForSpecificLesson(int lessonId){
+        return repositoryInstance.getLiveNumberOfWordsForSpecificLesson(lessonId);
+    }
+
+    public int getNumberOfWordsForSpecificLesson(int lessonId){
+        return repositoryInstance.getNumberOfWordsForSpecificLesson(lessonId);
+    }
+
     @Override
     protected boolean isItemValid(Word item) {
         throw new TODO("not implemented");

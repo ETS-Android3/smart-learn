@@ -17,8 +17,13 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
+import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment;
@@ -30,18 +35,14 @@ import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
-
-import timber.log.Timber;
-
-import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 /**
  * For ListAdapter https://www.youtube.com/watch?v=xPPMygGxiEo
  * */
 public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
 
-    private final MutableLiveData<Boolean> liveIsActionModeActive;
     private boolean isFiltering;
     private String filteringValue;
 
@@ -61,17 +62,12 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
 
         this.fragmentCallback = fragmentCallback;
 
-        this.liveIsActionModeActive = new MutableLiveData<>(false);
         this.isFiltering = false;
         this.filteringValue = "";
     }
 
     public void setItems(List<Lesson> items) {
         submitList(items);
-    }
-
-    public void setLiveActionMode(boolean value) {
-         liveIsActionModeActive.setValue(value);
     }
 
     @NonNull
@@ -83,22 +79,17 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 R.layout.layout_card_view_lesson, parent, false);
         viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
 
-        // set binding variable
-        viewHolderBinding.setLiveIsActionModeActive(liveIsActionModeActive);
-
         return new LessonViewHolder(viewHolderBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull LessonsAdapter.LessonViewHolder holder, int position) {
-        if(position == NO_POSITION){
-            Timber.w("position is set to NO_POSITION");
+        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
             return;
         }
 
         Lesson lesson = getItem(position);
-        if(lesson == null){
-            Timber.w("item is null ==> can not create bind");
+        if(!CoreUtilities.General.isItemNotNull(lesson)){
             return;
         }
 
@@ -175,16 +166,15 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
     public final class LessonViewHolder extends BasicViewHolder<Lesson, LayoutCardViewLessonBinding> {
 
         private final MutableLiveData<SpannableString> liveLessonSpannedName;
-        private final MutableLiveData<Boolean> liveIsSelected;
+        private final AtomicBoolean isDeleting;
 
         public LessonViewHolder(@NonNull LayoutCardViewLessonBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveLessonSpannedName = new MutableLiveData<>(new SpannableString(""));
-            liveIsSelected = new MutableLiveData<>(false);
+            isDeleting = new AtomicBoolean(false);
 
             // link binding with variables
             viewHolderBinding.setLiveLessonSpannedName(liveLessonSpannedName);
-            viewHolderBinding.setLiveIsSelected(liveIsSelected);
 
             setListeners();
         }
@@ -203,114 +193,106 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
-
-            if (fragmentCallback.getFragment().getActionMode() != null) {
-                liveIsSelected.setValue(item.isSelected());
-                viewHolderBinding.cvLayoutCardViewLesson.setChecked(item.isSelected());
-                return;
-            }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewLesson.setChecked(false);
         }
-
 
         private void setListeners(){
 
-            setToolbarListener();
+            setToolbarListeners();
 
             // simple click action
             viewHolderBinding.cvLayoutCardViewLesson.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(position == NO_POSITION){
-                        Timber.w("position is set to NO_POSITION");
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
                     Lesson lesson = getItem(position);
-                    if(lesson == null){
-                        Timber.w("lesson is null");
+                    if(!CoreUtilities.General.isItemNotNull(lesson)){
                         return;
                     }
 
-                    // If action mode is on then user can select/deselect items.
-                    if(fragmentCallback.getFragment().getActionMode() != null) {
-                        markItem(lesson,!lesson.isSelected());
-                        return;
-                    }
-
-                    // If action mode is disabled then simple click will navigate user to the
-                    // HomeLessonFragment using selected lesson.
-                    fragmentCallback.getFragment().goToHomeLessonFragment(lesson);
-                }
-            });
-
-            // long click is used for launching action mode
-            viewHolderBinding.cvLayoutCardViewLesson.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if(fragmentCallback.getFragment().getActionMode() == null) {
-                        int position = getAdapterPosition();
-                        if(position == NO_POSITION){
-                            Timber.w("position is set to NO_POSITION");
-                            return true;
-                        }
-
-                        Lesson lesson = getItem(position);
-                        if(lesson == null){
-                            Timber.w("lesson is null");
-                            return true;
-                        }
-
-                        fragmentCallback.getFragment().startFragmentActionMode();
-                        // by default clicked item is selected
-                        markItem(lesson,true);
-                    }
-                    return true;
+                    // Navigate user to the GuestHomeLessonFragment using selected lesson.
+                    fragmentCallback.getFragment().goToGuestHomeLessonFragment(lesson);
                 }
             });
 
         }
 
-        private void setToolbarListener(){
+        private void setToolbarListeners(){
             viewHolderBinding.toolbarLayoutCardViewLesson.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(position == NO_POSITION){
-                        Timber.w("position is set to NO_POSITION");
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 
                     Lesson lesson = getItem(position);
-                    if(lesson == null){
-                        Timber.w("lesson is null");
+                    if(!CoreUtilities.General.isItemNotNull(lesson)){
                         return true;
                     }
 
                     int id = item.getItemId();
                     if(id == R.id.action_delete_menu_card_view_lesson){
-                        fragmentCallback.getFragment().deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
-                            @Override
-                            public void onPositiveButtonPress() {
-                                GuestLessonService.getInstance().delete(lesson, null);
-                            }
-                        });
+                        // avoid multiple press until operation is finished
+                        if(isDeleting.get()){
+                            return true;
+                        }
+                        isDeleting.set(true);
+                        ThreadExecutorService.getInstance().execute(() -> onDeletePressed(lesson));
                         return true;
                     }
                     return true;
                 }
             });
         }
-    }
 
-    private void markItem(Lesson lesson, boolean isSelected) {
-        Lesson tmp = new Lesson(lesson.getNotes(), lesson.isSelected(), lesson.getBasicInfo(), lesson.getName());
-        tmp.setLessonId(lesson.getLessonId());
-        tmp.setSelected(isSelected);
-        GuestLessonService.getInstance().update(tmp, null);
+        private void onDeletePressed(Lesson lesson){
+            int wordsNr = GuestWordService.getInstance().getNumberOfWordsForSpecificLesson(lesson.getLessonId());
+            int expressionsNr = GuestExpressionService.getInstance().getNumberOfExpressionsForSpecificLesson(lesson.getLessonId());
+
+            if(wordsNr < 0 || expressionsNr < 0){
+                fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                    GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
+                            fragmentCallback.getFragment().getString(R.string.error_deleting_lesson));
+                });
+                isDeleting.set(false);
+                return;
+            }
+
+            // delete lesson if has no entries
+            if(wordsNr == 0 && expressionsNr == 0){
+                GuestLessonService.getInstance().delete(lesson, new DataCallbacks.General() {
+                    @Override
+                    public void onSuccess() {
+                        fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                            GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
+                                    fragmentCallback.getFragment().getString(R.string.success_deleting_lesson));
+                        });
+                        isDeleting.set(false);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                            GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
+                                    fragmentCallback.getFragment().getString(R.string.error_deleting_lesson));
+                        });
+                        isDeleting.set(false);
+                    }
+                });
+                return;
+            }
+
+            // show an alert dialog in order to block deletion until lesson entries are not deleted
+            fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                fragmentCallback.getFragment().deleteLessonAlert(wordsNr, expressionsNr);
+                isDeleting.set(false);
+            });
+        }
+
     }
 }
 

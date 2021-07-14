@@ -42,6 +42,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
+import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 
 import org.jetbrains.annotations.NotNull;
@@ -49,6 +50,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import timber.log.Timber;
+
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 /**
  * Main utilities class.
@@ -828,7 +831,26 @@ public final class Utilities {
                     .setIcon(R.drawable.ic_baseline_warning_24)
                     .show();
         }
+
+        /**
+         * Use this in order to show a simple InfoDialog.
+         *
+         * @param context The context where the InfoDialog will be shown.
+         * @param title   Title of the InfoDialog.
+         * @param message Description of the InfoDialog.
+         * */
+        public static void showStandardInfoDialog(@NonNull @NotNull Context context, @NonNull @NotNull String title,
+                                                  @NonNull @NotNull String message){
+            //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
+            new AlertDialog.Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setIcon(R.drawable.ic_baseline_info_triangle_24)
+                    .show();
+        }
     }
+
 
     /**
      * Use this function in order to add predefined animations for actions from NavigationGraph.
@@ -853,6 +875,25 @@ public final class Utilities {
     public abstract static class Auth {
         public static boolean isUserLoggedIn(){
             return false;
+        }
+    }
+
+    /** All utilities related to recycler view adapters. */
+    public static final class Adapters {
+
+        /**
+         * Use to check if adapter position is not set to NO_POSITION.
+         *
+         * @param position Position to be checked.
+         *
+         * @return true if position is not NO_POSITION, false otherwise.
+         * */
+        public static boolean isGoodAdapterPosition(int position){
+            if(position == NO_POSITION){
+                Timber.w("position is set to NO_POSITION");
+                return false;
+            }
+            return true;
         }
     }
 

@@ -59,7 +59,7 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
     }
 
     /** Fragment has bottom navigation view HIDDEN. */
-    public void goToHomeLessonFragment(){
+    public void goToGuestHomeLessonFragment(){
         navController.navigate(R.id.action_guest_lessons_fragment_to_guest_home_lesson_fragment_nav_graph_activity_guest_notebook,null,
                 Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_lesson_fragment_nav_graph_activity_guest_notebook));
     }

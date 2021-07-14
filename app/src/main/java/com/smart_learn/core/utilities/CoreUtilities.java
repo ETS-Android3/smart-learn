@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * Main utilities class for core layer.
  *
@@ -254,6 +256,22 @@ public abstract class CoreUtilities {
             }
 
             return objectA.equals(objectB);
+        }
+
+
+        /**
+         * Use to check if item is not null.
+         *
+         * @param item Item to be checked.
+         *
+         * @return true if item is not null, false otherwise.
+         * */
+        public static <T> boolean isItemNotNull(T item){
+            if(item == null){
+                Timber.w("item is null");
+                return false;
+            }
+            return true;
         }
     }
 
