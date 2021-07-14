@@ -22,6 +22,6 @@ public class GuestExpressionService extends BasicRoomService<Expression, GuestEx
     }
 
     public LiveData<Integer> getLiveNumberOfExpressions(){
-        return repository.getLiveNumberOfExpressions();
+        return repositoryInstance.getLiveNumberOfExpressions();
     }
 }

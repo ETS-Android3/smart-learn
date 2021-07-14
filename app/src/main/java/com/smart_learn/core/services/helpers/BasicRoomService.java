@@ -23,10 +23,10 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
 
     @NonNull
     @NotNull
-    protected final K repository;
+    protected final K repositoryInstance;
 
-    public BasicRoomService(@NonNull K repository) {
-        this.repository = repository;
+    public BasicRoomService(@NonNull K repositoryInstance) {
+        this.repositoryInstance = repositoryInstance;
     }
 
 
@@ -50,7 +50,7 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
                     "Insertion for value [" + value.toString() + "] failed");
         }
 
-        repository.insert(value, callback);
+        repositoryInstance.insert(value, callback);
     }
 
 
@@ -79,7 +79,7 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
         value.getBasicInfo().setModifiedAt(System.currentTimeMillis());
 
         DataCallbacks.General finalCallback = callback;
-        repository.update(value, new DataCallbacks.General() {
+        repositoryInstance.update(value, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 finalCallback.onSuccess();
@@ -116,6 +116,6 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
                     "Deletion for value [" + value.toString() + "] failed");
         }
 
-        repository.delete(value, callback);
+        repositoryInstance.delete(value, callback);
     }
 }

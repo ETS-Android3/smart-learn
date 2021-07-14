@@ -30,16 +30,16 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
     }
 
     public Word getSampleWord(String word){
-        return repository.getSampleWord(word);
+        return repositoryInstance.getSampleWord(word);
     }
 
     public LiveData<List<Word>> getCurrentLessonLiveWords(int currentLessonId){
-        return repository.getCurrentLessonLiveWords(currentLessonId);
+        return repositoryInstance.getCurrentLessonLiveWords(currentLessonId);
     }
 
     @NonNull
     public List<Word> getCurrentLessonSampleWords(int currentLessonId){
-        List<Word> tmp = repository.getCurrentLessonLiveWords(currentLessonId).getValue();
+        List<Word> tmp = repositoryInstance.getCurrentLessonLiveWords(currentLessonId).getValue();
         if(tmp == null){
             return new ArrayList<>();
         }
@@ -47,15 +47,15 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
     }
 
     public LiveData<Word> getSampleLiveWord(int wordId) {
-        return repository.getSampleLiveWord(wordId);
+        return repositoryInstance.getSampleLiveWord(wordId);
     }
 
     boolean checkIfWordExist(String word){
-        return repository.checkIfWordExist(word);
+        return repositoryInstance.checkIfWordExist(word);
     }
 
     boolean checkIfWordExist(String word, int lessonId){
-        return repository.checkIfWordExist(word,lessonId);
+        return repositoryInstance.checkIfWordExist(word,lessonId);
     }
 
     private ResponseInfo wordDetailsCheck(Word word){
@@ -127,16 +127,16 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
         return responseInfo;
     }
 
-    public void deleteSelectedItems(int lessonId){ repository.deleteSelectedItems(lessonId); }
+    public void deleteSelectedItems(int lessonId){ repositoryInstance.deleteSelectedItems(lessonId); }
 
-    public void updateSelectAll(boolean isSelected, int lessonId){ repository.updateSelectAll(isSelected,lessonId); }
+    public void updateSelectAll(boolean isSelected, int lessonId){ repositoryInstance.updateSelectAll(isSelected,lessonId); }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return repository.getLiveSelectedItemsCount(lessonId); }
+    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return repositoryInstance.getLiveSelectedItemsCount(lessonId); }
 
-    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return repository.getLiveItemsNumber(lessonId); }
+    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return repositoryInstance.getLiveItemsNumber(lessonId); }
 
     public LiveData<Integer> getLiveNumberOfWords(){
-        return repository.getLiveNumberOfWords();
+        return repositoryInstance.getLiveNumberOfWords();
     }
 
 }

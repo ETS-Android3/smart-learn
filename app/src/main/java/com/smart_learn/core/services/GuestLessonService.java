@@ -30,31 +30,31 @@ public class GuestLessonService extends BasicRoomService<Lesson, GuestLessonRepo
     }
 
     public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
-        return repository.getSampleLiveLesson(lessonId);
+        return repositoryInstance.getSampleLiveLesson(lessonId);
     }
 
     @NonNull
     public List<Lesson> getAllSampleLesson(){
-        List<Lesson> tmp = repository.getAllLiveSampleLessons().getValue();
+        List<Lesson> tmp = repositoryInstance.getAllLiveSampleLessons().getValue();
         if(tmp == null){
             return new ArrayList<>();
         }
         return tmp;
     }
 
-    public LiveData<List<Lesson>> getAllLiveSampleLessons() { return repository.getAllLiveSampleLessons(); }
+    public LiveData<List<Lesson>> getAllLiveSampleLessons() { return repositoryInstance.getAllLiveSampleLessons(); }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(){ return repository.getLiveSelectedItemsCount(); }
+    public LiveData<Integer> getLiveSelectedItemsCount(){ return repositoryInstance.getLiveSelectedItemsCount(); }
 
-    public LiveData<Integer> getLiveItemsNumber(){ return repository.getLiveItemsNumber(); }
+    public LiveData<Integer> getLiveItemsNumber(){ return repositoryInstance.getLiveItemsNumber(); }
 
-    public void deleteSelectedItems(){ repository.deleteSelectedItems(); }
+    public void deleteSelectedItems(){ repositoryInstance.deleteSelectedItems(); }
 
-    public void updateSelectAll(boolean isSelected){ repository.updateSelectAll(isSelected); }
+    public void updateSelectAll(boolean isSelected){ repositoryInstance.updateSelectAll(isSelected); }
 
 
     public boolean checkIfLessonExist(String lessonName) {
-        return repository.checkIfLessonExist(lessonName);
+        return repositoryInstance.checkIfLessonExist(lessonName);
     }
 
     private ResponseInfo lessonDetailsCheck(Lesson lesson){
@@ -115,7 +115,7 @@ public class GuestLessonService extends BasicRoomService<Lesson, GuestLessonRepo
     }
 
     public LiveData<Integer> getLiveNumberOfLessons(){
-        return repository.getLiveNumberOfLessons();
+        return repositoryInstance.getLiveNumberOfLessons();
     }
 
 }
