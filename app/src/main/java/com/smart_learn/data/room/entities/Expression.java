@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Leave the ForeignKey declaration in @Entity. If you put declaration on field propriety inside
@@ -21,6 +22,7 @@ import lombok.Setter;
  * */
 @Getter
 @Setter
+@ToString
 @Entity(tableName = AppRoomDatabase.EXPRESSIONS_TABLE,
         foreignKeys = {
                         @ForeignKey(entity = Lesson.class,

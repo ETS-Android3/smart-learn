@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public abstract class LessonEntrance extends NotebookCommon {
 
     // use Integer because in some situations a null value for foreign key is needed

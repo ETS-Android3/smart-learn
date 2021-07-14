@@ -10,9 +10,11 @@ import com.smart_learn.data.room.entities.helpers.BasicInfo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity(tableName = AppRoomDatabase.NOTIFICATIONS_TABLE)
 public class Notification {
 

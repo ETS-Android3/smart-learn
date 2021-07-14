@@ -4,9 +4,11 @@ import androidx.room.ColumnInfo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Translation {
 
     @ColumnInfo(name = "translation")

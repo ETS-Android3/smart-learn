@@ -11,12 +11,14 @@ import org.jetbrains.annotations.NotNull;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Use to store common info`s about Lessons and Lesson entries.
  * */
 @Getter
 @Setter
+@ToString
 public abstract class NotebookCommon implements DataHelpers.RoomBasicInfoHelper {
 
     @ColumnInfo(name = "notes")
