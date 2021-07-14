@@ -294,7 +294,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                         fragmentCallback.getFragment().deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
                             @Override
                             public void onPositiveButtonPress() {
-                                fragmentCallback.getFragment().getViewModel().getGuestLessonService().delete(lesson);
+                                fragmentCallback.getFragment().getViewModel().getGuestLessonService().delete(lesson, null);
                             }
                         });
                         return true;
@@ -309,7 +309,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
         Lesson tmp = new Lesson(lesson.getNotes(), lesson.isSelected(), lesson.getBasicInfo(), lesson.getName());
         tmp.setLessonId(lesson.getLessonId());
         tmp.setSelected(isSelected);
-        fragmentCallback.getFragment().getViewModel().getGuestLessonService().update(tmp);
+        fragmentCallback.getFragment().getViewModel().getGuestLessonService().update(tmp, null);
     }
 }
 

@@ -1,7 +1,5 @@
 package com.smart_learn.data.room.repository;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -10,64 +8,28 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.dao.BasicDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 import timber.log.Timber;
 
-public abstract class BasicRoomRepository <T> {
+/**
+ * Base class for Room repository operations.
+ *
+ * @param <T> Object type on which the repository operations will be applied.
+ * @param <K> DAO to handle operations, which must extend BasicDao<T>.
+ * */
+public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
 
     // https://androidx.de/androidx/room/EntityInsertionAdapter.html#insertAndReturnId(T)
     // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
     protected final static int INSERTION_FAILED = -1;
 
-    protected BasicDao<T> basicDao;
+    @NonNull
+    @NotNull
+    protected final K dao;
 
-    @Deprecated
-    // TODO: when you delete this make protected BasicDao<T> basicDao final
-    public BasicRoomRepository(){}
-
-    public BasicRoomRepository(@NonNull BasicDao<T> basicDao) {
-        this.basicDao = basicDao;
-    }
-
-    @Deprecated
-    public void insert(T value) {
-
-        if (basicDao == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[insert in BasicRoomRepository] basicDao is null. " +
-                    "Value was not inserted.");
-            return;
-        }
-
-        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            basicDao.insert(value);
-        });
-    }
-
-    @Deprecated
-    public void update(T value) {
-
-        if (basicDao == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[update in BasicRoomRepository] basicDao is null. " +
-                    "Value was not updated.");
-            return;
-        }
-
-        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            basicDao.update(value);
-        });
-    }
-
-    @Deprecated
-    public void delete(T value) {
-
-        if (basicDao == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[delete in BasicRoomRepository] basicDao is null. " +
-                    "Value was not deleted.");
-            return;
-        }
-
-        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            basicDao.delete(value);
-        });
+    public BasicRoomRepository(@NonNull K dao) {
+        this.dao = dao;
     }
 
 
@@ -78,9 +40,9 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if insertion is made, or
      *                 onFailure() action if insertion failed.
      * */
-    public void insert(@NonNull T value, @Nullable DataCallbacks.InsertCallback<T> callback) {
+    public void insert(@NonNull T value, @Nullable DataCallbacks.General callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            long rowId = basicDao.insert(value);
+            long rowId = dao.insert(value);
             if(callback == null){
                 return;
             }
@@ -89,10 +51,10 @@ public abstract class BasicRoomRepository <T> {
             // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
             if(rowId == INSERTION_FAILED){
                 Timber.e("%s Insertion failed ", Logs.UNEXPECTED_ERROR);
-                callback.onFailure(value);
+                callback.onFailure();
             }
             else{
-                callback.onSuccess(value);
+                callback.onSuccess();
             }
         });
     }
@@ -105,9 +67,9 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if update is made, or
      *                 onFailure() action if update failed.
      * */
-    public void update(@NonNull T value, @Nullable DataCallbacks.UpdateCallback<T> callback) {
+    public void update(@NonNull T value, @Nullable DataCallbacks.General callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            int numberOfAffectedRows = basicDao.update(value);
+            int numberOfAffectedRows = dao.update(value);
             if(callback == null){
                 return;
             }
@@ -117,10 +79,10 @@ public abstract class BasicRoomRepository <T> {
             // update is made for one item so must be 1 row affected
             if(numberOfAffectedRows != 1){
                 Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were updated");
-                callback.onFailure(value);
+                callback.onFailure();
             }
             else{
-                callback.onSuccess(value);
+                callback.onSuccess();
             }
         });
     }
@@ -133,9 +95,9 @@ public abstract class BasicRoomRepository <T> {
      * @param callback Callback which will manage onSuccess() action if deletion is made, or
      *                 onFailure() action if deletion failed.
      * */
-    public void delete(@NonNull T value, @Nullable DataCallbacks.DeleteCallback<T> callback) {
+    public void delete(@NonNull T value, @Nullable DataCallbacks.General callback) {
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            int numberOfAffectedRows = basicDao.delete(value);
+            int numberOfAffectedRows = dao.delete(value);
             if(callback == null){
                 return;
             }
@@ -145,10 +107,10 @@ public abstract class BasicRoomRepository <T> {
             // deletion is made for one item so must be 1 row affected
             if(numberOfAffectedRows != 1){
                 Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were deleted");
-                callback.onFailure(value);
+                callback.onFailure();
             }
             else{
-                callback.onSuccess(value);
+                callback.onSuccess();
             }
         });
     }

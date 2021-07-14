@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.data.helpers.DataHelpers;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ import lombok.Setter;
  * */
 @Getter
 @Setter
-public abstract class NotebookCommon {
+public abstract class NotebookCommon implements DataHelpers.RoomBasicInfoHelper {
 
     @ColumnInfo(name = "notes")
     private String notes;

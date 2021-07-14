@@ -15,40 +15,33 @@ import java.util.List;
 /**
  * https://developer.android.com/codelabs/android-room-with-a-view#8
  * */
-public class GuestLessonRepository extends BasicRoomRepository<Lesson> {
+public class GuestLessonRepository extends BasicRoomRepository<Lesson, LessonDao> {
 
-    private final LessonDao lessonDao;
     private final LiveData<List<Lesson>> sampleLiveLessonList;
 
     public GuestLessonRepository(Application application) {
         // no need for db instance in class because communication will be made using dao interface
-        AppRoomDatabase db = AppRoomDatabase.getDatabaseInstance(application);
-
-        // this is used to communicate with db
-        lessonDao = db.lessonDao();
-
-        // set dao in super class
-        super.basicDao = lessonDao;
+        super(AppRoomDatabase.getDatabaseInstance(application).lessonDao());
 
         // one query is enough because LiveData is made i.e. to be automatically notified by room
         // when changes are made in db
-        sampleLiveLessonList = lessonDao.getAllLiveSampleLessons();
+        sampleLiveLessonList = dao.getAllLiveSampleLessons();
     }
 
     /** Get a sample LiveData wrapped notebook based on lessonId. */
     public LiveData<Lesson> getSampleLiveLesson(int lessonId) {
-        return lessonDao.getSampleLiveLesson(lessonId);
+        return dao.getSampleLiveLesson(lessonId);
     }
 
     /** Get a sample LiveData wrapped notebook based on lessonName. */
     public LiveData<Lesson> getSampleLiveLesson(String lessonName) {
-        return lessonDao.getSampleLiveLesson(lessonName);
+        return dao.getSampleLiveLesson(lessonName);
     }
 
 
     /** Get all entries for a specific notebook. */
     public LiveData<LessonWithJoinedInfo> getFullLiveLessonInfo(int lessonId) {
-        return lessonDao.getFullLiveLessonInfo(lessonId);
+        return dao.getFullLiveLessonInfo(lessonId);
     }
 
     /** Get a list of all lessons. */
@@ -58,34 +51,34 @@ public class GuestLessonRepository extends BasicRoomRepository<Lesson> {
 
     /** Check if Lesson already exists in database. */
     public boolean checkIfLessonExist(String lessonName){
-        return lessonDao.getSampleLiveLesson(lessonName) == null;
+        return dao.getSampleLiveLesson(lessonName) == null;
     }
 
     public void updateAll(List<Lesson> items){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            lessonDao.updateAll(items);
+            dao.updateAll(items);
         });
     }
 
     public void deleteAll(){
-        AppRoomDatabase.databaseWriteExecutor.execute(lessonDao::deleteAll);
+        AppRoomDatabase.databaseWriteExecutor.execute(dao::deleteAll);
     }
 
     public void deleteSelectedItems(){
-        AppRoomDatabase.databaseWriteExecutor.execute(lessonDao::deleteSelectedItems);
+        AppRoomDatabase.databaseWriteExecutor.execute(dao::deleteSelectedItems);
     }
 
     public void updateSelectAll(boolean isSelected){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
-            lessonDao.updateSelectAll(isSelected);
+            dao.updateSelectAll(isSelected);
         });
     }
 
-    public LiveData<Integer> getLiveSelectedItemsCount(){ return lessonDao.getLiveSelectedItemsCount(); }
+    public LiveData<Integer> getLiveSelectedItemsCount(){ return dao.getLiveSelectedItemsCount(); }
 
-    public LiveData<Integer> getLiveItemsNumber(){ return lessonDao.getLiveItemsNumber(); }
+    public LiveData<Integer> getLiveItemsNumber(){ return dao.getLiveItemsNumber(); }
 
     public LiveData<Integer> getLiveNumberOfLessons(){
-        return lessonDao.getLiveNumberOfLessons();
+        return dao.getLiveNumberOfLessons();
     }
 }

@@ -9,22 +9,14 @@ import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
 
-public class GuestExpressionRepository extends BasicRoomRepository<Expression> {
-
-    private final ExpressionDao expressionDao;
+public class GuestExpressionRepository extends BasicRoomRepository<Expression, ExpressionDao> {
 
     public GuestExpressionRepository(Application application) {
         // no need for db instance in class because communication will be made using dao interface
-        AppRoomDatabase db = AppRoomDatabase.getDatabaseInstance(application);
-
-        // this is used to communicate with db
-        expressionDao = db.expressionDao();
-
-        // set dao in super class
-        super.basicDao = expressionDao;
+        super(AppRoomDatabase.getDatabaseInstance(application).expressionDao());
     }
 
     public LiveData<Integer> getLiveNumberOfExpressions(){
-        return expressionDao.getLiveNumberOfExpressions();
+        return dao.getLiveNumberOfExpressions();
     }
 }

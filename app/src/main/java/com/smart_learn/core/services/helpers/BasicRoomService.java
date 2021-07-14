@@ -1,65 +1,32 @@
 package com.smart_learn.core.services.helpers;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.smart_learn.core.utilities.CoreCallbacks;
-import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.helpers.DataCallbacks;
+import com.smart_learn.data.helpers.DataHelpers;
+import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
-public abstract class BasicRoomService <T> {
+/**
+ * Base class for Room services operations.
+ *
+ * @param <T> Object type on which the service operations will be applied. Must implement
+ *           DataHelpers.RoomBasicInfoHelper.
+ * @param <K> Repository to handle operations, which must extend BasicRoomRepository<T,?>.
+ * */
+public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelper, K extends BasicRoomRepository<T, ?>> {
 
-    protected BasicRoomRepository<T> basicRoomRepository;
+    @NonNull
+    @NotNull
+    protected final K repository;
 
-    @Deprecated
-    // TODO: when you delete this make protected BasicRoomRepository<T> basicRoomRepository final
-    public BasicRoomService() {}
-
-    public BasicRoomService(@NonNull BasicRoomRepository<T> basicRoomRepository) {
-        this.basicRoomRepository = basicRoomRepository;
-    }
-
-    @Deprecated
-    public void insert(T value) {
-
-        if (basicRoomRepository == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[insert in BasicRoomService] basicRoomRepository is null. " +
-                    "Value was not inserted.");
-            return;
-        }
-
-        basicRoomRepository.insert(value);
-    }
-
-    @Deprecated
-    public void update(T value) {
-
-        if (basicRoomRepository == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[update in BasicRoomService] basicRoomRepository is null. " +
-                    "Value was not updated.");
-            return;
-        }
-
-        basicRoomRepository.update(value);
-    }
-
-    @Deprecated
-    public void delete(T value) {
-
-        if (basicRoomRepository == null){
-            Log.e(Logs.UNEXPECTED_ERROR,Logs.FUNCTION + "[delete in BasicRoomService] basicRoomRepository is null. " +
-                    "Value was not deleted.");
-            return;
-        }
-
-        basicRoomRepository.delete(value);
+    public BasicRoomService(@NonNull K repository) {
+        this.repository = repository;
     }
 
 
@@ -70,29 +37,20 @@ public abstract class BasicRoomService <T> {
      * @param callback Callback which will manage onSuccess() action if insertion is made, or
      *                 onFailure() action if insertion failed.
      * */
-    public void insert(T value, @Nullable CoreCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void insert(T value, @Nullable DataCallbacks.General callback) {
         if(value == null){
             if(callback != null){
-                callback.onFailure(null);
+                callback.onFailure();
             }
             return;
         }
 
-        basicRoomRepository.insert(value, new DataCallbacks.InsertCallback<T>() {
-            @Override
-            public void onSuccess(@NonNull @NotNull T value) {
-                if(callback != null){
-                    callback.onSuccess(value);
-                }
-            }
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] inserted",
+                    "Insertion for value [" + value.toString() + "] failed");
+        }
 
-            @Override
-            public void onFailure(@Nullable T value) {
-                if(callback != null){
-                    callback.onFailure(value);
-                }
-            }
-        });
+        repository.insert(value, callback);
     }
 
 
@@ -103,34 +61,39 @@ public abstract class BasicRoomService <T> {
      * @param callback Callback which will manage onSuccess() action if update is made, or
      *                 onFailure() action if update failed.
      * */
-    public void update(T value, @Nullable CoreCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void update(T value, @Nullable DataCallbacks.General callback) {
         if(value == null){
             if(callback != null){
-                callback.onFailure(null);
+                callback.onFailure();
             }
             return;
         }
 
-        //values.setModifiedAt(System.currentTimeMillis());
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] updated",
+                    "Update for value [" + value.toString() + "] failed");
+        }
 
-        basicRoomRepository.update(value, new DataCallbacks.UpdateCallback<T>() {
+        // set new update time
+        long previousUpdateTime = value.getBasicInfo().getModifiedAt();
+        value.getBasicInfo().setModifiedAt(System.currentTimeMillis());
+
+        DataCallbacks.General finalCallback = callback;
+        repository.update(value, new DataCallbacks.General() {
             @Override
-            public void onSuccess(@NonNull @NotNull T value) {
-                if(callback != null){
-                    callback.onSuccess(value);
-                }
+            public void onSuccess() {
+                finalCallback.onSuccess();
             }
 
             @Override
-            public void onFailure(@NonNull @NotNull T value) {
+            public void onFailure() {
                 // reset previous update time
-                //value.setModifiedAt(previousUpdateTime);
-                if(callback != null){
-                    callback.onFailure(value);
-                }
+                value.getBasicInfo().setModifiedAt(previousUpdateTime);
+                finalCallback.onFailure();
             }
         });
     }
+
 
     /**
      * Used to delete one value from database.
@@ -139,29 +102,20 @@ public abstract class BasicRoomService <T> {
      * @param callback Callback which will manage onSuccess() action if deletion is made, or
      *                 onFailure() action if deletion failed.
      * */
-    public void delete(T value, @Nullable CoreCallbacks.InsertUpdateDeleteCallback<T> callback) {
+    public void delete(T value, @Nullable DataCallbacks.General callback) {
         if(value == null){
             Timber.w("value is null");
             if(callback != null){
-                callback.onFailure(null);
+                callback.onFailure();
             }
             return;
         }
 
-        basicRoomRepository.delete(value, new DataCallbacks.DeleteCallback<T>() {
-            @Override
-            public void onSuccess(@Nullable T value) {
-                if(callback != null){
-                    callback.onSuccess(value);
-                }
-            }
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] deleted",
+                    "Deletion for value [" + value.toString() + "] failed");
+        }
 
-            @Override
-            public void onFailure(@NonNull @NotNull T value) {
-                if(callback != null){
-                    callback.onFailure(value);
-                }
-            }
-        });
+        repository.delete(value, callback);
     }
 }

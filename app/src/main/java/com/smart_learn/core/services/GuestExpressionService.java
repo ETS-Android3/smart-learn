@@ -8,18 +8,13 @@ import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.data.repository.GuestExpressionRepository;
 import com.smart_learn.data.room.entities.Expression;
 
-public class GuestExpressionService extends BasicRoomService<Expression> {
-
-    private final GuestExpressionRepository guestExpressionRepository;
+public class GuestExpressionService extends BasicRoomService<Expression, GuestExpressionRepository> {
 
     public GuestExpressionService(Application application){
-        guestExpressionRepository = new GuestExpressionRepository(application);
-
-        // set super repository
-        super.basicRoomRepository = guestExpressionRepository;
+        super(new GuestExpressionRepository(application));
     }
 
     public LiveData<Integer> getLiveNumberOfExpressions(){
-        return guestExpressionRepository.getLiveNumberOfExpressions();
+        return repository.getLiveNumberOfExpressions();
     }
 }
