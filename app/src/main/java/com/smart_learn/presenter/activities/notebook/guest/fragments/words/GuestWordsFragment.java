@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsFragment;
@@ -59,7 +60,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         // Use this to prevent any previous selection. If an error occurred and
         // action mode could not be closed then items could not be disabled and will
         // hang as selected.  FIXME: try yo find a better way to do that
-        viewModel.getWordsService().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
+        GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
     }
 
     @Override
@@ -67,7 +68,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
 
         // use this to disable all selection
-        viewModel.getWordsService().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
+        GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
     }
 
     @Override
@@ -92,7 +93,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             @Override
             public void onClick(View v) {
                 viewModel.setAllItemsAreSelected(!viewModel.isAllItemsAreSelected());
-                viewModel.getWordsService().updateSelectAll(viewModel.isAllItemsAreSelected(), sharedViewModel.getSelectedLessonId());
+                GuestWordService.getInstance().updateSelectAll(viewModel.isAllItemsAreSelected(), sharedViewModel.getSelectedLessonId());
                 Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
@@ -101,7 +102,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.getWordsService().deleteSelectedItems(sharedViewModel.getSelectedLessonId());
+                GuestWordService.getInstance().deleteSelectedItems(sharedViewModel.getSelectedLessonId());
             }
         });
 
@@ -132,7 +133,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         }));
 
         // set observers
-        viewModel.getWordsService().getLiveSelectedItemsCount(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Integer>() {
+        GuestWordService.getInstance().getLiveSelectedItemsCount(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(actionMode != null){
@@ -141,7 +142,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             }
         });
 
-        viewModel.getWordsService().getCurrentLessonLiveWords(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<List<Word>>() {
+        GuestWordService.getInstance().getCurrentLessonLiveWords(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
                 Utilities.Activities.changeTextViewStatus(words.isEmpty(), emptyLabel);

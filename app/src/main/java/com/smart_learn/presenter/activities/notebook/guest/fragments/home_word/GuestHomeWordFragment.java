@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.HomeWordFragment;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
@@ -75,7 +76,7 @@ public class GuestHomeWordFragment extends HomeWordFragment<GuestHomeWordViewMod
         // set shared view model
         sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
-        viewModel.getWordsService().getSampleLiveWord(sharedViewModel.getSelectedWordId()).observe(this, new Observer<Word>() {
+        GuestWordService.getInstance().getSampleLiveWord(sharedViewModel.getSelectedWordId()).observe(this, new Observer<Word>() {
             @Override
             public void onChanged(Word word) {
                 viewModel.setLiveWord(word);

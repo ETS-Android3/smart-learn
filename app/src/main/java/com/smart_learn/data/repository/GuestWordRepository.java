@@ -1,23 +1,31 @@
 package com.smart_learn.data.repository;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import com.smart_learn.data.room.dao.WordDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
+import com.smart_learn.presenter.helpers.ApplicationController;
 
 import java.util.List;
 
 public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
 
+    private static GuestWordRepository instance;
+
     private LiveData<List<Word>> currentLessonLiveWordList;
 
-    public GuestWordRepository(Application application) {
+    private GuestWordRepository() {
         // no need for db instance in class because communication will be made using dao interface
-        super(AppRoomDatabase.getDatabaseInstance(application).wordDao());
+        super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).wordDao());
+    }
+
+    public static GuestWordRepository getInstance() {
+        if(instance == null){
+            instance = new GuestWordRepository();
+        }
+        return instance;
     }
 
     public Word getSampleWord(String word){

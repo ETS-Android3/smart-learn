@@ -1,6 +1,5 @@
 package com.smart_learn.core.services;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,9 +16,17 @@ import java.util.List;
 
 public class GuestWordService extends BasicRoomService<Word, GuestWordRepository> {
 
+    private static GuestWordService instance;
 
-    public GuestWordService(Application application){
-        super(new GuestWordRepository(application));
+    private GuestWordService() {
+        super(GuestWordRepository.getInstance());
+    }
+
+    public static GuestWordService getInstance() {
+        if(instance == null){
+            instance = new GuestWordService();
+        }
+        return instance;
     }
 
     public Word getSampleWord(String word){
