@@ -18,13 +18,11 @@ public class GuestAccountOverviewViewModel extends AccountOverviewViewModel {
     public GuestAccountOverviewViewModel(@NonNull @NotNull Application application) {
         super(application);
 
-        guestExpressionService = new GuestExpressionService(application);
-
         // Is enough to set this values once because will be linked with db using live data, so any
         // change in db will be propagated to the layout.
         liveNumberOfLessons = GuestLessonService.getInstance().getLiveNumberOfLessons();
         liveNumberOfWords = GuestWordService.getInstance().getLiveNumberOfWords();
-        liveNumberOfExpressions = guestExpressionService.getLiveNumberOfExpressions();
+        liveNumberOfExpressions = GuestExpressionService.getInstance().getLiveNumberOfExpressions();
 
         // TODO: link this with correct values from db
         liveNumberOfLocalActiveTests = new MutableLiveData<>(0);

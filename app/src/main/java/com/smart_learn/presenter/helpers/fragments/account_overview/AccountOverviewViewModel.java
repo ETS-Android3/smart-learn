@@ -21,8 +21,6 @@ import lombok.Getter;
 @Getter
 public abstract class AccountOverviewViewModel extends BasicAndroidViewModel {
 
-    protected GuestExpressionService guestExpressionService;
-
     protected LiveData<Integer> liveNumberOfLessons;
     protected LiveData<Integer> liveNumberOfWords;
     protected LiveData<Integer> liveNumberOfExpressions;
