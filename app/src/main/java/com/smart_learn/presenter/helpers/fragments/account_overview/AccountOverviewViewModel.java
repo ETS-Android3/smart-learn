@@ -21,7 +21,6 @@ import lombok.Getter;
 @Getter
 public abstract class AccountOverviewViewModel extends BasicAndroidViewModel {
 
-    protected GuestLessonService guestLessonService;
     protected GuestWordService guestWordService;
     protected GuestExpressionService guestExpressionService;
 

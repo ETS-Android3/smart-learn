@@ -1,7 +1,5 @@
 package com.smart_learn.data.repository;
 
-import android.app.Application;
-
 import androidx.lifecycle.LiveData;
 
 import com.smart_learn.data.room.dao.LessonDao;
@@ -9,6 +7,7 @@ import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.relationships.LessonWithJoinedInfo;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
+import com.smart_learn.presenter.helpers.ApplicationController;
 
 import java.util.List;
 
@@ -17,15 +16,24 @@ import java.util.List;
  * */
 public class GuestLessonRepository extends BasicRoomRepository<Lesson, LessonDao> {
 
+    private static GuestLessonRepository instance;
+
     private final LiveData<List<Lesson>> sampleLiveLessonList;
 
-    public GuestLessonRepository(Application application) {
+    private GuestLessonRepository() {
         // no need for db instance in class because communication will be made using dao interface
-        super(AppRoomDatabase.getDatabaseInstance(application).lessonDao());
+        super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).lessonDao());
 
         // one query is enough because LiveData is made i.e. to be automatically notified by room
         // when changes are made in db
         sampleLiveLessonList = dao.getAllLiveSampleLessons();
+    }
+
+    public static GuestLessonRepository getInstance() {
+        if(instance == null){
+            instance = new GuestLessonRepository();
+        }
+        return instance;
     }
 
     /** Get a sample LiveData wrapped notebook based on lessonId. */

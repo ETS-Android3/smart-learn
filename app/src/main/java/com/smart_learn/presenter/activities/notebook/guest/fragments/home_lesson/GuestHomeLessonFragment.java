@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
@@ -75,7 +76,7 @@ public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonV
         // set shared view model
         sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
-        viewModel.getGuestLessonService().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
+        GuestLessonService.getInstance().getSampleLiveLesson(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Lesson>() {
             @Override
             public void onChanged(Lesson lesson) {
                 viewModel.setLiveLesson(lesson);

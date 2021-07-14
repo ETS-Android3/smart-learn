@@ -1,6 +1,5 @@
 package com.smart_learn.core.services;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,17 @@ import java.util.List;
 
 public class GuestLessonService extends BasicRoomService<Lesson, GuestLessonRepository> {
 
-    public GuestLessonService(Application application){
-        super(new GuestLessonRepository(application));
+    private static GuestLessonService instance;
+
+    private GuestLessonService() {
+        super(GuestLessonRepository.getInstance());
+    }
+
+    public static GuestLessonService getInstance() {
+        if(instance == null){
+            instance = new GuestLessonService();
+        }
+        return instance;
     }
 
     public LiveData<Lesson> getSampleLiveLesson(int lessonId) {

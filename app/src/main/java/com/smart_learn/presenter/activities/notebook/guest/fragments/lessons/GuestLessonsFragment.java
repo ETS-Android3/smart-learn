@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
@@ -63,13 +64,13 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         // Use this to prevent any previous selection. If an error occurred and
         // action mode could not be closed then items could not be disabled and will
         // hang as selected.  FIXME: try yo find a better way to do that
-        viewModel.getGuestLessonService().updateSelectAll(false);
+        GuestLessonService.getInstance().updateSelectAll(false);
     }
 
     @Override
     protected void onActionModeDestroy() {
         // use this to disable all selection
-        viewModel.getGuestLessonService().updateSelectAll(false);
+        GuestLessonService.getInstance().updateSelectAll(false);
 
         // mark that action mode finished
         if(viewModel.getAdapter() != null){
@@ -100,7 +101,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
             @Override
             public void onClick(View v) {
                 viewModel.setAllItemsAreSelected(!viewModel.isAllItemsAreSelected());
-                viewModel.getGuestLessonService().updateSelectAll(viewModel.isAllItemsAreSelected());
+                GuestLessonService.getInstance().updateSelectAll(viewModel.isAllItemsAreSelected());
                 Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
@@ -143,7 +144,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         }));
 
         // set observers
-        viewModel.getGuestLessonService().getLiveSelectedItemsCount().observe(this, new Observer<Integer>() {
+        GuestLessonService.getInstance().getLiveSelectedItemsCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 if(actionMode != null){
@@ -152,7 +153,7 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
             }
         });
 
-        viewModel.getGuestLessonService().getAllLiveSampleLessons().observe(this, new Observer<List<Lesson>>() {
+        GuestLessonService.getInstance().getAllLiveSampleLessons().observe(this, new Observer<List<Lesson>>() {
             @Override
             public void onChanged(List<Lesson> lessons) {
                 Utilities.Activities.changeTextViewStatus(lessons.isEmpty(), emptyLabel);

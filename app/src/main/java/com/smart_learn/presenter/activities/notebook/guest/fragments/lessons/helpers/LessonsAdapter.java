@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.databinding.LayoutCardViewLessonBinding;
@@ -119,7 +120,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                 filteringValue = constraint.toString();
 
                 // For filtering mode we search always in all db.
-                List<Lesson> allItems = fragmentCallback.getFragment().getViewModel().getGuestLessonService().getAllSampleLesson();
+                List<Lesson> allItems = GuestLessonService.getInstance().getAllSampleLesson();
                 List<Lesson> filteredItems;
 
                 if (filteringValue.isEmpty()) {
@@ -294,7 +295,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                         fragmentCallback.getFragment().deleteLessonAlert(new Callbacks.StandardAlertDialogCallback() {
                             @Override
                             public void onPositiveButtonPress() {
-                                fragmentCallback.getFragment().getViewModel().getGuestLessonService().delete(lesson, null);
+                                GuestLessonService.getInstance().delete(lesson, null);
                             }
                         });
                         return true;
@@ -309,7 +310,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
         Lesson tmp = new Lesson(lesson.getNotes(), lesson.isSelected(), lesson.getBasicInfo(), lesson.getName());
         tmp.setLessonId(lesson.getLessonId());
         tmp.setSelected(isSelected);
-        fragmentCallback.getFragment().getViewModel().getGuestLessonService().update(tmp, null);
+        GuestLessonService.getInstance().update(tmp, null);
     }
 }
 
