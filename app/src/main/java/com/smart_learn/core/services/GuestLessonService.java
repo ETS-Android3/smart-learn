@@ -5,11 +5,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.core.exceptions.TODO;
 import com.smart_learn.core.helpers.ResponseInfo;
 import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.core.utilities.Logs;
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.repository.GuestLessonRepository;
 import com.smart_learn.data.room.entities.Lesson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,4 +122,8 @@ public class GuestLessonService extends BasicRoomService<Lesson, GuestLessonRepo
         return repositoryInstance.getLiveNumberOfLessons();
     }
 
+    @Override
+    protected boolean isItemValid(Lesson item) {
+        throw new TODO("not implemented");
+    }
 }

@@ -10,8 +10,6 @@ import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
-
 /**
  * Base class for Room services operations.
  *
@@ -24,6 +22,8 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
     @NonNull
     @NotNull
     protected final K repositoryInstance;
+
+    protected abstract boolean isItemValid(T item);
 
     public BasicRoomService(@NonNull K repositoryInstance) {
         this.repositoryInstance = repositoryInstance;
@@ -38,16 +38,14 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
      *                 onFailure() action if insertion failed.
      * */
     public void insert(T value, @Nullable DataCallbacks.General callback) {
-        if(value == null){
-            if(callback != null){
-                callback.onFailure();
-            }
-            return;
-        }
-
         if(callback == null){
             callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] inserted",
                     "Insertion for value [" + value.toString() + "] failed");
+        }
+
+        if(!isItemValid(value)){
+            callback.onFailure();
+            return;
         }
 
         repositoryInstance.insert(value, callback);
@@ -62,16 +60,14 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
      *                 onFailure() action if update failed.
      * */
     public void update(T value, @Nullable DataCallbacks.General callback) {
-        if(value == null){
-            if(callback != null){
-                callback.onFailure();
-            }
-            return;
-        }
-
         if(callback == null){
             callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] updated",
                     "Update for value [" + value.toString() + "] failed");
+        }
+
+        if(!isItemValid(value)){
+            callback.onFailure();
+            return;
         }
 
         // set new update time
@@ -103,17 +99,14 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
      *                 onFailure() action if deletion failed.
      * */
     public void delete(T value, @Nullable DataCallbacks.General callback) {
-        if(value == null){
-            Timber.w("value is null");
-            if(callback != null){
-                callback.onFailure();
-            }
-            return;
-        }
-
         if(callback == null){
             callback = DataUtilities.General.generateGeneralCallback("Value [" + value.toString() + "] deleted",
                     "Deletion for value [" + value.toString() + "] failed");
+        }
+
+        if(!isItemValid(value)){
+            callback.onFailure();
+            return;
         }
 
         repositoryInstance.delete(value, callback);
