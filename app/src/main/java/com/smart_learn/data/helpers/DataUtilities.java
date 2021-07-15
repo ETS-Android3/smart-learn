@@ -23,6 +23,7 @@ public final class DataUtilities {
      * */
     public static final class Limits {
             public static final int MAX_LESSON_NAME = 50;
+            public static final int MAX_NOTES = 1024;
     }
 
     /**

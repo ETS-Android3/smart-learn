@@ -249,5 +249,19 @@
     <string name="success_adding_lesson">Lesson was added</string>
     <string name="error_adding_lesson">Lesson could not be added</string>
     <string name="success_deleting_lesson">Lesson was deleted</string>
+    <string name="notes">Notes</string>
+    <string name="error_update_lesson_name">Lesson was not updated</string>
+    <string name="error_notes_is_same">Notes were not modified</string>
+    <string name="error_notes_too_long">Notes are too long</string>
+    <string name="succes_update_lesson_name">Lesson name was updated</string>
+    <string name="error_update_notes">Notes were not updated</string>
+    <string name="succes_update_notes">Notes were updated</string>
+    <string name="lesson_overview">Lesson overview</string>
+    <string name="words_point">Words:</string>
+    <string name="expressions_point">Expressions:</string>
+    <string name="notebook">Notebook</string>
+    <string name="update">Update</string>
+    <string name="name">Name</string>
+    <string name="update_notes">Update notes</string>
 
 </resources>

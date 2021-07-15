@@ -15,84 +15,178 @@
         tools:context=".presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_summary_fragment_home_lesson"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_account_overview_white"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_layout_lesson_name_fragment_home_lesson"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/words_point"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.liveNumberOfWords)}"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/lesson_name"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/expressions_point"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.liveNumberOfExpressions)}"
                     android:textSize="16sp" />
 
-                <!-- Use this to center the toolbar at right end
-                 https://stackoverflow.com/questions/10829835/right-align-button-in-horizontal-linearlayout/29209614#29209614
-                 -->
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_lesson_name_fragment_home_lesson"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_account_overview_white"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_layout_lesson_notes_fragment_home_lesson"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_summary_fragment_home_lesson">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/name"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar_fragment_home_lesson"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btn_update_lesson_name_fragment_home_lesson"
+                    style="@style/AppTheme.ButtonStyle.Borderless.Update.White"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle.OptionEdit"
-                    app:menu="@menu/menu_options_custom_editable_layout" />
+                    android:gravity="end" />
 
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_lesson_name_fragment_home_lesson"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/lesson_name"
-                app:counterEnabled="true"
-                app:counterMaxLength="@{viewModel.MAX_LESSON_NAME}"
-                app:endIconMode="clear_text"
-                app:errorEnabled="true"
-                app:errorTextColor="@color/red"
-                app:startIconDrawable="@drawable/ic_baseline_library_books_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_lesson_name_fragment_home_lesson"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="textPersonName"
-                    android:maxLength="@{viewModel.MAX_LESSON_NAME}"
-                    android:text="@={viewModel.liveLesson.name}"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
-                android:id="@+id/tv_lesson_name_fragment_home_lesson"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="@{viewModel.liveLesson.name}"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textSize="24sp"
-                android:visibility="gone" />
-
+                android:singleLine="false"
+                android:text="@{viewModel.liveLessonName}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="16sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_lesson_notes_fragment_home_lesson"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="72dp"
+            android:background="@drawable/background_account_overview_white"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_lesson_name_fragment_home_lesson">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/notes"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_update_lesson_notes_fragment_home_lesson"
+                    style="@style/AppTheme.ButtonStyle.Borderless.Update.White"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- https://stackoverflow.com/questions/6674578/multiline-textview-in-android/43030903#43030903 -->
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
+                android:text="@{viewModel.liveLessonNotes}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="16sp"
+                tools:ignore="LabelFor" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

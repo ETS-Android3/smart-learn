@@ -246,6 +246,13 @@
         <item name="android:background">@drawable/background_button_info_disabled</item>
     </style>
 
+    <!-- For info Edit buttons on custom editable layout -->
+    <style name="AppTheme.ButtonStyle.Borderless.Update.White" parent="AppTheme.ButtonStyle">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawableStart">@drawable/ic_baseline_edit_24</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
 
     <!--  =====================================================================================  -->
     <!--                                 Recycler view styles                                    -->
