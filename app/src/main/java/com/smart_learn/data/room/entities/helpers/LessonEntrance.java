@@ -2,6 +2,8 @@ package com.smart_learn.data.room.entities.helpers;
 
 import androidx.room.ColumnInfo;
 
+import com.smart_learn.core.utilities.CoreUtilities;
+
 import java.util.ArrayList;
 
 import lombok.Getter;
@@ -35,5 +37,16 @@ public abstract class LessonEntrance extends NotebookCommon {
         this.isFavourite = isFavourite;
         this.language = language;
         this.translations = translations;
+    }
+
+    public boolean areContentsTheSame(LessonEntrance newItem){
+        if(newItem == null){
+            return false;
+        }
+        return super.areContentsTheSame(newItem) &&
+                CoreUtilities.General.areObjectsTheSame(this.fkLessonId, newItem.getFkLessonId()) &&
+                this.isFavourite == newItem.isFavourite() &&
+                CoreUtilities.General.areObjectsTheSame(this.language, newItem.getLanguage()) &&
+                Translation.areContentsTheSame(this.translations, newItem.getTranslations());
     }
 }

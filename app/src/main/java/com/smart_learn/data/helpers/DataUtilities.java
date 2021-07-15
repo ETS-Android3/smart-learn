@@ -24,6 +24,11 @@ public final class DataUtilities {
     public static final class Limits {
             public static final int MAX_LESSON_NAME = 50;
             public static final int MAX_NOTES = 1024;
+            public static final int MAX_WORD = 100;
+            public static final int MAX_WORD_PHONETIC = 100;
+            public static final int MAX_LANGUAGE = 25;
+            public static final int MAX_WORD_TRANSLATION = 100;
+            public static final int MAX_WORD_TRANSLATION_PHONETIC = 100;
     }
 
     /**

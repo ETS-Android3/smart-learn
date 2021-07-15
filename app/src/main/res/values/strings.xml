@@ -263,5 +263,15 @@
     <string name="update">Update</string>
     <string name="name">Name</string>
     <string name="update_notes">Update notes</string>
+    <string name="error_delete_words">Words canot be deleted</string>
+    <string name="error_adding_word">Word can not be added</string>
+    <string name="success_deleting_word">Word was deleted</string>
+    <string name="error_deleting_word">Word can not be deleted</string>
+    <string name="error_word_too_long">Word is too long</string>
+    <string name="error_translation_too_long">Translation is too long</string>
+    <string name="word">Word</string>
+    <string name="translation">Translation (optional)</string>
+    <string name="add_word">Add word</string>
+    <string name="success_adding_word">Word was added</string>
 
 </resources>

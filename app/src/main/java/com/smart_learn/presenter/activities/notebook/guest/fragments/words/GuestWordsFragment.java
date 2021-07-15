@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,10 +11,10 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsFragment;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter;
+import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
@@ -57,6 +56,11 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
     protected void onActionModeCreate() {
         ((GuestNotebookActivity)requireActivity()).hideBottomNavigationMenu();
 
+        // mark that action mode started
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setLiveActionMode(true);
+        }
+
         // Use this to prevent any previous selection. If an error occurred and
         // action mode could not be closed then items could not be disabled and will
         // hang as selected.  FIXME: try yo find a better way to do that
@@ -69,12 +73,16 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
         // use this to disable all selection
         GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
+
+        // mark that action mode finished
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setLiveActionMode(false);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.words));
         ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }
@@ -103,15 +111,8 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             @Override
             public void onClick(View v) {
                 GuestWordService.getInstance().deleteSelectedItems(sharedViewModel.getSelectedLessonId());
-            }
-        });
-
-
-        // recycler view include layout listeners
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                viewModel.setAllItemsAreSelected(false);
+                Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
     }
@@ -123,6 +124,9 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
         // set shared view model
         sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
+
+        // set current lesson on view model for further operations inside view model
+        viewModel.setCurrentLessonId(sharedViewModel.getSelectedLessonId());
 
         // set fragment view model adapter
         viewModel.setAdapter(new WordsAdapter(new Callbacks.FragmentGeneralCallback<GuestWordsFragment>() {
@@ -154,16 +158,16 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     }
 
-    public void goToHomeWordFragment(Word word){
+    public void goToGuestHomeWordFragment(Word word){
         if(word == null || word.getWordId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }
 
-        // First set current lesson id (lesson which is clicked) on the shared view model and
+        // First set current word id (word which is clicked) on the shared view model and
         // then you can navigate.
         sharedViewModel.setSelectedWordId(word.getWordId());
-        ((GuestNotebookActivity)requireActivity()).goToHomeWordFragment();
+        ((GuestNotebookActivity)requireActivity()).goToGuestHomeWordFragment();
     }
 
 }

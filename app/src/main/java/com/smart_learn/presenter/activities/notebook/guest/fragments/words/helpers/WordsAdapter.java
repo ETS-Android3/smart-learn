@@ -1,34 +1,47 @@
 package com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers;
 
 
+import android.text.SpannableString;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Word;
+import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.databinding.LayoutCardViewWordBinding;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.words.GuestWordsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
+
+    private final MutableLiveData<Boolean> liveIsActionModeActive;
+    private boolean isFiltering;
+    private String filteringValue;
 
     private final Callbacks.FragmentGeneralCallback<GuestWordsFragment> fragmentCallback;
 
@@ -36,22 +49,23 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
         super(new DiffUtil.ItemCallback<Word>(){
             @Override
             public boolean areItemsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-                return oldItem.getWordId() == newItem.getWordId();
+                return oldItem.areItemsTheSame(newItem);
             }
-
             @Override
             public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-                return oldItem.getWord().equals(newItem.getWord()) &&
-                        oldItem.getBasicInfo().getCreatedAt() == newItem.getBasicInfo().getCreatedAt() &&
-                        oldItem.getBasicInfo().getModifiedAt() == newItem.getBasicInfo().getModifiedAt() &&
-                        oldItem.isSelected() == newItem.isSelected();
-                        // FIXME: fix this equality
-                        //oldItem.getTranslation().getTranslation().equals(newItem.getTranslation().getTranslation()) &&
-                        //oldItem.getTranslation().getPhonetic().equals(newItem.getTranslation().getPhonetic());
+                return oldItem.areContentsTheSame(newItem);
             }
         });
 
         this.fragmentCallback = fragmentCallback;
+
+        this.liveIsActionModeActive = new MutableLiveData<>(false);
+        this.isFiltering = false;
+        this.filteringValue = "";
+    }
+
+    public void setLiveActionMode(boolean value) {
+        liveIsActionModeActive.setValue(value);
     }
 
     /** Load data in recycler view */
@@ -67,22 +81,26 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
         LayoutCardViewWordBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater ,R.layout.layout_card_view_word, parent, false);
         viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
 
-        // link data binding layout with view holder
-        WordsAdapter.WordViewHolder lessonViewHolder = new  WordsAdapter.WordViewHolder(viewHolderBinding);
-        viewHolderBinding.setViewHolder(lessonViewHolder);
+        // set binding variable
+        viewHolderBinding.setLiveIsActionModeActive(liveIsActionModeActive);
 
-        return lessonViewHolder;
+        return new WordViewHolder(viewHolderBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WordsAdapter.WordViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+            return;
+        }
+
+        Word word = getItem(position);
+        if(!CoreUtilities.General.isItemNotNull(word)){
+            return;
+        }
+
+        holder.bind(word, position);
     }
 
-    /**
-     * Filter used in search mode
-     *  https://www.youtube.com/watch?v=CTvzoVtKoJ8&list=WL&index=78&t=285s
-     * */
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -90,15 +108,52 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             /** Run on background thread. Background thread is created automatically. */
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+                isFiltering = true;
+                filteringValue = constraint.toString();
+
+                // For filtering mode we search always in all db.
+                List<Word> allItems = GuestWordService.getInstance().getCurrentLessonSampleWords(fragmentCallback.getFragment().getViewModel().getCurrentLessonId());
+                List<Word> filteredItems;
+
+                if (filteringValue.isEmpty()) {
+                    isFiltering = false;
+                    filteredItems = allItems;
+                }
+                else {
+                    filteredItems = allItems.stream()
+                            .filter(it -> it.getWord().toLowerCase().contains(filteringValue.toLowerCase()))
+                            .collect(Collectors.toList());
+                }
 
                 FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredItems;
                 return filterResults;
             }
 
             /** runs on a UI thread */
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
+                /*
+                 When filtering, search is made in all database and objects returned from db will
+                 have same address as objects from current recycler view list. So any change which
+                 will be made at filtered items will be reflected in recycler view list also.
 
+                 By this cause DiffUtilCallback will not work because he will see NO change and by
+                 this cause, for him, after calling submitList(...) method (and areContentsTheSame(...)
+                 method will be called automatically), newList and oldList will be identical.
+                 In order to show new changes notifyDataSetChanged() must be called in order to call
+                 onBindViewHolder().
+
+                 To avoid this call while filtering, you must make a deep copy for items from
+                 database in order to be different from current recycler view list but time will be
+                 increased because copies must be processed.
+                 */
+
+                // FIXME: make a check for this cast
+                submitList((List<Word>) results.values);
+
+                // this call is made in order to show a colorful spanned text
+                notifyDataSetChanged();
             }
         };
     }
@@ -109,35 +164,70 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
     }
 
 
-    /**
-     * Class to specific how an element from recycler view (lesson card) will be shown
-     * */
-    public final class WordViewHolder extends RecyclerView.ViewHolder {
+    public final class WordViewHolder extends BasicViewHolder<Word, LayoutCardViewWordBinding> {
 
-        private final LayoutCardViewWordBinding viewHolderBinding;
-        private final MutableLiveData<Word> liveWord;
+        private final MutableLiveData<SpannableString> liveSpannedWord;
+        private final MutableLiveData<Boolean> liveIsSelected;
+        private final AtomicBoolean isDeleting;
 
         public WordViewHolder(@NonNull LayoutCardViewWordBinding viewHolderBinding) {
-            // this will set itemView in ViewHolder class
-            super(viewHolderBinding.getRoot());
-            this.viewHolderBinding = viewHolderBinding;
+            super(viewHolderBinding);
+            liveSpannedWord = new MutableLiveData<>(new SpannableString(""));
+            liveIsSelected = new MutableLiveData<>(false);
+            isDeleting = new AtomicBoolean(false);
 
-            // FIXME: add a standard empty word
-            // avoid a null value for liveLesson.getValue()
-            //liveWord = new MutableLiveData<>(new Word(0,0,0,false,new Translation("",""),""));
-            liveWord = new MutableLiveData<>();
+            // link binding with variables
+            viewHolderBinding.setLiveSpannedWord(liveSpannedWord);
+            viewHolderBinding.setLiveIsSelected(liveIsSelected);
 
             setListeners();
         }
 
-        public LiveData<Word> getLiveWord(){ return liveWord; }
+        @Override
+        protected Word getEmptyLiveItemInfo() {
+            return Word.generateEmptyObject();
+        }
+
+        @Override
+        protected void bind(@NonNull @NotNull Word item, int position) {
+            if (fragmentCallback.getFragment().getActionMode() != null) {
+                liveSpannedWord.setValue(new SpannableString(item.getWord()));
+                liveIsSelected.setValue(item.isSelected());
+                viewHolderBinding.cvLayoutCardViewWord.setChecked(item.isSelected());
+                return;
+            }
+
+            if(isFiltering){
+                liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
+                        CoreUtilities.General.getSubstringIndexes(item.getWord(), filteringValue), item.getWord()));
+            }
+            else {
+                liveSpannedWord.setValue(new SpannableString(item.getWord()));
+            }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
+        }
+
 
         private void setListeners(){
+
+            setToolbarListener();
+
             // simple click action
             viewHolderBinding.cvLayoutCardViewWord.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Word word = getItem(getAdapterPosition());
+                    int position = getAdapterPosition();
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        return;
+                    }
+
+                    Word word = getItem(position);
+                    if(!CoreUtilities.General.isItemNotNull(word)){
+                        return;
+                    }
+
                     // If action mode is on then user can select/deselect items.
                     if(fragmentCallback.getFragment().getActionMode() != null) {
                         markItem(word,!word.isSelected());
@@ -146,7 +236,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
 
                     // If action mode is disabled then simple click will navigate user to the
                     // HomeWordFragment using selected word.
-                    fragmentCallback.getFragment().goToHomeWordFragment(word);
+                    fragmentCallback.getFragment().goToGuestHomeWordFragment(word);
                 }
             });
 
@@ -155,54 +245,100 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
                 @Override
                 public boolean onLongClick(View v) {
                     if(fragmentCallback.getFragment().getActionMode() == null) {
+                        int position = getAdapterPosition();
+                        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                            return true;
+                        }
+
+                        Word word = getItem(position);
+                        if(!CoreUtilities.General.isItemNotNull(word)){
+                            return true;
+                        }
+
                         fragmentCallback.getFragment().startFragmentActionMode();
                         // by default clicked item is selected
-                        markItem(getItem(getAdapterPosition()),true);
+                        markItem(word,true);
                     }
+
                     return true;
                 }
             });
 
         }
 
-        /** this is how single elements are displayed in recycler view */
-        private void bind(Word word){
-            if(word == null){
-                Timber.w("word is null ==> can not create bind");
-                return;
-            }
+        private void setToolbarListener(){
+            viewHolderBinding.toolbarLayoutCardViewWord.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int position = getAdapterPosition();
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        return true;
+                    }
 
-            if (fragmentCallback.getFragment().getActionMode() != null) {
-                viewHolderBinding.toolbarLayoutCardViewWord.setVisibility(View.GONE);
-                viewHolderBinding.cvLayoutCardViewWord.setChecked(word.isSelected());
-                liveWord.setValue(word);
-                return;
-            }
+                    Word word = getItem(position);
+                    if(!CoreUtilities.General.isItemNotNull(word)){
+                        return true;
+                    }
 
-            viewHolderBinding.toolbarLayoutCardViewWord.setVisibility(View.VISIBLE);
+                    int id = item.getItemId();
+                    if(id == R.id.action_delete_menu_card_view_word){
+                        // avoid multiple press until operation is finished
+                        if(isDeleting.get()){
+                            return true;
+                        }
+                        isDeleting.set(true);
+                        onDeletePressed(word);
+                        return true;
+                    }
+                    return true;
+                }
+            });
+        }
 
-            if(!word.getSearchIndexes().isEmpty()) {
-                word.setSpannedWord(Utilities.Activities.createSpannedText(word.getSearchIndexes(), word.getWord()));
-            }
-            else {
-                // This reset will be made also when a new filtering is made, but to avoid to keep
-                // irrelevant info linked to lesson if no filtering will be made, make reset here
-                // too.
-                word.setSearchIndexes(new ArrayList<>());
-                word.resetSpannedWord();
-            }
+        private void onDeletePressed(Word word){
+            GuestWordService.getInstance().delete(word, new DataCallbacks.General() {
+                @Override
+                public void onSuccess() {
+                    fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
+                                fragmentCallback.getFragment().getString(R.string.success_deleting_word));
+                    });
+                    isDeleting.set(false);
+                }
 
-            liveWord.setValue(word);
+                @Override
+                public void onFailure() {
+                    fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
+                                fragmentCallback.getFragment().getString(R.string.error_deleting_word));
+                    });
+                    isDeleting.set(false);
+                }
+            });
         }
     }
 
     private void markItem(Word word, boolean isSelected) {
-        // FIXME: add a standard empty word
-//        Word tmp = new Word(word.getCreatedAt(),word.getModifiedAt(),word.getFkLessonId(),word.isSelected(),
-//                new Translation(word.getTranslation().getTranslation(),word.getTranslation().getPhonetic()),word.getWord());
-//        tmp.setWordId(word.getWordId());
-//        tmp.setSelected(isSelected);
-//        fragmentCallback.getFragment().getWordsViewModel().getWordsService().update(tmp);
+        // TODO: make a specific method for deep copy on Basic info entity
+        BasicInfo basicInfo = new BasicInfo(word.getBasicInfo().getCreatedAt());
+        basicInfo.setModifiedAt(word.getBasicInfo().getModifiedAt());
+
+        // TODO: make a specific method for deep copy on Word entity
+        Word tmp = new Word(
+                word.getNotes(),
+                word.isSelected(),
+                basicInfo,
+                word.getFkLessonId(),
+                word.isFavourite(),
+                word.getLanguage(),
+                new ArrayList<>(word.getTranslations()),
+                word.getWord(),
+                word.getPhonetic()
+        );
+
+        tmp.setWordId(word.getWordId());
+        tmp.setSelected(isSelected);
+        GuestWordService.getInstance().update(tmp, null);
     }
 }
 

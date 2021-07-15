@@ -1,22 +1,17 @@
 package com.smart_learn.data.room.entities;
 
-import android.text.Html;
-import android.text.Spanned;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
-import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,27 +40,35 @@ public class Word extends LessonEntrance {
     @ColumnInfo(name = "word")
     private String word;
 
-    @Ignore
-    // this indexes are used for search value in recycler view for making the foreground color
-    private List<IndexRange> searchIndexes = new ArrayList<>();
-
-    @Ignore
-    // this will be used for showing the foreground color using html tags for text between searchIndexes
-    private Spanned spannedWord;
+    @ColumnInfo(name = "phonetic")
+    private String phonetic;
 
     public Word(String notes, boolean isSelected, BasicInfo basicInfo, Integer fkLessonId,
-                boolean isFavourite, String language, ArrayList<Translation> translations, String word) {
+                boolean isFavourite, String language, ArrayList<Translation> translations, String word, String phonetic) {
         super(notes, isSelected, basicInfo, fkLessonId, isFavourite, language, translations);
         this.word = word;
+        this.phonetic = phonetic;
     }
 
-    public void addIndexRange(IndexRange indexRange){
-        searchIndexes.add(indexRange);
+    public boolean areItemsTheSame(Word newItem) {
+        if(newItem == null){
+            return false;
+        }
+        return this.wordId == newItem.getWordId();
     }
 
-    public void setSpannedWord(Spanned spannedWord) { this.spannedWord = spannedWord; }
+    public boolean areContentsTheSame(Word newItem){
+        if(newItem == null){
+            return false;
+        }
+        return super.areContentsTheSame(newItem) &&
+                CoreUtilities.General.areObjectsTheSame(this.word, newItem.getWord()) &&
+                CoreUtilities.General.areObjectsTheSame(this.phonetic, newItem.getPhonetic());
+    }
 
-    public void resetSpannedWord(){ spannedWord = Html.fromHtml(this.word,Html.FROM_HTML_MODE_LEGACY); }
+    public static Word generateEmptyObject(){
+        return new Word("", false, BasicInfo.generateEmptyObject(), null,
+                false, "", new ArrayList<>(), "", "");
+    }
 
-    public Spanned getSpannedWord() { return spannedWord; }
 }

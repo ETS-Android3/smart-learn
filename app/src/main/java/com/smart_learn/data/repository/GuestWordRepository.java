@@ -28,10 +28,6 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
         return instance;
     }
 
-    public Word getSampleWord(String word){
-        return dao.getSampleWord(word);
-    }
-
     public LiveData<List<Word>> getCurrentLessonLiveWords(int currentLessonId){
         if (currentLessonLiveWordList == null){
             // one query is enough because LiveData is made i.e. to be automatically notified by room
@@ -41,19 +37,8 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
         return currentLessonLiveWordList;
     }
 
-    /** Get a sample LiveData wrapped word based on wordId. */
     public LiveData<Word> getSampleLiveWord(int wordId) {
         return dao.getSampleLiveWord(wordId);
-    }
-
-    /** Check if Word already exists in database. */
-    public boolean checkIfWordExist(String word){
-        return dao.getSampleWord(word) == null;
-    }
-
-    /** Check if Word already exists in a specific notebook. */
-    public boolean checkIfWordExist(String word, int lessonId){
-        return dao.getSampleWord(word,lessonId) == null;
     }
 
     public void deleteSelectedItems(int lessonId){
@@ -69,8 +54,6 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
     }
 
     public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return dao.getLiveSelectedItemsCount(lessonId); }
-
-    public LiveData<Integer> getLiveItemsNumber(int lessonId){ return dao.getLiveItemsNumber(lessonId); }
 
     public LiveData<Integer> getLiveNumberOfWords(){
         return dao.getLiveNumberOfWords();

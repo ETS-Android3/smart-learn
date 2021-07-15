@@ -83,19 +83,19 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 translations.add(new Translation("trans 1","phon 1", ""));
                 translations.add(new Translation("trans 2","phon 2", ""));
                 Word word = new Word("word 1",false,
-                        basicInfo,idLesson,false,"", translations,"word 1");
+                        basicInfo,idLesson,false,"", translations,"word 1", "phonetic 1");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 2",false,
-                        basicInfo,idLesson,false,"", translations,"word 2");
+                        basicInfo,idLesson,false,"", translations,"word 2", "phonetic 2");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 3",false,
-                        basicInfo,idLesson,false,"", translations,"word 3");
+                        basicInfo,idLesson,false,"", translations,"word 3", "phonetic 3");
                 instance.wordDao().insert(word);
 
                 word = new Word("notes word 4",false,
-                        basicInfo,idLesson,false,"", translations,"word 4");
+                        basicInfo,idLesson,false,"", translations,"word 4", "phonetic 4");
                 instance.wordDao().insert(word);
 
                 lesson = new Lesson("notes lectia 2",false, basicInfo,"lectia 2");
