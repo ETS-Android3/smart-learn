@@ -131,6 +131,31 @@ public abstract class CoreUtilities {
 
 
         /**
+         * Use to create a special String for url search.
+         *
+         * @param value String to be split.
+         *
+         * @return Url type string.
+         * */
+        @NotNull
+        @NonNull
+        public static String getStringForUrlSearch(String value){
+            /*
+              Example:
+                - From value "the   red    nice apple" will result "the+red+nice+apple"
+             */
+            if(value == null || value.isEmpty()){
+                return "";
+            }
+
+            // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead/2932439#2932439
+            value = value.trim().replaceAll(" +", " ");
+            value = value.replace(' ','+');
+            return value;
+        }
+
+
+        /**
          * Use to generate a search list array for a Firestore document.
          *
          * @param valueList The strings on the basis of which the generation will be made.

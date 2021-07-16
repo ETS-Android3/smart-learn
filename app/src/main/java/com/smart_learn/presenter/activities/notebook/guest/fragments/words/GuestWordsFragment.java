@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
@@ -163,9 +164,13 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             return;
         }
 
-        // First set current word id (word which is clicked) on the shared view model and
-        // then you can navigate.
+        // first set current word id (word which is clicked) and specific url`s on the shared view model
         sharedViewModel.setSelectedWordId(word.getWordId());
+        String value = CoreUtilities.General.getStringForUrlSearch(word.getWord());
+        sharedViewModel.setMeaningUrl("https://www.google.ro/search?q=the+meaning+of+" + value);
+        sharedViewModel.setExamplesUrl("https://www.google.ro/search?q=images+example+of+" + value);
+
+        // and then navigate
         ((GuestNotebookActivity)requireActivity()).goToGuestHomeWordFragment();
     }
 

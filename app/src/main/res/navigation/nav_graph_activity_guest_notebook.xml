@@ -33,4 +33,14 @@
         android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_word.GuestHomeWordFragment"
         android:label="guest_home_word_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_home_word" />
+    <fragment
+        android:id="@+id/guest_meaning_web_view_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:label="guest_meaning_web_view_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/guest_examples_web_view_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:label="guest_examples_web_view_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_web_view" />
 </navigation>
