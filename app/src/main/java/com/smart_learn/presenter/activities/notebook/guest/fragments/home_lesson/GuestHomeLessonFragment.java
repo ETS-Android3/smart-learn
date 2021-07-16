@@ -8,7 +8,6 @@ import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment;
 
@@ -21,12 +20,6 @@ public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonV
     @Override
     protected @NotNull Class<GuestHomeLessonViewModel> getModelClassForViewModel() {
         return GuestHomeLessonViewModel.class;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
     }
 
     @Override

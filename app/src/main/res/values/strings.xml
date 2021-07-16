@@ -238,6 +238,9 @@
     <string name="search_is_in_progress">Please wait until search is finished.</string>
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
+
+
+    <!-- HomeLessonFragment -->
     <string name="delete_lesson">Delete lesson</string>
     <string name="delete_lesson_description_1">This lesson has</string>
     <string name="delete_lesson_description_2">words</string>
@@ -270,8 +273,45 @@
     <string name="error_word_too_long">Word is too long</string>
     <string name="error_translation_too_long">Translation is too long</string>
     <string name="word">Word</string>
-    <string name="translation">Translation (optional)</string>
+    <string name="translation_optional">Translation (optional)</string>
     <string name="add_word">Add word</string>
     <string name="success_adding_word">Word was added</string>
+
+
+    <!-- HomeWordFragment -->
+    <string name="word_overview">Word overview</string>
+    <string name="translations">Translations</string>
+    <string name="error_word_name_is_same">Word is the same</string>
+    <string name="error_word_phonetic_is_same">Word phonetic is same</string>
+    <string name="error_phonetic_too_long">Phonetic is too long</string>
+    <string name="error_update_word">Word was not updated</string>
+    <string name="succes_update_word">Word was updated</string>
+    <string name="phonetic">Phonetic</string>
+    <string name="update_word">Update word</string>
+    <string name="update_phonetic">Update phonetic</string>
+    <string name="phonetic_optional">Phonetic (optional)</string>
+    <string name="error_add_translation">Error while adding translation</string>
+    <string name="error_update_translations">Error while updating translations</string>
+    <string name="success_update_translations">Translations were updated</string>
+    <string name="error_translation_is_same">Translation is the same</string>
+    <string name="error_phonetic_is_same">Phonetic is the same</string>
+    <string name="error_translation_exist">This translation already exists</string>
+    <string name="success_deleting_translation">Translation was deleted</string>
+    <string name="error_deleting_translation">Translation was not deleted</string>
+    <string name="error_delete_translation">Error while deleting translation</string>
+    <string name="success_delete_translation">Translation was deleted</string>
+    <string name="error_update_phonetic">Error while updating phonetic</string>
+    <string name="succes_update_phonetic">Phonetic was updated</string>
+    <string name="error_add_translations">Error while adding translation</string>
+    <string name="success_add_translations">Translation was added</string>
+    <string name="add_translation">Add translation</string>
+    <string name="update_translation">Update translation</string>
+    <string name="translation">Translation</string>
+    <string name="value">Value</string>
+    <string name="translation_overview">Translation overview</string>
+    <string name="change_info">Change info</string>
+    <string name="translation_point">Translation:</string>
+    <string name="value_point">Value:</string>
+    <string name="phonetic_point">Phonetic:</string>
 
 </resources>

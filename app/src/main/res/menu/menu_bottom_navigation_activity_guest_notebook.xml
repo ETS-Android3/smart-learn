@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/main_group_menu_bottom_navigation_activity_guest_notebook">
+        android:id="@+id/lesson_group_menu_bottom_navigation_activity_guest_notebook">
 
         <!-- Do not change id`s for items because are related to the navigation graph where bottom
          menu navigation is attached.-->
@@ -13,5 +13,22 @@
             android:id="@+id/guest_words_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_email_24"
             android:title="Words"/>
+    </group>
+
+    <group
+        android:id="@+id/word_group_menu_bottom_navigation_activity_guest_notebook">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
+        <item
+            android:id="@+id/guest_home_word_fragment_nav_graph_activity_guest_notebook"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="Info"/>
+        <item
+            android:icon="@drawable/ic_baseline_email_24"
+            android:title="Meaning"/>
+        <item
+            android:icon="@drawable/ic_baseline_email_24"
+            android:title="Examples"/>
     </group>
 </menu>

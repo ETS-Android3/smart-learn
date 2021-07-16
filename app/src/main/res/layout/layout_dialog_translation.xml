@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
+        <variable
+            name="viewModel"
+            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialogViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_word_layout_dialog_translation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_word_add_or_update_layout_dialog_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_word_translation_value_layout_dialog_translation"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/translation"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="@{Limits.MAX_WORD_TRANSLATION}"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:errorTextColor="@color/colorError"
+                    app:startIconDrawable="@drawable/ic_baseline_translate_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:inputType="textLongMessage"
+                        android:maxLength="@{Limits.MAX_WORD_TRANSLATION}"
+                        android:text="@={viewModel.liveValue}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_word_phonetic_layout_dialog_translation"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:ems="10"
+                    android:hint="@string/phonetic_optional"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="@{Limits.MAX_WORD_PHONETIC}"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:errorTextColor="@color/colorError"
+                    app:startIconDrawable="@drawable/ic_baseline_phonetic_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:inputType="textLongMessage"
+                        android:maxLength="@{Limits.MAX_WORD_PHONETIC}"
+                        android:text="@={viewModel.livePhonetic}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_word_view_layout_dialog_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="start"
+                    android:text="@string/value_point"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start"
+                    android:singleLine="false"
+                    android:text="@{viewModel.liveValue}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="start"
+                    android:text="@string/phonetic_point"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:singleLine="false"
+                    android:text="@{viewModel.livePhonetic}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_expression_layout_dialog_translation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_expression_add_or_update_layout_dialog_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/et_expression_translation_value_layout_dialog_translation"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/translation"
+                    app:counterMaxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
+                    app:errorEnabled="true"
+                    app:errorTextColor="@color/colorError">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:inputType="textLongMessage"
+                        android:minLines="4"
+                        android:maxLines="20"
+                        android:maxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
+                        android:text="@={viewModel.liveValue}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_expression_view_layout_dialog_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="start"
+                    android:text="@string/value_point"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <!-- https://stackoverflow.com/questions/6674578/multiline-textview-in-android/43030903#43030903 -->
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:minLines="4"
+                    android:maxLines="20"
+                    android:inputType="textMultiLine"
+                    android:scrollbars="vertical"
+                    android:text="@{viewModel.liveValue}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textSize="16sp"
+                    tools:ignore="LabelFor" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -29,6 +29,8 @@ public final class DataUtilities {
             public static final int MAX_LANGUAGE = 25;
             public static final int MAX_WORD_TRANSLATION = 100;
             public static final int MAX_WORD_TRANSLATION_PHONETIC = 100;
+            public static final int MAX_EXPRESSION = 512;
+            public static final int MAX_EXPRESSION_TRANSLATION = 512;
     }
 
     /**

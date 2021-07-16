@@ -4,9 +4,13 @@ import androidx.room.ColumnInfo;
 
 import com.smart_learn.core.utilities.CoreUtilities;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,12 +34,18 @@ public class Translation {
         this.language = language;
     }
 
+    public boolean areItemsTheSame(Translation newItem) {
+        if(newItem == null){
+            return false;
+        }
+        return CoreUtilities.General.areObjectsTheSame(this.translation, newItem.getTranslation());
+    }
+
     public boolean areContentsTheSame(Translation newItem){
         if(newItem == null){
             return false;
         }
-        return CoreUtilities.General.areObjectsTheSame(this.translation, newItem.getTranslation()) &&
-                CoreUtilities.General.areObjectsTheSame(this.phonetic, newItem.getPhonetic()) &&
+        return CoreUtilities.General.areObjectsTheSame(this.phonetic, newItem.getPhonetic()) &&
                 CoreUtilities.General.areObjectsTheSame(this.language, newItem.getLanguage());
     }
 
@@ -60,5 +70,22 @@ public class Translation {
         }
 
         return true;
+    }
+
+    public static Translation generateEmptyObject(){
+        return new Translation("", "", "");
+    }
+
+    @NonNull
+    @NotNull
+    public static ArrayList<Translation> makeDeepCopy(List<Translation> array){
+        if(array == null){
+            return new ArrayList<>();
+        }
+        ArrayList<Translation> tmp = new ArrayList<>();
+        for(Translation item : array){
+            tmp.add(new Translation(item.getTranslation(), item.getPhonetic(), item.getLanguage()));
+        }
+        return tmp;
     }
 }

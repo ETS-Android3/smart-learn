@@ -69,7 +69,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Override
     protected void onActionModeDestroy() {
-        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
+        ((GuestNotebookActivity)requireActivity()).showLessonGroupBottomNavigation();
 
         // use this to disable all selection
         GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
@@ -83,7 +83,6 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
     @Override
     public void onResume() {
         super.onResume();
-        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }
 

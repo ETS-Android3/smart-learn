@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.helpers.Translation;
+import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.helpers.WordDialog;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -50,6 +51,12 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
         // https://stackoverflow.com/questions/15653737/oncreateoptionsmenu-inside-fragments/31360073#31360073
         setHasOptionsMenu(true);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((NotebookActivity<?>)requireActivity()).showLessonGroupBottomNavigation();
     }
 
     @Override

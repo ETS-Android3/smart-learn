@@ -45,7 +45,6 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
     @Override
     public void onResume() {
         super.onResume();
-        ((GuestNotebookActivity)requireActivity()).hideBottomNavigationMenu();
         sharedViewModel.setSelectedLessonId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
         sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }

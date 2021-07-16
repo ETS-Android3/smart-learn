@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.smart_learn.R;
+import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -51,6 +52,12 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
                         onFilter(newText);
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((NotebookActivity<?>)requireActivity()).showMainGroupBottomNavigation();
     }
 
     public void deleteLessonAlert(int wordsNr, int expressionsNr) {

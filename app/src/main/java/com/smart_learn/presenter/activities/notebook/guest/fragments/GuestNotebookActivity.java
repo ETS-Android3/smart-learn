@@ -41,15 +41,17 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
                     @Override
                     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                         switch (item.getItemId()){
-                            // fragment with bottom navigation view VISIBLE
                             case R.id.guest_home_lesson_fragment_nav_graph_activity_guest_notebook:
                                 navController.navigate(R.id.guest_home_lesson_fragment_nav_graph_activity_guest_notebook,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
+                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
                                 return true;
-                            // fragment with bottom navigation view VISIBLE
                             case R.id.guest_words_fragment_nav_graph_activity_guest_notebook:
                                 navController.navigate(R.id.guest_words_fragment_nav_graph_activity_guest_notebook,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
+                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
+                                return true;
+                            case R.id.guest_home_word_fragment_nav_graph_activity_guest_notebook:
+                                navController.navigate(R.id.guest_home_word_fragment_nav_graph_activity_guest_notebook,null,
+                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_words_fragment_nav_graph_activity_guest_notebook));
                                 return true;
                         }
                         return false;
@@ -58,15 +60,32 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
 
     }
 
-    /** Fragment has bottom navigation view HIDDEN. */
     public void goToGuestHomeLessonFragment(){
         navController.navigate(R.id.action_guest_lessons_fragment_to_guest_home_lesson_fragment_nav_graph_activity_guest_notebook,null,
                 Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_lesson_fragment_nav_graph_activity_guest_notebook));
     }
 
-    /** Fragment has bottom navigation view HIDDEN. */
     public void goToGuestHomeWordFragment(){
         navController.navigate(R.id.action_guest_words_fragment_nav_graph_activity_notebook_to_guest_home_word_fragment_nav_graph_activity_guest_notebook,null,
-                Utilities.Activities.getExitBottomMenuNavOptions(R.id.guest_home_word_fragment_nav_graph_activity_guest_notebook));
+                Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_word_fragment_nav_graph_activity_guest_notebook));
+    }
+
+    @Override
+    public void showMainGroupBottomNavigation(){
+        super.hideBottomNavigationMenu();
+    }
+
+    @Override
+    public void showLessonGroupBottomNavigation(){
+        binding.bottomNavigationActivityNotebook.getMenu().setGroupVisible(R.id.lesson_group_menu_bottom_navigation_activity_guest_notebook, true);
+        binding.bottomNavigationActivityNotebook.getMenu().setGroupVisible(R.id.word_group_menu_bottom_navigation_activity_guest_notebook, false);
+        super.showBottomNavigationMenu();
+    }
+
+    @Override
+    public void showWordGroupBottomNavigation(){
+        binding.bottomNavigationActivityNotebook.getMenu().setGroupVisible(R.id.lesson_group_menu_bottom_navigation_activity_guest_notebook, false);
+        binding.bottomNavigationActivityNotebook.getMenu().setGroupVisible(R.id.word_group_menu_bottom_navigation_activity_guest_notebook, true);
+        super.showBottomNavigationMenu();
     }
 }

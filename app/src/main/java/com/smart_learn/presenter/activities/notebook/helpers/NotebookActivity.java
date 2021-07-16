@@ -56,6 +56,10 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
      */
     protected abstract int getMenuResourceId();
 
+    public abstract void showMainGroupBottomNavigation();
+    public abstract void showLessonGroupBottomNavigation();
+    public abstract void showWordGroupBottomNavigation();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +115,7 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
-    public void showBottomNavigationMenu(){
+    protected void showBottomNavigationMenu(){
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 

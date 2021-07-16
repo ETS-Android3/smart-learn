@@ -42,7 +42,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 
 import org.jetbrains.annotations.NotNull;
@@ -473,6 +472,32 @@ public final class Utilities {
                     .setExitAnim(R.anim.anim_slide_out_left)
                     .setPopEnterAnim(R.anim.popup_enter)
                     .setPopExitAnim(R.anim.popup_exit)
+                    // This is used whether this navigation action should launch as single-top
+                    // (i.e., there will be at most one copy of a given destination on the top of the back stack)
+                    .setLaunchSingleTop(true)
+                    // This is important because when a bottom menu is used back button will go to previous
+                    // main destination. If you do not use this back press will give previous destination
+                    // (this can be a fragment from bottom menu also)
+                    //
+                    // Obs:
+                    //      Leave 'inclusive' parameter value to 'false'. If you put 'true', then
+                    //      'startDestination' will be deleted from back stack and at back press
+                    //      previous destination can NOT longer be reached.
+                    .setPopUpTo(destinationId, false)
+                    .build();
+        }
+
+        /**
+         * Use this function in order to set only where go back press should go.
+         *
+         * @param destinationId Where should navigation go when back button is pressed.
+         *
+         * @return NavOptions object which will have the predefined options.
+         * */
+        public static NavOptions getBottomMenuNavOptionsForOnBackPress(@IdRes int destinationId) {
+            // https://stackoverflow.com/questions/61541455/animation-for-bottomnavigation-fragments-with-architecture-navigation-components/65979864#65979864
+            // https://betterprogramming.pub/everything-about-android-jetpacks-navigation-component-b550017c7354
+            return new NavOptions.Builder()
                     // This is used whether this navigation action should launch as single-top
                     // (i.e., there will be at most one copy of a given destination on the top of the back stack)
                     .setLaunchSingleTop(true)
