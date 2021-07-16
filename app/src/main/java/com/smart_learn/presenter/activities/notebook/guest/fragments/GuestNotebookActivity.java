@@ -69,6 +69,10 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
                                 navController.navigate(R.id.guest_examples_web_view_fragment_nav_graph_activity_guest_notebook, examplesBundle,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_words_fragment_nav_graph_activity_guest_notebook));
                                 return true;
+                            case R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook:
+                                navController.navigate(R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook,null,
+                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
+                                return true;
                         }
                         return false;
                     }
@@ -84,6 +88,11 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
     public void goToGuestHomeWordFragment(){
         navController.navigate(R.id.action_guest_words_fragment_nav_graph_activity_notebook_to_guest_home_word_fragment_nav_graph_activity_guest_notebook,null,
                 Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_word_fragment_nav_graph_activity_guest_notebook));
+    }
+
+    public void goToGuestHomeExpressionFragment(){
+        //navController.navigate(R.id.action_guest_expressions_fragment_nav_graph_activity_notebook_to_guest_home_expression_fragment_nav_graph_activity_guest_notebook, null,
+                //Utilities.Activities.getEnterBottomMenuNavOptions(R.id.guest_home_expression_fragment_nav_graph_activity_guest_notebook));
     }
 
     @Override

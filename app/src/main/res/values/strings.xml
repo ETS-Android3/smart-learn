@@ -314,4 +314,14 @@
     <string name="value_point">Value:</string>
     <string name="phonetic_point">Phonetic:</string>
 
+    <!-- ExpressionsFragment -->
+    <string name="add_expression">Add expression</string>
+    <string name="error_expression_too_long">Expression is too long</string>
+    <string name="expression">Expression</string>
+    <string name="error_expression_can_not_be_opened">Expression can not be opened</string>
+    <string name="error_adding_expression">Error while adding expression</string>
+    <string name="success_adding_expression">Expression was added</string>
+    <string name="success_deleting_expression">Expression was deleted</string>
+    <string name="error_deleting_expression">Expression can not be deleted</string>
+
 </resources>

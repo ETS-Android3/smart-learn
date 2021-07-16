@@ -8,9 +8,13 @@ import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
+import java.util.List;
+
 public class GuestExpressionRepository extends BasicRoomRepository<Expression, ExpressionDao> {
 
     private static GuestExpressionRepository instance;
+
+    private LiveData<List<Expression>> currentLessonLiveExpressionList;
 
     private GuestExpressionRepository() {
         // no need for db instance in class because communication will be made using dao interface
@@ -23,6 +27,33 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
         }
         return instance;
     }
+
+    public LiveData<List<Expression>> getCurrentLessonLiveExpressions(int currentLessonId){
+        if (currentLessonLiveExpressionList == null){
+            // one query is enough because LiveData is made i.e. to be automatically notified by room
+            // when changes are made in db
+            currentLessonLiveExpressionList = dao.getLessonLiveExpressions(currentLessonId);
+        }
+        return currentLessonLiveExpressionList;
+    }
+
+    public LiveData<Expression> getSampleLiveExpression(int expressionId) {
+        return dao.getSampleLiveExpression(expressionId);
+    }
+
+    public void deleteSelectedItems(int lessonId){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            dao.deleteSelectedItems(lessonId);
+        });
+    }
+
+    public void updateSelectAll(boolean isSelected, int lessonId){
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            dao.updateSelectAll(isSelected, lessonId);
+        });
+    }
+
+    public LiveData<Integer> getLiveSelectedItemsCount(int lessonId){ return dao.getLiveSelectedItemsCount(lessonId); }
 
     public LiveData<Integer> getLiveNumberOfExpressions(){
         return dao.getLiveNumberOfExpressions();

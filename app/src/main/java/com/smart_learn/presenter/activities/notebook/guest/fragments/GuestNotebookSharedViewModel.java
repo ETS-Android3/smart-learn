@@ -30,6 +30,11 @@ public class GuestNotebookSharedViewModel extends NotebookSharedViewModel {
     @Getter
     @Setter
     private int selectedWordId;
+    // Is set when an expression is clicked in ExpressionsFragment and navigation to ExpressionHomeFragment is made.
+    // This will allow the ExpressionHomeFragment to know what expression to load.
+    @Getter
+    @Setter
+    private int selectedExpressionId;
 
     public GuestNotebookSharedViewModel(@NonNull @NotNull Application application) {
         super(application);

@@ -13,6 +13,10 @@
             android:id="@+id/guest_words_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_email_24"
             android:title="Words"/>
+        <item
+            android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
+            android:icon="@drawable/ic_baseline_email_24"
+            android:title="Expressions"/>
     </group>
 
     <group
@@ -28,9 +32,9 @@
             android:id="@+id/guest_meaning_web_view_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_format_italic_24"
             android:title="Meaning"/>
-        <item
-            android:id="@+id/guest_examples_web_view_fragment_nav_graph_activity_guest_notebook"
-            android:icon="@drawable/ic_baseline_explore_24"
-            android:title="Examples"/>
+<!--        <item-->
+<!--            android:id="@+id/guest_examples_web_view_fragment_nav_graph_activity_guest_notebook"-->
+<!--            android:icon="@drawable/ic_baseline_explore_24"-->
+<!--            android:title="Examples"/>-->
     </group>
 </menu>

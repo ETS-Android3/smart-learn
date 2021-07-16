@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
@@ -43,5 +44,25 @@ public class Expression extends LessonEntrance {
                       boolean isFavourite, String language, ArrayList<Translation> translations, String expression) {
         super(notes, isSelected, basicInfo, fkLessonId, isFavourite, language, translations);
         this.expression = expression;
+    }
+
+    public boolean areItemsTheSame(Expression newItem) {
+        if(newItem == null){
+            return false;
+        }
+        return this.expressionId == newItem.getExpressionId();
+    }
+
+    public boolean areContentsTheSame(Expression newItem){
+        if(newItem == null){
+            return false;
+        }
+        return super.areContentsTheSame(newItem) &&
+                CoreUtilities.General.areObjectsTheSame(this.expression, newItem.getExpression());
+    }
+
+    public static Expression generateEmptyObject(){
+        return new Expression("", false, BasicInfo.generateEmptyObject(), null,
+                false, "", new ArrayList<>(), "");
     }
 }

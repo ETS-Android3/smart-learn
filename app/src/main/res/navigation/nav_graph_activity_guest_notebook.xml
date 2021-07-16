@@ -43,4 +43,10 @@
         android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
         android:label="guest_examples_web_view_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.GuestExpressionsFragment"
+        android:label="guest_expressions_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
 </navigation>
