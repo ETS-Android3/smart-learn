@@ -109,7 +109,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 isFiltering = true;
-                filteringValue = constraint.toString();
+                filteringValue = constraint.toString().toLowerCase();
 
                 // For filtering mode we search always in all db.
                 List<Word> allItems = GuestWordService.getInstance().getCurrentLessonSampleWords(fragmentCallback.getFragment().getViewModel().getCurrentLessonId());
@@ -121,7 +121,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getWord().toLowerCase().contains(filteringValue.toLowerCase()))
+                            .filter(it -> it.getWord().toLowerCase().contains(filteringValue))
                             .collect(Collectors.toList());
                 }
 
@@ -199,7 +199,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
 
             if(isFiltering){
                 liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getWord(), filteringValue), item.getWord()));
+                        CoreUtilities.General.getSubstringIndexes(item.getWord().toLowerCase(), filteringValue), item.getWord()));
             }
             else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));

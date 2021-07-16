@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/tv_lesson_name_layout_card_view_word"
-                    android:layout_width="wrap_content"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:text="@{liveSpannedWord}"
                     android:textAppearance="?attr/textAppearanceHeadline6"/>
@@ -70,7 +70,7 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="1 Day ago"
