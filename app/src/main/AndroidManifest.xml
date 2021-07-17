@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".presenter.activities.notebook.user.fragments.UserNotebookActivity"></activity>
-        <activity android:name=".presenter.activities.notebook.guest.fragments.GuestNotebookActivity" />
+        <activity android:name=".presenter.activities.notebook.guest.GuestNotebookActivity" />
         <activity android:name=".presenter.activities.notebook.helpers.NotebookActivity" />
         <activity android:name=".presenter.activities.community.CommunityActivity" />
         <activity android:name=".presenter.activities.guest.GuestActivity" />

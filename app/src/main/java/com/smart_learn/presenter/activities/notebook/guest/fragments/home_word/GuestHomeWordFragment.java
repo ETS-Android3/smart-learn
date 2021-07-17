@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.HomeWordFragment;
 
 import org.jetbrains.annotations.NotNull;

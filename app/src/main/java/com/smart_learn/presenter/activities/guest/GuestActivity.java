@@ -17,7 +17,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;

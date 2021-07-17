@@ -10,7 +10,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.Translation;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsViewModel;
 import com.smart_learn.presenter.helpers.ApplicationController;

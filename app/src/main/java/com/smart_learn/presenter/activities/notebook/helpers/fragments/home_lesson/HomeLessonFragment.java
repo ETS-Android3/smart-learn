@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;

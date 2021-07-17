@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.guest.fragments;
+package com.smart_learn.presenter.activities.notebook.guest;
 
 import android.annotation.SuppressLint;
 import android.view.MenuItem;
