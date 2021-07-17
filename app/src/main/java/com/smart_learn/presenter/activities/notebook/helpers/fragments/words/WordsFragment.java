@@ -56,7 +56,7 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
     @Override
     public void onResume() {
         super.onResume();
-        ((NotebookActivity<?>)requireActivity()).showLessonGroupBottomNavigation();
+        ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
     }
 
     @Override

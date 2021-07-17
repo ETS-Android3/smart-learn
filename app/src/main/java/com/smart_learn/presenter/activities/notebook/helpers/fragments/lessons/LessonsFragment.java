@@ -57,7 +57,7 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
     @Override
     public void onResume() {
         super.onResume();
-        ((NotebookActivity<?>)requireActivity()).showMainGroupBottomNavigation();
+        ((NotebookActivity<?>)requireActivity()).hideBottomNavigationMenu();
     }
 
     public void deleteLessonAlert(int wordsNr, int expressionsNr) {

@@ -17,9 +17,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.FragmentHomeWordBinding;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.fragments.GuestNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
 import com.smart_learn.presenter.helpers.ItemDecoration;
@@ -135,13 +133,6 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
     private void setRecyclerView(){
         Utilities.Activities.initializeRecyclerView(requireContext(), binding.rvTranslationsFragmentHomeWord,
                 new ItemDecoration(20), viewModel.getAdapter(), null);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.word_overview));
-        ((NotebookActivity<?>)requireActivity()).showWordGroupBottomNavigation();
     }
 
     @Override

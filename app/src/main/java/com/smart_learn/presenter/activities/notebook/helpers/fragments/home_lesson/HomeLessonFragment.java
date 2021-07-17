@@ -92,7 +92,7 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.lesson_overview));
-        ((NotebookActivity<?>)requireActivity()).showLessonGroupBottomNavigation();
+        ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
     }
 }
 

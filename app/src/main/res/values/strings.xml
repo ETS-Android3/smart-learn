@@ -331,4 +331,9 @@
     <string name="error_update_expression">Error while updating expression</string>
     <string name="succes_update_expression">Expression was updated</string>
 
+    <!-- GuestWordContainerFragment -->
+    <string name="overview">Overview</string>
+    <string name="meaning">Meaning</string>
+    <string name="examples">Examples</string>
+
 </resources>

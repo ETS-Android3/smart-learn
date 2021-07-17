@@ -236,7 +236,7 @@ public class WordsAdapter extends ListAdapter <Word, WordsAdapter.WordViewHolder
 
                     // If action mode is disabled then simple click will navigate user to the
                     // HomeWordFragment using selected word.
-                    fragmentCallback.getFragment().goToGuestHomeWordFragment(word);
+                    fragmentCallback.getFragment().goToGuestWordContainerFragment(word);
                 }
             });
 

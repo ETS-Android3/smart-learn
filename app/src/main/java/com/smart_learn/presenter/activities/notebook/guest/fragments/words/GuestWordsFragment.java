@@ -70,7 +70,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Override
     protected void onActionModeDestroy() {
-        ((GuestNotebookActivity)requireActivity()).showLessonGroupBottomNavigation();
+        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
 
         // use this to disable all selection
         GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
@@ -158,7 +158,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     }
 
-    public void goToGuestHomeWordFragment(Word word){
+    public void goToGuestWordContainerFragment(Word word){
         if(word == null || word.getWordId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
@@ -171,7 +171,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         sharedViewModel.setExamplesUrl("https://www.google.ro/search?q=images+example+of+" + value);
 
         // and then navigate
-        ((GuestNotebookActivity)requireActivity()).goToGuestHomeWordFragment();
+        ((GuestNotebookActivity)requireActivity()).goToGuestWordContainerFragment();
     }
 
 }

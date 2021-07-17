@@ -56,7 +56,7 @@ public abstract class ExpressionsFragment <VM extends ExpressionsViewModel<?>> e
     @Override
     public void onResume() {
         super.onResume();
-        ((NotebookActivity<?>)requireActivity()).showLessonGroupBottomNavigation();
+        ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
     }
 
     @Override

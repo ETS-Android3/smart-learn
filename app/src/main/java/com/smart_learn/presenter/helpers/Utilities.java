@@ -595,6 +595,27 @@ public final class Utilities {
             return getEnterBottomMenuNavOptions(destinationId);
         }
 
+        /**
+         * Use this function in order to add predefined animations for NavigationGraph
+         * fragments when the NavigationGraph has a bottom navigation view attached.
+         *
+         * Also this function must be used only if navigation is made from a fragment which have the
+         * bottom navigation view VISIBLE to a fragment which will have the bottom navigation
+         * view HIDDEN.
+         *
+         * @return NavOptions object which will have the predefined animations.
+         * */
+        public static NavOptions getExitBottomMenuNavAnimationsOptions() {
+            // https://stackoverflow.com/questions/61541455/animation-for-bottomnavigation-fragments-with-architecture-navigation-components/65979864#65979864
+            // https://betterprogramming.pub/everything-about-android-jetpacks-navigation-component-b550017c7354
+            return new NavOptions.Builder()
+                    .setEnterAnim(R.anim.fragment_close_enter)
+                    .setExitAnim(R.anim.fragment_close_exit)
+                    .setPopEnterAnim(R.anim.popup_enter)
+                    .setPopExitAnim(R.anim.popup_exit)
+                    .build();
+        }
+
 
         /**
          * Use this to hide/show a text view.

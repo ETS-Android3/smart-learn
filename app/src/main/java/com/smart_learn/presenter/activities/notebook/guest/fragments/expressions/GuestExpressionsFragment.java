@@ -70,7 +70,7 @@ public class GuestExpressionsFragment extends ExpressionsFragment<GuestExpressio
 
     @Override
     protected void onActionModeDestroy() {
-        ((GuestNotebookActivity)requireActivity()).showLessonGroupBottomNavigation();
+        ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
 
         // use this to disable all selection
         GuestExpressionService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
