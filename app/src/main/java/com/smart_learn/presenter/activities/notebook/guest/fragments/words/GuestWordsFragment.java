@@ -38,12 +38,12 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
     @Override
     protected int getBottomSheetLayout() {
-        return R.layout.include_layout_action_mode_guest;
+        return R.layout.layout_action_mode_fragment_guest_words;
     }
 
     @Override
     protected int getParentBottomSheetLayoutId() {
-        return R.id.parent_layout_include_layout_action_mode_guest;
+        return R.id.parent_layout_include_layout_action_mode_fragment_guest_words;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         swipeRefreshLayout.setRefreshing(false);
 
         // set bottom sheet listeners
-        Button btnSelectAll = requireActivity().findViewById(R.id.btn_select_include_layout_action_mode_guest);
+        Button btnSelectAll = requireActivity().findViewById(R.id.btn_select_include_layout_action_mode_fragment_guest_words);
         btnSelectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +106,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             }
         });
 
-        Button btnDeleteSelected = requireActivity().findViewById(R.id.btn_delete_include_layout_action_mode_guest);
+        Button btnDeleteSelected = requireActivity().findViewById(R.id.btn_delete_include_layout_action_mode_fragment_guest_words);
         btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
