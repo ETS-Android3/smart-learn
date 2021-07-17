@@ -47,6 +47,14 @@
         android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
         android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.GuestExpressionsFragment"
         android:label="guest_expressions_fragment_nav_graph_activity_guest_notebook"
-        tools:layout="@layout/fragment_basic_for_recycler_view"/>
-
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_expressions_fragment_nav_graph_activity_guest_notebook_to_guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+            app:destination="@id/guest_home_expression_fragment_nav_graph_activity_guest_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_expression.GuestHomeExpressionFragment"
+        android:label="guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_home_expression"/>
 </navigation>

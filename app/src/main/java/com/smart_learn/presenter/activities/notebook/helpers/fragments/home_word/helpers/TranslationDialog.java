@@ -117,6 +117,7 @@ public class TranslationDialog extends DialogFragment {
 
     private void setLayoutForExpression(LayoutDialogTranslationBinding binding){
         binding.linearLayoutWordLayoutDialogTranslation.setVisibility(View.GONE);
+        binding.linearLayoutExpressionLayoutDialogTranslation.setVisibility(View.VISIBLE);
         dialogViewModel.setForExpression(true);
 
         if(view || update){

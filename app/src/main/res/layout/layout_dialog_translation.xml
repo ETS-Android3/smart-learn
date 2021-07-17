@@ -140,9 +140,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/et_expression_translation_value_layout_dialog_translation"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:ems="10"
                     android:hint="@string/translation"
                     app:counterMaxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
                     app:errorEnabled="true"
@@ -150,10 +149,11 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:inputType="textLongMessage"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:gravity="top"
                         android:minLines="4"
-                        android:maxLines="20"
+                        android:maxLines="10"
                         android:maxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
                         android:text="@={viewModel.liveValue}" />
 
@@ -179,7 +179,7 @@
 
                 <!-- https://stackoverflow.com/questions/6674578/multiline-textview-in-android/43030903#43030903 -->
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints=""
                     android:background="@android:color/transparent"
@@ -187,7 +187,7 @@
                     android:focusable="false"
                     android:gravity="start"
                     android:minLines="4"
-                    android:maxLines="20"
+                    android:maxLines="10"
                     android:inputType="textMultiLine"
                     android:scrollbars="vertical"
                     android:text="@{viewModel.liveValue}"

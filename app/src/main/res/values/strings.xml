@@ -324,4 +324,11 @@
     <string name="success_deleting_expression">Expression was deleted</string>
     <string name="error_deleting_expression">Expression can not be deleted</string>
 
+    <!-- HomeExpressionFragment -->
+    <string name="update_expression">Update expression</string>
+    <string name="error_expression_is_same">Expression is the same</string>
+    <string name="expression_overview">Expression overview</string>
+    <string name="error_update_expression">Error while updating expression</string>
+    <string name="succes_update_expression">Expression was updated</string>
+
 </resources>
