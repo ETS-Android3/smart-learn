@@ -22,10 +22,10 @@
         android:label="fragment_intro_nav_graph_activity_authentication"
         tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_intro_fragment_nav_graph_activity_authentication_to_email_login_fragment_nav_graph_activity_authentication"
+            android:id="@+id/action_intro_fragment_to_email_login_fragment_nav_graph_activity_authentication"
             app:destination="@id/email_login_fragment_nav_graph_activity_authentication"/>
         <action
-            android:id="@+id/action_intro_fragment_nav_graph_activity_authentication_to_email_register_fragment_nav_graph_activity_authentication"
+            android:id="@+id/action_intro_fragment_to_email_register_fragment_nav_graph_activity_authentication"
             app:destination="@id/email_register_fragment_nav_graph_activity_authentication"/>
     </fragment>
 </navigation>

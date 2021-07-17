@@ -94,11 +94,11 @@ public class IntroFragment extends BasicFragment<IntroViewModel> {
             public void onClick(View v) {
                 bottomSheetDialog.dismiss();
                 if(login){
-                    navController.navigate(R.id.action_intro_fragment_nav_graph_activity_authentication_to_email_login_fragment_nav_graph_activity_authentication, null,
+                    navController.navigate(R.id.action_intro_fragment_to_email_login_fragment_nav_graph_activity_authentication, null,
                             Utilities.getNavOptions());
                 }
                 else{
-                    navController.navigate(R.id.action_intro_fragment_nav_graph_activity_authentication_to_email_register_fragment_nav_graph_activity_authentication, null,
+                    navController.navigate(R.id.action_intro_fragment_to_email_register_fragment_nav_graph_activity_authentication, null,
                             Utilities.getNavOptions());
                 }
             }

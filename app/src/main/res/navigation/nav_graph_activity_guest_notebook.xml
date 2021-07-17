@@ -25,7 +25,7 @@
         android:label="guest_words_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
-            android:id="@+id/action_guest_words_fragment_nav_graph_activity_notebook_to_guest_home_word_fragment_nav_graph_activity_guest_notebook"
+            android:id="@+id/action_guest_words_fragment_to_guest_home_word_fragment_nav_graph_activity_guest_notebook"
             app:destination="@id/guest_home_word_fragment_nav_graph_activity_guest_notebook" />
     </fragment>
     <fragment
@@ -49,7 +49,7 @@
         android:label="guest_expressions_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
-            android:id="@+id/action_guest_expressions_fragment_nav_graph_activity_guest_notebook_to_guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+            android:id="@+id/action_guest_expressions_fragment_to_guest_home_expression_fragment_nav_graph_activity_guest_notebook"
             app:destination="@id/guest_home_expression_fragment_nav_graph_activity_guest_notebook" />
     </fragment>
     <fragment
