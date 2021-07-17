@@ -10,10 +10,19 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/include_layout_recycler_view_fragment_basic_for_recycler_view"
-            layout="@layout/include_layout_recycler_view_with_bottom_nav"
+            android:id="@+id/no_bottom_nav_include_layout_rv_fragment_basic_for_recycler_view"
+            layout="@layout/include_layout_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"/>
+
+        <include
+            android:id="@+id/with_bottom_nav_include_layout_rv_fragment_basic_for_recycler_view"
+            layout="@layout/include_layout_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="72dp"/>
 
         <ViewStub
             android:id="@+id/view_stub_fragment_basic_for_recycler_view"

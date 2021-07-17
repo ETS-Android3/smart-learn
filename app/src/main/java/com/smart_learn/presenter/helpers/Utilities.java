@@ -396,26 +396,31 @@ public final class Utilities {
          * Also in order to achieve a nice view effect, the recycler view will be resized in order to
          * fit between the ActionBar and sheetLayout.
          *
+         * @param isBottomNav If RecyclerView is attached on a Fragment/Activity where bottom
+         *                     navigation is active.
          * @param button The floating button for add action (this will be hidden in action mode).
          * @param mainLayout The main layout which is shown when bottom sheet is HIDDEN.
          * @param sheetLayout The layout for bottom sheet.
          * @param sheetBehaviour The behaviour for which the state BottomSheetBehavior.STATE_EXPANDED will be set.
          * */
-        public static void showPersistentBottomSheet(@Nullable FloatingActionButton button, @NonNull CoordinatorLayout mainLayout,
-                                               @NonNull LinearLayoutCompat sheetLayout, @NonNull BottomSheetBehavior<LinearLayoutCompat> sheetBehaviour){
+        public static void showPersistentBottomSheet(boolean isBottomNav, @Nullable FloatingActionButton button,
+                                                     @NonNull CoordinatorLayout mainLayout, @NonNull LinearLayoutCompat sheetLayout,
+                                                     @NonNull BottomSheetBehavior<LinearLayoutCompat> sheetBehaviour){
             if(button != null){
                 // floating button will be hidden in action mode
                 button.hide();
             }
 
-            // resize recycler view layout
-            // https://stackoverflow.com/questions/6798867/android-how-to-programmatically-set-the-size-of-a-layout/6798938#6798938
-            // https://stackoverflow.com/questions/10310550/set-height-of-imageview-as-matchparent-programmatically/10310612#10310612
-            int mainLayoutHeight = mainLayout.getHeight();
-            int sheetHeight = sheetLayout.getHeight();
-            // resize only if is a positive value
-            if(mainLayoutHeight - sheetHeight > 0){
-                mainLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, mainLayoutHeight - sheetHeight));
+            // resize recycler view layout only if bottom navigation does not exist
+            if(!isBottomNav){
+                // https://stackoverflow.com/questions/6798867/android-how-to-programmatically-set-the-size-of-a-layout/6798938#6798938
+                // https://stackoverflow.com/questions/10310550/set-height-of-imageview-as-matchparent-programmatically/10310612#10310612
+                int mainLayoutHeight = mainLayout.getHeight();
+                int sheetHeight = sheetLayout.getHeight();
+                // resize only if is a positive value
+                if(mainLayoutHeight - sheetHeight > 0){
+                    mainLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, mainLayoutHeight - sheetHeight));
+                }
             }
 
             // in order to be visible, sheet will be expanded
@@ -430,19 +435,24 @@ public final class Utilities {
          * Also in order to achieve a nice view effect, the recycler view will be resized in order to
          * cover the sheetLayout space (which will be hidden).
          *
+         * @param isBottomNav If RecyclerView is attached on a Fragment/Activity where bottom
+         *                     navigation is active.
          * @param button The floating button for add action (this will be shown when action mode is stopped).
          * @param mainLayout The main layout which is shown when bottom sheet is HIDDEN.
          * @param sheetBehaviour The behaviour for which the state BottomSheetBehavior.STATE_HIDDEN will be set.
          * */
-        public static void hidePersistentBottomSheet(@Nullable FloatingActionButton button, @NonNull CoordinatorLayout mainLayout,
-                                               @NonNull BottomSheetBehavior<LinearLayoutCompat> sheetBehaviour){
+        public static void hidePersistentBottomSheet(boolean isBottomNav, @Nullable FloatingActionButton button,
+                                                     @NonNull CoordinatorLayout mainLayout,
+                                                     @NonNull BottomSheetBehavior<LinearLayoutCompat> sheetBehaviour){
             // in order to disappear, sheet will be expanded
             sheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-            // resize recycler view layout
-            // https://stackoverflow.com/questions/6798867/android-how-to-programmatically-set-the-size-of-a-layout/6798938#6798938
-            // https://stackoverflow.com/questions/10310550/set-height-of-imageview-as-matchparent-programmatically/10310612#10310612
-            mainLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT));
+            // resize recycler view layout only if bottom navigation does not exist
+            if(!isBottomNav){
+                // https://stackoverflow.com/questions/6798867/android-how-to-programmatically-set-the-size-of-a-layout/6798938#6798938
+                // https://stackoverflow.com/questions/10310550/set-height-of-imageview-as-matchparent-programmatically/10310612#10310612
+                mainLayout.setLayoutParams(new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT));
+            }
 
             if(button != null){
                 // floating button will be shown when action mode is stopped

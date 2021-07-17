@@ -36,6 +36,11 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void onFilter(String newText) {
         if(viewModel.getAdapter() != null){
             viewModel.getAdapter().getFilter().filter(newText);

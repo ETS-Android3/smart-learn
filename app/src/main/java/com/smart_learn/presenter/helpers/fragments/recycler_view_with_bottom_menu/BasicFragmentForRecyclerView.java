@@ -152,6 +152,15 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
         return R.string.empty;
     }
 
+    /**
+     * Override if fragment does not use bottom navigation. By default 'true' is set.
+     *
+     * @return true if fragment use bottom navigation, or false otherwise.
+     * */
+    protected boolean isFragmentWithBottomNav() {
+        return true;
+    }
+
 
     @Nullable
     @Override
@@ -177,11 +186,31 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
 
     protected void setLayoutUtilities(){
         // set views
-        includeRVLayout = binding.includeLayoutRecyclerViewFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerViewWithBottomNav;
-        swipeRefreshLayout = binding.includeLayoutRecyclerViewFragmentBasicForRecyclerView.swipeRefreshLayoutRecyclerViewWithBottomNav;
-        recyclerView = binding.includeLayoutRecyclerViewFragmentBasicForRecyclerView.rvIncludeLayoutRecyclerViewWithBottomNav;
-        floatingActionButton = binding.includeLayoutRecyclerViewFragmentBasicForRecyclerView.floatingBtnAddIncludeLayoutRecyclerViewWithBottomNav;
-        emptyLabel = binding.includeLayoutRecyclerViewFragmentBasicForRecyclerView.tvNoItemIncludeLayoutRecyclerViewWithBottomNav;
+        if(isFragmentWithBottomNav()){
+            // hide RecyclerView with no bottom nav and show RecyclerView with bottom nav
+            binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView.setVisibility(View.GONE);
+            binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView.setVisibility(View.VISIBLE);
+
+            // set current views extracted from include layout RecyclerView with bottom nav
+            includeRVLayout = binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView;
+            swipeRefreshLayout = binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.swipeRefreshIncludeLayoutRecyclerView;
+            recyclerView = binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.rvIncludeLayoutRecyclerView;
+            floatingActionButton = binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.floatingBtnAddIncludeLayoutRecyclerView;
+            emptyLabel = binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.tvNoItemIncludeLayoutRecyclerView;
+        }
+        else {
+            // show RecyclerView with no bottom nav and hide RecyclerView with bottom nav
+            binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView.setVisibility(View.VISIBLE);
+            binding.withBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView.setVisibility(View.GONE);
+
+            // set current views extracted from include layout RecyclerView with no bottom nav
+            includeRVLayout = binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.parentLayoutIncludeLayoutRecyclerView;
+            swipeRefreshLayout = binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.swipeRefreshIncludeLayoutRecyclerView;
+            recyclerView = binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.rvIncludeLayoutRecyclerView;
+            floatingActionButton = binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.floatingBtnAddIncludeLayoutRecyclerView;
+            emptyLabel = binding.noBottomNavIncludeLayoutRvFragmentBasicForRecyclerView.tvNoItemIncludeLayoutRecyclerView;
+        }
+
 
         // fragments can choose to hide the floating action button
         if(!showFloatingActionButton()){
@@ -262,10 +291,10 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 if(!showFloatingActionButton()){
-                    Utilities.Activities.showPersistentBottomSheet(null, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
+                    Utilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
                 }
                 else{
-                    Utilities.Activities.showPersistentBottomSheet(floatingActionButton, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
+                    Utilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
                 }
                 actionModeCustomCallback.onCreateActionMode();
                 return true;
@@ -286,10 +315,10 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
                 mode.finish();
                 actionMode = null;
                 if(!showFloatingActionButton()){
-                    Utilities.Activities.hidePersistentBottomSheet(null, includeRVLayout, bottomSheetBehavior);
+                    Utilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetBehavior);
                 }
                 else{
-                    Utilities.Activities.hidePersistentBottomSheet(floatingActionButton, includeRVLayout, bottomSheetBehavior);
+                    Utilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetBehavior);
                 }
                 actionModeCustomCallback.onDestroyActionMode();
             }
