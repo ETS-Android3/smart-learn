@@ -38,12 +38,12 @@ public class GuestExpressionsFragment extends ExpressionsFragment<GuestExpressio
 
     @Override
     protected int getBottomSheetLayout() {
-        return R.layout.include_layout_action_mode_guest;
+        return R.layout.layout_action_mode_fragment_guest_expressions;
     }
 
     @Override
     protected int getParentBottomSheetLayoutId() {
-        return R.id.parent_layout_include_layout_action_mode_guest;
+        return R.id.parent_layout_include_layout_action_mode_fragment_guest_expressions;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class GuestExpressionsFragment extends ExpressionsFragment<GuestExpressio
         swipeRefreshLayout.setRefreshing(false);
 
         // set bottom sheet listeners
-        Button btnSelectAll = requireActivity().findViewById(R.id.btn_select_include_layout_action_mode_guest);
+        Button btnSelectAll = requireActivity().findViewById(R.id.btn_select_include_layout_action_mode_fragment_guest_expressions);
         btnSelectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +106,7 @@ public class GuestExpressionsFragment extends ExpressionsFragment<GuestExpressio
             }
         });
 
-        Button btnDeleteSelected = requireActivity().findViewById(R.id.btn_delete_include_layout_action_mode_guest);
+        Button btnDeleteSelected = requireActivity().findViewById(R.id.btn_delete_include_layout_action_mode_fragment_guest_expressions);
         btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
