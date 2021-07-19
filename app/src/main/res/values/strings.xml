@@ -346,4 +346,11 @@
     <!-- UserLessonsFragment -->
     <string name="share">Share</string>
 
+    <!-- SelectFriendsFragment -->
+    <string name="selected_friends_point">Selected friends:</string>
+    <string name="share_lesson">Share lesson</string>
+    <string name="success_shared_lesson">Lesson shared</string>
+    <string name="error_share_lesson">Lesson was not shared</string>
+    <string name="no_friend_selected">No friend is selected</string>
+
 </resources>

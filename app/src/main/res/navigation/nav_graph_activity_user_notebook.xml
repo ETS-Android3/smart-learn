@@ -10,8 +10,15 @@
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.lessons.UserLessonsFragment"
         android:label="user_lessons_fragment_nav_graph_activity_user_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
-
+        <action
+            android:id="@+id/action_user_lessons_fragment_to_select_friends_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/select_friends_fragment_nav_graph_activity_user_notebook" />
     </fragment>
 
+    <fragment
+        android:id="@+id/select_friends_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.select_friends.SelectFriendsFragment"
+        android:label="select_friends_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
 </navigation>

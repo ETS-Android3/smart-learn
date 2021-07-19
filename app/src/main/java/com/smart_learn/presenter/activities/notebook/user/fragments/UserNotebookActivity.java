@@ -41,6 +41,6 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
     }
 
     public void goToSelectFriendsFragment(){
-
+        navController.navigate(R.id.action_user_lessons_fragment_to_select_friends_fragment_nav_graph_activity_user_notebook);
     }
 }
