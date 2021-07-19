@@ -29,6 +29,24 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
     }
 
     @Override
+    protected int getEmptyLabelDescriptionResourceId() {
+        return R.string.no_lessons;
+    }
+
+    @Override
+    protected int getToolbarTitle() {
+        return R.string.lessons;
+    }
+
+    protected void unsetValueFromEmptyLabel(){
+        emptyLabel.setText("");
+    }
+
+    protected void resetValueFromEmptyLabel(){
+        emptyLabel.setText(super.getEmptyLabelDescriptionResourceId());
+    }
+
+    @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);

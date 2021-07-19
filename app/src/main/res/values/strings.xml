@@ -239,6 +239,8 @@
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
 
+    <!-- LessonsFragment -->
+    <string name="no_lessons">There are no lessons</string>
 
     <!-- HomeLessonFragment -->
     <string name="delete_lesson">Delete lesson</string>
