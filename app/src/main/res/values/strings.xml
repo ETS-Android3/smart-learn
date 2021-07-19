@@ -338,4 +338,9 @@
     <string name="meaning">Meaning</string>
     <string name="examples">Examples</string>
 
+    <!-- LessonDocument -->
+    <string name="local_lesson">Type: local</string>
+    <string name="received_lesson">Type: received</string>
+    <string name="shared_lesson">Type: shared</string>
+
 </resources>
