@@ -19,6 +19,9 @@ public class UserDocument extends BasicProfileDocument {
         String PENDING_FRIENDS_FIELD_NAME = "pendingFriends";
         String FRIENDS_FIELD_NAME = "friends";
         String NR_OF_UNREAD_NOTIFICATIONS_FIELD_NAME = "nrOfUnreadNotifications";
+        String NR_OF_LESSONS_FIELD_NAME = "nrOfLessons";
+        String NR_OF_WORDS_FIELD_NAME = "nrOfWords";
+        String NR_OF_EXPRESSIONS_FIELD_NAME = "nrOfExpressions";
     }
 
     private ArrayList<String> receivedRequest;
@@ -27,6 +30,9 @@ public class UserDocument extends BasicProfileDocument {
 
     // counters
     private long nrOfUnreadNotifications;
+    private long nrOfLessons;
+    private long nrOfWords;
+    private long nrOfExpressions;
 
     public UserDocument() {
         // needed for Firestore
