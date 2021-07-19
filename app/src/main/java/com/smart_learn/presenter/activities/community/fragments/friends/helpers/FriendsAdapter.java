@@ -202,10 +202,10 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
             if(isFiltering){
                 friendDocument.setSpannedEmail(Utilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(friendDocument.getEmail(), filteringValue), friendDocument.getEmail()));
+                        CoreUtilities.General.getSubstringIndexes(friendDocument.getEmail().toLowerCase(), filteringValue), friendDocument.getEmail()));
 
                 friendDocument.setSpannedDisplayName(Utilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(friendDocument.getDisplayName(), filteringValue), friendDocument.getDisplayName()));
+                        CoreUtilities.General.getSubstringIndexes(friendDocument.getDisplayName().toLowerCase(), filteringValue), friendDocument.getDisplayName()));
             }
             else {
                 friendDocument.setSpannedEmail(new SpannableString(friendDocument.getEmail()));
