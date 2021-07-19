@@ -27,6 +27,7 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
 
     private final MutableLiveData<String> liveLessonName;
     private final MutableLiveData<String> liveLessonNotes;
+    private final MutableLiveData<String> liveExtraInfo;
     private final MutableLiveData<Integer> liveNumberOfWords;
     private final MutableLiveData<Integer> liveNumberOfExpressions;
 
@@ -39,6 +40,7 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
         MAX_NOTES = DataUtilities.Limits.MAX_NOTES;
         liveLessonName = new MutableLiveData<>("");
         liveLessonNotes = new MutableLiveData<>("");
+        liveExtraInfo = new MutableLiveData<>("");
         liveNumberOfWords = new MutableLiveData<>(0);
         liveNumberOfExpressions = new MutableLiveData<>(0);
     }
@@ -57,6 +59,14 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
 
     public void setLiveLessonNotes(String value) {
         liveLessonNotes.setValue(value);
+    }
+
+    public LiveData<String> getLiveExtraInfo() {
+        return liveExtraInfo;
+    }
+
+    public void setLiveExtraInfo(String value) {
+        liveExtraInfo.setValue(value);
     }
 
     public LiveData<Integer> getLiveNumberOfWords() {

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -14,6 +15,7 @@ import com.smart_learn.core.services.UserService;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
+import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCommonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.firebase.firestore.repository.BasicFirestoreRepository;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -198,6 +200,22 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
 
         // 3. Transaction is complete so commit
         commitBatch(batch, callback);
+    }
+
+    public void updateLessonName(@NonNull @NotNull String newName, @NonNull @NotNull DocumentSnapshot lessonSnapshot,
+                                 @NonNull @NotNull DataCallbacks.General callback){
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(LessonDocument.Fields.NAME_FIELD_NAME, newName);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, lessonSnapshot, callback);
+    }
+
+    public void updateLessonNotes(@NonNull @NotNull String newNotes, @NonNull @NotNull DocumentSnapshot lessonSnapshot,
+                                  @NonNull @NotNull DataCallbacks.General callback){
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(BasicNotebookCommonDocument.Fields.NOTES_FIELD_NAME, newNotes);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, lessonSnapshot, callback);
     }
 
 }

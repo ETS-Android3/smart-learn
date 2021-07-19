@@ -353,4 +353,13 @@
     <string name="error_share_lesson">Lesson was not shared</string>
     <string name="no_friend_selected">No friend is selected</string>
 
+    <!-- UserHomeLessonFragment -->
+    <string name="received_from">Received from</string>
+    <string name="from">from</string>
+    <string name="string_with_other_users">with other users</string>
+    <string name="type">Type:</string>
+    <string name="received">received</string>
+    <string name="shared">shared</string>
+    <string name="personal">local</string>
+
 </resources>

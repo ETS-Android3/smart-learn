@@ -103,6 +103,48 @@ public class UserLessonService extends BasicFirestoreService<LessonDocument, Use
 
     }
 
+    public void updateLessonName(String newName, DocumentSnapshot lessonSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(lessonSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Lesson name for document " + lessonSnapshot.getId() + " updated",
+                    "Lesson name for document " + lessonSnapshot.getId() + " was NOT updated");
+        }
+
+        if(newName == null || newName.isEmpty()){
+            callback.onFailure();
+            Timber.w("name can not be null or empty");
+            return;
+        }
+
+        repositoryInstance.updateLessonName(newName, lessonSnapshot, callback);
+    }
+
+    public void updateLessonNotes(String newNotes, DocumentSnapshot lessonSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(lessonSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Lesson notes for document " + lessonSnapshot.getId() + " updated",
+                    "Lesson notes for document " + lessonSnapshot.getId() + " was NOT updated");
+        }
+
+        if(newNotes == null){
+           newNotes = "";
+        }
+
+        repositoryInstance.updateLessonNotes(newNotes, lessonSnapshot, callback);
+    }
+
     public void updateLesson(DocumentSnapshot lessonSnapshot, DataCallbacks.General callback){
         if(DataUtilities.Firestore.notGoodDocumentSnapshot(lessonSnapshot)){
             if(callback != null){
