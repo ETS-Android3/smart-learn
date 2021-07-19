@@ -166,15 +166,21 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
     public final class LessonViewHolder extends BasicViewHolder<Lesson, LayoutCardViewLessonBinding> {
 
         private final MutableLiveData<SpannableString> liveLessonSpannedName;
+        private final MutableLiveData<String> liveExtraInfo;
         private final AtomicBoolean isDeleting;
 
         public LessonViewHolder(@NonNull LayoutCardViewLessonBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveLessonSpannedName = new MutableLiveData<>(new SpannableString(""));
+            liveExtraInfo = new MutableLiveData<>("");
             isDeleting = new AtomicBoolean(false);
+
+            // set user menu to invisible
+            viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().setGroupVisible(R.id.user_group_menu_card_view_lesson, false);
 
             // link binding with variables
             viewHolderBinding.setLiveLessonSpannedName(liveLessonSpannedName);
+            viewHolderBinding.setLiveExtraInfo(liveExtraInfo);
 
             setListeners();
         }
@@ -193,6 +199,8 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
+
+            liveExtraInfo.setValue("1 Day ago");
         }
 
         private void setListeners(){
@@ -235,7 +243,7 @@ public class LessonsAdapter extends ListAdapter <Lesson, LessonsAdapter.LessonVi
                     }
 
                     int id = item.getItemId();
-                    if(id == R.id.action_delete_menu_card_view_lesson){
+                    if(id == R.id.action_guest_delete_menu_card_view_lesson){
                         // avoid multiple press until operation is finished
                         if(isDeleting.get()){
                             return true;

@@ -9,6 +9,9 @@
         <variable
             name="liveLessonSpannedName"
             type="LiveData&lt;SpannableString&gt;" />
+        <variable
+            name="liveExtraInfo"
+            type="LiveData&lt;String&gt;" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -66,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="1 Day ago"
+                android:text="@{liveExtraInfo}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"/>
 
