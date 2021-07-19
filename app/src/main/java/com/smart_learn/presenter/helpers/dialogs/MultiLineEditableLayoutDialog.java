@@ -27,14 +27,16 @@ public class MultiLineEditableLayoutDialog extends DialogFragment {
     private final String title;
     private final String previousValue;
     private final MutableLiveData<String> liveValue;
+    private final String hint;
     private final int maximLength;
 
-    public MultiLineEditableLayoutDialog(String title, String value, int maximLength,
+    public MultiLineEditableLayoutDialog(String title, String value, String hint, int maximLength,
                                           @NonNull @NotNull MultiLineEditableLayoutDialog.Callback callback) {
         this.callback = callback;
         this.title = title == null ? "" : title;
         this.previousValue = value == null ? "" : value;
         this.liveValue = new MutableLiveData<>(this.previousValue);
+        this.hint = hint == null ? "" : hint;
         this.maximLength = maximLength;
     }
 
@@ -49,6 +51,7 @@ public class MultiLineEditableLayoutDialog extends DialogFragment {
 
         // set dialog values
         binding.setLiveValue(liveValue);
+        binding.setHint(hint);
         binding.setCounterMaxLength(maximLength);
 
         // build dialog

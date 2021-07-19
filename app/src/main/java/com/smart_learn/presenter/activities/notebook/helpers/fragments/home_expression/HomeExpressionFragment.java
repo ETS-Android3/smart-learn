@@ -66,6 +66,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
                 MultiLineEditableLayoutDialog dialog = new MultiLineEditableLayoutDialog(
                         getString(R.string.update_expression),
                         viewModel.getLiveExpressionValue().getValue(),
+                        getString(R.string.expression),
                         DataUtilities.Limits.MAX_EXPRESSION,
                         new MultiLineEditableLayoutDialog.Callback() {
                             @Override
@@ -99,6 +100,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
                 MultiLineEditableLayoutDialog dialog = new MultiLineEditableLayoutDialog(
                         getString(R.string.update_notes),
                         viewModel.getLiveExpressionNotes().getValue(),
+                        getString(R.string.notes),
                         DataUtilities.Limits.MAX_NOTES,
                         new MultiLineEditableLayoutDialog.Callback() {
                             @Override

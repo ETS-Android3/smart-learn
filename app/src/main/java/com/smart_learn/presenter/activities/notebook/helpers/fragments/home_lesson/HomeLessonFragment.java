@@ -72,6 +72,7 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
                 MultiLineEditableLayoutDialog dialog = new MultiLineEditableLayoutDialog(
                         getString(R.string.update_notes),
                         viewModel.getLiveLessonNotes().getValue(),
+                        getString(R.string.notes),
                         DataUtilities.Limits.MAX_NOTES,
                         new MultiLineEditableLayoutDialog.Callback() {
                             @Override

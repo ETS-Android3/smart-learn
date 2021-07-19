@@ -117,6 +117,7 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
                 MultiLineEditableLayoutDialog dialog = new MultiLineEditableLayoutDialog(
                         getString(R.string.update_notes),
                         viewModel.getLiveWordNotes().getValue(),
+                        getString(R.string.notes),
                         DataUtilities.Limits.MAX_NOTES,
                         new MultiLineEditableLayoutDialog.Callback() {
                             @Override

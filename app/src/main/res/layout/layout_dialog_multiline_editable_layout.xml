@@ -10,6 +10,9 @@
         <variable
             name="liveValue"
             type="MutableLiveData&lt;String&gt;" />
+        <variable
+            name="hint"
+            type="String" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -22,6 +25,7 @@
             android:id="@+id/text_input_layout_dialog_multiline_editable_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@{hint}"
             app:counterEnabled="false"
             app:counterMaxLength="@{counterMaxLength}"
             app:errorEnabled="true"
