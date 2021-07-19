@@ -182,6 +182,13 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     public void onResume() {
         super.onResume();
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(getToolbarTitle()));
+        if(isCreated){
+            isCreated = false;
+        }
+        else{
+            // for fragment which are not recreated hide loading icon
+            stopRefreshing();
+        }
     }
 
     protected void setLayoutUtilities(){
