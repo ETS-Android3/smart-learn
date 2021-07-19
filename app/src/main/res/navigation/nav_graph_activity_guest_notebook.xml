@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph_activity_notebook"
+    android:id="@+id/nav_graph_activity_guest_notebook"
     app:startDestination="@id/guest_lessons_fragment_nav_graph_activity_guest_notebook">
 
     <fragment
