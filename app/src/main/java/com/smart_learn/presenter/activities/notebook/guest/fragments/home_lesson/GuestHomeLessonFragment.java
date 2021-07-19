@@ -13,8 +13,13 @@ import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_less
 
 import org.jetbrains.annotations.NotNull;
 
+import lombok.Getter;
+
 
 public class GuestHomeLessonFragment extends HomeLessonFragment<GuestHomeLessonViewModel> {
+
+    @Getter
+    private GuestNotebookSharedViewModel sharedViewModel;
 
     @NonNull
     @Override

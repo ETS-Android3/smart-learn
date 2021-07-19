@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
-import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
@@ -29,8 +28,6 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
 
     @Getter
     protected FragmentHomeLessonBinding binding;
-    @Getter
-    protected GuestNotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
