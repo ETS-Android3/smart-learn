@@ -165,7 +165,7 @@ public class LessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocument
         protected void bind(@NonNull @NotNull LessonDocument item, int position){
             if(isFiltering){
                 liveLessonSpannedName.setValue(Utilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getName(), filteringValue), item.getName()));
+                        CoreUtilities.General.getSubstringIndexes(item.getName().toLowerCase(), filteringValue), item.getName()));
             }
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
