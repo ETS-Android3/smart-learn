@@ -246,7 +246,7 @@ public class LessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocument
 
             // delete lesson if has no entries
             if(wordsNr == 0 && expressionsNr == 0){
-                UserLessonService.getInstance().deleteDocument(snapshot, new DataCallbacks.General() {
+                UserLessonService.getInstance().deleteLesson(snapshot, new DataCallbacks.General() {
                     @Override
                     public void onSuccess() {
                         adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {

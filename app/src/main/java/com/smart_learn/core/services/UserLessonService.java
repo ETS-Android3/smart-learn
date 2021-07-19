@@ -222,4 +222,21 @@ public class UserLessonService extends BasicFirestoreService<LessonDocument, Use
         repositoryInstance.shareLesson(lessonSnapshot.getId(), lesson, friendUidList, callback);
     }
 
+    public void deleteLesson(DocumentSnapshot lessonSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(lessonSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Document " + lessonSnapshot.getId() + " deleted",
+                    "Document " + lessonSnapshot.getId() + " was NOT deleted");
+        }
+
+
+        repositoryInstance.deleteLesson(lessonSnapshot.getReference(), callback);
+    }
+
 }

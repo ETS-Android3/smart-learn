@@ -218,4 +218,25 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
         updateDocument(data, lessonSnapshot, callback);
     }
 
+    public void deleteLesson(@NonNull @NotNull DocumentReference lessonReference, @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToDeleteLesson(lessonReference, callback));
+    }
+
+    private void tryToDeleteLesson(@NonNull @NotNull DocumentReference lessonReference, @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Delete lesson from user lessons collection
+        batch.delete(lessonReference);
+
+        // 2. Update counter on user document and user modified time
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put(UserDocument.Fields.NR_OF_LESSONS_FIELD_NAME, FieldValue.increment(-1));
+        userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
+
+        // 3. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
 }
