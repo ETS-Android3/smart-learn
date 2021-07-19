@@ -31,6 +31,9 @@ public class NotificationDocument {
         String FINISHED_FIELD_NAME = "finished";
         String ACCEPTED_FIELD_NAME = "accepted";
         String DECLINED_FIELD_NAME = "declined";
+        String RECEIVED_LESSON_FIELD_NAME = "receivedLesson";
+        String RECEIVED_LESSON_WORD_LIST_FIELD_NAME = "receivedLessonWordList";
+        String RECEIVED_LESSON_EXPRESSIONS_LIST_FIELD_NAME = "receivedLessonExpressionList";
     }
 
     public interface Types {
@@ -86,6 +89,10 @@ public class NotificationDocument {
     // used for notifications with friend request type
     private boolean accepted;
     private boolean declined;
+
+    private String receivedLesson;
+    private String receivedLessonWordList;
+    private String receivedLessonExpressionList;
 
     /* *********************************************************************************************
                                     END  Optional Fields
@@ -293,6 +300,9 @@ public class NotificationDocument {
         data.put(Fields.FINISHED_FIELD_NAME, notificationDocument.getFinished());
         data.put(Fields.ACCEPTED_FIELD_NAME, notificationDocument.getAccepted());
         data.put(Fields.DECLINED_FIELD_NAME, notificationDocument.getDeclined());
+        data.put(Fields.RECEIVED_LESSON_FIELD_NAME, notificationDocument.getReceivedLesson());
+        data.put(Fields.RECEIVED_LESSON_WORD_LIST_FIELD_NAME, notificationDocument.getReceivedLessonWordList());
+        data.put(Fields.RECEIVED_LESSON_EXPRESSIONS_LIST_FIELD_NAME, notificationDocument.getReceivedLessonExpressionList());
 
         return data;
     }
