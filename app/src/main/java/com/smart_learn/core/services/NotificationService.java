@@ -143,6 +143,13 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
                 repositoryInstance.processNotificationForFriendRemovedYou(notification, notificationSnapshot.getReference(), callback);
                 break;
 
+            case NotificationDocument.Types.TYPE_NORMAL_LESSON_SENT:
+                repositoryInstance.processNotificationForNormalLessonSent(notificationSnapshot, callback);
+                break;
+            case NotificationDocument.Types.TYPE_NORMAL_LESSON_RECEIVED:
+                repositoryInstance.processNotificationForNormalLessonReceived(notification, notificationSnapshot.getReference(), callback);
+                break;
+
             case NotificationDocument.Types.TYPE_NONE:
                 Timber.e("type none");
                 break;

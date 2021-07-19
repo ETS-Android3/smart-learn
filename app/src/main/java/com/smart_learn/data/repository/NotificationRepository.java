@@ -15,11 +15,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
+import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
+import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.firebase.firestore.repository.BasicFirestoreRepository;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -380,4 +384,77 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
                 });
     }
 
+
+    public void processNotificationForNormalLessonSent(@NonNull @NotNull DocumentSnapshot notificationSnapshot,
+                                                        @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation is needed only to set notification to finish
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, notificationSnapshot, callback);
+    }
+
+    public void processNotificationForNormalLessonReceived(@NonNull @NotNull NotificationDocument notificationDocument,
+                                                           @NonNull @NotNull DocumentReference notificationDocRef,
+                                                           @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForNormalLessonReceived(notificationDocument,
+                notificationDocRef, callback));
+    }
+
+    private void tryToProcessNotificationForNormalLessonReceived(@NonNull @NotNull NotificationDocument notificationDocument,
+                                                                 @NonNull @NotNull DocumentReference notificationDocRef,
+                                                                 @NonNull @NotNull DataCallbacks.General callback){
+
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Update notification status with finished
+        HashMap<String, Object> notificationData = new HashMap<>();
+        notificationData.put(NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
+        notificationData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(notificationDocRef, notificationData);
+
+        // 2. Extract words and expressions
+        // TODO
+        ArrayList<WordDocument> wordList = new ArrayList<>();
+        ArrayList<ExpressionDocument> expressionList = new ArrayList<>();
+
+        // 3. Extract lesson and add it to the lesson collection
+        LessonDocument lesson = LessonDocument.convertJsonToDocument(notificationDocument.getReceivedLesson());
+        // make same setups
+        lesson.getDocumentMetadata().setCounted(true);
+        lesson.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+        lesson.setFromUid(notificationDocument.getFromUid());
+        lesson.setFromDisplayName(notificationDocument.getFromDisplayName());
+        lesson.setFromDocumentReference(notificationDocument.getFromDocumentReference());
+        lesson.setType(LessonDocument.Types.RECEIVED);
+        lesson.setNrOfWords(wordList.size());
+        lesson.setNrOfExpressions(expressionList.size());
+
+        // save lesson
+        DocumentReference lessonDocRef = UserLessonService.getInstance().getLessonsCollectionReference().document();
+        batch.set(lessonDocRef, LessonDocument.convertDocumentToHashMap(lesson));
+
+        // 4. Add words and expressions to the current lesson collections
+        // TODO
+
+
+        // 5. Update contours on user document and user modified time
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put(UserDocument.Fields.NR_OF_LESSONS_FIELD_NAME, FieldValue.increment(1));
+
+        if(lesson.getNrOfWords() > 0) {
+            userData.put(UserDocument.Fields.NR_OF_WORDS_FIELD_NAME, FieldValue.increment(lesson.getNrOfWords()));
+        }
+
+        if(lesson.getNrOfExpressions() > 0) {
+            userData.put(UserDocument.Fields.NR_OF_EXPRESSIONS_FIELD_NAME, FieldValue.increment(lesson.getNrOfExpressions()));
+        }
+
+        userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
+
+        // 6. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
 }
