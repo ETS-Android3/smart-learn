@@ -34,6 +34,9 @@ public abstract class BasicFragment <VM extends BasicAndroidViewModel> extends F
     @Getter
     protected VM viewModel;
 
+    // used to check is fragment is created
+    protected boolean isCreated = false;
+
     /**
      *  Used to instantiate ViewModel. ViewModelProvider needs something like 'ViewModelClassName.class'.
      *
@@ -47,6 +50,7 @@ public abstract class BasicFragment <VM extends BasicAndroidViewModel> extends F
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setViewModel();
+        isCreated = true;
     }
 
     protected void setViewModel(){
