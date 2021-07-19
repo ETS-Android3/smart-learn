@@ -1,5 +1,8 @@
 package com.smart_learn.presenter.activities.notebook.guest.fragments.lessons;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import lombok.Getter;
+import timber.log.Timber;
 
 
 public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel> {
@@ -48,10 +52,47 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_layout_with_recycler_view, menu);
+
+        // TODO: Implement filtering options (at this moment options will be hidden)
+        menu.setGroupVisible(R.id.secondary_group_menu_layout_with_recycler_view, false);
+        Utilities.Activities.setSearchMenuItem(menu, R.id.action_search_menu_layout_with_recycler_view,
+                new Callbacks.SearchActionCallback() {
+                    @Override
+                    public void onQueryTextChange(String newText) {
+                        onFilter(newText);
+                    }
+                });
+
+        MenuItem searchItem = menu.findItem(R.id.action_search_menu_layout_with_recycler_view);
+        if(searchItem == null){
+            Timber.w("searchItem is null ==> search is not functionally");
+            return;
+        }
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                unsetValueFromEmptyLabel();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                resetValueFromEmptyLabel();
+                return true;
+            }
+        });
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         sharedViewModel.setSelectedLessonId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
         sharedViewModel.setSelectedWordId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
+        sharedViewModel.setSelectedExpressionId(GuestNotebookSharedViewModel.NO_ITEM_SELECTED);
     }
 
     @Override

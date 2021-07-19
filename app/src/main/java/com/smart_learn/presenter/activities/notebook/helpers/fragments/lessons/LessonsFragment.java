@@ -2,8 +2,6 @@ package com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,7 +11,6 @@ import androidx.fragment.app.DialogFragment;
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonDialog;
-import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
@@ -54,22 +51,6 @@ public abstract class LessonsFragment <VM extends LessonsViewModel<?>> extends B
         // https://stackoverflow.com/questions/15653737/oncreateoptionsmenu-inside-fragments/31360073#31360073
         setHasOptionsMenu(true);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_layout_with_recycler_view, menu);
-
-        // TODO: Implement filtering options (at this moment options will be hidden)
-        menu.setGroupVisible(R.id.secondary_group_menu_layout_with_recycler_view, false);
-        Utilities.Activities.setSearchMenuItem(menu, R.id.action_search_menu_layout_with_recycler_view,
-                new Callbacks.SearchActionCallback() {
-                    @Override
-                    public void onQueryTextChange(String newText) {
-                        onFilter(newText);
-                    }
-                });
     }
 
     @Override
