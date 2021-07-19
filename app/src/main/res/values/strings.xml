@@ -343,4 +343,7 @@
     <string name="received_lesson">Type: received</string>
     <string name="shared_lesson">Type: shared</string>
 
+    <!-- UserLessonsFragment -->
+    <string name="share">Share</string>
+
 </resources>

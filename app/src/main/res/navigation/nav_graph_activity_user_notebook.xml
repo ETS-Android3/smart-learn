@@ -2,8 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph_activity_user_notebook"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/user_lessons_fragment_nav_graph_activity_user_notebook">
 
+    <fragment
+        android:id="@+id/user_lessons_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.lessons.UserLessonsFragment"
+        android:label="user_lessons_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+
+    </fragment>
 
 
 </navigation>

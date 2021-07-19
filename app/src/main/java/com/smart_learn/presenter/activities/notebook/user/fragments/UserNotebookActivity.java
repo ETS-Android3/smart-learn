@@ -35,4 +35,12 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
                 binding.bottomNavigationActivityNotebook, null, null);
 
     }
+
+    public void goToUserHomeLessonFragment(){
+
+    }
+
+    public void goToSelectFriendsFragment(){
+
+    }
 }

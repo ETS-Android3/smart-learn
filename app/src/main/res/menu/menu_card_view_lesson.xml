@@ -12,7 +12,14 @@
 
     <group
         android:id="@+id/user_group_menu_card_view_lesson">
-
+        <item
+            android:id="@+id/action_user_share_menu_card_view_lesson"
+            android:title="@string/share"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/action_user_delete_menu_card_view_lesson"
+            android:title="@string/delete"
+            app:showAsAction="never"/>
     </group>
 
 </menu>
