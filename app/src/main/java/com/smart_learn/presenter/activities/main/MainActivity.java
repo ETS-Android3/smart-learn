@@ -25,6 +25,7 @@ import com.smart_learn.databinding.ActivityMainBinding;
 import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
 import com.smart_learn.presenter.activities.community.CommunityActivity;
 import com.smart_learn.presenter.activities.guest.GuestActivity;
+import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;
@@ -118,8 +119,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_community_menu_nav_drawer_activity_main:
                         goToCommunityActivity();
                         break;
-                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_lessons_menu_nav_drawer_activity_main:
+                        startActivity(new Intent(MainActivity.this, UserNotebookActivity.class));
+                        break;
+                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_test_menu_nav_drawer_activity_main:
                     case R.id.nav_settings_menu_nav_drawer_activity_main:
                     case R.id.nav_help_menu_nav_drawer_activity_main:
