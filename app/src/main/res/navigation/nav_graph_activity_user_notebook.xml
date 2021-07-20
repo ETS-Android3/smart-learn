@@ -29,4 +29,12 @@
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_lesson.UserHomeLessonFragment"
         android:label="user_home_lesson_fragment_nav_graph_activity_user_notebook"
         tools:layout="@layout/fragment_home_lesson"/>
+
+    <fragment
+        android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.words.UserWordsFragment"
+        android:label="user_words_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
+
 </navigation>

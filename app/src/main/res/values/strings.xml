@@ -365,5 +365,11 @@
     <!-- WordsFragment -->
     <string name="no_words">You have no words</string>
 
+    <!-- UserWordsFragment -->
+    <string name="error_deleting_words">Can not delete selected words</string>
+    <string name="success_deleting_words">Selected words were deleted</string>
+    <string name="no_selected_word">No word is selected</string>
+    <string name="selected_words_point">Selected:</string>
+
 
 </resources>
