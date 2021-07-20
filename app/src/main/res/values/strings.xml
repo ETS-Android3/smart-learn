@@ -362,4 +362,8 @@
     <string name="shared">shared</string>
     <string name="personal">local</string>
 
+    <!-- WordsFragment -->
+    <string name="no_words">You have no words</string>
+
+
 </resources>

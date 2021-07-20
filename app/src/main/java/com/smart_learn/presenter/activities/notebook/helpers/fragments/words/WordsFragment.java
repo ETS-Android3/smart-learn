@@ -39,6 +39,11 @@ public abstract class WordsFragment <VM extends WordsViewModel<?>> extends Basic
     }
 
     @Override
+    protected int getEmptyLabelDescriptionResourceId() {
+        return R.string.no_words;
+    }
+
+    @Override
     protected int getToolbarTitle() {
         return R.string.words;
     }
