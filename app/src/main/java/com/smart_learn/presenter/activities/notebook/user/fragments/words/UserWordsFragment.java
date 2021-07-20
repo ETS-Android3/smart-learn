@@ -13,8 +13,8 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsFragment;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookActivity;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.user.fragments.words.helpers.WordsAdapter;
 
 import org.jetbrains.annotations.NotNull;

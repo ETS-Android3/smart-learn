@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

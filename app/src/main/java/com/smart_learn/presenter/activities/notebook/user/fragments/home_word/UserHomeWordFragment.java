@@ -9,7 +9,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.HomeWordFragment;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -18,7 +18,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentUserWordContainerBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment;
 

@@ -14,7 +14,7 @@ import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.user.fragments.words.helpers.WordsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
 

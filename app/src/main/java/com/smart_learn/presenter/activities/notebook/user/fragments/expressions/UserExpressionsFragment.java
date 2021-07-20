@@ -12,8 +12,8 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.expressions.ExpressionsFragment;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookActivity;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.user.fragments.expressions.helpers.ExpressionsAdapter;
 
 import org.jetbrains.annotations.NotNull;

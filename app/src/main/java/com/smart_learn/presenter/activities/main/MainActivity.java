@@ -25,7 +25,7 @@ import com.smart_learn.databinding.ActivityMainBinding;
 import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
 import com.smart_learn.presenter.activities.community.CommunityActivity;
 import com.smart_learn.presenter.activities.guest.GuestActivity;
-import com.smart_learn.presenter.activities.notebook.user.fragments.UserNotebookActivity;
+import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;
