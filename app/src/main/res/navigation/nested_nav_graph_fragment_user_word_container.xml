@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_nav_graph_fragment_user_word_container"
+    app:startDestination="@id/user_home_word_fragment_nested_nav_graph_fragment_user_word_container">
+
+    <fragment
+        android:id="@+id/user_home_word_fragment_nested_nav_graph_fragment_user_word_container"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserHomeWordFragment"
+        android:label="user_home_word_fragment_nested_nav_graph_fragment_user_word_container"
+        tools:layout="@layout/fragment_home_word" />
+
+    <fragment
+        android:id="@+id/meaning_web_view_fragment_nested_nav_graph_fragment_user_word_container"
+        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:label="meaning_web_view_fragment_nested_nav_graph_fragment_user_word_container"
+        tools:layout="@layout/fragment_web_view"/>
+
+    <fragment
+        android:id="@+id/examples_web_view_fragment_nested_nav_graph_fragment_user_word_container"
+        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:label="examples_web_view_fragment_nested_nav_graph_fragment_user_word_container"
+        tools:layout="@layout/fragment_web_view"/>
+</navigation>
