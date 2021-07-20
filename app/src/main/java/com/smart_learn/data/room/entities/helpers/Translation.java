@@ -2,10 +2,13 @@ package com.smart_learn.data.room.entities.helpers;
 
 import androidx.room.ColumnInfo;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.smart_learn.core.utilities.CoreUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,5 +90,23 @@ public class Translation {
             tmp.add(new Translation(item.getTranslation(), item.getPhonetic(), item.getLanguage()));
         }
         return tmp;
+    }
+
+    public static String fromListToJson(ArrayList<Translation> value) {
+        if (value == null) {
+            value = new ArrayList<>();
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Translation>>() {}.getType();
+        return gson.toJson(value, type);
+    }
+
+    public static ArrayList<Translation> fromJsonToList(String value) {
+        if (value== null) {
+            return new ArrayList<>();
+        }
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Translation>>() {}.getType();
+        return gson.fromJson(value, type);
     }
 }
