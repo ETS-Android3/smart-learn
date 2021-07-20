@@ -75,5 +75,7 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
     }
 
     public void goToUserHomeExpressionFragment(){
+        navController.navigate(R.id.action_user_expressions_fragment_to_user_home_expression_fragment_nav_graph_activity_user_notebook,
+                null, Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }
