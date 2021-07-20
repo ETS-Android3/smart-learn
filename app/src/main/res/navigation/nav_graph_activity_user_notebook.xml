@@ -34,7 +34,16 @@
         android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.words.UserWordsFragment"
         android:label="user_words_fragment_nav_graph_activity_user_notebook"
-        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/user_word_container_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/user_word_container_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserWordContainerFragment"
+        android:label="user_word_container_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_user_word_container"/>
 
 </navigation>

@@ -66,6 +66,7 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
     }
 
     public void goToUserWordContainerFragment(){
-
+        navController.navigate(R.id.action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook,null,
+                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }
