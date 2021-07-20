@@ -22,6 +22,7 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_USERS = "users";
     public static final String COLLECTION_FRIENDS = "friends";
     public static final String COLLECTION_LESSONS = "lessons";
+    public static final String COLLECTION_WORDS = "words";
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
                             @NonNull @NotNull DataCallbacks.General callback){
