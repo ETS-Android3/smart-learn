@@ -35,8 +35,6 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
 
     @Getter
     protected FragmentHomeExpressionBinding binding;
-    @Getter
-    protected GuestNotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
