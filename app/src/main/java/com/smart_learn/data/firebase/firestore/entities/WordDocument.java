@@ -14,9 +14,11 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class WordDocument extends LessonEntranceDocument {
 
     public interface Fields {

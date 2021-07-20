@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument {
 
     public interface Fields {
