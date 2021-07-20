@@ -371,5 +371,11 @@
     <string name="no_selected_word">No word is selected</string>
     <string name="selected_words_point">Selected:</string>
 
+    <!-- UserExpressionsFragment -->
+    <string name="error_deleting_expressions">Expressions can not be deleted</string>
+    <string name="no_selected_expression">No expression is selected</string>
+    <string name="success_deleting_expressions">Selected expressions were deleted</string>
+    <string name="selected_point">Selected:</string>
+
 
 </resources>

@@ -45,5 +45,10 @@
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserWordContainerFragment"
         android:label="user_word_container_fragment_nav_graph_activity_user_notebook"
         tools:layout="@layout/fragment_user_word_container"/>
+    <fragment
+        android:id="@+id/user_expressions_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.expressions.UserExpressionsFragment"
+        android:label="user_expressions_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
 </navigation>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/parent_layout_include_layout_action_mode_fragment_user_expressions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_delete_include_layout_action_mode_fragment_user_expressions"
+            style="@style/AppTheme.ButtonStyle.ActionModeButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_baseline_delete_24"
+            android:text="@string/delete" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

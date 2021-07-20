@@ -49,6 +49,10 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
                                 navController.navigate(R.id.user_words_fragment_nav_graph_activity_user_notebook,null,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
+                            case R.id.user_expressions_fragment_nav_graph_activity_user_notebook:
+                                navController.navigate(R.id.user_expressions_fragment_nav_graph_activity_user_notebook,null,
+                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
+                                return true;
                         }
                         return false;
                     }
@@ -68,5 +72,8 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
     public void goToUserWordContainerFragment(){
         navController.navigate(R.id.action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook,null,
                 Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+    }
+
+    public void goToUserHomeExpressionFragment(){
     }
 }
