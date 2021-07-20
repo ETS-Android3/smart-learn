@@ -34,8 +34,6 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
 
     @Getter
     protected FragmentHomeWordBinding binding;
-    @Getter
-    protected GuestNotebookSharedViewModel sharedViewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
