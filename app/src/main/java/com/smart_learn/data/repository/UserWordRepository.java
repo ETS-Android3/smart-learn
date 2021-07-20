@@ -101,6 +101,15 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         updateDocument(data, wordSnapshot, callback);
     }
 
+
+    public void updateWordPhonetic(@NonNull @NotNull String newValue, @NonNull @NotNull DocumentSnapshot wordSnapshot,
+                                    @NonNull @NotNull DataCallbacks.General callback){
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(WordDocument.Fields.PHONETIC_FIELD_NAME, newValue);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, wordSnapshot, callback);
+    }
+
     public void updateWordNotes(@NonNull @NotNull String newNotes, @NonNull @NotNull DocumentSnapshot wordSnapshot,
                                 @NonNull @NotNull DataCallbacks.General callback){
         HashMap<String, Object> data = new HashMap<>();

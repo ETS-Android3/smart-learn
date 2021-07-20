@@ -100,6 +100,26 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
         repositoryInstance.updateWordValue(newValue, wordSnapshot, callback);
     }
 
+    public void updateWordPhonetic(String newValue, DocumentSnapshot wordSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(wordSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Word phonetic for document " + wordSnapshot.getId() + " updated",
+                    "Word phonetic for document " + wordSnapshot.getId() + " was NOT updated");
+        }
+
+        if(newValue == null){
+            newValue = "";
+        }
+
+        repositoryInstance.updateWordPhonetic(newValue, wordSnapshot, callback);
+    }
+
     public void updateWordNotes(String newNotes, DocumentSnapshot wordSnapshot, DataCallbacks.General callback){
         if(DataUtilities.Firestore.notGoodDocumentSnapshot(wordSnapshot)){
             if(callback != null){
@@ -135,6 +155,14 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
 
         if(newTranslationList == null){
             newTranslationList = new ArrayList<>();
+        }
+
+        for(Translation item : newTranslationList){
+            if(item == null){
+                callback.onFailure();
+                Timber.w("item is null");
+                return;
+            }
         }
 
         repositoryInstance.updateWordTranslations(newTranslationList, wordSnapshot, callback);
