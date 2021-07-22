@@ -10,6 +10,8 @@ import com.smart_learn.data.room.db.AppRoomDatabase;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import timber.log.Timber;
 
 /**
@@ -106,6 +108,30 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             // https://stackoverflow.com/questions/53448287/how-to-check-whether-record-is-delete-or-not-in-room-database
             // deletion is made for one item so must be 1 row affected
             if(numberOfAffectedRows != 1){
+                Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were deleted");
+                callback.onFailure();
+            }
+            else{
+                callback.onSuccess();
+            }
+        });
+    }
+
+    /**
+     * Used to delete more values from database.
+     *
+     * @param valueList Values which will be deleted from database.
+     * @param callback Callback which will manage onSuccess() action if deletion is made, or
+     *                 onFailure() action if deletion failed.
+     * */
+    public void deleteAll(@NonNull List<T> valueList, @Nullable DataCallbacks.General callback) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            int numberOfAffectedRows = dao.deleteAll(valueList);
+            if(callback == null){
+                return;
+            }
+
+            if(numberOfAffectedRows != valueList.size()){
                 Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were deleted");
                 callback.onFailure();
             }

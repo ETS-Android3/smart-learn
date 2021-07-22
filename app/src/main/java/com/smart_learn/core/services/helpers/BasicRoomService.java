@@ -10,6 +10,8 @@ import com.smart_learn.data.room.repository.BasicRoomRepository;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 /**
  * Base class for Room services operations.
  *
@@ -110,5 +112,33 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
         }
 
         repositoryInstance.delete(value, callback);
+    }
+
+    /**
+     * Used to delete more values from database.
+     *
+     * @param valueList Values which will be deleted from database.
+     * @param callback Callback which will manage onSuccess() action if deletion is made, or
+     *                 onFailure() action if deletion failed.
+     * */
+    public void deleteAll(ArrayList<T> valueList, @Nullable DataCallbacks.General callback) {
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Values deleted",
+                    "Deletion for values failed");
+        }
+
+        if(valueList == null || valueList.isEmpty()){
+            callback.onSuccess();
+            return;
+        }
+
+        for(T item : valueList){
+            if(!isItemValid(item)){
+                callback.onFailure();
+                return;
+            }
+        }
+
+        repositoryInstance.deleteAll(valueList, callback);
     }
 }

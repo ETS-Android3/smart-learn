@@ -37,5 +37,8 @@ public interface WordDao extends BasicDao<Word>  {
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id == :lessonId")
     int getNumberOfWordsForSpecificLesson(int lessonId);
+
+    @Query("DELETE FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id == :lessonId" )
+    int deleteAll(int lessonId);
 }
 

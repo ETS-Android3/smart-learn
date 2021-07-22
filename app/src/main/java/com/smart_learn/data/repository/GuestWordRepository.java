@@ -1,7 +1,9 @@
 package com.smart_learn.data.repository;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.dao.WordDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Word;
@@ -65,5 +67,15 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
 
     public int getNumberOfWordsForSpecificLesson(int lessonId){
         return dao.getNumberOfWordsForSpecificLesson(lessonId);
+    }
+
+    public void deleteAll(int lessonId, @Nullable DataCallbacks.General callback) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            dao.deleteAll(lessonId);
+            if(callback == null){
+                return;
+            }
+            callback.onSuccess();
+        });
     }
 }

@@ -37,5 +37,8 @@ public interface ExpressionDao extends BasicDao<Expression> {
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
     int getNumberOfExpressionsForSpecificLesson(int lessonId);
+
+    @Query("DELETE FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId" )
+    int deleteAll(int lessonId);
 }
 

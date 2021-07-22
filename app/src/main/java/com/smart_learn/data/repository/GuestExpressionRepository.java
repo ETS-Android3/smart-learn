@@ -1,7 +1,9 @@
 package com.smart_learn.data.repository;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.dao.ExpressionDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Expression;
@@ -65,5 +67,15 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
 
     public int getNumberOfExpressionsForSpecificLesson(int lessonId){
         return dao.getNumberOfExpressionsForSpecificLesson(lessonId);
+    }
+
+    public void deleteAll(int lessonId, @Nullable DataCallbacks.General callback) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            dao.deleteAll(lessonId);
+            if(callback == null){
+                return;
+            }
+            callback.onSuccess();
+        });
     }
 }
