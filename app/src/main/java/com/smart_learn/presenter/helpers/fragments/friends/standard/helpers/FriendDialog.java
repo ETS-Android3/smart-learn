@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.community.fragments.friends.helpers;
+package com.smart_learn.presenter.helpers.fragments.friends.standard.helpers;
 
 import android.app.Dialog;
 import android.os.Bundle;

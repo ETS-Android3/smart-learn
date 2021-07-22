@@ -346,7 +346,7 @@
     <!-- UserLessonsFragment -->
     <string name="share">Share</string>
 
-    <!-- SelectFriendsFragment -->
+    <!-- FriendsFragment -->
     <string name="selected_friends_point">Selected friends:</string>
     <string name="share_lesson">Share lesson</string>
     <string name="success_shared_lesson">Lesson shared</string>

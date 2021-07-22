@@ -119,14 +119,6 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
         @Override
         protected void bind(@NonNull @NotNull FriendDocument friendDocument, int position){
 
-            if (isSelectionModeActive()) {
-                friendDocument.setSpannedEmail(new SpannableString(friendDocument.getEmail()));
-                friendDocument.setSpannedDisplayName(new SpannableString(friendDocument.getDisplayName()));
-                // set the existent value
-                liveItemInfo.setValue(friendDocument);
-                return;
-            }
-
             if(isFiltering){
                 friendDocument.setSpannedEmail(Utilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(friendDocument.getEmail().toLowerCase(), filteringValue), friendDocument.getEmail()));
@@ -137,6 +129,11 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
             else {
                 friendDocument.setSpannedEmail(new SpannableString(friendDocument.getEmail()));
                 friendDocument.setSpannedDisplayName(new SpannableString(friendDocument.getDisplayName()));
+            }
+
+            if (isSelectionModeActive()) {
+                liveItemInfo.setValue(friendDocument);
+                return;
             }
 
             setSelectionModeActive(false);
