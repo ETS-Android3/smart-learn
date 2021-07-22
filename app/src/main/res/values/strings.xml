@@ -239,7 +239,7 @@
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
 
-    <!-- LessonsFragment -->
+    <!-- BasicLessonsFragment -->
     <string name="no_lessons">There are no lessons</string>
 
     <!-- HomeLessonFragment -->
@@ -376,6 +376,8 @@
     <string name="no_selected_expression">No expression is selected</string>
     <string name="success_deleting_expressions">Selected expressions were deleted</string>
     <string name="selected_point">Selected:</string>
+
+    <string name="filter">Filter</string>
 
 
 </resources>
