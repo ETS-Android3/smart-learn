@@ -9,24 +9,17 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.UserLessonService;
 import com.smart_learn.databinding.LayoutBottomSheetShowLessonsOptionsBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonDialog;
-import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.lessons.user.UserBasicLessonsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 
 public abstract class UserStandardLessonsFragment <VM extends UserStandardLessonsViewModel> extends UserBasicLessonsFragment<VM> {
-
-    @Override
-    protected int getFloatingActionButtonIconResourceId() {
-        return R.drawable.ic_baseline_plus_24;
-    }
 
     @Override
     protected boolean showFloatingActionButton() {
@@ -44,37 +37,13 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
     }
 
     @Override
-    protected boolean onAdapterShowCheckedIcon() {
-        return false;
-    }
-
-    @Override
     protected boolean onAdapterShowOptionsToolbar() {
         return true;
     }
 
     @Override
-    protected void onAdapterSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
-    }
-
-    @Override
-    protected void onAdapterLongClick(@NonNull @NotNull DocumentSnapshot item) {
-
-    }
-
-    @Override
-    protected void onAdapterUpdateSelectedItemsCounter(int value) {
-
-    }
-
-    @Override
     protected void onAdapterDeleteLessonAlert(int wordsNr, int expressionsNr) {
         deleteLessonAlert(wordsNr, expressionsNr);
-    }
-
-    @Override
-    protected void onAdapterShareLessonClick(@NonNull @NotNull DocumentSnapshot lessonSnapshot) {
-
     }
 
     @Override
@@ -85,7 +54,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
             requireActivity().onBackPressed();
             return true;
         }
-        if(id == R.id.action_filter_menu_toolbar_fragment_lessons){
+        if(id == R.id.action_filter_menu_layout_with_recycler_view){
             showFilterOptionsDialog();
             return true;
         }
@@ -184,7 +153,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
                 viewModel.addLessonByName(lessonName);
             }
         });
-        dialogFragment.show(requireActivity().getSupportFragmentManager(), "GuestStandardLessonsFragment");
+        dialogFragment.show(requireActivity().getSupportFragmentManager(), "UserStandardLessonsFragment");
     }
 
 }

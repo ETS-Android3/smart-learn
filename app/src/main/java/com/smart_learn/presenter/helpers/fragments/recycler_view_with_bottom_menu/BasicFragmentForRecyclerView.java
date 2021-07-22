@@ -3,6 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_me
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
+import timber.log.Timber;
 
 /**
  * The main fragment from which all the fragments of the application which contains a standard
@@ -76,6 +78,39 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     protected LinearLayoutCompat bottomSheetLayout;
     protected BottomSheetBehavior<LinearLayoutCompat> bottomSheetBehavior;
 
+    // adapter general
+    protected boolean onAdapterShowCheckedIcon(){
+        return false;
+    }
+    protected boolean onAdapterShowOptionsToolbar(){
+        return false;
+    }
+    protected void onAdapterUpdateSelectedItemsCounter(int value){}
+
+    // general
+    protected boolean useToolbarMenu(){
+        return false;
+    }
+    protected int getMenuResourceId(){
+        return R.menu.menu_layout_with_recycler_view;
+    }
+    protected boolean useSearchOnMenu(){
+        return false;
+    }
+    protected int getActionSearchId(){
+        return R.id.action_search_menu_layout_with_recycler_view;
+    }
+    protected boolean useSecondaryGroupOnMenu(){
+        return false;
+    }
+    protected int getSecondaryGroupId(){
+        return R.id.secondary_group_menu_layout_with_recycler_view;
+    }
+    protected int getFloatingActionButtonIconResourceId(){
+        return R.drawable.ic_baseline_plus_24;
+    }
+    protected void onFloatingActionButtonPress(){}
+    protected void onFilter(String newText){}
 
     /**
      * Override if you want to use a bottom sheet when action mode is active.
@@ -169,6 +204,11 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
         super.onCreateView(inflater, container, savedInstanceState);
         binding = FragmentBasicForRecyclerViewBinding.inflate(inflater);
         binding.setLifecycleOwner(this);
+        if(useToolbarMenu()){
+            // use this to set toolbar menu inside fragment
+            // https://stackoverflow.com/questions/15653737/oncreateoptionsmenu-inside-fragments/31360073#31360073
+            setHasOptionsMenu(true);
+        }
         return binding.getRoot();
     }
 
@@ -176,6 +216,55 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setLayoutUtilities();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull @NotNull Menu menu, @NonNull @NotNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if(!useToolbarMenu()){
+            return;
+        }
+
+        inflater.inflate(getMenuResourceId(), menu);
+
+        if(!useSecondaryGroupOnMenu()){
+            menu.setGroupVisible(getSecondaryGroupId(), false);
+        }
+
+        if(!useSearchOnMenu()){
+            return;
+        }
+
+        Utilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new Callbacks.SearchActionCallback() {
+                    @Override
+                    public void onQueryTextChange(String newText) {
+                        onFilter(newText);
+                    }
+                });
+
+        MenuItem searchItem = menu.findItem(getActionSearchId());
+        if(searchItem == null){
+            Timber.w("searchItem is null ==> search is not functionally");
+            return;
+        }
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                menu.setGroupVisible(getSecondaryGroupId(), false);
+                unsetValueFromEmptyLabel();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                if(useSecondaryGroupOnMenu()){
+                    menu.setGroupVisible(getSecondaryGroupId(), true);
+                }
+                resetValueFromEmptyLabel();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -222,6 +311,16 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
         // fragments can choose to hide the floating action button
         if(!showFloatingActionButton()){
             floatingActionButton.setVisibility(View.GONE);
+        }
+        else{
+            floatingActionButton.setImageResource(getFloatingActionButtonIconResourceId());
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onFloatingActionButtonPress();
+                }
+            });
         }
 
         // fragments can choose specific description when are no items in the recycler view
@@ -330,5 +429,13 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
                 actionModeCustomCallback.onDestroyActionMode();
             }
         });
+    }
+
+    protected void unsetValueFromEmptyLabel(){
+        emptyLabel.setText("");
+    }
+
+    protected void resetValueFromEmptyLabel(){
+        emptyLabel.setText(getEmptyLabelDescriptionResourceId());
     }
 }

@@ -14,21 +14,16 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class UserBasicLessonsFragment <VM extends UserBasicLessonsViewModel> extends BasicLessonsFragment<DocumentSnapshot, VM> {
 
-    protected abstract void onAdapterShareLessonClick(@NonNull @NotNull DocumentSnapshot lessonSnapshot);
+    protected void onAdapterShareLessonClick(@NonNull @NotNull DocumentSnapshot lessonSnapshot){}
 
     @Override
-    protected boolean hideGuestGroupToolbarMenu() {
+    protected boolean useSearchOnMenu() {
         return true;
     }
 
     @Override
-    protected boolean hideUserGroupToolbarMenu() {
-        return false;
-    }
-
-    @Override
-    protected boolean hideSecondaryGroupToolbarMenu() {
-        return false;
+    protected boolean useSecondaryGroupOnMenu() {
+        return true;
     }
 
     @Override

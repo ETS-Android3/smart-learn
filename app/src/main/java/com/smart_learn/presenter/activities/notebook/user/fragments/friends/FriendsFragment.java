@@ -36,7 +36,7 @@ public class FriendsFragment extends SelectFriendsFragment<FriendsViewModel> {
     }
 
     @Override
-    protected void showSelectedItemsCounter(int value) {
+    protected void onAdapterUpdateSelectedItemsCounter(int value) {
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_friends_point) + " " + value);
     }
 

@@ -18,17 +18,7 @@ import java.util.List;
 public abstract class GuestBasicLessonsFragment <VM extends GuestBasicLessonsViewModel> extends BasicLessonsFragment<Lesson, VM> {
 
     @Override
-    protected boolean hideGuestGroupToolbarMenu() {
-        return false;
-    }
-
-    @Override
-    protected boolean hideUserGroupToolbarMenu() {
-        return true;
-    }
-
-    @Override
-    protected boolean hideSecondaryGroupToolbarMenu() {
+    protected boolean useSearchOnMenu() {
         return true;
     }
 
@@ -101,5 +91,4 @@ public abstract class GuestBasicLessonsFragment <VM extends GuestBasicLessonsVie
             viewModel.getAdapter().getFilter().filter(newText);
         }
     }
-
 }

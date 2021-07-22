@@ -14,21 +14,6 @@ import org.jetbrains.annotations.NotNull;
 public abstract class StandardFriendsFragment <VM extends StandardFriendsViewModel> extends BasicFriendsFragment<VM> {
 
     @Override
-    protected boolean useToolbarMenu() {
-        return true;
-    }
-
-    @Override
-    protected void onAdapterRemoveFriend(@NonNull @NotNull DocumentSnapshot friendSnapshot) {
-        viewModel.removeFriend(StandardFriendsFragment.this, friendSnapshot);
-    }
-
-    @Override
-    protected boolean onAdapterShowCheckedIcon() {
-        return false;
-    }
-
-    @Override
     protected boolean onAdapterShowOptionsToolbar() {
         return true;
     }
@@ -39,13 +24,8 @@ public abstract class StandardFriendsFragment <VM extends StandardFriendsViewMod
     }
 
     @Override
-    protected void onAdapterLongClick(@NonNull @NotNull DocumentSnapshot item) {
-
-    }
-
-    @Override
-    protected void onAdapterUpdateSelectedItemsCounter(int value) {
-
+    protected void onAdapterRemoveFriend(@NonNull @NotNull DocumentSnapshot friendSnapshot) {
+        viewModel.removeFriend(StandardFriendsFragment.this, friendSnapshot);
     }
 
     private void showFriendDialog(@NonNull @NotNull DocumentSnapshot friendSnapshot){
