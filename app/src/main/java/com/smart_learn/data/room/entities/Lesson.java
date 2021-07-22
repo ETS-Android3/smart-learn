@@ -8,6 +8,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.NotebookCommon;
+import com.smart_learn.presenter.helpers.PresenterHelpers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity(tableName = AppRoomDatabase.LESSONS_TABLE)
-public class Lesson extends NotebookCommon {
+public class Lesson extends NotebookCommon implements PresenterHelpers.DiffUtilCallbackHelper<Lesson> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -31,6 +32,7 @@ public class Lesson extends NotebookCommon {
         this.name = name;
     }
 
+    @Override
     public boolean areItemsTheSame(Lesson newItem) {
         if(newItem == null){
             return false;
@@ -38,6 +40,7 @@ public class Lesson extends NotebookCommon {
         return this.lessonId == newItem.getLessonId();
     }
 
+    @Override
     public boolean areContentsTheSame(Lesson newItem){
         if(newItem == null){
             return false;

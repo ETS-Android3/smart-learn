@@ -10,6 +10,7 @@ import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.LessonEntrance;
 import com.smart_learn.data.room.entities.helpers.Translation;
+import com.smart_learn.presenter.helpers.PresenterHelpers;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ import lombok.ToString;
                                 childColumns = "fk_lesson_id",
                                 onDelete = ForeignKey.CASCADE)
         })
-public class Expression extends LessonEntrance {
+public class Expression extends LessonEntrance implements PresenterHelpers.DiffUtilCallbackHelper<Expression> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -46,6 +47,7 @@ public class Expression extends LessonEntrance {
         this.expression = expression;
     }
 
+    @Override
     public boolean areItemsTheSame(Expression newItem) {
         if(newItem == null){
             return false;
@@ -53,6 +55,7 @@ public class Expression extends LessonEntrance {
         return this.expressionId == newItem.getExpressionId();
     }
 
+    @Override
     public boolean areContentsTheSame(Expression newItem){
         if(newItem == null){
             return false;

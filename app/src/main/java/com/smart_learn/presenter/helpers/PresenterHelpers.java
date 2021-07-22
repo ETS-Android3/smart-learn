@@ -53,4 +53,12 @@ public interface PresenterHelpers {
          * */
         void loadMoreData();
     }
+
+    /**
+     * Used for Diff Util in List Adapter.
+     * */
+    interface DiffUtilCallbackHelper<T> {
+        boolean areItemsTheSame(T item);
+        boolean areContentsTheSame(T item);
+    }
 }
