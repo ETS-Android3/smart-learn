@@ -11,6 +11,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserService;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonEntranceDocument;
@@ -95,7 +96,10 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
 
     public void updateExpressionValue(@NonNull @NotNull String newValue, @NonNull @NotNull DocumentSnapshot expressionSnapshot,
                                       @NonNull @NotNull DataCallbacks.General callback){
+        ArrayList<String> searchValues = new ArrayList<>();
+        searchValues.add(newValue);
         HashMap<String, Object> data = new HashMap<>();
+        data.put(DocumentMetadata.Fields.SEARCH_LIST_FIELD_NAME, CoreUtilities.General.generateSearchListForFirestoreDocument(searchValues));
         data.put(ExpressionDocument.Fields.EXPRESSION_FIELD_NAME, newValue);
         data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
         updateDocument(data, expressionSnapshot, callback);
