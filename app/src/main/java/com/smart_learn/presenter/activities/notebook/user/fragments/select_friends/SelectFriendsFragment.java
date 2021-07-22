@@ -12,11 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.select_friends.helpers.SelectFriendsAdapter;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -105,7 +106,7 @@ public class SelectFriendsFragment extends BasicFragmentForRecyclerView<SelectFr
     public void onResume() {
         super.onResume();
         if(viewModel.getAdapter() != null){
-            showSelectedItems(viewModel.getAdapter().getSelectedFriends().size());
+            showSelectedItems(viewModel.getAdapter().getSelectedValues().size());
         }
     }
 
@@ -132,12 +133,49 @@ public class SelectFriendsFragment extends BasicFragmentForRecyclerView<SelectFr
         sharedViewModel = new ViewModelProvider(requireActivity()).get(UserNotebookSharedViewModel.class);
 
         // set fragment view model adapter
-        viewModel.setAdapter(new SelectFriendsAdapter(new SelectFriendsAdapter.Callback<SelectFriendsFragment>() {
+        viewModel.setAdapter(new FriendsAdapter(new FriendsAdapter.Callback() {
             @Override
-            public SelectFriendsFragment getFragment() {
+            public void onRemoveFriend(@NonNull @NotNull DocumentSnapshot friendSnapshot) {
+
+            }
+
+            @Override
+            public boolean showCheckedIcon() {
+                return true;
+            }
+
+            @Override
+            public boolean showToolbar() {
+                return false;
+            }
+
+            @Override
+            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
+
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+                showSelectedItems(value);
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return SelectFriendsFragment.this;
             }
         }));
+
+        // here be used only selection mode
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setSelectionModeActive(true);
+        }
+
     }
 
 

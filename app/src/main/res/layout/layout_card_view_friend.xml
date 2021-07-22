@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.activities.community.fragments.friends.helpers.FriendsAdapter.FriendViewHolder" />
+            type="com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter.FriendViewHolder" />
     </data>
 
 

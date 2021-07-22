@@ -1,15 +1,29 @@
-package com.smart_learn.presenter.helpers.adapters;
+package com.smart_learn.presenter.helpers.adapters.helpers;
+
+import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
+import lombok.Getter;
 import timber.log.Timber;
 
 import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
@@ -22,8 +36,29 @@ import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
  * @param <VH> A ViewHolder class that extends BasicViewHolder<T,?> that will be used by the
  *             adapter to show Entity details.
  * */
-public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHolder<T, ?>>
+public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHolder<T, ?>, CBK extends BasicFirestoreRecyclerAdapter.Callback>
         extends FirestoreRecyclerAdapter<T, VH> implements PresenterHelpers.AdapterHelper {
+
+    // main callback for handling different operations
+    @NonNull
+    @NotNull
+    protected final CBK adapterCallback;
+
+    // used to add values when selection mode is active
+    @NonNull
+    @NotNull
+    protected final ArrayList<Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>>> selectedValues;
+
+    // live value will be used for view holder binding in order to show/hide views
+    @Getter
+    private final MutableLiveData<Boolean> liveIsSelectionModeActive;
+    // normal value will be used for fast access at value
+    @Getter
+    private boolean isSelectionModeActive;
+
+    // used for filtering purpose
+    protected boolean isFiltering;
+    protected String filteringValue;
 
     // helper for 'currentLoad'
     private static final int UNSET = -1;
@@ -56,21 +91,26 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
 
     /**
-     * @param helper Helper to manage different actions.
      * @param options Options needed by the FirestoreRecyclerAdapter in order to load data.
      * @param initialAdapterCapacity How many items will be loaded in the adapter when adapter is
      *                               initialized.
      * @param loadingStep How many items will be added after user scrolls down and list is finished.
      * */
-    public BasicFirestoreRecyclerAdapter(@NonNull @NotNull PresenterHelpers.FragmentRecyclerViewHelper helper,
+    public BasicFirestoreRecyclerAdapter(@NonNull @NotNull CBK adapterCallback,
                                          @NonNull @NotNull FirestoreRecyclerOptions<T> options,
                                          long initialAdapterCapacity, long loadingStep) {
         super(options);
-        this.helper = helper;
+        this.adapterCallback = adapterCallback;
+        this.helper = adapterCallback.getFragment();
         this.initialAdapterCapacity = initialAdapterCapacity;
         this.loadingStep = loadingStep;
 
         // specific initial setup
+        this.isFiltering = false;
+        this.filteringValue = "";
+        this.isSelectionModeActive = false;
+        this.liveIsSelectionModeActive = new MutableLiveData<>(false);
+        this.selectedValues = new ArrayList<>();
         this.isLoadingNewData = false;
         this.secondCall = false;
         this.currentLoad = UNSET;
@@ -234,6 +274,98 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         updateOptions(newOptions);
 
         // helper.stopRefreshing() will be called on onDataChanged() after load is complete
+
+    }
+
+    @NonNull
+    @NotNull
+    public ArrayList<DocumentSnapshot> getSelectedValues(){
+        ArrayList<DocumentSnapshot> tmp = new ArrayList<>();
+        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
+            tmp.add(item.first);
+        }
+        return tmp;
+    }
+
+    public void resetSelectedItems(){
+        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
+            item.second.first.setChecked(false);
+            item.second.second.postValue(false);
+        }
+        selectedValues.clear();
+        adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+    }
+
+    public void setSelectionModeActive(boolean value) {
+        resetSelectedItems();
+        isSelectionModeActive = value;
+        liveIsSelectionModeActive.setValue(isSelectionModeActive);
+    }
+
+    protected void makeStandardSetup(Toolbar toolbar, MaterialCardView cardView){
+        if(toolbar != null){
+            toolbar.setVisibility(adapterCallback.showToolbar() ? View.VISIBLE : View.GONE);
+        }
+
+        if(cardView != null && !adapterCallback.showCheckedIcon()){
+            cardView.setCheckedIcon(null);
+        }
+    }
+
+    protected void markItem(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item){
+        String currentDocId = item.first.getId();
+        MaterialCardView cardView = item.second.first;
+        MutableLiveData<Boolean> liveSelected = item.second.second;
+
+        // if is checked, remove item and then uncheck it
+        if(cardView.isChecked()){
+            // mark as unchecked
+            cardView.setChecked(false);
+            liveSelected.setValue(false);
+
+            // and remove checked item from list
+            int lim = selectedValues.size();
+            for(int i = 0; i < lim; i++){
+                if(selectedValues.get(i).first.getId().equals(currentDocId)){
+                    selectedValues.remove(i);
+                    break;
+                }
+            }
+
+            adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+            return;
+        }
+
+        // if is unchecked the mark as checked
+        cardView.setChecked(true);
+        liveSelected.setValue(true);
+
+        // and add item only if does not exists
+        boolean exists = false;
+        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> value : selectedValues){
+            if(value.first.getId().equals(currentDocId)){
+                exists = true;
+                break;
+            }
+        }
+
+        if(!exists){
+            selectedValues.add(item);
+        }
+
+        adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+    }
+
+    protected String getString(int id){
+        return adapterCallback.getFragment().getString(id);
+    }
+
+    protected void showMessage(int id){
+        adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
+                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
+    }
+
+    public interface Callback extends Callbacks.StandardAdapterCallback <DocumentSnapshot> {
 
     }
 

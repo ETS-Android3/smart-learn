@@ -7,8 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationDialog;
-import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationsAdapter;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.adapters.notifications.NotificationsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,12 +36,38 @@ public class NotificationsFragment extends BasicFragmentForRecyclerView<Notifica
         super.setViewModel();
 
         // set fragment view model adapter
-        viewModel.setAdapter(new NotificationsAdapter(new Callbacks.FragmentGeneralCallback<NotificationsFragment>() {
+        viewModel.setAdapter(new NotificationsAdapter(new NotificationsAdapter.Callback() {
             @Override
-            public NotificationsFragment getFragment() {
+            public boolean showCheckedIcon() {
+                return false;
+            }
+
+            @Override
+            public boolean showToolbar() {
+                return true;
+            }
+
+            @Override
+            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+                showNotificationDialog(item);
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
+
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return NotificationsFragment.this;
             }
-        }, NotificationsAdapter.getInitialAdapterOptions(NotificationsFragment.this)));
+        }));
 
     }
 

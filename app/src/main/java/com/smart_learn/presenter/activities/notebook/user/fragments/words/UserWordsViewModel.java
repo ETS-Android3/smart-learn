@@ -15,7 +15,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsViewModel;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.words.helpers.WordsAdapter;
+import com.smart_learn.presenter.helpers.adapters.words.UserWordsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,17 +27,17 @@ import lombok.Getter;
 import lombok.Setter;
 import timber.log.Timber;
 
-public class UserWordsViewModel extends WordsViewModel<WordsAdapter> {
+public class UserWordsViewModel extends WordsViewModel<UserWordsAdapter> {
 
     @Getter
     @Setter
     private DocumentSnapshot currentLessonSnapshot;
-    private final AtomicBoolean isDeleting;
+    private final AtomicBoolean isDeletingActive;
 
     public UserWordsViewModel(@NonNull @NotNull Application application) {
         super(application);
         currentLessonSnapshot = UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED;
-        isDeleting = new AtomicBoolean(false);
+        isDeletingActive = new AtomicBoolean(false);
     }
 
     @Override
@@ -77,45 +77,45 @@ public class UserWordsViewModel extends WordsViewModel<WordsAdapter> {
     }
 
     protected void deleteSelectedWords(){
-        if(isDeleting.get()){
+        if(isDeletingActive.get()){
             return;
         }
-        isDeleting.set(true);
+        isDeletingActive.set(true);
 
         if(currentLessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_deleting_words));
             Timber.w("currentLessonSnapshot is not set");
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
         if(adapter == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_deleting_words));
             Timber.w("adapter is null");
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
-        if(adapter.getSelectedWords().isEmpty()){
+        if(adapter.getSelectedValues().isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_word));
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
-        UserWordService.getInstance().deleteWordList(currentLessonSnapshot, adapter.getSelectedWords(), new DataCallbacks.General() {
+        UserWordService.getInstance().deleteWordList(currentLessonSnapshot, adapter.getSelectedValues(), new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_words));
                 if (adapter != null) {
                     adapter.resetSelectedItems();
                 }
-                isDeleting.set(false);
+                isDeletingActive.set(false);
             }
 
             @Override
             public void onFailure() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.error_deleting_words));
-                isDeleting.set(false);
+                isDeletingActive.set(false);
             }
         });
     }

@@ -14,7 +14,8 @@ import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.expressions.ExpressionsFragment;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.expressions.helpers.ExpressionsAdapter;
+import com.smart_learn.presenter.helpers.adapters.expressions.UserExpressionsAdapter;
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,8 +61,7 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
     protected void onActionModeCreate() {
         if(viewModel.getAdapter() != null){
             ((UserNotebookActivity)requireActivity()).hideBottomNavigationMenu();
-            viewModel.getAdapter().resetSelectedItems();
-            viewModel.getAdapter().setLiveActionMode(true);
+            viewModel.getAdapter().setSelectionModeActive(true);
         }
     }
 
@@ -69,8 +69,7 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
     protected void onActionModeDestroy() {
         if(viewModel.getAdapter() != null){
             ((UserNotebookActivity)requireActivity()).showBottomNavigationMenu();
-            viewModel.getAdapter().resetSelectedItems();
-            viewModel.getAdapter().setLiveActionMode(false);
+            viewModel.getAdapter().setSelectionModeActive(false);
         }
     }
 
@@ -106,9 +105,35 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
         viewModel.setCurrentLessonSnapshot(sharedViewModel.getSelectedLesson());
 
         // set fragment view model adapter
-        viewModel.setAdapter(new ExpressionsAdapter(sharedViewModel.getSelectedLesson(), new ExpressionsAdapter.Callback<UserExpressionsFragment>() {
+        viewModel.setAdapter(new UserExpressionsAdapter(sharedViewModel.getSelectedLesson(), new UserExpressionsAdapter.Callback() {
             @Override
-            public UserExpressionsFragment getFragment() {
+            public boolean showCheckedIcon() {
+                return true;
+            }
+
+            @Override
+            public boolean showToolbar() {
+                return true;
+            }
+
+            @Override
+            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+                goToUserHomeExpressionFragment(item);
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
+                startFragmentActionMode();
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+                showSelectedItems(value);
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return UserExpressionsFragment.this;
             }
         }));

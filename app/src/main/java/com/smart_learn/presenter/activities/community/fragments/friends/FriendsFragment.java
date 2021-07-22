@@ -15,9 +15,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.presenter.activities.community.fragments.friends.helpers.FriendDialog;
-import com.smart_learn.presenter.activities.community.fragments.friends.helpers.FriendsAdapter;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -88,10 +88,10 @@ public class FriendsFragment extends BasicFragmentForRecyclerView<FriendsViewMod
         super.setViewModel();
 
         // set fragment view model adapter
-        viewModel.setAdapter(new FriendsAdapter(new FriendsAdapter.Callback<FriendsFragment>() {
+        viewModel.setAdapter(new FriendsAdapter(new FriendsAdapter.Callback() {
             @Override
-            public boolean hideItemToolbar() {
-                return false;
+            public void onRemoveFriend(@NonNull @NotNull DocumentSnapshot friendSnapshot) {
+                viewModel.removeFriend(FriendsFragment.this, friendSnapshot);
             }
 
             @Override
@@ -100,12 +100,28 @@ public class FriendsFragment extends BasicFragmentForRecyclerView<FriendsViewMod
             }
 
             @Override
-            public void onItemClick(@NonNull @NotNull DocumentSnapshot documentSnapshot) {
-                showFriendDialog(documentSnapshot);
+            public boolean showToolbar() {
+                return true;
             }
 
             @Override
-            public FriendsFragment getFragment() {
+            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+                showFriendDialog(item);
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
+
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return FriendsFragment.this;
             }
         }));

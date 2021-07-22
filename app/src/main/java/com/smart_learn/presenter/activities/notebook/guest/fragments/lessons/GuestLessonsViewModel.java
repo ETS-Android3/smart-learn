@@ -9,13 +9,13 @@ import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.helpers.adapters.lessons.GuestLessonsAdapter;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsViewModel;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
-public class GuestLessonsViewModel extends LessonsViewModel<LessonsAdapter> {
+public class GuestLessonsViewModel extends LessonsViewModel<GuestLessonsAdapter> {
 
     public GuestLessonsViewModel(@NonNull @NotNull Application application) {
         super(application);

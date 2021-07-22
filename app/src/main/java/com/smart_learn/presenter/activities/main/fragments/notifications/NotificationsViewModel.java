@@ -14,7 +14,7 @@ import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationDialog;
-import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationsAdapter;
+import com.smart_learn.presenter.helpers.adapters.notifications.NotificationsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicViewModelForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;

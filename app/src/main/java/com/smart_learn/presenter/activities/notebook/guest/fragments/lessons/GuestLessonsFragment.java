@@ -15,10 +15,11 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.helpers.adapters.lessons.GuestLessonsAdapter;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -120,9 +121,40 @@ public class GuestLessonsFragment extends LessonsFragment<GuestLessonsViewModel>
         sharedViewModel = new ViewModelProvider(requireActivity()).get(GuestNotebookSharedViewModel.class);
 
         // set adapter
-        viewModel.setAdapter(new LessonsAdapter(new Callbacks.FragmentGeneralCallback<GuestLessonsFragment>() {
+        viewModel.setAdapter(new GuestLessonsAdapter(new GuestLessonsAdapter.Callback() {
             @Override
-            public GuestLessonsFragment getFragment() {
+            public void onDeleteLessonAlert(int wordsNr, int expressionsNr) {
+                deleteLessonAlert(wordsNr, expressionsNr);
+            }
+
+            @Override
+            public void onSimpleClick(@NonNull @NotNull Lesson item) {
+                goToGuestHomeLessonFragment(item);
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull Lesson item) {
+
+            }
+
+            @Override
+            public boolean showCheckedIcon() {
+                return false;
+            }
+
+            @Override
+            public boolean showToolbar() {
+                return true;
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return GuestLessonsFragment.this;
             }
         }));

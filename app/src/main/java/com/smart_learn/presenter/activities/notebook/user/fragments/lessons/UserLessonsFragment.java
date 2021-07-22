@@ -21,9 +21,10 @@ import com.smart_learn.databinding.LayoutBottomSheetShowLessonsOptionsBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsFragment;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.helpers.adapters.lessons.UserLessonsAdapter;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -141,33 +142,48 @@ public class UserLessonsFragment extends LessonsFragment<UserLessonsViewModel> {
         sharedViewModel = new ViewModelProvider(requireActivity()).get(UserNotebookSharedViewModel.class);
 
         // set adapter
-        viewModel.setAdapter(new LessonsAdapter(new LessonsAdapter.Callback<UserLessonsFragment>() {
+        viewModel.setAdapter(new UserLessonsAdapter(new UserLessonsAdapter.Callback() {
             @Override
-            public boolean hideItemToolbar() {
-                return false;
+            public void onDeleteLessonAlert(int wordsNr, int expressionsNr) {
+                deleteLessonAlert(wordsNr, expressionsNr);
+            }
+
+            @Override
+            public void onShareLessonClick(@NonNull @NotNull DocumentSnapshot lessonSnapshot) {
+                shareLesson(lessonSnapshot);
             }
 
             @Override
             public boolean showCheckedIcon() {
+                return false;
+            }
+
+            @Override
+            public boolean showToolbar() {
                 return true;
             }
 
             @Override
-            public void onItemClick(@NonNull @NotNull DocumentSnapshot documentSnapshot) {
-                goToUserHomeLessonFragment(documentSnapshot);
+            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+                goToUserHomeLessonFragment(item);
             }
 
             @Override
-            public void onShareLessonClick(@NonNull @NotNull DocumentSnapshot documentSnapshot) {
-                shareLesson(documentSnapshot);
+            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
+
             }
 
             @Override
-            public UserLessonsFragment getFragment() {
+            public void updateSelectedItemsCounter(int value) {
+
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return UserLessonsFragment.this;
             }
         }));
-
     }
 
 

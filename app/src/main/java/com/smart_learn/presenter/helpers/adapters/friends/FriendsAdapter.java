@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.community.fragments.friends.helpers;
+package com.smart_learn.presenter.helpers.adapters.friends;
 
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -16,41 +19,22 @@ import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.utilities.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.databinding.LayoutCardViewFriendBinding;
-import com.smart_learn.presenter.activities.community.fragments.friends.FriendsFragment;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
-import com.smart_learn.presenter.helpers.adapters.BasicFirestoreRecyclerAdapter;
-import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
-
-import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
-
-public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument, FriendsAdapter.FriendViewHolder> {
+public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument, FriendsAdapter.FriendViewHolder, FriendsAdapter.Callback> {
 
     private static final int INITIAL_ADAPTER_CAPACITY = 20;
     private static final int LOADING_STEP = 10;
 
-    protected final FriendsAdapter.Callback<FriendsFragment> adapterCallback;
-
-    // if filter is on
-    private boolean isFiltering;
-    // current filter value if filter is on
-    private String filteringValue;
-
-    public FriendsAdapter(@NonNull @NotNull FriendsAdapter.Callback<FriendsFragment> adapterCallback) {
-        super(adapterCallback.getFragment(), getInitialAdapterOptions(adapterCallback.getFragment()),
-                INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
-        this.adapterCallback = adapterCallback;
-
-        // set initial values
-        this.isFiltering = false;
-        this.filteringValue = "";
+    public FriendsAdapter(@NonNull @NotNull FriendsAdapter.Callback adapterCallback) {
+        super(adapterCallback, getInitialAdapterOptions(adapterCallback.getFragment()), INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
     }
 
     @NonNull
@@ -81,7 +65,7 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
         super.loadData(query, FriendDocument.class, adapterCallback.getFragment());
     }
 
-    private static FirestoreRecyclerOptions<FriendDocument> getInitialAdapterOptions(@NonNull @NotNull FriendsFragment fragment) {
+    private static FirestoreRecyclerOptions<FriendDocument> getInitialAdapterOptions(@NonNull @NotNull Fragment fragment) {
         Query query = FriendService.getInstance().getQueryForAllAcceptedFriends(INITIAL_ADAPTER_CAPACITY);
         return new FirestoreRecyclerOptions.Builder<FriendDocument>()
                 .setLifecycleOwner(fragment)
@@ -94,7 +78,7 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
      *
      * @param fragment Fragment where adapter must be shown.
      * */
-    public void setInitialOption(@NonNull @NotNull FriendsFragment fragment){
+    public void setInitialOption(@NonNull @NotNull Fragment fragment){
         filteringValue = "";
         isFiltering = false;
         updateOptions(getInitialAdapterOptions(fragment));
@@ -107,7 +91,7 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
      * @param fragment Fragment where adapter must be shown.
      * @param value Value to be search.
      * */
-    public void setFilterOption(@NonNull @NotNull FriendsFragment fragment, @NonNull @NotNull String value){
+    public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
         filteringValue = value.toLowerCase();
         isFiltering = true;
         Query query = FriendService.getInstance().getQueryForFilter(INITIAL_ADAPTER_CAPACITY, filteringValue);
@@ -123,73 +107,8 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
         public FriendViewHolder(@NonNull @NotNull LayoutCardViewFriendBinding viewHolderBinding) {
             super(viewHolderBinding);
-
-            // Hide toolbar if not necessary. Fragments which will use the same adapter can choose
-            // show/hide toolbar
-            if(adapterCallback.hideItemToolbar()){
-                viewHolderBinding.toolbarLayoutCardViewFriend.setVisibility(View.GONE);
-            }
-
-            // Disable checked icon if it is not necessary. Fragments which will use the same adapter
-            // can choose show/disable checked icon.
-            if(!adapterCallback.showCheckedIcon()){
-                viewHolderBinding.cvLayoutCardViewFriend.setCheckedIcon(null);
-            }
-
+            makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewFriend, viewHolderBinding.cvLayoutCardViewFriend);
             setListeners();
-        }
-
-        private void setListeners(){
-
-            // If toolbar is not hidden the enable listeners.
-            if(!adapterCallback.hideItemToolbar()){
-                setToolbarListener();
-            }
-
-            // simple click action on recycler view item
-            viewHolderBinding.cvLayoutCardViewFriend.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if(position == NO_POSITION){
-                        Timber.w("position is set to NO_POSITION");
-                        return;
-                    }
-                    adapterCallback.onItemClick(getSnapshots().getSnapshot(position));
-                }
-            });
-
-        }
-
-        private void setToolbarListener(){
-            viewHolderBinding.toolbarLayoutCardViewFriend.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    int id = item.getItemId();
-                    if(id == R.id.action_remove_friend_menu_card_view_friend){
-                        String title = adapterCallback.getFragment().getString(R.string.remove_friend);
-                        String description = adapterCallback.getFragment().getString(R.string.remove_friend_description);
-                        String positiveButtonDescription = adapterCallback.getFragment().getString(R.string.remove);
-                        Utilities.Activities.showStandardAlertDialog(adapterCallback.getFragment().requireContext(),
-                                title, description, positiveButtonDescription, new Callbacks.StandardAlertDialogCallback() {
-                                    @Override
-                                    public void onPositiveButtonPress() {
-                                        int position = getAdapterPosition();
-                                        if(position == NO_POSITION){
-                                            GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(),
-                                                    adapterCallback.getFragment().getString(R.string.error_remove_friend));
-                                            return;
-                                        }
-                                        adapterCallback.getFragment().getViewModel()
-                                                .removeFriend(adapterCallback.getFragment(),
-                                                        getSnapshots().getSnapshot(position));
-                                    }
-                                });
-                        return true;
-                    }
-                    return true;
-                }
-            });
         }
 
         @Override
@@ -199,6 +118,14 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
         @Override
         protected void bind(@NonNull @NotNull FriendDocument friendDocument, int position){
+
+            if (isSelectionModeActive()) {
+                friendDocument.setSpannedEmail(new SpannableString(friendDocument.getEmail()));
+                friendDocument.setSpannedDisplayName(new SpannableString(friendDocument.getDisplayName()));
+                // set the existent value
+                liveItemInfo.setValue(friendDocument);
+                return;
+            }
 
             if(isFiltering){
                 friendDocument.setSpannedEmail(Utilities.Activities.generateSpannedString(
@@ -212,19 +139,72 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
                 friendDocument.setSpannedDisplayName(new SpannableString(friendDocument.getDisplayName()));
             }
 
-            // first set the existent value
+            setSelectionModeActive(false);
+            viewHolderBinding.cvLayoutCardViewFriend.setChecked(false);
+
+            // set the existent value
             liveItemInfo.setValue(friendDocument);
 
-            // then try to get updated data from the friend user profile
+            // try to get updated data from the friend user profile
             FriendService.getInstance().syncFriendDocument(getSnapshots().getSnapshot(position), null);
+        }
+
+        private void setListeners(){
+            if(adapterCallback.showToolbar()){
+                setToolbarListener();
+            }
+
+            // simple click action on recycler view item
+            viewHolderBinding.cvLayoutCardViewFriend.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        return;
+                    }
+
+                    if(isSelectionModeActive()){
+                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewFriend, new MutableLiveData<>())));
+                        return;
+                    }
+
+                    adapterCallback.onSimpleClick(getSnapshots().getSnapshot(position));
+                }
+            });
+
+        }
+
+        private void setToolbarListener(){
+            viewHolderBinding.toolbarLayoutCardViewFriend.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int position = getAdapterPosition();
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        return true;
+                    }
+
+                    int id = item.getItemId();
+                    if(id == R.id.action_remove_friend_menu_card_view_friend){
+                        String title = getString(R.string.remove_friend);
+                        String description = getString(R.string.remove_friend_description);
+                        String positiveButtonDescription = getString(R.string.remove);
+                        Utilities.Activities.showStandardAlertDialog(adapterCallback.getFragment().requireContext(),
+                                title, description, positiveButtonDescription, new Callbacks.StandardAlertDialogCallback() {
+                                    @Override
+                                    public void onPositiveButtonPress() {
+                                        adapterCallback.onRemoveFriend(getSnapshots().getSnapshot(position));
+                                    }
+                                });
+                        return true;
+                    }
+                    return true;
+                }
+            });
         }
     }
 
-    public interface Callback <T> {
-        boolean hideItemToolbar();
-        boolean showCheckedIcon();
-        void onItemClick(@NonNull @NotNull DocumentSnapshot documentSnapshot);
-        T getFragment();
+    public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
+        void onRemoveFriend(@NonNull @NotNull DocumentSnapshot friendSnapshot);
     }
 
 }

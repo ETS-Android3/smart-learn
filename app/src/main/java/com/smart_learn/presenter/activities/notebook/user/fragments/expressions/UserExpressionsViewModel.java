@@ -15,7 +15,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.expressions.ExpressionsViewModel;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.expressions.helpers.ExpressionsAdapter;
+import com.smart_learn.presenter.helpers.adapters.expressions.UserExpressionsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,17 +27,17 @@ import lombok.Getter;
 import lombok.Setter;
 import timber.log.Timber;
 
-public class UserExpressionsViewModel extends ExpressionsViewModel<ExpressionsAdapter> {
+public class UserExpressionsViewModel extends ExpressionsViewModel<UserExpressionsAdapter> {
 
     @Getter
     @Setter
     private DocumentSnapshot currentLessonSnapshot;
-    private final AtomicBoolean isDeleting;
+    private final AtomicBoolean isDeletingActive;
 
     public UserExpressionsViewModel(@NonNull @NotNull Application application) {
         super(application);
         currentLessonSnapshot = UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED;
-        isDeleting = new AtomicBoolean(false);
+        isDeletingActive = new AtomicBoolean(false);
     }
 
     @Override
@@ -78,45 +78,45 @@ public class UserExpressionsViewModel extends ExpressionsViewModel<ExpressionsAd
 
 
     protected void deleteSelectedExpressions(){
-        if(isDeleting.get()){
+        if(isDeletingActive.get()){
             return;
         }
-        isDeleting.set(true);
+        isDeletingActive.set(true);
 
         if(currentLessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_deleting_expressions));
             Timber.w("currentLessonSnapshot is not set");
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
         if(adapter == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_deleting_expressions));
             Timber.w("adapter is null");
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
-        if(adapter.getSelectedExpressions().isEmpty()){
+        if(adapter.getSelectedValues().isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_expression));
-            isDeleting.set(false);
+            isDeletingActive.set(false);
             return;
         }
 
-        UserExpressionService.getInstance().deleteExpressionList(currentLessonSnapshot, adapter.getSelectedExpressions(), new DataCallbacks.General() {
+        UserExpressionService.getInstance().deleteExpressionList(currentLessonSnapshot, adapter.getSelectedValues(), new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_expressions));
                 if (adapter != null) {
                     adapter.resetSelectedItems();
                 }
-                isDeleting.set(false);
+                isDeletingActive.set(false);
             }
 
             @Override
             public void onFailure() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.error_deleting_expressions));
-                isDeleting.set(false);
+                isDeletingActive.set(false);
             }
         });
     }

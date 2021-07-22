@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers.adapters;
+package com.smart_learn.presenter.helpers.adapters.helpers;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;

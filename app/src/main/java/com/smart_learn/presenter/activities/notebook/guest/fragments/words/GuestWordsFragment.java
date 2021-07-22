@@ -14,10 +14,10 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.words.helpers.WordsAdapter;
+import com.smart_learn.presenter.helpers.adapters.words.GuestWordsAdapter;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.words.WordsFragment;
-import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,25 +59,17 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
 
         // mark that action mode started
         if(viewModel.getAdapter() != null){
-            viewModel.getAdapter().setLiveActionMode(true);
+            viewModel.getAdapter().setSelectionModeActive(true);
         }
-
-        // Use this to prevent any previous selection. If an error occurred and
-        // action mode could not be closed then items could not be disabled and will
-        // hang as selected.  FIXME: try yo find a better way to do that
-        GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
     }
 
     @Override
     protected void onActionModeDestroy() {
         ((GuestNotebookActivity)requireActivity()).showBottomNavigationMenu();
 
-        // use this to disable all selection
-        GuestWordService.getInstance().updateSelectAll(false, sharedViewModel.getSelectedLessonId());
-
         // mark that action mode finished
         if(viewModel.getAdapter() != null){
-            viewModel.getAdapter().setLiveActionMode(false);
+            viewModel.getAdapter().setSelectionModeActive(false);
         }
     }
 
@@ -101,7 +93,6 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
             @Override
             public void onClick(View v) {
                 viewModel.setAllItemsAreSelected(!viewModel.isAllItemsAreSelected());
-                GuestWordService.getInstance().updateSelectAll(viewModel.isAllItemsAreSelected(), sharedViewModel.getSelectedLessonId());
                 Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
@@ -110,7 +101,7 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GuestWordService.getInstance().deleteSelectedItems(sharedViewModel.getSelectedLessonId());
+                viewModel.deleteSelectedWords();
                 viewModel.setAllItemsAreSelected(false);
                 Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
@@ -129,23 +120,41 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         viewModel.setCurrentLessonId(sharedViewModel.getSelectedLessonId());
 
         // set fragment view model adapter
-        viewModel.setAdapter(new WordsAdapter(new Callbacks.FragmentGeneralCallback<GuestWordsFragment>() {
+        viewModel.setAdapter(new GuestWordsAdapter(sharedViewModel.getSelectedLessonId(), new GuestWordsAdapter.Callback(){
+
             @Override
-            public GuestWordsFragment getFragment() {
+            public void onSimpleClick(@NonNull @NotNull Word item) {
+                goToGuestWordContainerFragment(item);
+            }
+
+            @Override
+            public void onLongClick(@NonNull @NotNull Word item) {
+                startFragmentActionMode();
+            }
+
+            @Override
+            public boolean showCheckedIcon() {
+                return true;
+            }
+
+            @Override
+            public boolean showToolbar() {
+                return true;
+            }
+
+            @Override
+            public void updateSelectedItemsCounter(int value) {
+                showSelectedItems(value);
+            }
+
+            @NonNull
+            @Override
+            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
                 return GuestWordsFragment.this;
             }
         }));
 
         // set observers
-        GuestWordService.getInstance().getLiveSelectedItemsCount(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if(actionMode != null){
-                    actionMode.setTitle(getString(R.string.selected) + " " + integer);
-                }
-            }
-        });
-
         GuestWordService.getInstance().getCurrentLessonLiveWords(sharedViewModel.getSelectedLessonId()).observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
@@ -173,5 +182,14 @@ public class GuestWordsFragment extends WordsFragment<GuestWordsViewModel> {
         // and then navigate
         ((GuestNotebookActivity)requireActivity()).goToGuestWordContainerFragment();
     }
+
+    public void showSelectedItems(int value){
+        this.requireActivity().runOnUiThread(() -> {
+            if(actionMode != null) {
+                actionMode.setTitle(getString(R.string.selected_words_point) + " " + value);
+            }
+        });
+    }
+
 
 }

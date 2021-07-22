@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.user.fragments.expressions.helpers;
+package com.smart_learn.presenter.helpers.adapters.expressions;
 
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -18,23 +19,18 @@ import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.utilities.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewExpressionBinding;
-import com.smart_learn.presenter.activities.notebook.user.fragments.expressions.UserExpressionsFragment;
 import com.smart_learn.presenter.helpers.Utilities;
-import com.smart_learn.presenter.helpers.adapters.BasicFirestoreRecyclerAdapter;
-import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import lombok.Getter;
-
-public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<ExpressionDocument, ExpressionsAdapter.ExpressionViewHolder> {
+public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<ExpressionDocument, UserExpressionsAdapter.ExpressionViewHolder, UserExpressionsAdapter.Callback> {
 
     private static final int MAX_FILTER_LINES = 25;
     private static final int MAX_NO_FILTER_LINES = 4;
@@ -42,36 +38,12 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
     private static final int INITIAL_ADAPTER_CAPACITY = 20;
     private static final int LOADING_STEP = 10;
 
-    protected final ExpressionsAdapter.Callback<UserExpressionsFragment> adapterCallback;
-    private final MutableLiveData<Boolean> liveIsActionModeActive;
-
     private final DocumentSnapshot currentLessonSnapshot;
-    @Getter
-    @NonNull
-    @NotNull
-    private final ArrayList<DocumentSnapshot> selectedExpressions;
 
-    // if filter is on
-    private boolean isFiltering;
-    // current filter value if filter is on
-    private String filteringValue;
-
-    public ExpressionsAdapter(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
-                              @NonNull @NotNull ExpressionsAdapter.Callback<UserExpressionsFragment> adapterCallback) {
-        super(adapterCallback.getFragment(), getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.getFragment()),
-                INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
+    public UserExpressionsAdapter(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
+                                  @NonNull @NotNull UserExpressionsAdapter.Callback adapterCallback) {
+        super(adapterCallback, getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.getFragment()), INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
         this.currentLessonSnapshot = currentLessonSnapshot;
-        this.adapterCallback = adapterCallback;
-
-        // set initial values
-        this.liveIsActionModeActive = new MutableLiveData<>(false);
-        this.selectedExpressions = new ArrayList<>();
-        this.isFiltering = false;
-        this.filteringValue = "";
-    }
-
-    public void setLiveActionMode(boolean value) {
-        liveIsActionModeActive.setValue(value);
     }
 
     @NonNull
@@ -85,7 +57,7 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
         viewHolderBinding.setLifecycleOwner(adapterCallback.getFragment());
 
         // set binding variable
-        viewHolderBinding.setLiveIsActionModeActive(liveIsActionModeActive);
+        viewHolderBinding.setLiveIsActionModeActive(getLiveIsSelectionModeActive());
 
         return new ExpressionViewHolder(viewHolderBinding);
     }
@@ -141,22 +113,19 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
         updateOptions(newOptions);
     }
 
-    public void resetSelectedItems(){
-        selectedExpressions.clear();
-        adapterCallback.getFragment().showSelectedItems(selectedExpressions.size());
-    }
-
     public final class ExpressionViewHolder extends BasicViewHolder<ExpressionDocument, LayoutCardViewExpressionBinding> {
 
         private final MutableLiveData<SpannableString> liveSpannedExpression;
         private final MutableLiveData<Boolean> liveIsSelected;
-        private final AtomicBoolean isDeleting;
+        private final AtomicBoolean isDeletingActive;
 
         public ExpressionViewHolder(@NonNull @NotNull LayoutCardViewExpressionBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedExpression = new MutableLiveData<>(new SpannableString(""));
             liveIsSelected = new MutableLiveData<>(false);
-            isDeleting = new AtomicBoolean(false);
+            isDeletingActive = new AtomicBoolean(false);
+
+            makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewExpression, viewHolderBinding.cvLayoutCardViewExpression);
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
@@ -173,9 +142,8 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
 
         @Override
         protected void bind(@NonNull @NotNull ExpressionDocument item, int position){
-            if (adapterCallback.getFragment().getActionMode() != null) {
+            if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
-                liveIsSelected.setValue(viewHolderBinding.cvLayoutCardViewExpression.isChecked());
                 return;
             }
 
@@ -197,9 +165,10 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
 
         private void setListeners(){
 
-            setToolbarListener();
+            if(adapterCallback.showToolbar()){
+                setToolbarListener();
+            }
 
-            // simple click action
             viewHolderBinding.cvLayoutCardViewExpression.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -208,31 +177,27 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
                         return;
                     }
 
-                    // If action mode is on then user can select/deselect items.
-                    if(adapterCallback.getFragment().getActionMode() != null) {
-                        mark(position);
+                    if(isSelectionModeActive()){
+                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
                         return;
                     }
 
-                    // If action mode is disabled then simple click will navigate user to the
-                    // HomeExpressionFragment using selected expression.
-                    adapterCallback.getFragment().goToUserHomeExpressionFragment(getSnapshots().getSnapshot(position));
+                    adapterCallback.onSimpleClick(getSnapshots().getSnapshot(position));
                 }
             });
 
-            // long click is used for launching action mode
             viewHolderBinding.cvLayoutCardViewExpression.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if(adapterCallback.getFragment().getActionMode() == null) {
+                    if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
                         if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                             return true;
                         }
 
-                        adapterCallback.getFragment().startFragmentActionMode();
+                        adapterCallback.onLongClick(getSnapshots().getSnapshot(position));
                         // by default clicked item is selected
-                        mark(position);
+                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
                     }
 
                     return true;
@@ -252,11 +217,10 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
 
                     int id = item.getItemId();
                     if(id == R.id.action_delete_menu_card_view_expression){
-                        // avoid multiple press until operation is finished
-                        if(isDeleting.get()){
+                        if(isDeletingActive.get()){
                             return true;
                         }
-                        isDeleting.set(true);
+                        isDeletingActive.set(true);
                         onDeletePressed(getSnapshots().getSnapshot(position));
                         return true;
                     }
@@ -269,70 +233,21 @@ public class ExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expression
             UserExpressionService.getInstance().deleteExpression(currentLessonSnapshot, expressionSnapshot, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {
-                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(),
-                                adapterCallback.getFragment().getString(R.string.success_deleting_expression));
-                    });
-                    isDeleting.set(false);
+                    showMessage(R.string.success_deleting_expression);
+                    isDeletingActive.set(false);
                 }
 
                 @Override
                 public void onFailure() {
-                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(),
-                                adapterCallback.getFragment().getString(R.string.error_deleting_expression));
-                    });
-                    isDeleting.set(false);
+                    showMessage(R.string.error_deleting_expression);
+                    isDeletingActive.set(false);
                 }
             });
         }
 
-        private void mark(int position){
-            String currentDocId = getSnapshots().getSnapshot(position).getId();
-
-            // if is checked, remove item and then uncheck it
-            if(viewHolderBinding.cvLayoutCardViewExpression.isChecked()){
-                // mark as unchecked
-                viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
-                liveIsSelected.setValue(false);
-
-                // and remove checked item from list
-                int lim = selectedExpressions.size();
-                for(int i = 0; i < lim; i++){
-                    if(selectedExpressions.get(i).getId().equals(currentDocId)){
-                        selectedExpressions.remove(i);
-                        break;
-                    }
-                }
-
-                adapterCallback.getFragment().showSelectedItems(selectedExpressions.size());
-                return;
-            }
-
-            // if is unchecked the mark as checked
-            viewHolderBinding.cvLayoutCardViewExpression.setChecked(true);
-            liveIsSelected.setValue(true);
-
-            // and add item only if does not exists
-            boolean exists = false;
-            for(DocumentSnapshot item : selectedExpressions){
-                if(item.getId().equals(currentDocId)){
-                    exists = true;
-                    break;
-                }
-            }
-
-            if(!exists){
-                selectedExpressions.add(getSnapshots().getSnapshot(position));
-            }
-
-            adapterCallback.getFragment().showSelectedItems(selectedExpressions.size());
-
-        }
     }
 
-    public interface Callback <T> {
-        T getFragment();
+    public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
     }
 
 }

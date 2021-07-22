@@ -20,7 +20,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutCardViewTranslationBinding;
 import com.smart_learn.presenter.helpers.Utilities;
-import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 

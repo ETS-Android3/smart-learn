@@ -9,19 +9,28 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.data.helpers.DataCallbacks;
-import com.smart_learn.presenter.activities.community.fragments.friends.helpers.FriendsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicViewModelForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class FriendsViewModel extends BasicViewModelForRecyclerView<FriendsAdapter> {
+
+    private final AtomicBoolean isRemovingActive;
 
     public FriendsViewModel(@NonNull @NotNull Application application) {
         super(application);
+        isRemovingActive = new AtomicBoolean(false);
     }
 
     public void removeFriend(@NonNull @NotNull FriendsFragment fragment, DocumentSnapshot friendSnapshot){
+        if(isRemovingActive.get()){
+            return;
+        }
+        isRemovingActive.set(true);
 
         fragment.showProgressDialog("", fragment.getString(R.string.removing_friend));
 
@@ -42,6 +51,7 @@ public class FriendsViewModel extends BasicViewModelForRecyclerView<FriendsAdapt
             @Override
             public void notConnected() {
                 fragment.requireActivity().runOnUiThread(fragment::closeProgressDialog);
+                isRemovingActive.set(false);
             }
         }).check();
     }
@@ -54,6 +64,7 @@ public class FriendsViewModel extends BasicViewModelForRecyclerView<FriendsAdapt
                     fragment.closeProgressDialog();
                     liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.success_remove_friend));
                 });
+                isRemovingActive.set(false);
             }
 
             @Override
@@ -62,6 +73,7 @@ public class FriendsViewModel extends BasicViewModelForRecyclerView<FriendsAdapt
                     fragment.closeProgressDialog();
                     liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_remove_friend));
                 });
+                isRemovingActive.set(false);
             }
         });
     }

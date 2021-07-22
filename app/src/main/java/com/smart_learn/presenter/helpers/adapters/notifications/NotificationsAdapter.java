@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.main.fragments.notifications.helpers;
+package com.smart_learn.presenter.helpers.adapters.notifications;
 
 
 import android.annotation.SuppressLint;
@@ -10,37 +10,31 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.NotificationService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
+import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewNotificationBinding;
-import com.smart_learn.presenter.activities.main.fragments.notifications.NotificationsFragment;
-import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.adapters.BasicFirestoreRecyclerAdapter;
-import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
-
-public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<NotificationDocument, NotificationsAdapter.NotificationViewHolder> {
+public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<NotificationDocument, NotificationsAdapter.NotificationViewHolder, NotificationsAdapter.Callback> {
 
     private static final int INITIAL_ADAPTER_CAPACITY = 20;
     private static final int LOADING_STEP = 10;
 
-    protected final Callbacks.FragmentGeneralCallback<NotificationsFragment> fragmentCallback;
-
-    public NotificationsAdapter(@NonNull @NotNull Callbacks.FragmentGeneralCallback<NotificationsFragment> fragmentCallback,
-                                @NonNull @NotNull FirestoreRecyclerOptions<NotificationDocument> initialOptions) {
-        super(fragmentCallback.getFragment(), initialOptions, INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
-        this.fragmentCallback = fragmentCallback;
+    public NotificationsAdapter(@NonNull @NotNull NotificationsAdapter.Callback adapterCallback) {
+        super(adapterCallback, getInitialAdapterOptions(adapterCallback.getFragment()), INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
     }
-
 
     @NonNull
     @NotNull
@@ -50,7 +44,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         LayoutCardViewNotificationBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.layout_card_view_notification, parent, false);
-        viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
+        viewHolderBinding.setLifecycleOwner(adapterCallback.getFragment());
 
         // link data binding layout with view holder
         NotificationViewHolder viewHolder = new NotificationViewHolder(viewHolderBinding);
@@ -61,10 +55,10 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
     @Override
     public void loadMoreData() {
         Query query = NotificationService.getInstance().getQueryForAllVisibleNotifications(currentLoad + loadingStep);
-        super.loadData(query, NotificationDocument.class, fragmentCallback.getFragment());
+        super.loadData(query, NotificationDocument.class, adapterCallback.getFragment());
     }
 
-    public static FirestoreRecyclerOptions<NotificationDocument> getInitialAdapterOptions(@NonNull @NotNull NotificationsFragment fragment) {
+    private static FirestoreRecyclerOptions<NotificationDocument> getInitialAdapterOptions(@NonNull @NotNull Fragment fragment) {
         Query query = NotificationService.getInstance().getQueryForAllVisibleNotifications(NotificationsAdapter.INITIAL_ADAPTER_CAPACITY);
         return new FirestoreRecyclerOptions.Builder<NotificationDocument>()
                 .setLifecycleOwner(fragment)
@@ -74,51 +68,67 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
     public final class NotificationViewHolder extends BasicViewHolder<NotificationDocument, LayoutCardViewNotificationBinding> {
 
+        private final AtomicBoolean isHideActive;
+
         public NotificationViewHolder(@NonNull @NotNull LayoutCardViewNotificationBinding viewHolderBinding) {
             super(viewHolderBinding);
-
-            // disable checked icon because is not necessary
-            viewHolderBinding.cvLayoutCardViewNotification.setCheckedIcon(null);
-
+            isHideActive = new AtomicBoolean(false);
+            makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewNotification, viewHolderBinding.cvLayoutCardViewNotification);
             setListeners();
         }
 
         private void setListeners(){
-            // menu listeners
-            viewHolderBinding.toolbarLayoutCardViewNotification.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @SuppressLint("NonConstantResourceId")
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    int id = item.getItemId();
-                    int position = getAdapterPosition();
-                    if(position == NO_POSITION){
-                        Timber.w("position is set to NO_POSITION");
-                        return true;
-                    }
-
-                    if (id == R.id.action_hide_notification_menu_card_view_notification) {
-                        NotificationService.getInstance().markAsHidden(getSnapshots().getSnapshot(position),null);
-                        return true;
-                    }
-                    return true;
-                }
-            });
+            if(adapterCallback.showToolbar()){
+                setToolbarListeners();
+            }
 
             // simple click action
             viewHolderBinding.cvLayoutCardViewNotification.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(position == NO_POSITION){
-                        Timber.w("position is set to NO_POSITION");
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
+                    adapterCallback.onSimpleClick(getSnapshots().getSnapshot(position));
                     NotificationDocument notification = getItem(position);
-                    fragmentCallback.getFragment().showNotificationDialog(getSnapshots().getSnapshot(position));
                     if(!notification.getMarkedAsRead()){
                         // when is clicked notification is marked as read if was unread
                         NotificationService.getInstance().markAsRead(getSnapshots().getSnapshot(position),null);
                     }
+                }
+            });
+        }
+
+        private void setToolbarListeners(){
+            viewHolderBinding.toolbarLayoutCardViewNotification.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @SuppressLint("NonConstantResourceId")
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    int position = getAdapterPosition();
+                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        return true;
+                    }
+
+                    int id = item.getItemId();
+                    if (id == R.id.action_hide_notification_menu_card_view_notification) {
+                        if(isHideActive.get()){
+                            return true;
+                        }
+                        isHideActive.set(true);
+                        NotificationService.getInstance().markAsHidden(getSnapshots().getSnapshot(position), new DataCallbacks.General() {
+                            @Override
+                            public void onSuccess() {
+                                isHideActive.set(false);
+                            }
+                            @Override
+                            public void onFailure() {
+                                isHideActive.set(false);
+                            }
+                        });
+                        return true;
+                    }
+                    return true;
                 }
             });
         }
@@ -133,7 +143,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
             viewHolderBinding.cvLayoutCardViewNotification.setChecked(!notification.getMarkedAsRead());
 
-            notification.setTitle(fragmentCallback.getFragment()
+            notification.setTitle(adapterCallback.getFragment()
                     .getString(NotificationDocument.generateNotificationTitle(notification.getType())));
 
             notification.setDescription(NotificationDocument.generateNotificationDescription(notification.getType(),
@@ -141,6 +151,9 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
             liveItemInfo.setValue(notification);
         }
+    }
+
+    public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
     }
 
 }

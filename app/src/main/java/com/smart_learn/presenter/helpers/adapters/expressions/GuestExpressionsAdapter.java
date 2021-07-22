@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.helpers;
+package com.smart_learn.presenter.helpers.adapters.expressions;
 
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -10,70 +10,39 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.utilities.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Expression;
-import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.databinding.LayoutCardViewExpressionBinding;
-import com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.GuestExpressionsFragment;
-import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.Utilities;
-import com.smart_learn.presenter.helpers.adapters.BasicViewHolder;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicListAdapter;
+import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 
-public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapter.ExpressionViewHolder> implements Filterable, PresenterHelpers.AdapterHelper {
+public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestExpressionsAdapter.ExpressionViewHolder, GuestExpressionsAdapter.Callback> implements Filterable {
 
     private static final int MAX_FILTER_LINES = 25;
     private static final int MAX_NO_FILTER_LINES = 4;
 
-    private final MutableLiveData<Boolean> liveIsActionModeActive;
-    private boolean isFiltering;
-    private String filteringValue;
+    private final int currentLessonId;
 
-    private final Callbacks.FragmentGeneralCallback<GuestExpressionsFragment> fragmentCallback;
-
-    public ExpressionsAdapter(@NonNull Callbacks.FragmentGeneralCallback<GuestExpressionsFragment> fragmentCallback) {
-        super(new DiffUtil.ItemCallback<Expression>(){
-            @Override
-            public boolean areItemsTheSame(@NonNull Expression oldItem, @NonNull Expression newItem) {
-                return oldItem.areItemsTheSame(newItem);
-            }
-            @Override
-            public boolean areContentsTheSame(@NonNull Expression oldItem, @NonNull Expression newItem) {
-                return oldItem.areContentsTheSame(newItem);
-            }
-        });
-
-        this.fragmentCallback = fragmentCallback;
-
-        this.liveIsActionModeActive = new MutableLiveData<>(false);
-        this.isFiltering = false;
-        this.filteringValue = "";
+    public GuestExpressionsAdapter(int currentLessonId, @NonNull @NotNull GuestExpressionsAdapter.Callback adapterCallback) {
+        super(adapterCallback);
+        this.currentLessonId = currentLessonId;
     }
 
-    public void setLiveActionMode(boolean value) {
-        liveIsActionModeActive.setValue(value);
-    }
-
-    public void setItems(List<Expression> items) {
-        submitList(items);
-    }
 
     @NonNull
     @Override
@@ -82,26 +51,12 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         LayoutCardViewExpressionBinding viewHolderBinding = DataBindingUtil.inflate(layoutInflater,
                 R.layout.layout_card_view_expression, parent, false);
-        viewHolderBinding.setLifecycleOwner(fragmentCallback.getFragment());
+        viewHolderBinding.setLifecycleOwner(adapterCallback.getFragment());
 
         // set binding variable
-        viewHolderBinding.setLiveIsActionModeActive(liveIsActionModeActive);
+        viewHolderBinding.setLiveIsActionModeActive(getLiveIsSelectionModeActive());
 
         return new ExpressionViewHolder(viewHolderBinding);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ExpressionViewHolder holder, int position) {
-        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
-            return;
-        }
-
-        Expression expression = getItem(position);
-        if(!CoreUtilities.General.isItemNotNull(expression)){
-            return;
-        }
-
-        holder.bind(expression, position);
     }
 
     @Override
@@ -116,7 +71,7 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
 
                 // For filtering mode we search always in all db.
                 List<Expression> allItems = GuestExpressionService.getInstance()
-                        .getCurrentLessonSampleExpressions(fragmentCallback.getFragment().getViewModel().getCurrentLessonId());
+                        .getCurrentLessonSampleExpressions(currentLessonId);
                 List<Expression> filteredItems;
 
                 if (filteringValue.isEmpty()) {
@@ -172,13 +127,15 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
 
         private final MutableLiveData<SpannableString> liveSpannedExpression;
         private final MutableLiveData<Boolean> liveIsSelected;
-        private final AtomicBoolean isDeleting;
+        private final AtomicBoolean isDeletingActive;
 
         public ExpressionViewHolder(@NonNull LayoutCardViewExpressionBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedExpression = new MutableLiveData<>(new SpannableString(""));
             liveIsSelected = new MutableLiveData<>(false);
-            isDeleting = new AtomicBoolean(false);
+            isDeletingActive = new AtomicBoolean(false);
+
+            makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewExpression, viewHolderBinding.cvLayoutCardViewExpression);
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
@@ -194,10 +151,9 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
 
         @Override
         protected void bind(@NonNull @NotNull Expression item, int position) {
-            if (fragmentCallback.getFragment().getActionMode() != null) {
+            if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
-                liveIsSelected.setValue(item.isSelected());
-                viewHolderBinding.cvLayoutCardViewExpression.setChecked(item.isSelected());
+                liveIsSelected.setValue(viewHolderBinding.cvLayoutCardViewExpression.isChecked());
                 return;
             }
 
@@ -219,7 +175,9 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
 
         private void setListeners(){
 
-            setToolbarListener();
+            if(adapterCallback.showToolbar()){
+                setToolbarListener();
+            }
 
             // simple click action
             viewHolderBinding.cvLayoutCardViewExpression.setOnClickListener(new View.OnClickListener(){
@@ -235,15 +193,12 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
                         return;
                     }
 
-                    // If action mode is on then user can select/deselect items.
-                    if(fragmentCallback.getFragment().getActionMode() != null) {
-                        markItem(expression,!expression.isSelected());
+                    if(isSelectionModeActive()){
+                        markItem(new Pair<>(expression, new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
                         return;
                     }
 
-                    // If action mode is disabled then simple click will navigate user to the
-                    // HomeExpressionFragment using selected expression.
-                    fragmentCallback.getFragment().goToGuestHomeExpressionFragment(expression);
+                    adapterCallback.onSimpleClick(expression);
                 }
             });
 
@@ -251,7 +206,7 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
             viewHolderBinding.cvLayoutCardViewExpression.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if(fragmentCallback.getFragment().getActionMode() == null) {
+                    if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
                         if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                             return true;
@@ -262,9 +217,9 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
                             return true;
                         }
 
-                        fragmentCallback.getFragment().startFragmentActionMode();
+                        adapterCallback.onLongClick(expression);
                         // by default clicked item is selected
-                        markItem(expression,true);
+                        markItem(new Pair<>(expression, new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
                     }
 
                     return true;
@@ -289,11 +244,10 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
 
                     int id = item.getItemId();
                     if(id == R.id.action_delete_menu_card_view_expression){
-                        // avoid multiple press until operation is finished
-                        if(isDeleting.get()){
+                        if(isDeletingActive.get()){
                             return true;
                         }
-                        isDeleting.set(true);
+                        isDeletingActive.set(true);
                         onDeletePressed(expression);
                         return true;
                     }
@@ -306,45 +260,22 @@ public class ExpressionsAdapter extends ListAdapter<Expression, ExpressionsAdapt
             GuestExpressionService.getInstance().delete(expression, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {
-                    fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
-                                fragmentCallback.getFragment().getString(R.string.success_deleting_expression));
-                    });
-                    isDeleting.set(false);
+                    showMessage(R.string.success_deleting_expression);
+                    isDeletingActive.set(false);
                 }
 
                 @Override
                 public void onFailure() {
-                    fragmentCallback.getFragment().requireActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(fragmentCallback.getFragment().requireContext(),
-                                fragmentCallback.getFragment().getString(R.string.error_deleting_expression));
-                    });
-                    isDeleting.set(false);
+                    showMessage(R.string.error_deleting_expression);
+                    isDeletingActive.set(false);
                 }
             });
         }
 
-        private void markItem(Expression expression, boolean isSelected) {
-            // TODO: make a specific method for deep copy on Basic info entity
-            BasicInfo basicInfo = new BasicInfo(expression.getBasicInfo().getCreatedAt());
-            basicInfo.setModifiedAt(expression.getBasicInfo().getModifiedAt());
+    }
 
-            // TODO: make a specific method for deep copy on Expression entity
-            Expression tmp = new Expression(
-                    expression.getNotes(),
-                    expression.isSelected(),
-                    basicInfo,
-                    expression.getFkLessonId(),
-                    expression.isFavourite(),
-                    expression.getLanguage(),
-                    new ArrayList<>(expression.getTranslations()),
-                    expression.getExpression()
-            );
+    public interface Callback extends BasicListAdapter.Callback<Expression> {
 
-            tmp.setExpressionId(expression.getExpressionId());
-            tmp.setSelected(isSelected);
-            GuestExpressionService.getInstance().update(tmp, null);
-        }
     }
 
 }

@@ -10,8 +10,8 @@ import com.smart_learn.core.services.UserLessonService;
 import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
-import com.smart_learn.presenter.activities.notebook.user.fragments.select_friends.helpers.SelectFriendsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicViewModelForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import timber.log.Timber;
 
-public class SelectFriendsViewModel extends BasicViewModelForRecyclerView<SelectFriendsAdapter> {
+public class SelectFriendsViewModel extends BasicViewModelForRecyclerView<FriendsAdapter> {
 
     public SelectFriendsViewModel(@NonNull @NotNull Application application) {
         super(application);
@@ -33,7 +33,7 @@ public class SelectFriendsViewModel extends BasicViewModelForRecyclerView<Select
             return;
         }
 
-        ArrayList<DocumentSnapshot> friends = adapter.getSelectedFriends();
+        ArrayList<DocumentSnapshot> friends = adapter.getSelectedValues();
         if(friends.isEmpty()){
             liveToastMessage.setValue(fragment.getString(R.string.no_friend_selected));
             return;

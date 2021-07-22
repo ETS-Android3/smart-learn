@@ -13,14 +13,14 @@ import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.LessonsViewModel;
-import com.smart_learn.presenter.activities.notebook.user.fragments.lessons.helpers.LessonsAdapter;
+import com.smart_learn.presenter.helpers.adapters.lessons.UserLessonsAdapter;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class UserLessonsViewModel extends LessonsViewModel<LessonsAdapter> {
+public class UserLessonsViewModel extends LessonsViewModel<UserLessonsAdapter> {
 
     public UserLessonsViewModel(@NonNull @NotNull Application application) {
         super(application);

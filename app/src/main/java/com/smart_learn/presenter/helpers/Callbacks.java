@@ -1,5 +1,11 @@
 package com.smart_learn.presenter.helpers;
 
+import androidx.annotation.NonNull;
+
+import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
+
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Main callbacka interface.
  * */
@@ -70,5 +76,19 @@ public interface Callbacks {
      * */
     interface StandardAlertDialogCallback {
         void onPositiveButtonPress();
+    }
+
+    /**
+     * Used to manage standard actions on Recycler View adapters.
+     * */
+    interface StandardAdapterCallback <T> {
+        void onSimpleClick(@NonNull @NotNull T item);
+        void onLongClick(@NonNull @NotNull T item);
+        boolean showCheckedIcon();
+        boolean showToolbar();
+        void updateSelectedItemsCounter(int value);
+        @NonNull
+        @NotNull
+        BasicFragmentForRecyclerView<?> getFragment();
     }
 }
