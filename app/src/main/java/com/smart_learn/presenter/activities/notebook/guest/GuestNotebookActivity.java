@@ -56,7 +56,9 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
                                 return true;
                             case R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook:
-                                navController.navigate(R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook,null,
+                                Bundle expressionArgs = new Bundle();
+                                expressionArgs.putInt(BasicWordsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLessonId());
+                                navController.navigate(R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook, expressionArgs,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
                                 return true;
                         }

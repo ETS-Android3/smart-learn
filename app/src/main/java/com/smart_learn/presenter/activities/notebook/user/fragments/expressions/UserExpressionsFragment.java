@@ -1,9 +1,5 @@
 package com.smart_learn.presenter.activities.notebook.user.fragments.expressions;
 
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,18 +7,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.expressions.ExpressionsFragment;
+import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.adapters.expressions.UserExpressionsAdapter;
-import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
+import com.smart_learn.presenter.helpers.fragments.expressions.user.standard.UserStandardExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
 
 
-public class UserExpressionsFragment extends ExpressionsFragment<UserExpressionsViewModel> {
+public class UserExpressionsFragment extends UserStandardExpressionsFragment<UserExpressionsViewModel> {
 
     @Getter
     private UserNotebookSharedViewModel sharedViewModel;
@@ -34,63 +29,33 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
     }
 
     @Override
-    protected int getBottomSheetLayout() {
-        return R.layout.layout_action_mode_fragment_user_expressions;
+    protected boolean isFragmentWithBottomNav() {
+        return true;
     }
 
     @Override
-    protected int getParentBottomSheetLayoutId() {
-        return R.id.parent_layout_include_layout_action_mode_fragment_user_expressions;
-    }
-
-    @Override
-    protected void onFilter(String newText) {
-        if(viewModel.getAdapter() == null){
-            return;
-        }
-
-        if(TextUtils.isEmpty(newText)){
-            viewModel.getAdapter().setInitialOption(UserExpressionsFragment.this);
-        }
-        else {
-            viewModel.getAdapter().setFilterOption(UserExpressionsFragment.this, newText);
-        }
+    protected void onAdapterSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
+        super.onAdapterSimpleClick(item);
+        goToUserHomeExpressionFragment(item);
     }
 
     @Override
     protected void onActionModeCreate() {
-        if(viewModel.getAdapter() != null){
-            ((UserNotebookActivity)requireActivity()).hideBottomNavigationMenu();
-            viewModel.getAdapter().setSelectionModeActive(true);
-        }
+        super.onActionModeCreate();
+        ((UserNotebookActivity)requireActivity()).hideBottomNavigationMenu();
     }
 
     @Override
     protected void onActionModeDestroy() {
-        if(viewModel.getAdapter() != null){
-            ((UserNotebookActivity)requireActivity()).showBottomNavigationMenu();
-            viewModel.getAdapter().setSelectionModeActive(false);
-        }
+        super.onActionModeDestroy();
+        ((UserNotebookActivity)requireActivity()).showBottomNavigationMenu();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedExpression(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
-    }
-
-    @Override
-    protected void setLayoutUtilities(){
-        super.setLayoutUtilities();
-
-        // set bottom sheet listeners
-        Button btnDeleteSelected = requireActivity().findViewById(R.id.btn_delete_include_layout_action_mode_fragment_user_expressions);
-        btnDeleteSelected.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.deleteSelectedExpressions();
-            }
-        });
     }
 
 
@@ -100,44 +65,6 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
 
         // set shared view model
         sharedViewModel = new ViewModelProvider(requireActivity()).get(UserNotebookSharedViewModel.class);
-
-        // set current lesson on view model for further operations inside view model
-        viewModel.setCurrentLessonSnapshot(sharedViewModel.getSelectedLesson());
-
-        // set fragment view model adapter
-        viewModel.setAdapter(new UserExpressionsAdapter(sharedViewModel.getSelectedLesson(), new UserExpressionsAdapter.Callback() {
-            @Override
-            public boolean showCheckedIcon() {
-                return true;
-            }
-
-            @Override
-            public boolean showToolbar() {
-                return true;
-            }
-
-            @Override
-            public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
-                goToUserHomeExpressionFragment(item);
-            }
-
-            @Override
-            public void onLongClick(@NonNull @NotNull DocumentSnapshot item) {
-                startFragmentActionMode();
-            }
-
-            @Override
-            public void updateSelectedItemsCounter(int value) {
-                showSelectedItems(value);
-            }
-
-            @NonNull
-            @Override
-            public @NotNull BasicFragmentForRecyclerView<?> getFragment() {
-                return UserExpressionsFragment.this;
-            }
-        }));
-
     }
 
     public void goToUserHomeExpressionFragment(DocumentSnapshot expressionSnapshot){
@@ -159,11 +86,4 @@ public class UserExpressionsFragment extends ExpressionsFragment<UserExpressions
         ((UserNotebookActivity)requireActivity()).goToUserHomeExpressionFragment();
     }
 
-    public void showSelectedItems(int value){
-        this.requireActivity().runOnUiThread(() -> {
-            if(actionMode != null) {
-                actionMode.setTitle(getString(R.string.selected_point) + " " + value);
-            }
-        });
-    }
 }

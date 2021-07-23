@@ -378,6 +378,7 @@
     <string name="selected_point">Selected:</string>
 
     <string name="filter">Filter</string>
+    <string name="no_expressions">No expressions</string>
 
 
 </resources>
