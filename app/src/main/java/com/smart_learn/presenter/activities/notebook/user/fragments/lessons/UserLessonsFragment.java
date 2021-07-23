@@ -43,9 +43,9 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
     public void onResume() {
         super.onResume();
         ((NotebookActivity<?>)requireActivity()).hideBottomNavigationMenu();
-        sharedViewModel.setSelectedLesson(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
-        sharedViewModel.setSelectedWord(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
-        sharedViewModel.setSelectedExpression(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
+        sharedViewModel.setSelectedLesson(null);
+        sharedViewModel.setSelectedWord(null);
+        sharedViewModel.setSelectedExpression(null);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
 
     private void goToUserHomeLessonFragment(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
-        if(lessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(lessonSnapshot == null){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
@@ -71,9 +71,9 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
     }
 
 
-    private void shareLesson(@NonNull @NotNull DocumentSnapshot lessonSnapshot){
+    private void shareLesson(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
-        if(lessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(lessonSnapshot == null){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }

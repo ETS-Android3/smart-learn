@@ -14,8 +14,6 @@ import lombok.Setter;
 
 public class UserNotebookSharedViewModel extends NotebookSharedViewModel {
 
-    public static DocumentSnapshot NO_DOCUMENT_SELECTED = null;
-
     @Getter
     @Setter
     private DocumentSnapshot selectedLesson;

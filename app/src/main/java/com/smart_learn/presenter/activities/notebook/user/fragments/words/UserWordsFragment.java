@@ -56,7 +56,7 @@ public class UserWordsFragment extends UserStandardWordsFragment<UserWordsViewMo
     public void onResume() {
         super.onResume();
         ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
-        sharedViewModel.setSelectedWord(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
+        sharedViewModel.setSelectedWord(null);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UserWordsFragment extends UserStandardWordsFragment<UserWordsViewMo
 
     private void goToUserWordContainerFragment(DocumentSnapshot wordSnapshot){
         // when navigation is made a valid word must be set on shared view model
-        if(wordSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(wordSnapshot == null){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }

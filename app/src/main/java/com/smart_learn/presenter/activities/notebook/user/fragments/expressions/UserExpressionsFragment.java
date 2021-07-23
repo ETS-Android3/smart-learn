@@ -55,7 +55,7 @@ public class UserExpressionsFragment extends UserStandardExpressionsFragment<Use
     public void onResume() {
         super.onResume();
         ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
-        sharedViewModel.setSelectedExpression(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED);
+        sharedViewModel.setSelectedExpression(null);
     }
 
 
@@ -69,7 +69,7 @@ public class UserExpressionsFragment extends UserStandardExpressionsFragment<Use
 
     public void goToUserHomeExpressionFragment(DocumentSnapshot expressionSnapshot){
         // when navigation is made a valid expression must be set on shared view model
-        if(expressionSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(expressionSnapshot == null){
             GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
             return;
         }

@@ -12,7 +12,6 @@ import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
-import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.words.user.UserBasicWordsViewModel;
 
@@ -33,7 +32,7 @@ public abstract class UserStandardWordsViewModel extends UserBasicWordsViewModel
     }
 
     public void addWord(String wordValue, String phonetic, String notes, ArrayList<Translation> translations) {
-        if(currentLessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(currentLessonSnapshot == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_adding_word));
             return;
         }
@@ -73,7 +72,7 @@ public abstract class UserStandardWordsViewModel extends UserBasicWordsViewModel
         }
         isDeletingActive.set(true);
 
-        if(currentLessonSnapshot.equals(UserNotebookSharedViewModel.NO_DOCUMENT_SELECTED)){
+        if(currentLessonSnapshot == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_deleting_words));
             Timber.w("currentLessonSnapshot is not set");
             isDeletingActive.set(false);
