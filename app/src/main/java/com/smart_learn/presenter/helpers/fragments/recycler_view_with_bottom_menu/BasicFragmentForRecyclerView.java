@@ -111,6 +111,8 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     }
     protected void onFloatingActionButtonPress(){}
     protected void onFilter(String newText){}
+    protected void onSearchActionExpand(){}
+    protected void onSearchActionCollapse(){}
 
     /**
      * Override if you want to use a bottom sheet when action mode is active.
@@ -253,6 +255,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             public boolean onMenuItemActionExpand(MenuItem item) {
                 menu.setGroupVisible(getSecondaryGroupId(), false);
                 unsetValueFromEmptyLabel();
+                onSearchActionExpand();
                 return true;
             }
 
@@ -262,6 +265,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
                     menu.setGroupVisible(getSecondaryGroupId(), true);
                 }
                 resetValueFromEmptyLabel();
+                onSearchActionCollapse();
                 return true;
             }
         });

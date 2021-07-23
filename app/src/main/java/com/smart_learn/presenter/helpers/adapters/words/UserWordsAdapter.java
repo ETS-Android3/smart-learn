@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -86,9 +85,11 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
+        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
+        // Update values here in order to avoid to remove selected items if selection mode was active
+        // while filtering.
         filteringValue = "";
         isFiltering = false;
-        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
     }
 
 
@@ -142,8 +143,15 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
             if (isSelectionModeActive()) {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
+                boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewWord.setChecked(isSelected);
                 return;
             }
+
+            // selection mode is not active so items must be unchecked
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
                 liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
@@ -152,9 +160,6 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
             }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
         }
 
         private void setListeners(){
@@ -172,7 +177,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewWord, liveIsSelected)));
+                        markItem(position, getSnapshots().getSnapshot(position));
                         return;
                     }
 
@@ -196,7 +201,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
                         adapterCallback.onLongClick(getSnapshots().getSnapshot(position));
                         // by default clicked item is selected
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewWord, liveIsSelected)));
+                        markItem(position, getSnapshots().getSnapshot(position));
                     }
 
                     return true;

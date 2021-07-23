@@ -1,11 +1,10 @@
 package com.smart_learn.presenter.helpers.fragments.friends;
 
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.presenter.helpers.adapters.friends.FriendsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
@@ -87,11 +86,18 @@ public abstract class BasicFriendsFragment <VM extends BasicFriendsViewModel> ex
             return;
         }
 
-        if(TextUtils.isEmpty(newText)){
-            viewModel.getAdapter().setInitialOption(BasicFriendsFragment.this);
+        if(newText == null || newText.isEmpty()){
+            newText = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
         }
-        else {
-            viewModel.getAdapter().setFilterOption(BasicFriendsFragment.this, newText);
+
+        viewModel.getAdapter().setFilterOption(BasicFriendsFragment.this, newText);
+    }
+
+    @Override
+    protected void onSearchActionCollapse() {
+        super.onSearchActionCollapse();
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setInitialOption(BasicFriendsFragment.this);
         }
     }
 }

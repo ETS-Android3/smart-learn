@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -89,9 +88,11 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
+        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
+        // Update values here in order to avoid to remove selected items if selection mode was active
+        // while filtering.
         filteringValue = "";
         isFiltering = false;
-        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
     }
 
 
@@ -142,10 +143,18 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
         @Override
         protected void bind(@NonNull @NotNull ExpressionDocument item, int position){
+
             if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
+                boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
                 return;
             }
+
+            // selection mode is not active so items must be unchecked
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
             if(isFiltering){
                 liveSpannedExpression.setValue(Utilities.Activities.generateSpannedString(
@@ -157,9 +166,6 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_NO_FILTER_LINES);
             }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
         }
 
@@ -178,7 +184,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
+                        markItem(position, getSnapshots().getSnapshot(position));
                         return;
                     }
 
@@ -202,7 +208,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
                         adapterCallback.onLongClick(getSnapshots().getSnapshot(position));
                         // by default clicked item is selected
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
+                        markItem(position, getSnapshots().getSnapshot(position));
                     }
 
                     return true;

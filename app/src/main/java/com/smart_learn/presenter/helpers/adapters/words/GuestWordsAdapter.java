@@ -11,7 +11,6 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
@@ -148,9 +147,14 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
             if (isSelectionModeActive()) {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
-                liveIsSelected.setValue(viewHolderBinding.cvLayoutCardViewWord.isChecked());
+                boolean isSelected = isSelected(item);
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewWord.setChecked(isSelected);
                 return;
             }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
                 liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
@@ -160,8 +164,6 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
             }
 
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
         }
 
 
@@ -186,7 +188,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(new Pair<>(word, new Pair<>(viewHolderBinding.cvLayoutCardViewWord, liveIsSelected)));
+                        markItem(position, word);
                         return;
                     }
 
@@ -216,7 +218,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
                         adapterCallback.onLongClick(word);
                         // by default clicked item is selected
-                        markItem(new Pair<>(word, new Pair<>(viewHolderBinding.cvLayoutCardViewWord, liveIsSelected)));
+                        markItem(position, word);
                     }
 
                     return true;

@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -79,9 +77,11 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
+        updateOptions(getInitialAdapterOptions(fragment));
+        // Update values here in order to avoid to remove selected items if selection mode was active
+        // while filtering.
         filteringValue = "";
         isFiltering = false;
-        updateOptions(getInitialAdapterOptions(fragment));
     }
 
 
@@ -133,13 +133,12 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
             if (isSelectionModeActive()) {
                 liveItemInfo.setValue(friendDocument);
+                boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
+                viewHolderBinding.cvLayoutCardViewFriend.setChecked(isSelected);
                 return;
             }
 
-            setSelectionModeActive(false);
             viewHolderBinding.cvLayoutCardViewFriend.setChecked(false);
-
-            // set the existent value
             liveItemInfo.setValue(friendDocument);
 
             // try to get updated data from the friend user profile
@@ -161,14 +160,13 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewFriend, new MutableLiveData<>())));
+                        markItem(position, getSnapshots().getSnapshot(position));
                         return;
                     }
 
                     adapterCallback.onSimpleClick(getSnapshots().getSnapshot(position));
                 }
             });
-
         }
 
         private void setToolbarListener(){

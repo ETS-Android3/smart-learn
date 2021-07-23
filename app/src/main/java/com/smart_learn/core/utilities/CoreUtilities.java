@@ -39,6 +39,11 @@ public abstract class CoreUtilities {
     public abstract static class General {
 
         /**
+         * Used while filtering in adapters in order to give a list off all elements.
+          */
+        public static final String DEFAULT_VALUE_FOR_SEARCH = " ";
+
+        /**
          * Use this in order to convert millisecond in a standard locale date format.
          *
          * @param milliseconds Value to be converted.
@@ -176,6 +181,10 @@ public abstract class CoreUtilities {
                 value = value.toLowerCase();
                 resultList.addAll(splitStringInSubstrings(value));
             }
+
+            // Add by default a special value for search, which will be used in order to get all
+            // data, because all data will contain that value.
+            resultList.add(DEFAULT_VALUE_FOR_SEARCH);
 
             // sort values in order to speed up debugging process if necessary
             ArrayList<String> tmp = new ArrayList<>(resultList);

@@ -11,7 +11,6 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
@@ -146,11 +145,6 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
         @Override
         protected void bind(@NonNull @NotNull Lesson item, int position) {
 
-            if (isSelectionModeActive()) {
-                liveLessonSpannedName.setValue(new SpannableString(item.getName()));
-                return;
-            }
-
             if(isFiltering){
                 liveLessonSpannedName.setValue(Utilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(item.getName().toLowerCase(), filteringValue), item.getName()));
@@ -158,9 +152,6 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
-
-            setSelectionModeActive(false);
-            viewHolderBinding.cvLayoutCardViewLesson.setChecked(false);
 
             liveExtraInfo.setValue("1 Day ago");
         }
@@ -182,11 +173,6 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
 
                     Lesson lesson = getItem(position);
                     if(!CoreUtilities.General.isItemNotNull(lesson)){
-                        return;
-                    }
-
-                    if(isSelectionModeActive()){
-                        markItem(new Pair<>(lesson, new Pair<>(viewHolderBinding.cvLayoutCardViewLesson, new MutableLiveData<>())));
                         return;
                     }
 

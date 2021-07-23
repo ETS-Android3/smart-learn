@@ -2,11 +2,8 @@ package com.smart_learn.presenter.helpers.adapters.helpers;
 
 import android.view.View;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 
@@ -22,6 +19,7 @@ import com.smart_learn.presenter.helpers.PresenterHelpers;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import lombok.Getter;
 import timber.log.Timber;
@@ -47,7 +45,8 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
     // used to add values when selection mode is active
     @NonNull
     @NotNull
-    protected final ArrayList<Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>>> selectedValues;
+    @Getter
+    protected final ArrayList<DocumentSnapshot> selectedValues;
 
     // live value will be used for view holder binding in order to show/hide views
     @Getter
@@ -131,12 +130,12 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         // how many items are in the current list
         int totalItems = getItemCount();
 
-        // When loading new data, onDataChanged() is called twice. First with getItemCount() == 0, and
-        // after that with the correct list values. I presume that first values will be deleted, and
+        // When loading new data or filtering, onDataChanged() is called twice. First with getItemCount() == 0,
+        // and after that with the correct list values. I presume that first values will be deleted, and
         // after that will be added (if any will exists). So I must make check just after second call.
         //FIXME: this check can produce error. You can`t know every time if secondCall is the secondCall
         // for the loaded data, or some another action comes between.
-        if(isLoadingNewData && !secondCall && totalItems == 0){
+        if((isFiltering || isLoadingNewData) && !secondCall && totalItems == 0){
             // next time will be second call
             secondCall = true;
             return;
@@ -200,6 +199,24 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         }
 
         // here new items were deleted
+
+        // If items were deleted update selectedValues because is possible that a value which is
+        // marked for deletion to already deleted.
+        // FIXME: For filtering, this update is ignored because while filtering list size can alternate
+        //  between sizes, so selection will not persist, because when current size is smaller then
+        //  previous size, app will presume that items were deleted (but here items are only filtered).
+        //  Still, problem can appear if, while filtering, a value from database is deleted in real time,
+        //  because value it will disappear in real time (this is an expected behaviour), but if that
+        //  value was selected by user, will not be eliminated from selected values, so selected values
+        //  will not be consistent.
+        if(isSelectionModeActive && !isFiltering){
+            ArrayList<DocumentSnapshot> tmp = new ArrayList<>();
+            // totalItems is same as getSnapshots().size()
+            for(int i = 0; i < totalItems; i++){
+                tmp.add(getSnapshots().getSnapshot(i));
+            }
+            updateSelectedValues(tmp);
+        }
 
         // if user deleted items without refreshing, just reset currentLoad
         if(!isLoadingNewData){
@@ -277,29 +294,77 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
     }
 
-    @NonNull
-    @NotNull
-    public ArrayList<DocumentSnapshot> getSelectedValues(){
-        ArrayList<DocumentSnapshot> tmp = new ArrayList<>();
-        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
-            tmp.add(item.first);
+    protected void updateSelectedValues(ArrayList<DocumentSnapshot> newSnapshotList){
+        if(newSnapshotList == null || newSnapshotList.isEmpty()){
+            resetSelectedItems();
+            return;
         }
-        return tmp;
-    }
 
-    public void resetSelectedItems(){
-        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
-            item.second.first.setChecked(false);
-            item.second.second.postValue(false);
+        ArrayList<DocumentSnapshot> removedList = new ArrayList<>();
+        for(DocumentSnapshot selectedItem : selectedValues){
+            boolean exist = false;
+            for(DocumentSnapshot snapshot : newSnapshotList){
+                if(selectedItem.getId().equals(snapshot.getId())){
+                    exist = true;
+                    break;
+                }
+            }
+
+            if(!exist){
+                // Here item exist in selectedValues but was removed from newSnapshotList ==>
+                // must be removed from selectedValues.
+                removedList.add(selectedItem);
+            }
         }
-        selectedValues.clear();
+
+        for(DocumentSnapshot item : removedList){
+            selectedValues.remove(item);
+        }
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
     }
 
+    protected boolean isSelected(DocumentSnapshot item){
+        if(item == null){
+            return false;
+        }
+        for(DocumentSnapshot snapshot : selectedValues){
+            if(snapshot.getId().equals(item.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void resetSelectedItems(){
+        HashSet<Integer> selectedPositions = new HashSet<>();
+        if(!selectedValues.isEmpty() && !isSelectionModeActive){
+            // If selected values existed and selected mode is disabled, then extract updated positions.
+            int lim = getSnapshots().size();
+            for(int i = 0; i < lim; i++){
+                if(isSelected(getSnapshots().getSnapshot(i))){
+                    selectedPositions.add(i);
+                }
+            }
+        }
+
+        selectedValues.clear();
+        adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+
+        if(!selectedPositions.isEmpty() && !isSelectionModeActive){
+            // Notify all previous selected positions which will call onBindViewHolder() for every position.
+            // This must be after selectedValues.clear() because in binding call, a check for isSelected(...)
+            // will be made. And if selectedValues is not clear, then execution will not be correct.
+            for(Integer position : selectedPositions){
+                notifyItemChanged(position);
+            }
+        }
+    }
+
     public void setSelectionModeActive(boolean value) {
-        resetSelectedItems();
         isSelectionModeActive = value;
         liveIsSelectionModeActive.setValue(isSelectionModeActive);
+        // reset must be done here because value from isSelectionModeActive will be used.
+        resetSelectedItems();
     }
 
     protected void makeStandardSetup(Toolbar toolbar, MaterialCardView cardView){
@@ -312,48 +377,25 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         }
     }
 
-    protected void markItem(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> item){
-        String currentDocId = item.first.getId();
-        MaterialCardView cardView = item.second.first;
-        MutableLiveData<Boolean> liveSelected = item.second.second;
+    protected void markItem(int position, DocumentSnapshot item){
 
-        // if is checked, remove item and then uncheck it
-        if(cardView.isChecked()){
-            // mark as unchecked
-            cardView.setChecked(false);
-            liveSelected.setValue(false);
-
-            // and remove checked item from list
+        if(isSelected(item)){
+            // if is selected, remove it from selected list
             int lim = selectedValues.size();
             for(int i = 0; i < lim; i++){
-                if(selectedValues.get(i).first.getId().equals(currentDocId)){
+                if(selectedValues.get(i).getId().equals(item.getId())){
                     selectedValues.remove(i);
                     break;
                 }
             }
-
-            adapterCallback.updateSelectedItemsCounter(selectedValues.size());
-            return;
         }
-
-        // if is unchecked the mark as checked
-        cardView.setChecked(true);
-        liveSelected.setValue(true);
-
-        // and add item only if does not exists
-        boolean exists = false;
-        for(Pair<DocumentSnapshot, Pair<MaterialCardView, MutableLiveData<Boolean>>> value : selectedValues){
-            if(value.first.getId().equals(currentDocId)){
-                exists = true;
-                break;
-            }
-        }
-
-        if(!exists){
+        else {
             selectedValues.add(item);
         }
 
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+        // this is necessary in order to call bind method
+        notifyItemChanged(position);
     }
 
     protected String getString(int id){

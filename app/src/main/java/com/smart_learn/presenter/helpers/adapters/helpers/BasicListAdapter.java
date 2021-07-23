@@ -4,13 +4,11 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.presenter.helpers.Callbacks;
@@ -20,6 +18,7 @@ import com.smart_learn.presenter.helpers.Utilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import lombok.Getter;
@@ -48,7 +47,8 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
     // used to add values when selection mode is active
     @NonNull
     @NotNull
-    protected final ArrayList<Pair<T, Pair<MaterialCardView, MutableLiveData<Boolean>>>> selectedValues;
+    @Getter
+    protected final ArrayList<T> selectedValues;
 
     // live value will be used for view holder binding in order to show/hide views
     @Getter
@@ -106,29 +106,48 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
         // no action needed here
     }
 
-    @NonNull
-    @NotNull
-    public ArrayList<T> getSelectedValues(){
-        ArrayList<T> tmp = new ArrayList<>();
-        for(Pair<T, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
-            tmp.add(item.first);
+    protected boolean isSelected(T item){
+        if(item == null){
+            return false;
         }
-        return tmp;
+        for(T value : selectedValues){
+            if(value.areItemsTheSame(item)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void resetSelectedItems(){
-        for(Pair<T, Pair<MaterialCardView, MutableLiveData<Boolean>>> item : selectedValues){
-            item.second.first.setChecked(false);
-            item.second.second.postValue(false);
+        HashSet<Integer> selectedPositions = new HashSet<>();
+        if(!selectedValues.isEmpty() && !isSelectionModeActive){
+            // If selected values existed and selected mode is disabled, then extract updated positions.
+            int lim = getItemCount();
+            for(int i = 0; i < lim; i++){
+                if(isSelected(getItem(i))){
+                    selectedPositions.add(i);
+                }
+            }
         }
+
         selectedValues.clear();
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+
+        if(!selectedPositions.isEmpty() && !isSelectionModeActive){
+            // Notify all previous selected positions which will call onBindViewHolder() for every position.
+            // This must be after selectedValues.clear() because in binding call, a check for isSelected(...)
+            // will be made. And if selectedValues is not clear, then execution will not be correct.
+            for(Integer position : selectedPositions){
+                notifyItemChanged(position);
+            }
+        }
     }
 
     public void setSelectionModeActive(boolean value) {
-        resetSelectedItems();
         isSelectionModeActive = value;
         liveIsSelectionModeActive.setValue(isSelectionModeActive);
+        // reset must be done here because value from isSelectionModeActive will be used.
+        resetSelectedItems();
     }
 
     protected void makeStandardSetup(Toolbar toolbar, MaterialCardView cardView){
@@ -141,47 +160,25 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
         }
     }
 
-    protected void markItem(Pair<T, Pair<MaterialCardView, MutableLiveData<Boolean>>> item){
-        MaterialCardView cardView = item.second.first;
-        MutableLiveData<Boolean> liveSelected = item.second.second;
+    protected void markItem(int position, T item){
 
-        // if is checked, remove item and then uncheck it
-        if(cardView.isChecked()){
-            // mark as unchecked
-            cardView.setChecked(false);
-            liveSelected.setValue(false);
-
-            // and remove checked item from list
+        if(isSelected(item)){
+            // if is selected, remove it from selected list
             int lim = selectedValues.size();
             for(int i = 0; i < lim; i++){
-                if(selectedValues.get(i).first.areItemsTheSame(item.first)){
+                if(selectedValues.get(i).areItemsTheSame(item)){
                     selectedValues.remove(i);
                     break;
                 }
             }
-
-            adapterCallback.updateSelectedItemsCounter(selectedValues.size());
-            return;
         }
-
-        // if is unchecked the mark as checked
-        cardView.setChecked(true);
-        liveSelected.setValue(true);
-
-        // and add item only if does not exists
-        boolean exists = false;
-        for(Pair<T, Pair<MaterialCardView, MutableLiveData<Boolean>>> value : selectedValues){
-            if(value.first.areItemsTheSame(item.first)){
-                exists = true;
-                break;
-            }
-        }
-
-        if(!exists){
+        else {
             selectedValues.add(item);
         }
 
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
+        // this is necessary in order to call bind method
+        notifyItemChanged(position);
     }
 
     protected String getString(int id){

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
 import com.smart_learn.core.services.GuestExpressionService;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.adapters.expressions.GuestExpressionsAdapter;
@@ -98,8 +99,14 @@ public abstract class GuestBasicExpressionsFragment <VM extends GuestBasicExpres
 
     @Override
     protected void onFilter(String newText) {
-        if(viewModel.getAdapter() != null){
-            viewModel.getAdapter().getFilter().filter(newText);
+        if(viewModel.getAdapter() == null){
+            return;
         }
+
+        if(newText == null || newText.isEmpty()){
+            newText = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
+        }
+
+        viewModel.getAdapter().getFilter().filter(newText);
     }
 }

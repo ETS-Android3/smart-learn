@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -85,9 +84,11 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
+        updateOptions(getInitialAdapterOptions(fragment));
+        // Update values here in order to avoid to remove selected items if selection mode was active
+        // while filtering.
         filteringValue = "";
         isFiltering = false;
-        updateOptions(getInitialAdapterOptions(fragment));
     }
 
     /**
@@ -141,12 +142,6 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
         @Override
         protected void bind(@NonNull @NotNull LessonDocument item, int position){
 
-            if (isSelectionModeActive()) {
-                liveLessonSpannedName.setValue(new SpannableString(item.getName()));
-                liveExtraInfo.setValue(LessonDocument.generateLessonTypeTitle(item.getType()) + " - 1 Day Ago");
-                return;
-            }
-
             if(isFiltering){
                 liveLessonSpannedName.setValue(Utilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(item.getName().toLowerCase(), filteringValue), item.getName()));
@@ -154,9 +149,6 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
-
-            setSelectionModeActive(false);
-            viewHolderBinding.cvLayoutCardViewLesson.setChecked(false);
 
             liveExtraInfo.setValue(LessonDocument.generateLessonTypeTitle(item.getType()) + " - 1 Day Ago");
         }
@@ -174,11 +166,6 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if(!Utilities.Adapters.isGoodAdapterPosition(position)){
-                        return;
-                    }
-
-                    if(isSelectionModeActive()){
-                        markItem(new Pair<>(getSnapshots().getSnapshot(position), new Pair<>(viewHolderBinding.cvLayoutCardViewLesson, new MutableLiveData<>())));
                         return;
                     }
 

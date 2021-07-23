@@ -1,10 +1,9 @@
 package com.smart_learn.presenter.helpers.fragments.lessons.user;
 
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.presenter.helpers.adapters.lessons.UserLessonsAdapter;
 import com.smart_learn.presenter.helpers.fragments.lessons.BasicLessonsFragment;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
@@ -76,11 +75,18 @@ public abstract class UserBasicLessonsFragment <VM extends UserBasicLessonsViewM
             return;
         }
 
-        if(TextUtils.isEmpty(newText)){
-            viewModel.getAdapter().setInitialOption(UserBasicLessonsFragment.this);
+        if(newText == null || newText.isEmpty()){
+            newText = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
         }
-        else {
-            viewModel.getAdapter().setFilterOption(UserBasicLessonsFragment.this, newText);
+
+        viewModel.getAdapter().setFilterOption(UserBasicLessonsFragment.this, newText);
+    }
+
+    @Override
+    protected void onSearchActionCollapse() {
+        super.onSearchActionCollapse();
+        if(viewModel.getAdapter() != null){
+            viewModel.getAdapter().setInitialOption(UserBasicLessonsFragment.this);
         }
     }
 

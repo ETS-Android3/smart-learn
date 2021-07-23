@@ -10,7 +10,6 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.util.Pair;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
@@ -153,9 +152,14 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
         protected void bind(@NonNull @NotNull Expression item, int position) {
             if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
-                liveIsSelected.setValue(viewHolderBinding.cvLayoutCardViewExpression.isChecked());
+                boolean isSelected = isSelected(item);
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
                 return;
             }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
             if(isFiltering){
                 liveSpannedExpression.setValue(Utilities.Activities.generateSpannedString(
@@ -167,9 +171,6 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_NO_FILTER_LINES);
             }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
         }
 
 
@@ -194,7 +195,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(new Pair<>(expression, new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
+                        markItem(position, expression);
                         return;
                     }
 
@@ -224,7 +225,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
 
                         adapterCallback.onLongClick(expression);
                         // by default clicked item is selected
-                        markItem(new Pair<>(expression, new Pair<>(viewHolderBinding.cvLayoutCardViewExpression, liveIsSelected)));
+                        markItem(position, expression);
                     }
 
                     return true;
