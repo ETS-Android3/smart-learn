@@ -17,11 +17,6 @@ public abstract class UserBasicLessonsFragment <VM extends UserBasicLessonsViewM
     protected void onAdapterShareLessonClick(@NonNull @NotNull DocumentSnapshot lessonSnapshot){}
 
     @Override
-    protected boolean useSearchOnMenu() {
-        return true;
-    }
-
-    @Override
     protected boolean useSecondaryGroupOnMenu() {
         return true;
     }

@@ -16,6 +16,11 @@ public abstract class BasicLessonsFragment <T, VM extends BasicLessonsViewModel<
     protected void onAdapterDeleteLessonAlert(int wordsNr, int expressionsNr){}
 
     @Override
+    protected boolean useSearchOnMenu() {
+        return true;
+    }
+
+    @Override
     protected int getEmptyLabelDescriptionResourceId() {
         return R.string.no_lessons;
     }

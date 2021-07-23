@@ -3,7 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.lessons.guest.standard;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers.LessonDialog;
+import com.smart_learn.presenter.helpers.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.helpers.fragments.lessons.guest.GuestBasicLessonsFragment;
 
 import org.jetbrains.annotations.NotNull;

@@ -18,11 +18,6 @@ import java.util.List;
 public abstract class GuestBasicLessonsFragment <VM extends GuestBasicLessonsViewModel> extends BasicLessonsFragment<Lesson, VM> {
 
     @Override
-    protected boolean useSearchOnMenu() {
-        return true;
-    }
-
-    @Override
     protected void setLayoutUtilities() {
         super.setLayoutUtilities();
 

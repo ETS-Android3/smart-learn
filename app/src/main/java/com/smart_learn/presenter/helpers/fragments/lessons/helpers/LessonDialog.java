@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.activities.notebook.helpers.fragments.lessons.helpers;
+package com.smart_learn.presenter.helpers.fragments.lessons.helpers;
 
 
 import android.app.Dialog;

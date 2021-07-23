@@ -10,7 +10,7 @@ import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_men
 
 import org.jetbrains.annotations.NotNull;
 
-public class BasicLessonsViewModel <AD extends RecyclerView.Adapter<?> & PresenterHelpers.AdapterHelper> extends BasicViewModelForRecyclerView<AD> {
+public abstract class BasicLessonsViewModel <AD extends RecyclerView.Adapter<?> & PresenterHelpers.AdapterHelper> extends BasicViewModelForRecyclerView<AD> {
     public BasicLessonsViewModel(@NonNull @NotNull Application application) {
         super(application);
     }
