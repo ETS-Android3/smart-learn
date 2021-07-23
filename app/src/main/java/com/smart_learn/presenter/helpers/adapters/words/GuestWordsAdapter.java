@@ -198,6 +198,11 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             viewHolderBinding.cvLayoutCardViewWord.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    // if filtering is active nothing will happen
+                    if(isFiltering){
+                        return true;
+                    }
+
                     if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
                         if(!Utilities.Adapters.isGoodAdapterPosition(position)){

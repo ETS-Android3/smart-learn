@@ -1,6 +1,7 @@
 package com.smart_learn.presenter.activities.notebook.guest;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment;
+import com.smart_learn.presenter.helpers.fragments.words.BasicWordsFragment;
+import com.smart_learn.presenter.helpers.fragments.words.guest.GuestBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +50,9 @@ public class GuestNotebookActivity extends NotebookActivity<GuestNotebookSharedV
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
                                 return true;
                             case R.id.guest_words_fragment_nav_graph_activity_guest_notebook:
-                                navController.navigate(R.id.guest_words_fragment_nav_graph_activity_guest_notebook,null,
+                                Bundle wordArgs = new Bundle();
+                                wordArgs.putInt(BasicWordsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLessonId());
+                                navController.navigate(R.id.guest_words_fragment_nav_graph_activity_guest_notebook, wordArgs,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.guest_lessons_fragment_nav_graph_activity_guest_notebook));
                                 return true;
                             case R.id.guest_expressions_fragment_nav_graph_activity_guest_notebook:

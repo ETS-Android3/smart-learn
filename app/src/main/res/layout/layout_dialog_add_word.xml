@@ -6,7 +6,7 @@
         <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.words.helpers.WordDialogViewModel" />
+            type="com.smart_learn.presenter.helpers.fragments.words.helpers.WordDialogViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
