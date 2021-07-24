@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity(tableName = AppRoomDatabase.LESSONS_TABLE)
-public class Lesson extends NotebookCommon implements PresenterHelpers.DiffUtilCallbackHelper<Lesson> {
+public class Lesson extends NotebookCommon implements PresenterHelpers.SelectionHelper, PresenterHelpers.DiffUtilCallbackHelper<Lesson> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -47,6 +47,11 @@ public class Lesson extends NotebookCommon implements PresenterHelpers.DiffUtilC
         }
         return super.areContentsTheSame(newItem) &&
                 CoreUtilities.General.areObjectsTheSame(this.name, newItem.getName());
+    }
+
+    @Override
+    public int getId() {
+        return lessonId;
     }
 
     public static Lesson generateEmptyObject(){

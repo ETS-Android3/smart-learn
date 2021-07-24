@@ -32,7 +32,7 @@ import lombok.ToString;
                                 childColumns = "fk_lesson_id",
                                 onDelete = ForeignKey.CASCADE)
         })
-public class Word extends LessonEntrance implements PresenterHelpers.DiffUtilCallbackHelper<Word> {
+public class Word extends LessonEntrance implements PresenterHelpers.SelectionHelper, PresenterHelpers.DiffUtilCallbackHelper<Word> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -67,6 +67,11 @@ public class Word extends LessonEntrance implements PresenterHelpers.DiffUtilCal
         return super.areContentsTheSame(newItem) &&
                 CoreUtilities.General.areObjectsTheSame(this.word, newItem.getWord()) &&
                 CoreUtilities.General.areObjectsTheSame(this.phonetic, newItem.getPhonetic());
+    }
+
+    @Override
+    public int getId() {
+        return wordId;
     }
 
     public static Word generateEmptyObject(){

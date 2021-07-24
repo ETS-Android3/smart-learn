@@ -107,13 +107,14 @@ public abstract class GuestStandardWordsViewModel extends GuestBasicWordsViewMod
             return;
         }
 
-        if(adapter.getSelectedValues().isEmpty()){
+        ArrayList<Word> selectedWords = adapter.getSelectedValues();
+        if(selectedWords.isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_word));
             isDeletingActive.set(false);
             return;
         }
 
-        GuestWordService.getInstance().deleteAll(adapter.getSelectedValues(), new DataCallbacks.General() {
+        GuestWordService.getInstance().deleteAll(selectedWords, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_words));

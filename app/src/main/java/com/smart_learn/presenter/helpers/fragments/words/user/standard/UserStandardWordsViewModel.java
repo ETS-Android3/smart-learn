@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.UserWordService;
@@ -86,13 +87,14 @@ public abstract class UserStandardWordsViewModel extends UserBasicWordsViewModel
             return;
         }
 
-        if(adapter.getSelectedValues().isEmpty()){
+        ArrayList<DocumentSnapshot> selectedWords = adapter.getSelectedValues();
+        if(selectedWords.isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_word));
             isDeletingActive.set(false);
             return;
         }
 
-        UserWordService.getInstance().deleteWordList(currentLessonSnapshot, adapter.getSelectedValues(), new DataCallbacks.General() {
+        UserWordService.getInstance().deleteWordList(currentLessonSnapshot, selectedWords, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_words));

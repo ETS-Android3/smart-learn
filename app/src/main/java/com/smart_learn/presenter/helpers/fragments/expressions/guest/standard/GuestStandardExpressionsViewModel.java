@@ -106,13 +106,14 @@ public abstract class GuestStandardExpressionsViewModel extends GuestBasicExpres
             return;
         }
 
-        if(adapter.getSelectedValues().isEmpty()){
+        ArrayList<Expression> selectedExpressions = adapter.getSelectedValues();
+        if(selectedExpressions.isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_expression));
             isDeletingActive.set(false);
             return;
         }
 
-        GuestExpressionService.getInstance().deleteAll(adapter.getSelectedValues(), new DataCallbacks.General() {
+        GuestExpressionService.getInstance().deleteAll(selectedExpressions, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_expressions));

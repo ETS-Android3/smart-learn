@@ -61,4 +61,12 @@ public interface PresenterHelpers {
         boolean areItemsTheSame(T item);
         boolean areContentsTheSame(T item);
     }
+
+
+    /**
+     * Used for selection mode in List Adapter.
+     * */
+    interface SelectionHelper {
+        int getId();
+    }
 }

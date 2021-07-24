@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.services.UserService;
@@ -85,13 +86,14 @@ public abstract class UserStandardExpressionsViewModel extends UserBasicExpressi
             return;
         }
 
-        if(adapter.getSelectedValues().isEmpty()){
+        ArrayList<DocumentSnapshot> selectedExpressions = adapter.getSelectedValues();
+        if(selectedExpressions.isEmpty()){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.no_selected_expression));
             isDeletingActive.set(false);
             return;
         }
 
-        UserExpressionService.getInstance().deleteExpressionList(currentLessonSnapshot, adapter.getSelectedValues(), new DataCallbacks.General() {
+        UserExpressionService.getInstance().deleteExpressionList(currentLessonSnapshot, selectedExpressions, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
                 liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_deleting_expressions));

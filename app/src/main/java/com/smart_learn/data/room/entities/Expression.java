@@ -32,7 +32,7 @@ import lombok.ToString;
                                 childColumns = "fk_lesson_id",
                                 onDelete = ForeignKey.CASCADE)
         })
-public class Expression extends LessonEntrance implements PresenterHelpers.DiffUtilCallbackHelper<Expression> {
+public class Expression extends LessonEntrance implements PresenterHelpers.SelectionHelper, PresenterHelpers.DiffUtilCallbackHelper<Expression> {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -62,6 +62,11 @@ public class Expression extends LessonEntrance implements PresenterHelpers.DiffU
         }
         return super.areContentsTheSame(newItem) &&
                 CoreUtilities.General.areObjectsTheSame(this.expression, newItem.getExpression());
+    }
+
+    @Override
+    public int getId() {
+        return expressionId;
     }
 
     public static Expression generateEmptyObject(){

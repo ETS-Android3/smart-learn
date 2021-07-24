@@ -18,6 +18,7 @@ import com.smart_learn.presenter.helpers.Utilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,8 +28,8 @@ import lombok.Getter;
  * The main Adapter class from which all adapters of the application which extends from
  * ListAdapter <T,VH>, must be extended.
  *
- * @param <T>  Type of the Entity which this adapter will hold which will extend
- *             PresenterHelpers.DiffUtilCallbackHelper<T> .
+ * @param <T>  Type of the Entity which this adapter will hold which will extend SelectionHelper
+ *             and DiffUtilCallbackHelper<T> .
  * @param <VH> A ViewHolder class that extends BasicViewHolder<T,?> that will be used by the
  *             adapter to show Entity details.
  * @param <CBK> Adapter callback which will extend BasicListAdapter.Callback<T> .
@@ -36,7 +37,8 @@ import lombok.Getter;
  *
  *  For ListAdapter https://www.youtube.com/watch?v=xPPMygGxiEo
  * */
-public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallbackHelper<T>, VH extends BasicViewHolder<T, ?>, CBK extends BasicListAdapter.Callback<T>>
+public abstract class BasicListAdapter <T extends PresenterHelpers.SelectionHelper & PresenterHelpers.DiffUtilCallbackHelper<T>,
+        VH extends BasicViewHolder<T, ?>, CBK extends BasicListAdapter.Callback<T>>
         extends ListAdapter<T, VH> implements PresenterHelpers.AdapterHelper {
 
     // main callback for handling different operations
@@ -47,8 +49,7 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
     // used to add values when selection mode is active
     @NonNull
     @NotNull
-    @Getter
-    protected final ArrayList<T> selectedValues;
+    protected final HashMap<Integer, T> selectedValues;
 
     // live value will be used for view holder binding in order to show/hide views
     @Getter
@@ -76,7 +77,7 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
         this.adapterCallback = adapterCallback;
 
         // specific initial setup
-        this.selectedValues = new ArrayList<>();
+        this.selectedValues = new HashMap<>();
         this.isSelectionModeActive = false;
         this.liveIsSelectionModeActive = new MutableLiveData<>(false);
         this.isFiltering = false;
@@ -106,16 +107,15 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
         // no action needed here
     }
 
+    public ArrayList<T> getSelectedValues(){
+        return new ArrayList<>(selectedValues.values());
+    }
+
     protected boolean isSelected(T item){
         if(item == null){
             return false;
         }
-        for(T value : selectedValues){
-            if(value.areItemsTheSame(item)){
-                return true;
-            }
-        }
-        return false;
+        return selectedValues.containsKey(item.getId());
     }
 
     public void resetSelectedItems(){
@@ -164,16 +164,10 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.DiffUtilCallb
 
         if(isSelected(item)){
             // if is selected, remove it from selected list
-            int lim = selectedValues.size();
-            for(int i = 0; i < lim; i++){
-                if(selectedValues.get(i).areItemsTheSame(item)){
-                    selectedValues.remove(i);
-                    break;
-                }
-            }
+            selectedValues.remove(item.getId());
         }
         else {
-            selectedValues.add(item);
+            selectedValues.put(item.getId(), item);
         }
 
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());

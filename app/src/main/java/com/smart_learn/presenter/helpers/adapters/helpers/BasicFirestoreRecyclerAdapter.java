@@ -19,6 +19,7 @@ import com.smart_learn.presenter.helpers.PresenterHelpers;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import lombok.Getter;
@@ -45,8 +46,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
     // used to add values when selection mode is active
     @NonNull
     @NotNull
-    @Getter
-    protected final ArrayList<DocumentSnapshot> selectedValues;
+    protected final HashMap<String, DocumentSnapshot> selectedValues;
 
     // live value will be used for view holder binding in order to show/hide views
     @Getter
@@ -109,7 +109,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         this.filteringValue = "";
         this.isSelectionModeActive = false;
         this.liveIsSelectionModeActive = new MutableLiveData<>(false);
-        this.selectedValues = new ArrayList<>();
+        this.selectedValues = new HashMap<>();
         this.isLoadingNewData = false;
         this.secondCall = false;
         this.currentLoad = UNSET;
@@ -294,6 +294,12 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
     }
 
+    @NonNull
+    @NotNull
+    public ArrayList<DocumentSnapshot> getSelectedValues(){
+        return new ArrayList<>(selectedValues.values());
+    }
+
     protected void updateSelectedValues(ArrayList<DocumentSnapshot> newSnapshotList){
         if(newSnapshotList == null || newSnapshotList.isEmpty()){
             resetSelectedItems();
@@ -301,7 +307,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         }
 
         ArrayList<DocumentSnapshot> removedList = new ArrayList<>();
-        for(DocumentSnapshot selectedItem : selectedValues){
+        for(DocumentSnapshot selectedItem : selectedValues.values()){
             boolean exist = false;
             for(DocumentSnapshot snapshot : newSnapshotList){
                 if(selectedItem.getId().equals(snapshot.getId())){
@@ -318,7 +324,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         }
 
         for(DocumentSnapshot item : removedList){
-            selectedValues.remove(item);
+            selectedValues.remove(item.getId());
         }
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
     }
@@ -327,12 +333,7 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         if(item == null){
             return false;
         }
-        for(DocumentSnapshot snapshot : selectedValues){
-            if(snapshot.getId().equals(item.getId())){
-                return true;
-            }
-        }
-        return false;
+        return selectedValues.containsKey(item.getId());
     }
 
     public void resetSelectedItems(){
@@ -380,17 +381,10 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
     protected void markItem(int position, DocumentSnapshot item){
 
         if(isSelected(item)){
-            // if is selected, remove it from selected list
-            int lim = selectedValues.size();
-            for(int i = 0; i < lim; i++){
-                if(selectedValues.get(i).getId().equals(item.getId())){
-                    selectedValues.remove(i);
-                    break;
-                }
-            }
+            selectedValues.remove(item.getId());
         }
         else {
-            selectedValues.add(item);
+            selectedValues.put(item.getId(), item);
         }
 
         adapterCallback.updateSelectedItemsCounter(selectedValues.size());
