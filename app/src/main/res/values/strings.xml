@@ -390,6 +390,29 @@
     <string name="november">November</string>
     <string name="december">December</string>
 
+    <!-- Question entity -->
+    <string name="question_quiz_description">Choose correct translation for the following word</string>
+    <string name="question_true_or_false_description">Choose if the following expression translation is correct or not</string>
+    <string name="question_word_full_write_description">Write translation for the following word</string>
+    <string name="question_mixed_description">Arrange values in correct order</string>
+    <string name="true_option">True</string>
+    <string name="false_option">False</string>
+    <string name="no_response_given">No response given</string>
+
+    <!-- Test entity -->
+    <string name="word_full_write">Word full write</string>
+    <string name="word_quiz">Quiz</string>
+    <string name="word_mixed_letters">Mixed letters</string>
+    <string name="expression_true_or_false">True or false</string>
+    <string name="expression_mixed_words">Mixed words</string>
+    <string name="monday">Mon.</string>
+    <string name="tuesday">Tue.</string>
+    <string name="wednesday">Wen.</string>
+    <string name="thursday">Thu.</string>
+    <string name="friday">Fri.</string>
+    <string name="saturday">Sat.</string>
+    <string name="sunday">Sun.</string>
+    <string name="every_day">Every day</string>
 
     <string name="filter">Filter</string>
     <string name="no_expressions">No expressions</string>
