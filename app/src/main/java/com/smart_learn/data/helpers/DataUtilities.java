@@ -2,6 +2,12 @@ package com.smart_learn.data.helpers;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -59,6 +65,38 @@ public final class DataUtilities {
                     Timber.e("Error: %s", error);
                 }
             };
+        }
+
+        /**
+         * Use to transform an ArrayList of T objects in a string JSON.
+         *
+         * @param value Array to be converted.
+         *
+         * @return JSON string resulted from conversion.
+         * */
+        public static <T> String fromListToJson(ArrayList<T> value) {
+            if (value == null) {
+                value = new ArrayList<>();
+            }
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<T>>() {}.getType();
+            return gson.toJson(value, type);
+        }
+
+        /**
+         * Use to transform an JSON String in an array of objects of type T.
+         *
+         * @param value JSON to be converted.
+         *
+         * @return Array of objects of type T resulted from conversion.
+         * */
+        public static <T> ArrayList<T> fromJsonToList(String value) {
+            if (value == null) {
+                return new ArrayList<>();
+            }
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<T>>() {}.getType();
+            return gson.fromJson(value, type);
         }
     }
 
