@@ -2,8 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <group android:id="@+id/first_group_menu_layout_with_recycler_view">
+    <group android:id="@+id/search_group_menu_layout_with_recycler_view"
+        android:visible="false">
         <item
             android:id="@+id/action_search_menu_layout_with_recycler_view"
             android:layout_width="match_parent"

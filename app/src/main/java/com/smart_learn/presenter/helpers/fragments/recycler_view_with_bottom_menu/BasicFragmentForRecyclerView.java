@@ -97,6 +97,9 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     protected boolean useSearchOnMenu(){
         return false;
     }
+    protected int getSearchOnGroupId(){
+        return R.id.search_group_menu_layout_with_recycler_view;
+    }
     protected int getActionSearchId(){
         return R.id.action_search_menu_layout_with_recycler_view;
     }
@@ -237,6 +240,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             return;
         }
 
+        menu.setGroupVisible(getSearchOnGroupId(), true);
         Utilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new Callbacks.SearchActionCallback() {
                     @Override
                     public void onQueryTextChange(String newText) {
