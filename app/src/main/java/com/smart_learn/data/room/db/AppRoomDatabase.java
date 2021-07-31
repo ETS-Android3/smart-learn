@@ -9,14 +9,17 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.smart_learn.data.room.converters.BooleanConverter;
 import com.smart_learn.data.room.converters.TranslationConverter;
 import com.smart_learn.data.room.dao.ExpressionDao;
 import com.smart_learn.data.room.dao.LessonDao;
 import com.smart_learn.data.room.dao.NotificationDao;
+import com.smart_learn.data.room.dao.RoomTestDao;
 import com.smart_learn.data.room.dao.WordDao;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.Notification;
+import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.Translation;
@@ -31,10 +34,10 @@ import java.util.concurrent.Executors;
  * https://developer.android.com/codelabs/android-room-with-a-view#7
  * */
 @Database(
-        entities = {Lesson.class, Word.class, Expression.class, Notification.class},
+        entities = {Lesson.class, Word.class, Expression.class, Notification.class, RoomTest.class},
         version = 1, exportSchema = false
 )
-@TypeConverters({TranslationConverter.class})
+@TypeConverters({TranslationConverter.class, BooleanConverter.class})
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "app_room_db";
@@ -42,11 +45,13 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     public static final String WORDS_TABLE = "words";
     public static final String EXPRESSIONS_TABLE = "expressions";
     public static final String NOTIFICATIONS_TABLE = "notifications";
+    public static final String TESTS_TABLE = "tests";
 
     public abstract LessonDao lessonDao();
     public abstract WordDao wordDao();
     public abstract ExpressionDao expressionDao();
     public abstract NotificationDao notificationDao();
+    public abstract RoomTestDao roomTestDao();
 
     private static volatile AppRoomDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
