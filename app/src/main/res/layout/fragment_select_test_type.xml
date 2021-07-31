@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presenter.activities.test.helpers.fragments.select_test_type.SelectTestTypeFragment">
+
+        <TextView
+            android:id="@+id/tv_1_fragment_select_test_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="@string/word_tests"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_word_full_write_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_word_full_write_fragment_select_test_type"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_baseline_keyboard_24"
+            android:drawablePadding="10dp"
+            android:text="@string/full_write"
+            app:layout_constraintBottom_toTopOf="@+id/btn_word_quiz_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_1_fragment_select_test_type" />
+
+        <Button
+            android:id="@+id/btn_word_quiz_fragment_select_test_type"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_baseline_psychology_24"
+            android:drawablePadding="10dp"
+            android:text="@string/quiz"
+            app:layout_constraintBottom_toTopOf="@+id/btn_word_mixed_letters_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_word_full_write_fragment_select_test_type" />
+
+        <Button
+            android:id="@+id/btn_word_mixed_letters_fragment_select_test_type"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="48dp"
+            android:drawableStart="@drawable/ic_baseline_text_format_24"
+            android:drawablePadding="10dp"
+            android:text="@string/mixed_letters"
+            app:layout_constraintBottom_toTopOf="@+id/tv_2_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_word_quiz_fragment_select_test_type" />
+
+        <TextView
+            android:id="@+id/tv_2_fragment_select_test_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center"
+            android:text="@string/expression_tests"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_expression_mixed_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_word_mixed_letters_fragment_select_test_type" />
+
+        <Button
+            android:id="@+id/btn_expression_mixed_fragment_select_test_type"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:drawableStart="@drawable/ic_baseline_text_format_24"
+            android:drawablePadding="10dp"
+            android:text="@string/mixed_words"
+            app:layout_constraintBottom_toTopOf="@+id/btn_expression_true_or_false_fragment_select_test_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_2_fragment_select_test_type" />
+
+        <Button
+            android:id="@+id/btn_expression_true_or_false_fragment_select_test_type"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="48dp"
+            android:drawableStart="@drawable/ic_baseline_question_mark_24"
+            android:drawablePadding="10dp"
+            android:text="@string/expression_true_or_false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_expression_mixed_fragment_select_test_type" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

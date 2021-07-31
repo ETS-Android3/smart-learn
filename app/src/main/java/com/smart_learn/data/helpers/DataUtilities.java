@@ -37,6 +37,8 @@ public final class DataUtilities {
             public static final int MAX_WORD_TRANSLATION_PHONETIC = 100;
             public static final int MAX_EXPRESSION = 512;
             public static final int MAX_EXPRESSION_TRANSLATION = 512;
+            public static final int MAX_TEST_CUSTOM_NAME = 20;
+            public static final int MAX_ANSWER_QUESTION_FULL_WRITE = 200;
     }
 
     /**

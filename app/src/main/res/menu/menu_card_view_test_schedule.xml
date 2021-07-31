@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group
+        android:id="@+id/guest_group_menu_card_view_test_schedule">
+        <item
+            android:id="@+id/action_guest_delete_menu_card_view_test_schedule"
+            android:title="@string/delete"
+            app:showAsAction="never"/>
+    </group>
+
+    <group
+        android:id="@+id/user_group_menu_card_view_test_schedule">
+    </group>
+</menu>

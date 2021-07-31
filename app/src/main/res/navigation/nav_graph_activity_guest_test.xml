@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_activity_guest_test.xml"
+    app:startDestination="@id/guest_test_history_fragment_nav_graph_activity_guest_test">
+
+    <fragment
+        android:id="@+id/guest_test_history_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.history.GuestTestHistoryFragment"
+        android:label="guest_test_history_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_test_history_fragment_to_guest_test_questions_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_test_questions_fragment_nav_graph_activity_guest_test" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_scheduled_tests_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.schedule.GuestScheduledTestsFragment"
+        android:label="guest_scheduled_tests_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_scheduled_tests_fragment_to_guest_scheduled_test_info_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_scheduled_test_info_fragment_nav_graph_activity_guest_test" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_select_lesson_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.select_lesson.GuestSelectLessonFragment"
+        android:label="guest_select_lesson_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_select_lesson_fragment_to_guest_select_test_type_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_select_test_type_fragment_nav_graph_activity_guest_test" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_select_test_type_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.select_test_type.GuestSelectTestTypeFragment"
+        android:label="guest_select_test_type_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_select_test_type">
+        <action
+            android:id="@+id/action_guest_select_test_type_fragment_to_guest_test_setup_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_test_setup_fragment_nav_graph_activity_guest_test" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_test_setup_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_setup.GuestTestSetupFragment"
+        android:label="guest_test_setup_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_local_test_setup">
+        <action
+            android:id="@+id/action_guest_test_setup_fragment_to_guest_select_words_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_select_words_fragment_nav_graph_activity_guest_test" />
+        <action
+            android:id="@+id/action_guest_test_setup_fragment_to_guest_select_expressions_fragment_nav_graph_activity_guest_test"
+            app:destination="@id/guest_select_expressions_fragment_nav_graph_activity_guest_test" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_select_words_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.select_words.GuestSelectWordsFragment"
+        android:label="guest_select_words_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
+    <fragment
+        android:id="@+id/guest_select_expressions_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.select_expressions.GuestSelectExpressionsFragment"
+        android:label="guest_select_expressions_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+    <fragment
+        android:id="@+id/guest_test_questions_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_questions.GuestTestQuestionsFragment"
+        android:label="guest_test_questions_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+    <fragment
+        android:id="@+id/guest_scheduled_test_info_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.scheduled_test_info.GuestScheduledTestInfoFragment"
+        android:label="GuestScheduledTestInfoFragment"
+        tools:layout="@layout/fragment_scheduled_test_info"/>
+    <fragment
+        android:id="@+id/guest_full_write_test_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_types.test_full_write.GuestFullWriteTestFragment"
+        android:label="guest_full_write_test_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_full_write_test"/>
+    <fragment
+        android:id="@+id/guest_finalize_test_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.finalize_test.GuestFinalizeTestFragment"
+        android:label="guest_finalize_test_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_finalize_test"/>
+    <fragment
+        android:id="@+id/guest_quiz_test_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_types.quiz.GuestQuizTestFragment"
+        android:label="guest_quiz_test_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_quiz_test"/>
+    <fragment
+        android:id="@+id/guest_true_or_false_test_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_types.true_or_false.GuestTrueOrFalseTestFragment"
+        android:label="guest_true_or_false_test_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_true_or_false_test"/>
+    <fragment
+        android:id="@+id/guest_mixed_test_fragment_nav_graph_activity_guest_test"
+        android:name="com.smart_learn.presenter.activities.test.guest.fragments.test_types.mixed.GuestMixedTestFragment"
+        android:label="guest_mixed_test_fragment_nav_graph_activity_guest_test"
+        tools:layout="@layout/fragment_mixed_test"/>
+
+
+</navigation>

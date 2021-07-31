@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.smart_learn.data.helpers.DataUtilities.Limits"/>
+        <variable
+            name="viewModel"
+            type="com.smart_learn.presenter.helpers.fragments.test_types.quiz.QuizTestViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presenter.helpers.fragments.test_types.quiz.QuizTestFragment">
+
+        <!-- https://stackoverflow.com/questions/58214894/how-to-pass-data-variable-to-included-layout -->
+        <include
+            android:id="@+id/board_include_layout_fragment_quiz_test"
+            layout="@layout/include_layout_test_base_board"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_option_a_fragment_quiz_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:passedViewModel="@{viewModel}" />
+
+        <Button
+            android:id="@+id/btn_option_a_fragment_quiz_test"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:text="@{viewModel.liveOptionA}"
+            android:drawableStart="@drawable/img_letter_a_16"
+            android:drawablePadding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_option_b_fragment_quiz_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/board_include_layout_fragment_quiz_test" />
+
+        <Button
+            android:id="@+id/btn_option_b_fragment_quiz_test"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/img_letter_b_16"
+            android:drawablePadding="10dp"
+            android:text="@{viewModel.liveOptionB}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_option_c_fragment_quiz_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_option_a_fragment_quiz_test" />
+
+        <Button
+            android:id="@+id/btn_option_c_fragment_quiz_test"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/img_letter_c_16"
+            android:drawablePadding="10dp"
+            android:text="@{viewModel.liveOptionC}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_option_d_fragment_quiz_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_option_b_fragment_quiz_test" />
+
+        <Button
+            android:id="@+id/btn_option_d_fragment_quiz_test"
+            style="@style/AppTheme.ButtonStyle.WithBorder.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:drawableStart="@drawable/img_letter_d_16"
+            android:drawablePadding="10dp"
+            android:text="@{viewModel.liveOptionD}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_option_c_fragment_quiz_test" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

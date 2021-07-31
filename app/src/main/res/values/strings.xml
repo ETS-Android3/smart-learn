@@ -71,7 +71,7 @@
     <string name="tests_summary">Tests summary</string>
     <string name="active">Active</string>
     <string name="finished">Finished</string>
-    <string name="success_rate">Success Rate</string>
+    <string name="success_rate">Success rate</string>
 
 
     <!-- AuthenticationActivity -->
@@ -146,7 +146,7 @@
 
     <!-- BasicFragmentForRecyclerView -->
     <string name="no_items">There are no items</string>
-    <string name="empty" > </string>
+    <string name="empty"> </string>
 
     <!-- NotificationsFragment -->
     <string name="no_notifications">There are no notifications</string>
@@ -415,8 +415,134 @@
     <string name="every_day">Every day</string>
     <string name="test_name">Test</string>
 
+
+    <!-- TestActivity -->
     <string name="filter">Filter</string>
     <string name="no_expressions">No expressions</string>
+    <string name="hide">Hide</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_tests">There are no tests</string>
+    <string name="tests">Tests</string>
+    <string name="error_test_can_not_be_opened">Test can not be opened</string>
+    <string name="test_info">Test info</string>
+    <string name="see_results">See results</string>
+    <string name="start_date_point">Start date:</string>
+    <string name="tested_lesson_point">Tested lesson:</string>
+    <string name="test_number_point">Test number:</string>
+    <string name="history">History</string>
+    <string name="schedule">Schedule</string>
+    <string name="start_test">start_test</string>
+    <string name="start_new_local_test">Start new local test</string>
+    <string name="show_all">Show all</string>
+    <string name="show_only_finished">Show only finished</string>
+    <string name="show_only_in_progress">Show only in progress</string>
+    <string name="status_point">Status:</string>
+    <string name="finished_2">Finished</string>
+    <string name="in_progress">In progress</string>
+    <string name="error_page_can_not_be_opened">Error while opening page</string>
+    <string name="select_lesson">Select lesson</string>
+    <string name="word_tests">Word tests</string>
+    <string name="full_write">Full write</string>
+    <string name="quiz">Quiz</string>
+    <string name="mixed_words">Mixed words</string>
+    <string name="expression_tests">Expression tests</string>
+    <string name="select_test_type">Select test type</string>
+    <string name="lesson_values_selection">Lesson values selection</string>
+    <string name="use_custom_selection">Use custom selection</string>
+    <string name="use_all">Use all</string>
+    <string name="use_specific_number">Use specific number</string>
+    <string name="use_counter">Use counter</string>
+    <string name="yes">Yes</string>
+    <string name="select_test_options">Select test options</string>
+    <string name="next">Next</string>
+    <string name="error_can_not_continue">Can not continue</string>
+    <string name="error_lesson_has_no_words">Lesson has no words</string>
+    <string name="error_lesson_has_no_expressions">Lesson has no expressions</string>
+    <string name="error_lesson_has_no_entries">Lesson has no entries</string>
+    <string name="error_unable_to_continue_with_setup">Unable to continue with setup</string>
+    <string name="generating_test">Generating test</string>
+    <string name="error">Error</string>
+    <string name="error_not_good_question_type">Could not load question</string>
+    <string name="your_answer_point">Your answer:</string>
+    <string name="no_questions">There are no questions</string>
+    <string name="test_result">Test result</string>
+    <string name="continue_test">Continue test</string>
+    <string name="see_progress">See progress</string>
+    <string name="mixed_letters">Mixed letters</string>
+    <string name="custom_name">Custom name</string>
+    <string name="date">Date</string>
+    <string name="repeat">Repeat</string>
+    <string name="save_changes">Save changes</string>
+    <string name="prepare_test">Prepare test</string>
+    <string name="select_test_date">Select test date</string>
+    <string name="error_date_is_not_set">Must set a date or a repeat interval</string>
+    <string name="error_time_is_not_set">Time is not set</string>
+    <string name="test_name_optional">Test name (optional)</string>
+    <string name="error_name_is_same">Name is same</string>
+    <string name="error_test_custom_name_too_long">Name is too long</string>
+    <string name="time_point">Time:</string>
+    <string name="date_point">Date:</string>
+    <string name="monday_small">M</string>
+    <string name="tuesday_small">T</string>
+    <string name="wednesday_small">W</string>
+    <string name="thursday_small">T</string>
+    <string name="friday_small">F</string>
+    <string name="saturday_small">S</string>
+    <string name="sunday_small">S</string>
+    <string name="test_options">Test options</string>
+    <string name="test_type_point">Test type:</string>
+    <string name="values_selection_point">Values selection:</string>
+    <string name="use_counter_point">Use counter:</string>
+    <string name="error_can_not_process_selection">Can not process selection</string>
+    <string name="succes_test_updated">Test was updated</string>
+    <string name="error_test_updated">Test was not updated</string>
+    <string name="custom_selection">Custom selection</string>
+    <string name="use_specific_number_of_selections">Use specific numbers of selections</string>
+    <string name="test_saved">Test was saved</string>
+    <string name="error_can_not_save_test">Test can not be saved</string>
+    <string name="success_test_generated">Test was generated</string>
+    <string name="error_date_is_in_past">Date can not be in past</string>
+    <string name="error_time_is_in_past">Time can not be in past</string>
+    <string name="succes_delete_test">Test was deleted</string>
+    <string name="error_delete_test">Can not delete test</string>
+    <string name="error_can_not_set_schedule">Schedule can not be set</string>
+    <string name="error_can_not_set_schedule_because_date_is_in_past">Can not set schdule on because date is in past</string>
+    <string name="total_test_time">Total test time</string>
+    <string name="progress">Progress</string>
+    <string name="next_question">Next question</string>
+    <string name="submit">Submit</string>
+    <string name="submit_answer">Submit answer</string>
+    <string name="reverse">Reverse</string>
+    <string name="progress_saved">Progress saved</string>
+    <string name="error_progress_saved">Could not save progress</string>
+    <string name="test_time_finished">Total test time finished</string>
+    <string name="correct_answers">Correct answers</string>
+    <string name="error_can_not_open_results">Could not open results</string>
+    <string name="your_answer">Your answer</string>
+    <string name="question">Question</string>
+    <string name="current_order">Current order</string>
+    <string name="success_point">Success:</string>
+    <string name="generation_date_point">Generation date:</string>
+    <string name="general_info">General info</string>
+    <string name="progress_info">Progress info</string>
+    <string name="test_name_point">Test name:</string>
+    <string name="current_progress_point">Current progress:</string>
+    <string name="success_rate_point">Success rate:</string>
+    <string name="current_success_rate">Current success rate</string>
+    <string name="current_success_rate_point">Current success rate:</string>
+    <string name="correct_answers_point">Correct answers:</string>
+    <string name="result">Result</string>
+    <string name="question_point">Question:</string>
+    <string name="correct">Correct</string>
+    <string name="wrong">Wrong</string>
+    <string name="correct_answer_point">Correct answer:</string>
+    <string name="requirement_point">Requirement:</string>
+    <string name="results">Results</string>
+    <string name="options_point">Options:</string>
 
+    <string name="total_test_time_point">Test time:</string>
+    <string name="proposed_translation_point">Proposed translation:</string>
+    <string name="from_lesson_point">From lesson:</string>
 
 </resources>

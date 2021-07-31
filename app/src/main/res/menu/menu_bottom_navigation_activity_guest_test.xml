@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/main_group_menu_bottom_navigation_activity_guest_test">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
+        <item
+            android:id="@+id/guest_test_history_fragment_nav_graph_activity_guest_test"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:title="@string/history"/>
+
+        <!-- this will be replaced by fab button for add new test action -->
+        <item
+            android:id="@+id/no_action_nav_graph_activity_guest_test"
+            android:enabled="false"
+            android:title=""/>
+
+        <item
+            android:id="@+id/guest_scheduled_tests_fragment_nav_graph_activity_guest_test"
+            android:icon="@drawable/ic_baseline_schedule_24"
+            android:title="@string/schedule"/>
+    </group>
+</menu>

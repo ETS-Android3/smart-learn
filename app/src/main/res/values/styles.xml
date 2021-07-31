@@ -188,6 +188,11 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <!-- Use for custom buttons without border  -->
+    <style name="AppTheme.ButtonStyle.Borderless.Primary" parent="AppTheme.ButtonStyle">
+        <item name="android:background">@drawable/background_button_primary</item>
+    </style>
+
     <!-- Use for custom buttons when normal state background color is white  -->
     <style name="AppTheme.ButtonStyle.WithBorder.White" parent="@android:style/Widget.Button">
         <item name="android:textSize">16sp</item>
@@ -225,6 +230,18 @@
         <item name="android:layout_gravity">end|bottom</item>
     </style>
 
+    <!-- For floating button on bottom navigation menu -->
+    <style name="AppTheme.ButtonStyle.FloatingButton.BottomNavigation.Primary" parent="@style/Widget.Design.FloatingActionButton">
+        <!--  this will change fab border color -->
+        <item name="colorAccent">@color/black</item>
+
+        <!-- this will change fab background color  -->
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+
+        <!-- this will change icon color  -->
+        <item name="android:tint">@color/black</item>
+    </style>
+
     <!-- For alert buttons -->
     <style name="AppTheme.ButtonStyle.WithBorder.Alert" parent="AppTheme.ButtonStyle.WithBorder.White">
         <item name="android:textColor">@color/white</item>
@@ -235,6 +252,11 @@
     <style name="AppTheme.ButtonStyle.WithBorder.Info" parent="AppTheme.ButtonStyle.WithBorder.White">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/background_button_info</item>
+    </style>
+
+    <style name="AppTheme.ButtonStyle.WithBorder.True" parent="AppTheme.ButtonStyle.WithBorder.White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_button_true</item>
     </style>
 
     <!-- For info disabled buttons -->
@@ -253,6 +275,9 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="AppTheme.ButtonStyle.Borderless.Update.Primary" parent="AppTheme.ButtonStyle.Borderless.Update.White">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 
     <!--  =====================================================================================  -->
     <!--                                 Recycler view styles                                    -->
@@ -297,6 +322,11 @@
         <item name="colorSurface">@color/colorPrimary</item>
     </style>
 
+    <!-- This will work only for 'com.google.android.material.card.MaterialCardView' -->
+    <style name="AppTheme.CardView.MaterialDesign.MixedQuestionOption" parent="AppTheme.CardView.MaterialDesign">
+        <!-- this will change color for background when item is NOT selected -->
+        <item name="colorSurface">@color/white</item>
+    </style>
 
     <!--  =====================================================================================  -->
     <!--                       Bottom navigation view style                                      -->
