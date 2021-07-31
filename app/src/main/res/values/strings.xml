@@ -377,6 +377,20 @@
     <string name="success_deleting_expressions">Selected expressions were deleted</string>
     <string name="selected_point">Selected:</string>
 
+    <string name="january">January</string>
+    <string name="ferbruary">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+
+
     <string name="filter">Filter</string>
     <string name="no_expressions">No expressions</string>
 

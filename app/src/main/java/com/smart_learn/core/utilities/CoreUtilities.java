@@ -9,15 +9,19 @@ import androidx.core.util.Pair;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.smart_learn.R;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TimeZone;
 
 import timber.log.Timber;
 
@@ -43,6 +47,19 @@ public abstract class CoreUtilities {
           */
         public static final String DEFAULT_VALUE_FOR_SEARCH = " ";
 
+        // used for calendars
+        public static final int MIN_HOUR = 0;
+        public static final int MAX_HOUR = 23;
+        public static final int MIN_MINUTE = 0;
+        public static final int MAX_MINUTE = 59;
+        public static final int MIN_MONTH_DAY = 1;
+        public static final int MAX_MONTH_DAY = 31;
+        public static final int MIN_MONTH = 0;
+        public static final int MAX_MONTH = 11;
+        public static final int MIN_YEAR = 2021;
+        public static final int MAX_YEAR = 2100;
+
+
         /**
          * Use this in order to convert millisecond in a standard locale date format.
          *
@@ -65,6 +82,247 @@ public abstract class CoreUtilities {
          * */
         public static String longToDateTime(long milliseconds){
             return DateFormat.getDateTimeInstance().format(new Date(milliseconds));
+        }
+
+        /**
+         * @return Current hour of day.
+         * */
+        public static int getCurrentHour(){
+            return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.HOUR_OF_DAY);
+        }
+
+        /**
+         * @return Current minute of current hour.
+         * */
+        public static int getCurrentMinute(){
+            return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.MINUTE);
+        }
+
+        /**
+         * @return Current day of month.
+         * */
+        public static int getDayOfMonth(){
+            // https://beginnersbook.com/2014/01/how-to-get-current-day-month-year-day-of-weekmonthyear-in-java/
+            return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DATE);
+        }
+
+        /**
+         * @return Current month.
+         * */
+        public static int getMonth(){
+            // https://beginnersbook.com/2014/01/how-to-get-current-day-month-year-day-of-weekmonthyear-in-java/
+            return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.MONTH);
+        }
+
+        /**
+         * @return Current year.
+         * */
+        public static int getYear(){
+            // https://beginnersbook.com/2014/01/how-to-get-current-day-month-year-day-of-weekmonthyear-in-java/
+            return Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR);
+        }
+
+        /**
+         * Check if a year is leap or not.
+         *
+         * @param year Year to be checked.
+         *
+         * @return true if is a leap year, false otherwise.
+         * */
+        public static boolean isLeapYear(int year){
+            // https://stackoverflow.com/questions/1021324/java-code-for-calculating-leap-year
+            return new GregorianCalendar().isLeapYear(year);
+        }
+
+        /**
+         * Format date with format 'dayOfMonth X month X year' where X is a specified separator.
+         *
+         * @param dayOfMonth DayOfMonth [1,31]
+         * @param month [0,11]
+         * @param year [1,2100]
+         * @param separator Separator to be applied (e.g. '-', '/' ...).
+         *
+         * @return A formatted date with specified format, or a, empty value if parameters are not
+         *      valid.
+         * */
+        @NonNull
+        @NotNull
+        public static String getDateStringValue(int dayOfMonth, int month, int year, String separator){
+            final String emptyValue = "";
+
+            if(dayOfMonth < MIN_MONTH_DAY || dayOfMonth > MAX_MONTH_DAY ||
+                    month < MIN_MONTH || month > MAX_MONTH ||
+                    year < MIN_YEAR || year > MAX_YEAR){
+                return emptyValue;
+            }
+
+            switch (month){
+                case Calendar.JANUARY:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.january) + separator + year;
+                case Calendar.FEBRUARY:
+                    final boolean isLeapYear = isLeapYear(year);
+                    if(isLeapYear && dayOfMonth > 29){
+                        return emptyValue;
+                    }
+                    if(!isLeapYear && dayOfMonth > 28){
+                        return emptyValue;
+                    }
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.ferbruary) + separator + year;
+                case Calendar.MARCH:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.march) + separator + year;
+                case Calendar.APRIL:
+                    if(dayOfMonth > 30){
+                        return emptyValue;
+                    }
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.april) + separator + year;
+                case Calendar.MAY:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.may) + separator + year;
+                case Calendar.JUNE:
+                    if(dayOfMonth > 30){
+                        return emptyValue;
+                    }
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.june) + separator + year;
+                case Calendar.JULY:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.july) + separator + year;
+                case Calendar.AUGUST:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.august) + separator + year;
+                case Calendar.SEPTEMBER:
+                    if(dayOfMonth > 30){
+                        return emptyValue;
+                    }
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.september) + separator + year;
+                case Calendar.OCTOBER:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.october) + separator + year;
+                case Calendar.NOVEMBER:
+                    if(dayOfMonth > 30){
+                        return emptyValue;
+                    }
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.november) + separator + year;
+                case Calendar.DECEMBER:
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.december) + separator + year;
+                default:
+                    return emptyValue;
+            }
+        }
+
+
+        /**
+         * Check if hour is in INTERVAL [MIN_HOUR, MAX_HOUR]
+         *
+         * @param hour Hour to be checked.
+         *
+         * @return true if is in interval, false otherwise.
+         * */
+        private static boolean isHourValid(int hour){
+            return hour >= MIN_HOUR && hour <= MAX_HOUR;
+        }
+
+
+        /**
+         * Check if minute is in INTERVAL [MIN_MINUTE, MAX_MINUTE]
+         *
+         * @param minute Minute to be checked.
+         *
+         * @return true if is in interval, false otherwise.
+         * */
+        private static boolean isMinuteValid(int minute){
+            return minute >= MIN_MINUTE && minute <= MAX_MINUTE;
+        }
+
+
+        /**
+         * Check if day is in INTERVAL [MIN_MONTH_DAY, MAX_MONTH_DAY]
+         *
+         * @param day Day to be checked.
+         *
+         * @return true if is in interval, false otherwise.
+         * */
+        private static boolean isDayValid(int day){
+            return day >= MIN_MONTH_DAY && day <= MAX_MONTH_DAY;
+        }
+
+
+        /**
+         * Check if month is in INTERVAL [MIN_MONTH, MAX_MONTH]
+         *
+         * @param month Month to be checked.
+         *
+         * @return true if is in interval, false otherwise.
+         * */
+        private static boolean isMonthValid(int month){
+            return month >= MIN_MONTH && month <= MAX_MONTH;
+        }
+
+
+        /**
+         * Check if year is in INTERVAL [MIN_YEAR, MAX_YEAR]
+         *
+         * @param year Year to be checked.
+         *
+         * @return true if is in interval, false otherwise.
+         * */
+        private static boolean isYearValid(int year){
+            return year >= MIN_YEAR && year <= MAX_YEAR;
+        }
+
+
+        /**
+         * Check if given date and time is in future compared with current time.
+         *
+         * @param hour Hour to be compared.
+         * @param minute Minute to be compared.
+         * @param dayOfMonth Day to be compared.
+         * @param month Month to pe compared.
+         * @param year Year to be compared.
+         *
+         * @return true if date is in future, false otherwise.
+         * */
+        public static boolean isDateAndTimeInFuture(int hour, int minute, int dayOfMonth, int month, int year){
+            if(!isHourValid(hour) || !isMinuteValid(minute) || !isDayValid(dayOfMonth) || !isMonthValid(month) || !isYearValid(year)){
+                // TODO: here an exception throw can be made
+                return false;
+            }
+
+            // If 'Date currentDate = new GregorianCalendar().getTime()' is used comparison will fail
+            // because will set an entire time (including millisecond).
+            // In order to have a correct comparison set only needed values.
+            int currentHour = getCurrentHour();
+            int currentMinute = getCurrentMinute();
+            int currentYear = getYear();
+            int currentMonth = getMonth();
+            int currentDayOfMonth = getDayOfMonth();
+
+            Date currentDate = new GregorianCalendar(currentYear, currentMonth, currentDayOfMonth, currentHour, currentMinute).getTime();
+            Date givenDate = new GregorianCalendar(year, month, dayOfMonth, hour, minute).getTime();
+            return currentDate.compareTo(givenDate) < 0;
+        }
+
+
+        /**
+         * Check if given date is in future or equal compared with current time.
+         *
+         * @param dayOfMonth Day to be compared.
+         * @param month Month to pe compared.
+         * @param year Year to be compared.
+         *
+         * @return true if date is in future or equal, false otherwise.
+         * */
+        public static boolean isDateInFutureOrEqual(int dayOfMonth, int month, int year){
+            if(!isDayValid(dayOfMonth) || !isMonthValid(month) || !isYearValid(year)){
+                // TODO: here an exception throw can be made
+                return false;
+            }
+
+            // If 'Date currentDate = new GregorianCalendar().getTime()' is used comparison will fail
+            // because will set an entire time (including minute/seconds/millisecond).
+            // In order to have a correct comparison set only needed values.
+            int currentYear = getYear();
+            int currentMonth = getMonth();
+            int currentDayOfMonth = getDayOfMonth();
+
+            Date currentDate = new GregorianCalendar(currentYear, currentMonth, currentDayOfMonth).getTime();
+            Date givenDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
+            return currentDate.compareTo(givenDate) <= 0;
         }
 
 
