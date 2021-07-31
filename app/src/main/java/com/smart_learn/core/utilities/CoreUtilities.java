@@ -15,6 +15,7 @@ import com.smart_learn.presenter.helpers.ApplicationController;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -564,6 +565,31 @@ public abstract class CoreUtilities {
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Use to format a decimal value with pattern '#.##'
+         *
+         * @param value Value to be formatted.
+         *
+         * @return String value representing formatted value.
+         * */
+        public static String formatFloatValue(double value){
+            return formatFloatValue(value, "#.##");
+        }
+
+
+        /**
+         * Use to format a decimal value with specific pattern (e.g. '#.##')
+         *
+         * @param value Value to be formatted.
+         *
+         * @return String value representing formatted value.
+         * */
+        public static String formatFloatValue(double value, String pattern){
+            // https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
+            DecimalFormat decimalFormat = new DecimalFormat(pattern);
+            return decimalFormat.format(value);
         }
     }
 
