@@ -130,4 +130,8 @@ public abstract class BasicFragment <VM extends BasicAndroidViewModel> extends F
         }
     }
 
+    protected void showMessage(int id){
+        GeneralUtilities.showShortToastMessage(this.requireContext(),getString(id));
+    }
+
 }
