@@ -1,7 +1,6 @@
 package com.smart_learn.data.helpers;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -17,6 +16,14 @@ public interface DataCallbacks {
      * */
     interface General {
         void onSuccess();
+        void onFailure();
+    }
+
+    /**
+     * Use to manage Room db insertions when id is needed.
+     * */
+    interface RoomInsertionCallback {
+        void onSuccess(long id);
         void onFailure();
     }
 

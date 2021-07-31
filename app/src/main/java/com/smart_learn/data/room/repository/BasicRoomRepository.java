@@ -61,6 +61,25 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
         });
     }
 
+    public void insert(@NonNull T value, @Nullable DataCallbacks.RoomInsertionCallback callback) {
+        AppRoomDatabase.databaseWriteExecutor.execute(() -> {
+            long rowId = dao.insert(value);
+            if(callback == null){
+                return;
+            }
+
+            // https://androidx.de/androidx/room/EntityInsertionAdapter.html#insertAndReturnId(T)
+            // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
+            if(rowId == INSERTION_FAILED){
+                Timber.e("%s Insertion failed ", Logs.UNEXPECTED_ERROR);
+                callback.onFailure();
+            }
+            else{
+                callback.onSuccess(rowId);
+            }
+        });
+    }
+
 
     /**
      * Used to update one value in database.

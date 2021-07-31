@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 /**
  * Base class for Room services operations.
  *
@@ -53,6 +55,28 @@ public abstract class BasicRoomService <T extends DataHelpers.RoomBasicInfoHelpe
         repositoryInstance.insert(value, callback);
     }
 
+    public void insert(T value, @Nullable DataCallbacks.RoomInsertionCallback callback) {
+        if(callback == null){
+            callback = new DataCallbacks.RoomInsertionCallback() {
+                @Override
+                public void onSuccess(long id) {
+                    Timber.i("Item with id [" + id + "] inserted");
+                }
+
+                @Override
+                public void onFailure() {
+                    Timber.w("Insertion for value [" + value.toString() + "] failed");
+                }
+            };
+        }
+
+        if(!isItemValid(value)){
+            callback.onFailure();
+            return;
+        }
+
+        repositoryInstance.insert(value, callback);
+    }
 
     /**
      * Used to update one value in database.
