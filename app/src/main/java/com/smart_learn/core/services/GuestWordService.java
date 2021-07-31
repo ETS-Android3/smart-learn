@@ -44,6 +44,12 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
         return tmp;
     }
 
+    @NonNull
+    public List<Word> getLessonWords(int lessonId){
+        List<Word> tmp = repositoryInstance.getLessonWords(lessonId);
+        return tmp == null ? new ArrayList<>() : tmp;
+    }
+
     public LiveData<Word> getSampleLiveWord(int wordId) {
         return repositoryInstance.getSampleLiveWord(wordId);
     }

@@ -20,6 +20,10 @@ public interface ExpressionDao extends BasicDao<Expression> {
     @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
     LiveData<List<Expression>> getLessonLiveExpressions(int lessonId);
 
+    @Transaction
+    @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
+    List<Expression> getLessonExpressions(int lessonId);
+
     @Query("DELETE FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE isSelected AND fk_lesson_id == :lessonId")
     void deleteSelectedItems(int lessonId);
 

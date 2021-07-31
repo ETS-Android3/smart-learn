@@ -20,6 +20,10 @@ public interface WordDao extends BasicDao<Word>  {
     @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id == :lessonId")
     LiveData<List<Word>> getLessonLiveWords(int lessonId);
 
+    @Transaction
+    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id == :lessonId")
+    List<Word> getLessonWords(int lessonId);
+
     @Query("DELETE FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE isSelected AND fk_lesson_id == :lessonId")
     void deleteSelectedItems(int lessonId);
 

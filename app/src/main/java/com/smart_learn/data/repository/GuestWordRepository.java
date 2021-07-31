@@ -39,6 +39,10 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
         return currentLessonLiveWordList;
     }
 
+    public List<Word> getLessonWords(int lessonId){
+        return dao.getLessonWords(lessonId);
+    }
+
     public LiveData<Word> getSampleLiveWord(int wordId) {
         return dao.getSampleLiveWord(wordId);
     }

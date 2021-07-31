@@ -44,6 +44,12 @@ public class GuestExpressionService extends BasicRoomService<Expression, GuestEx
         return tmp;
     }
 
+    @NonNull
+    public List<Expression> getLessonExpressions(int lessonId){
+        List<Expression> tmp = repositoryInstance.getLessonExpressions(lessonId);
+        return tmp == null ? new ArrayList<>() : tmp;
+    }
+
     public LiveData<Expression> getSampleLiveExpression(int expressionId) {
         return repositoryInstance.getSampleLiveExpression(expressionId);
     }
