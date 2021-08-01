@@ -395,6 +395,11 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
             extractedTest.setFinished(true);
         }
 
+        // update success rate
+        if(extractedTest.getTotalQuestions() != 0){
+            extractedTest.setSuccessRate((float)extractedTest.getCorrectAnswers() / (float)extractedTest.getTotalQuestions());
+        }
+
         // finally update test and save progress
         updateTest(extractedTest, new DataCallbacks.General() {
             @Override

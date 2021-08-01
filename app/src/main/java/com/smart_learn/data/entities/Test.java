@@ -64,6 +64,8 @@ public abstract class Test {
     @NotNull
     private String customTestName;
     protected long testGenerationDate;
+    // correct questions/total questions (used for average calculus in queries)
+    private float successRate;
 
     // is hidden is used to hide test from user is this chose this option
     private boolean isHidden;
@@ -296,6 +298,7 @@ public abstract class Test {
 
         if (getType() != test.getType()) return false;
         if (getTestGenerationDate() != test.getTestGenerationDate()) return false;
+        if (Float.compare(test.getSuccessRate(), getSuccessRate()) != 0) return false;
         if (isHidden() != test.isHidden()) return false;
         if (isFinished() != test.isFinished()) return false;
         if (isGenerated() != test.isGenerated()) return false;
@@ -328,6 +331,7 @@ public abstract class Test {
         result = 31 * result + getTestName().hashCode();
         result = 31 * result + getCustomTestName().hashCode();
         result = 31 * result + (int) (getTestGenerationDate() ^ (getTestGenerationDate() >>> 32));
+        result = 31 * result + (getSuccessRate() != +0.0f ? Float.floatToIntBits(getSuccessRate()) : 0);
         result = 31 * result + (isHidden() ? 1 : 0);
         result = 31 * result + (isFinished() ? 1 : 0);
         result = 31 * result + (isGenerated() ? 1 : 0);

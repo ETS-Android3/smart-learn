@@ -64,12 +64,12 @@ public class TestInfoDialog extends DialogFragment {
 
         if(testInfo.getTotalQuestions() != 0){
             if(testInfo.isFinished()){
-                progressDescription = CoreUtilities.General.formatFloatValue((float)testInfo.getCorrectAnswers() / (float)testInfo.getTotalQuestions()) + " %";
+                progressDescription = CoreUtilities.General.formatFloatValue(testInfo.getSuccessRate()) + " %";
                 extraProgressDescription = testInfo.getCorrectAnswers() + " " + ApplicationController.getInstance().getString(R.string.from) + " " + testInfo.getTotalQuestions();
             }
             else{
                 progressDescription = testInfo.getAnsweredQuestions() + "/" + testInfo.getTotalQuestions();
-                extraProgressDescription = CoreUtilities.General.formatFloatValue((float)testInfo.getCorrectAnswers() / (float)testInfo.getTotalQuestions()) + " %";
+                extraProgressDescription = CoreUtilities.General.formatFloatValue(testInfo.getSuccessRate()) + " %";
             }
         }
         else{

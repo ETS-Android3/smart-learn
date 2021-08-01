@@ -76,13 +76,7 @@ public class GuestTestHistoryAdapter extends BasicListAdapter<RoomTest, GuestTes
             liveTest.setValue(item);
 
             if(item.isFinished()){
-                if(item.getTotalQuestions() != 0){
-                    String value = CoreUtilities.General.formatFloatValue((float)item.getCorrectAnswers() / (float)item.getTotalQuestions()) + " %";
-                    liveExtraDescription.setValue(value);
-                    return;
-                }
-
-                liveExtraDescription.setValue("");
+                liveExtraDescription.setValue(CoreUtilities.General.formatFloatValue(item.getSuccessRate()) + " %");
                 return;
             }
 
