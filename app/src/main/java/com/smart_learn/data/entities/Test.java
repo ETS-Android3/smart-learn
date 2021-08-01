@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import lombok.Getter;
@@ -19,6 +20,38 @@ import timber.log.Timber;
 @Setter
 @ToString
 public abstract class Test {
+
+    // Used for Firestore. At boolean fields if 'is' appears in front leave fields without 'is'  in
+    // order to work with Firestore.
+    public interface Fields {
+        String TYPE_FIELD_NAME = "type";
+        String TEST_NAME_FIELD_NAME = "testName";
+        String CUSTOM_TEST_NAME_FIELD_NAME = "customTestName";
+        String TEST_GENERATION_DATE_FIELD_NAME = "testGenerationDate";
+        String SUCCESS_RATE_FIELD_NAME = "successRate";
+        String IS_HIDDEN_FIELD_NAME = "hidden";
+        String IS_FINISHED_FIELD_NAME = "finished";
+        String IS_GENERATED_FIELD_NAME = "generated";
+        String QUESTIONS_JSON_FIELD_NAME = "questionsJson";
+        String TOTAL_QUESTIONS_FIELD_NAME = "totalQuestions";
+        String ANSWERED_QUESTIONS_FIELD_NAME = "answeredQuestions";
+        String CORRECT_ANSWERS_FIELD_NAME = "correctAnswers";
+        String TEST_TOTAL_TIME_FIELD_NAME = "testTotalTime";
+        String USE_CUSTOM_SELECTION_FIELD_NAME = "useCustomSelection";
+        String NR_OF_VALUES_FOR_GENERATING_FIELD_NAME = "nrOfValuesForGenerating";
+        String QUESTION_COUNTER_FIELD_NAME = "questionCounter";
+        String IS_SCHEDULED_FIELD_NAME = "scheduled";
+        String IS_SCHEDULE_ACTIVE_FIELD_NAME = "scheduleActive";
+        String HOUR_FIELD_NAME = "hour";
+        String MINUTE_FIELD_NAME = "minute";
+        String ONE_TIME_FIELD_NAME = "oneTime";
+        String DAY_OF_MONTH_FIELD_NAME = "dayOfMonth";
+        String MONTH_FIELD_NAME = "month";
+        String YEAR_FIELD_NAME = "year";
+        String DAYS_STATUS_FIELD_NAME = "daysStatus";
+        String LESSON_ID_FIELD_NAME = "lessonId";
+        String LESSON_NAME_FIELD_NAME = "lessonName";
+    }
 
     public interface Types {
         int NO_TYPE = 0;
@@ -287,6 +320,43 @@ public abstract class Test {
         value = value.trim();
         value = value.substring(0, value.length() - 1);
         return value;
+    }
+
+    public static HashMap<String, Object> convertDocumentToHashMap(Test test){
+        if(test == null){
+            return new HashMap<>();
+        }
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(Fields.TYPE_FIELD_NAME, test.getType());
+        data.put(Fields.TEST_NAME_FIELD_NAME, test.getTestName());
+        data.put(Fields.CUSTOM_TEST_NAME_FIELD_NAME, test.getCustomTestName());
+        data.put(Fields.TEST_GENERATION_DATE_FIELD_NAME, test.getTestGenerationDate());
+        data.put(Fields.SUCCESS_RATE_FIELD_NAME, test.getSuccessRate());
+        data.put(Fields.IS_HIDDEN_FIELD_NAME, test.isHidden());
+        data.put(Fields.IS_FINISHED_FIELD_NAME, test.isFinished());
+        data.put(Fields.IS_GENERATED_FIELD_NAME, test.isGenerated());
+        data.put(Fields.QUESTIONS_JSON_FIELD_NAME, test.getQuestionsJson());
+        data.put(Fields.TOTAL_QUESTIONS_FIELD_NAME, test.getTotalQuestions());
+        data.put(Fields.ANSWERED_QUESTIONS_FIELD_NAME, test.getAnsweredQuestions());
+        data.put(Fields.CORRECT_ANSWERS_FIELD_NAME, test.getCorrectAnswers());
+        data.put(Fields.TEST_TOTAL_TIME_FIELD_NAME, test.getTestTotalTime());
+        data.put(Fields.USE_CUSTOM_SELECTION_FIELD_NAME, test.isUseCustomSelection());
+        data.put(Fields.NR_OF_VALUES_FOR_GENERATING_FIELD_NAME, test.getNrOfValuesForGenerating());
+        data.put(Fields.QUESTION_COUNTER_FIELD_NAME, test.getQuestionCounter());
+        data.put(Fields.IS_SCHEDULED_FIELD_NAME, test.isScheduled());
+        data.put(Fields.IS_SCHEDULE_ACTIVE_FIELD_NAME, test.isScheduleActive());
+        data.put(Fields.HOUR_FIELD_NAME, test.getHour());
+        data.put(Fields.MINUTE_FIELD_NAME, test.getMinute());
+        data.put(Fields.ONE_TIME_FIELD_NAME, test.isOneTime());
+        data.put(Fields.DAY_OF_MONTH_FIELD_NAME, test.getDayOfMonth());
+        data.put(Fields.MONTH_FIELD_NAME, test.getMonth());
+        data.put(Fields.YEAR_FIELD_NAME, test.getYear());
+        data.put(Fields.DAYS_STATUS_FIELD_NAME, test.getDaysStatus());
+        data.put(Fields.LESSON_ID_FIELD_NAME, test.getLessonId());
+        data.put(Fields.LESSON_NAME_FIELD_NAME, test.getLessonName());
+
+        return data;
     }
 
     @Override
