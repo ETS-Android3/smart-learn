@@ -33,10 +33,10 @@ public class TestService {
 
     public static String NO_TEST_ID = "NO_TEST_ID";
 
-    public static final int SHOW_LOCAL_AND_ONLINE_TESTS = 1;
-    public static final int SHOW_ONLY_LOCAL_TESTS = 2;
-    public static final int SHOW_ONLY_LOCAL_FINISHED_TESTS = 3;
-    public static final int SHOW_ONLY_LOCAL_IN_PROGRESS_TESTS = 4;
+    public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS = 1;
+    public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS = 2;
+    public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS = 3;
+    public static final int SHOW_ONLY_LOCAL_SCHEDULED_TESTS = 4;
     public static final int SHOW_ONLY_ONLINE_TESTS = 5;
 
     private static TestService instance;

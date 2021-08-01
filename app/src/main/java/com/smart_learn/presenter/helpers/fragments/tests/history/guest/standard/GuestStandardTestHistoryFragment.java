@@ -88,13 +88,13 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
 
         int option = SettingsService.getInstance().getGuestTestFilterOption();
         switch (option){
-            case TestService.SHOW_ONLY_LOCAL_FINISHED_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS:
                 bottomSheetBinding.setIsFinishedSelected(true);
                 break;
-            case TestService.SHOW_ONLY_LOCAL_IN_PROGRESS_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS:
                 bottomSheetBinding.setIsInProgressSelected(true);
                 break;
-            case TestService.SHOW_ONLY_LOCAL_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS:
             default:
                 bottomSheetBinding.setIsAllSelected(true);
                 break;
@@ -112,7 +112,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                     return;
                 }
                 bottomSheetDialog.dismiss();
-                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_TESTS);
+                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS);
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });
@@ -125,7 +125,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                     return;
                 }
                 bottomSheetDialog.dismiss();
-                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_FINISHED_TESTS);
+                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS);
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });
@@ -138,7 +138,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                     return;
                 }
                 bottomSheetDialog.dismiss();
-                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_IN_PROGRESS_TESTS);
+                SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS);
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });

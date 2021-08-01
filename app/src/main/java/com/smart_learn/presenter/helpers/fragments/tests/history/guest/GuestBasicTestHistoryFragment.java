@@ -97,13 +97,13 @@ public abstract class GuestBasicTestHistoryFragment <VM extends GuestBasicTestHi
         // then attach observer to specific query
         int option = SettingsService.getInstance().getGuestTestFilterOption();
         switch (option){
-            case TestService.SHOW_ONLY_LOCAL_FINISHED_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS:
                 TestService.getInstance().getAllLiveFinishedTests().observe(this, observer);
                 break;
-            case TestService.SHOW_ONLY_LOCAL_IN_PROGRESS_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS:
                 TestService.getInstance().getAllLiveInProgressTests().observe(this, observer);
                 break;
-            case TestService.SHOW_ONLY_LOCAL_TESTS:
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS:
             default:
                 TestService.getInstance().getAllLiveNonScheduledTests().observe(this, observer);
                 break;
