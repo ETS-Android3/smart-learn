@@ -20,6 +20,8 @@ public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressi
     public static final String NO_LESSON_SELECTED = "";
     protected String currentLessonId = NO_LESSON_SELECTED;
 
+    protected void afterAdapterIsSet(){}
+
     @Override
     protected void setViewModel(){
         super.setViewModel();
@@ -90,6 +92,8 @@ public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressi
                         if(viewModel.getAdapter() != null){
                             recyclerView.setAdapter(viewModel.getAdapter());
                         }
+
+                        afterAdapterIsSet();
                     }
                 });
     }
