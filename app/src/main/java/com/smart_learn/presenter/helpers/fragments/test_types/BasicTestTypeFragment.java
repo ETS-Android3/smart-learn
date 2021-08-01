@@ -93,6 +93,11 @@ public abstract class BasicTestTypeFragment <VM extends BasicTestTypeViewModel> 
         customGoBack();
     }
 
+    public void goBack(int messageId){
+        showMessage(messageId);
+        customGoBack();
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
         super.onOptionsItemSelected(item);
