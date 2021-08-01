@@ -544,5 +544,11 @@
     <string name="total_test_time_point">Test time:</string>
     <string name="proposed_translation_point">Proposed translation:</string>
     <string name="from_lesson_point">From lesson:</string>
+    <string name="start_new_online_test">Start new online test</string>
+    <string name="error_can_not_open_test">Can not open test info</string>
+    <string name="show_all_local">Show all local</string>
+    <string name="show_only_local_finished">Show only local finished</string>
+    <string name="show_only_local_in_progress">Show only local in progress</string>
+    <string name="show_online">Show online</string>
 
 </resources>

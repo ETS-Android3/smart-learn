@@ -12,5 +12,9 @@
 
     <group
         android:id="@+id/user_group_menu_card_view_test_history">
+        <item
+            android:id="@+id/action_user_hide_menu_card_view_test_history"
+            android:title="@string/hide"
+            app:showAsAction="never"/>
     </group>
 </menu>

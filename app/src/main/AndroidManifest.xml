@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presenter.activities.test.guest.GuestTestActivity"></activity>
+        <activity android:name=".presenter.activities.test.user.UserTestActivity"></activity>
+        <activity android:name=".presenter.activities.test.guest.GuestTestActivity" />
         <activity android:name=".presenter.activities.test.TestActivity" />
         <activity android:name=".presenter.activities.notebook.user.UserNotebookActivity" />
         <activity android:name=".presenter.activities.notebook.guest.GuestNotebookActivity" />

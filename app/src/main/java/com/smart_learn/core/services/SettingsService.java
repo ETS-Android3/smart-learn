@@ -11,6 +11,7 @@ public class SettingsService {
     private static final String SHOW_OPTIONS_KEY = "SHOW_OPTIONS_KEY";
     private static final String USER_LESSON_SHOW_OPTION = "USER_LESSON_SHOW_OPTION";
     private static final String GUEST_TEST_FILTER_OPTION = "GUEST_TEST_FILTER_OPTION";
+    private static final String USER_TEST_FILTER_OPTION = "USER_TEST_FILTER_OPTION";
 
     private static SettingsService instance;
 
@@ -47,5 +48,17 @@ public class SettingsService {
     public synchronized int getGuestTestFilterOption(){
         SharedPreferences preferences = ApplicationController.getInstance().getSharedPreferences(SHOW_OPTIONS_KEY, Context.MODE_PRIVATE);
         return preferences.getInt(GUEST_TEST_FILTER_OPTION, NO_SHOW_OPTION);
+    }
+
+    public synchronized void saveUserTestFilterOption(int option){
+        SharedPreferences preferences = ApplicationController.getInstance().getSharedPreferences(SHOW_OPTIONS_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(USER_TEST_FILTER_OPTION, option);
+        editor.apply();
+    }
+
+    public synchronized int getUserTestFilterOption(){
+        SharedPreferences preferences = ApplicationController.getInstance().getSharedPreferences(SHOW_OPTIONS_KEY, Context.MODE_PRIVATE);
+        return preferences.getInt(USER_TEST_FILTER_OPTION, NO_SHOW_OPTION);
     }
 }

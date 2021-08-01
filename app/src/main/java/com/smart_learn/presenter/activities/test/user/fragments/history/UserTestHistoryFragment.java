@@ -1,0 +1,95 @@
+package com.smart_learn.presenter.activities.test.user.fragments.history;
+
+import android.text.TextUtils;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.smart_learn.R;
+import com.smart_learn.core.services.test.TestService;
+import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.firebase.firestore.entities.TestDocument;
+import com.smart_learn.presenter.activities.test.TestActivity;
+import com.smart_learn.presenter.activities.test.user.UserTestActivity;
+import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
+import com.smart_learn.presenter.activities.test.user.fragments.test_types.true_or_false.UserTrueOrFalseTestViewModel;
+import com.smart_learn.presenter.helpers.fragments.tests.history.user.standard.UserStandardTestHistoryFragment;
+
+import org.jetbrains.annotations.NotNull;
+
+import lombok.Getter;
+import timber.log.Timber;
+
+
+public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<UserTestHistoryViewModel> {
+
+    @Getter
+    private UserTestSharedViewModel sharedViewModel;
+
+    @NonNull
+    @Override
+    protected @NotNull Class<UserTestHistoryViewModel> getModelClassForViewModel() {
+        return UserTestHistoryViewModel.class;
+    }
+
+    @Override
+    protected boolean isFragmentWithBottomNav() {
+        return true;
+    }
+
+    @Override
+    protected void onSeeTestResultPress(@NonNull @NotNull DocumentSnapshot item) {
+        goToUserTestResultsFragment(item);
+    }
+
+    @Override
+    protected void onContinueTestPress(@NonNull @NotNull DocumentSnapshot item) {
+        viewModel.continueTest(UserTestHistoryFragment.this, item);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((TestActivity<?>)requireActivity()).showBottomNavigationMenu();
+        sharedViewModel.setSelectedTestHistoryId("");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull @NotNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            ((UserTestActivity)requireActivity()).goToMainActivity();
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    protected void setViewModel(){
+        super.setViewModel();
+
+        // set shared view model
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(UserTestSharedViewModel.class);
+    }
+
+    private void goToUserTestResultsFragment(DocumentSnapshot testSnapshot){
+        TestDocument test = testSnapshot.toObject(TestDocument.class);
+        if(test == null || TextUtils.isEmpty(testSnapshot.getId())){
+            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_test_can_not_be_opened));
+            return;
+        }
+
+        ((UserTestActivity)requireActivity()).goToUserTestResultsFragment(testSnapshot.getId(), test.getType());
+    }
+
+    protected void goToContinueTestFragment(int testType, String testId){
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(testType, testId);
+    }
+}
