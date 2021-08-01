@@ -6,24 +6,18 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
-import com.smart_learn.presenter.activities.test.user.fragments.test_types.true_or_false.UserTrueOrFalseTestViewModel;
 import com.smart_learn.presenter.helpers.fragments.tests.history.user.standard.UserStandardTestHistoryFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import lombok.Getter;
-import timber.log.Timber;
 
 
 public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<UserTestHistoryViewModel> {
@@ -49,8 +43,12 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
 
     @Override
     protected void onContinueTestPress(@NonNull @NotNull DocumentSnapshot item) {
-        viewModel.continueTest(UserTestHistoryFragment.this, item);
-
+        TestDocument test = item.toObject(TestDocument.class);
+        if(test == null){
+            showMessage(R.string.error_can_not_continue);
+            return;
+        }
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(test.getType(), item.getId());
     }
 
     @Override
@@ -89,7 +87,4 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
         ((UserTestActivity)requireActivity()).goToUserTestResultsFragment(testSnapshot.getId(), test.getType());
     }
 
-    protected void goToContinueTestFragment(int testType, String testId){
-        ((UserTestActivity)requireActivity()).goToActivateTestFragment(testType, testId);
-    }
 }

@@ -78,29 +78,6 @@ public class UserTestSetupViewModel extends LocalTestSetupViewModel {
             return;
         }
 
-        new ConnexionChecker(new ConnexionChecker.Callback() {
-            @Override
-            public void isConnected() {
-                continueWithSaveScheduledTest(fragment, test);
-            }
-            @Override
-            public void networkDisabled() {
-                liveToastMessage.postValue(fragment.getString(R.string.error_no_network));
-            }
-            @Override
-            public void internetNotAvailable() {
-                liveToastMessage.postValue(fragment.getString(R.string.error_no_internet_connection));
-            }
-            @Override
-            public void notConnected() {
-                // no action needed here
-            }
-        }).check();
-
-
-    }
-
-    private void continueWithSaveScheduledTest(UserTestSetupFragment fragment, Test test){
         TestService.getInstance().saveSimpleUserScheduledTest(test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
@@ -115,5 +92,7 @@ public class UserTestSetupViewModel extends LocalTestSetupViewModel {
                 });
             }
         });
+
     }
+
 }

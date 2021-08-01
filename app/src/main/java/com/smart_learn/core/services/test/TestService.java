@@ -450,8 +450,7 @@ public class TestService {
     private void tryToGenerateUserTest(ArrayList<LessonEntrance> valueList, Test testOptions, int questionsNr, TestService.TestGenerationCallback callback){
         UserService.getInstance()
                 .getUserDocumentReference()
-                // get data only from server in order to be fresh data
-                .get(Source.SERVER)
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {

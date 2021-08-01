@@ -37,45 +37,29 @@ public class UserFullWriteTestViewModel extends FullWriteTestViewModel {
             return;
         }
 
-        new ConnexionChecker(new ConnexionChecker.Callback() {
-            @Override
-            public void isConnected() {
-                TestService.getInstance()
-                        .getLocalTestsCollection()
-                        .document(testId)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                                if(!task.isSuccessful() || task.getResult() == null){
-                                    Timber.w("result is not valid");
-                                    fragment.requireActivity().runOnUiThread(fragment::goBack);
-                                    return;
-                                }
-                                extractedTestSnapshot = task.getResult();
-                                TestDocument test = extractedTestSnapshot.toObject(TestDocument.class);
-                                if(test == null){
-                                    fragment.requireActivity().runOnUiThread(fragment::goBack);
-                                    Timber.w("test is null");
-                                    return;
-                                }
-                                fragment.requireActivity().runOnUiThread(() -> UserFullWriteTestViewModel.super.setExtractedTest(fragment, test));
-                            }
-                        });
-            }
-            @Override
-            public void networkDisabled() {
-                fragment.requireActivity().runOnUiThread(() -> fragment.goBack(R.string.error_no_network));
-            }
-            @Override
-            public void internetNotAvailable() {
-                fragment.requireActivity().runOnUiThread(() -> fragment.goBack(R.string.error_no_internet_connection));
-            }
-            @Override
-            public void notConnected() {
-                // no action needed here
-            }
-        }).check();
+        TestService.getInstance()
+                .getLocalTestsCollection()
+                .document(testId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                        if(!task.isSuccessful() || task.getResult() == null){
+                            Timber.w("result is not valid");
+                            fragment.requireActivity().runOnUiThread(fragment::goBack);
+                            return;
+                        }
+                        extractedTestSnapshot = task.getResult();
+                        TestDocument test = extractedTestSnapshot.toObject(TestDocument.class);
+                        if(test == null){
+                            fragment.requireActivity().runOnUiThread(fragment::goBack);
+                            Timber.w("test is null");
+                            return;
+                        }
+                        fragment.requireActivity().runOnUiThread(() -> UserFullWriteTestViewModel.super.setExtractedTest(fragment, test));
+                    }
+                });
+
 
     }
 

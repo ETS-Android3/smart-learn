@@ -43,31 +43,13 @@ public class UserScheduledTestsFragment extends UserStandardScheduledTestsFragme
     @Override
     protected void onAdapterSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
         super.onAdapterSimpleClick(item);
-        viewModel.checkConnexion(UserScheduledTestsFragment.this, new UserScheduledTestsViewModel.Callback() {
-            @Override
-            public void onFinish(boolean isConnected) {
-                if(!isConnected){
-                    return;
-                }
-                goToUserScheduledTestInfoFragmentForUpdate(item);
-            }
-        });
+        goToUserScheduledTestInfoFragmentForUpdate(item);
     }
 
     @Override
     protected void onFloatingActionButtonPress() {
         super.onFloatingActionButtonPress();
-        viewModel.checkConnexion(UserScheduledTestsFragment.this, new UserScheduledTestsViewModel.Callback() {
-            @Override
-            public void onFinish(boolean isConnected) {
-                if(!isConnected){
-                    return;
-                }
-                sharedViewModel.setGeneratedTest(new TestDocument(new DocumentMetadata(UserService.getInstance().getUserUid(),
-                        System.currentTimeMillis(), new ArrayList<>())));
-                ((UserTestActivity)requireActivity()).goToUserScheduledTestInfoFragment();
-            }
-        });
+        goToUserScheduledTestInfoFragment();
     }
 
     @Override
@@ -110,6 +92,10 @@ public class UserScheduledTestsFragment extends UserStandardScheduledTestsFragme
         ((UserTestActivity)requireActivity()).goToUserScheduledTestInfoFragmentForUpdate(test.getId());
     }
 
-
+    private void goToUserScheduledTestInfoFragment(){
+        sharedViewModel.setGeneratedTest(new TestDocument(new DocumentMetadata(UserService.getInstance().getUserUid(),
+                System.currentTimeMillis(), new ArrayList<>())));
+        ((UserTestActivity)requireActivity()).goToUserScheduledTestInfoFragment();
+    }
 
 }

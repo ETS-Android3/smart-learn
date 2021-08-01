@@ -69,28 +69,6 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
 
         fragment.showProgressDialog("", fragment.getString(R.string.generating_test));
 
-        new ConnexionChecker(new ConnexionChecker.Callback() {
-            @Override
-            public void isConnected() {
-                continueWithGeneratingTest(fragment, test, selectedExpressions);
-            }
-            @Override
-            public void networkDisabled() {
-                liveToastMessage.postValue(fragment.getString(R.string.error_no_network));
-            }
-            @Override
-            public void internetNotAvailable() {
-                liveToastMessage.postValue(fragment.getString(R.string.error_no_internet_connection));
-            }
-            @Override
-            public void notConnected() {
-                fragment.requireActivity().runOnUiThread(fragment::closeProgressDialog);
-            }
-        }).check();
-
-    }
-
-    private void continueWithGeneratingTest(UserSelectExpressionsFragment fragment, Test test, ArrayList<ExpressionDocument> selectedExpressions){
         TestService.getInstance().generateUserExpressionTest(selectedExpressions, test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
@@ -115,4 +93,5 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
             }
         });
     }
+
 }
