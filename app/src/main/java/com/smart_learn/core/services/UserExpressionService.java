@@ -36,6 +36,10 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
         return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId, limit);
     }
 
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId) {
+        return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId);
+    }
+
     public Query getQueryForFilter(String lessonDocumentId, long limit, String value) {
         if(value == null){
             value = "";

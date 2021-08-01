@@ -36,6 +36,10 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
         return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId, limit);
     }
 
+    public Query getQueryForAllLessonWords(String lessonDocumentId) {
+        return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId);
+    }
+
     public Query getQueryForFilter(String lessonDocumentId, long limit, String value) {
         if(value == null){
             value = "";

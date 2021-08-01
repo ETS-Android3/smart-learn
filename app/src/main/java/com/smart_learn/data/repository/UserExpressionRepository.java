@@ -48,6 +48,10 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
                 .limit(limit);
     }
 
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId) {
+        return getExpressionsCollectionReference(lessonDocumentId);
+    }
+
     public Query getQueryForFilterForLessonExpressions(String lessonDocumentId, long limit, @NonNull @NotNull String value) {
         return getExpressionsCollectionReference(lessonDocumentId)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)

@@ -48,6 +48,10 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
                 .limit(limit);
     }
 
+    public Query getQueryForAllLessonWords(String lessonDocumentId) {
+        return getWordsCollectionReference(lessonDocumentId);
+    }
+
     public Query getQueryForFilterForLessonWords(String lessonDocumentId, long limit, @NonNull @NotNull String value) {
         return getWordsCollectionReference(lessonDocumentId)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
