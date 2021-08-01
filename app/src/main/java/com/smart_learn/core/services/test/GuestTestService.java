@@ -59,11 +59,11 @@ class GuestTestService extends BasicRoomService<RoomTest, GuestTestRepository> {
         return repositoryInstance.getLiveNumberOfNotHiddenNonScheduledTests();
     }
 
-    public Integer getNumberOfNonScheduledTests(){
+    protected Integer getNumberOfNonScheduledTests(){
         return repositoryInstance.getNumberOfNonScheduledTests();
     }
 
-    public Integer getNumberOfScheduledTests(){
+    protected Integer getNumberOfScheduledTests(){
         return repositoryInstance.getNumberOfScheduledTests();
     }
 
