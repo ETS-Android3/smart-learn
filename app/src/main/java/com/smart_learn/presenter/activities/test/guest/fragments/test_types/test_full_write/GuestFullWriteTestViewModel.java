@@ -28,7 +28,7 @@ public class GuestFullWriteTestViewModel extends FullWriteTestViewModel {
             RoomTest test = TestService.getInstance().getTest(Test.getTestIdInteger(getTestId()));
             if(test == null){
                 Timber.w("test is null");
-                fragment.goBack();
+                fragment.requireActivity().runOnUiThread(fragment::goBack);
                 return;
             }
             fragment.requireActivity().runOnUiThread(() -> super.setExtractedTest(fragment, test));
