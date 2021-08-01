@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:id="@+id/search_group_menu_layout_with_recycler_view"
         android:visible="false">
+        <!-- Leave  app:showAsAction="always|collapseActionView" in order not to hide search view after collapse.
+        https://stackoverflow.com/questions/42106738/after-collapse-searchview-disappear-from-toolbar/50773437#50773437 -->
         <item
             android:id="@+id/action_search_menu_layout_with_recycler_view"
             android:layout_width="match_parent"
@@ -11,7 +14,8 @@
             android:icon="@drawable/ic_baseline_search_24"
             android:title="@string/search"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
-            app:showAsAction="ifRoom|collapseActionView" />
+            app:showAsAction="always|collapseActionView"
+            tools:ignore="AlwaysShowAction" />
     </group>
 
     <group android:id="@+id/secondary_group_menu_layout_with_recycler_view">
