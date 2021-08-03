@@ -30,6 +30,8 @@ public abstract class BasicFirestoreRepository <T> {
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
                             @NonNull @NotNull DataCallbacks.General callback){
 
+        // FIXME: same problem as in commitBatch method.
+        /*
         collectionReference
                 .add(item)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -45,11 +47,17 @@ public abstract class BasicFirestoreRepository <T> {
                         callback.onFailure();
                     }
                 });
+        */
+        collectionReference
+                .add(item);
+        callback.onSuccess();
     }
 
     public void updateDocument(@NonNull @NotNull Map<String,Object> updatedInfo, @NonNull @NotNull DocumentSnapshot documentSnapshot,
                                @NonNull @NotNull DataCallbacks.General callback){
 
+        // FIXME: same problem as in commitBatch method.
+        /*
         documentSnapshot.getReference()
                 .update(updatedInfo)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -65,11 +73,18 @@ public abstract class BasicFirestoreRepository <T> {
                         callback.onFailure();
                     }
                 });
+         */
+
+        documentSnapshot.getReference()
+                .update(updatedInfo);
+        callback.onSuccess();
     }
 
     public void deleteDocument(@NonNull @NotNull DocumentSnapshot documentSnapshot,
                                @NonNull @NotNull DataCallbacks.General callback){
 
+        // FIXME: same problem as in commitBatch method.
+        /*
         documentSnapshot.getReference()
                 .delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -85,6 +100,11 @@ public abstract class BasicFirestoreRepository <T> {
                         callback.onFailure();
                     }
                 });
+         */
+
+        documentSnapshot.getReference()
+                .delete();
+        callback.onSuccess();
     }
 
     protected void commitBatch(@NonNull @NotNull WriteBatch batch, @NonNull @NotNull DataCallbacks.General callback){
