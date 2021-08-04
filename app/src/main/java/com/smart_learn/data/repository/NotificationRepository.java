@@ -457,4 +457,31 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         // 6. Transaction is complete so commit
         commitBatch(batch, callback);
     }
+
+    public void processNotificationForOnlineTestInvitationReceived(@NonNull @NotNull DocumentReference notificationDocRef,
+                                                                  @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForOnlineTestInvitationReceived(notificationDocRef, callback));
+    }
+
+    private void tryToProcessNotificationForOnlineTestInvitationReceived(@NonNull @NotNull DocumentReference notificationDocRef,
+                                                                         @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Update notification status with finished
+        HashMap<String, Object> notificationData = new HashMap<>();
+        notificationData.put(NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
+        notificationData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(notificationDocRef, notificationData);
+
+        // 2. Update contours on user document and user modified time
+        HashMap<String, Object> userData = new HashMap<>();
+        // when is send an online test can be only in progress
+        userData.put(UserDocument.Fields.NR_OF_ONLINE_IN_PROGRESS_TESTS_FIELD_NAME, FieldValue.increment(1));
+        userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
+
+        // 3. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
 }
