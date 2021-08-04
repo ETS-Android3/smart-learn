@@ -26,6 +26,8 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_EXPRESSIONS = "expressions";
     public static final String COLLECTION_LOCAL_TESTS = "local_tests";
     public static final String COLLECTION_ONLINE_TESTS = "online_tests";
+    public static final String COLLECTION_ONLINE_TEST_CHAT_MESSAGES = "messages";
+    public static final String COLLECTION_ONLINE_TEST_PARTICIPANTS = "participants";
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
                             @NonNull @NotNull DataCallbacks.General callback){

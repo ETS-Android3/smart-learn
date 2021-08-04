@@ -27,6 +27,7 @@ import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.QuestionTrueOrFalse;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
+import com.smart_learn.data.firebase.firestore.entities.GroupChatMessageDocument;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
@@ -123,12 +124,20 @@ public class TestService {
        return userTestServiceInstance.getQueryForTests(limit, option);
     }
 
+    public Query getQueryForOnlineTestChatMessages(String testDocumentId, long limit) {
+        return userTestServiceInstance.getQueryForOnlineTestChatMessages(testDocumentId, limit);
+    }
+
+    public Query getQueryForOnlineTestParticipantsRanking(String testDocumentId, long limit) {
+        return userTestServiceInstance.getQueryForOnlineTestParticipantsRanking(testDocumentId, limit);
+    }
+
     public CollectionReference getLocalTestsCollection(){
         return userTestServiceInstance.getLocalTestsCollection();
     }
 
-    public CollectionReference getOnlineTestsCollection(){
-        return userTestServiceInstance.getOnlineTestsCollection();
+    public CollectionReference getOnlineTestParticipantsCollectionReference(String testDocumentId){
+        return userTestServiceInstance.getOnlineTestParticipantsCollectionReference(testDocumentId);
     }
 
     public void markAsHidden(DocumentSnapshot testSnapshot, DataCallbacks.General callback){
@@ -137,10 +146,6 @@ public class TestService {
 
     public void setSchedule(DocumentSnapshot testSnapshot, boolean isScheduleActive, DataCallbacks.General callback){
         userTestServiceInstance.setSchedule(testSnapshot, isScheduleActive, callback);
-    }
-
-    public void addLocalTest(TestDocument testDocument, DataCallbacks.General callback){
-        userTestServiceInstance.addLocalTest(testDocument, callback);
     }
 
     public void updateTest(TestDocument updatedTest, DocumentSnapshot updatedTestSnapshot, DataCallbacks.General callback){
@@ -153,6 +158,10 @@ public class TestService {
 
     public void updateDocument(Map<String,Object> updatedInfo, DocumentSnapshot documentSnapshot, DataCallbacks.General callback){
         userTestServiceInstance.updateDocument(updatedInfo, documentSnapshot, callback);
+    }
+
+    public void sendOnlineTestMessage(String containerTestDocumentId, GroupChatMessageDocument messageDocument){
+        userTestServiceInstance.sendOnlineTestMessage(containerTestDocumentId, messageDocument);
     }
 
 
@@ -448,6 +457,13 @@ public class TestService {
     }
 
     private void tryToGenerateUserTest(ArrayList<LessonEntrance> valueList, Test testOptions, int questionsNr, TestService.TestGenerationCallback callback){
+        // for online test name generation is not needed because is set by user
+        if((testOptions instanceof TestDocument) && ((TestDocument)testOptions).isOnline()){
+            continueWithTestGeneration(true, valueList, testOptions, questionsNr, callback);
+            return;
+        }
+
+        // otherwise generate a name
         UserService.getInstance()
                 .getUserDocumentReference()
                 .get()
@@ -478,7 +494,7 @@ public class TestService {
                         }
                         testOptions.setTestName(ApplicationController.getInstance().getString(R.string.test_name) + " " + newTotalScheduledTest);
 
-                        continueWithLocalTestGeneration(true, valueList, testOptions, questionsNr, callback);
+                        continueWithTestGeneration(true, valueList, testOptions, questionsNr, callback);
                     }
                 });
 
@@ -690,7 +706,7 @@ public class TestService {
         }
         testOptions.setTestName(ApplicationController.getInstance().getString(R.string.test_name) + " " + newTotalScheduledTest);
 
-        continueWithLocalTestGeneration(false, valueList, testOptions, questionsNr, callback);
+        continueWithTestGeneration(false, valueList, testOptions, questionsNr, callback);
     }
 
 
@@ -707,8 +723,8 @@ public class TestService {
      * @param questionsNr How many questions should test have.
      * @param callback Callback to manage onComplete action.
      * */
-    private void continueWithLocalTestGeneration(boolean isForUser, ArrayList<LessonEntrance> valueList, Test testOptions,
-                                                 int questionsNr, TestService.TestGenerationCallback callback){
+    private void continueWithTestGeneration(boolean isForUser, ArrayList<LessonEntrance> valueList, Test testOptions,
+                                            int questionsNr, TestService.TestGenerationCallback callback){
         // For tests which are NOT scheduled questions must be generated always base on the value
         // list and questionsNr.
         //
@@ -822,20 +838,25 @@ public class TestService {
         }
 
         TestDocument newTest = (TestDocument)test;
-        if(!newTest.isOnline()){
-            final DocumentReference newTestDocumentRef = userTestServiceInstance.getLocalTestsCollection().document();
-            userTestServiceInstance.addLocalTest(newTest, newTestDocumentRef, new DataCallbacks.General() {
-                @Override
-                public void onSuccess() {
-                    callback.onComplete(newTestDocumentRef.getId());
-                }
-
-                @Override
-                public void onFailure() {
-                    callback.onComplete(NO_TEST_ID);
-                }
-            });
+        DocumentReference newTestDocumentRef;
+        if(newTest.isOnline()){
+            newTestDocumentRef = userTestServiceInstance.getOnlineTestsCollection().document();
         }
+        else{
+            newTestDocumentRef = userTestServiceInstance.getLocalTestsCollection().document();
+        }
+
+        userTestServiceInstance.addTest(newTest, newTestDocumentRef, new DataCallbacks.General() {
+            @Override
+            public void onSuccess() {
+                callback.onComplete(newTestDocumentRef.getId());
+            }
+
+            @Override
+            public void onFailure() {
+                callback.onComplete(NO_TEST_ID);
+            }
+        });
     }
 
 
