@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.smart_learn.data.helpers.DataUtilities.Limits"/>
+        <variable
+            name="viewModel"
+            type="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerFragment">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nested_container_view_fragment_online_test_messages_container"
+            android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.messages.OnlineTestMessagesFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_layout_message_fragment_online_test_messages_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- https://stackoverflow.com/questions/6316540/how-to-make-layout-with-view-fill-the-remaining-space/6316586#6316586 -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_message_fragment_online_test_messages_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nested_container_view_fragment_online_test_messages_container">
+
+            <ImageView
+                android:id="@+id/iv_message_fragment_online_test_messages_container"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="0"
+                android:contentDescription="@string/user_icon"
+                android:src="@drawable/ic_baseline_message_24" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_message_fragment_online_test_messages_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:counterEnabled="false"
+                app:counterMaxLength="@{Limits.MAX_ONLINE_TEST_CHAT_MESSAGE}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:maxLength="@{Limits.MAX_ONLINE_TEST_CHAT_MESSAGE}"
+                    android:maxLines="4"
+                    android:minLines="1"
+                    android:scrollbars="vertical"
+                    android:text="@={viewModel.liveMessage}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_send_message_fragment_online_test_messages_container"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="0"
+                android:background="@drawable/background_button_send_online_test_chat_message" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

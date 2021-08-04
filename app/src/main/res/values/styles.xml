@@ -323,6 +323,12 @@
     </style>
 
     <!-- This will work only for 'com.google.android.material.card.MaterialCardView' -->
+    <style name="AppTheme.CardView.MaterialDesign.OnlineTestChatMessage" parent="AppTheme.CardView.MaterialDesign">
+        <!-- this will change color for background when item is NOT selected -->
+        <item name="colorSurface">@color/colorPrimary</item>
+    </style>
+
+    <!-- This will work only for 'com.google.android.material.card.MaterialCardView' -->
     <style name="AppTheme.CardView.MaterialDesign.MixedQuestionOption" parent="AppTheme.CardView.MaterialDesign">
         <!-- this will change color for background when item is NOT selected -->
         <item name="colorSurface">@color/white</item>

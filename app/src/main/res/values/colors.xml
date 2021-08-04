@@ -40,4 +40,9 @@
     <color name="colorDRefreshIcon">#FF5722</color>
     <color name="colorSuccess">#2AA302</color>
     <color name="colorSuccessDark">#207703</color>
+    <color name="colorMessageReceived">#7ECBED</color>
+    <color name="colorMessageReceivedDark">#65C2EC</color>
+    <color name="colorMessageSent">#9BE184</color>
+    <color name="colorMessageSentDark">#72E34D</color>
+    <color name="colorButtonSentPressed">#151515</color>
 </resources>

@@ -99,6 +99,21 @@
         android:name="com.smart_learn.presenter.activities.test.user.fragments.test_types.mixed.UserMixedTestFragment"
         android:label="user_mixed_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_mixed_test"/>
+    <fragment
+        android:id="@+id/online_test_container_fragment_nav_graph_activity_user_test"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.OnlineTestContainerFragment"
+        android:label="online_test_container_fragment_nav_graph_activity_user_test"
+        tools:layout="@layout/fragment_online_test_container"/>
+    <fragment
+        android:id="@+id/user_select_friends_fragment_nav_graph_activity_user_test"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_friends.UserSelectFriendsFragment"
+        android:label="user_select_friends_fragment_nav_graph_activity_user_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
+    <fragment
+        android:id="@+id/user_online_test_questions_fragment_nav_graph_activity_user_test"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment"
+        android:label="user_online_test_questions_fragment_nav_graph_activity_user_test"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
 </navigation>

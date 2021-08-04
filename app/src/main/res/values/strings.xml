@@ -551,15 +551,25 @@
     <string name="show_only_local_in_progress">Show only local in progress</string>
     <string name="show_online">Show online</string>
 
-    <!-- NotificationDocument -->
-    <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
-    <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
-    <string name="online_test_invitation_received_title">New online test invitation</string>
-
     <string name="participants_point">Participants:</string>
     <string name="none">none</string>
     <string name="see_test">See test</string>
     <string name="created_by_point">Created by:</string>
     <string name="continue_value">Continue</string>
+    <string name="chat">Chat</string>
+    <string name="ranking">Ranking</string>
+    <string name="online_test">Online test</string>
+    <string name="participants">Participants</string>
+    <string name="no_messages">No mesages</string>
+    <string name="done_icon">Done icon</string>
+    <string name="error_no_internet_connection_snackbar_description">Internet is not available. Data can not be sync.</string>
+    <string name="error_no_network_snackbar_description">Network is disabled. Data can not be sync.</string>
+
+
+    <!-- NotificationDocument -->
+    <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
+    <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
+    <string name="online_test_invitation_received_title">New online test invitation</string>
+
 
 </resources>

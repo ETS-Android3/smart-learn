@@ -29,6 +29,10 @@ public class UserTestSharedViewModel extends TestSharedViewModel {
     private String selectedTestScheduledId;
 
     private String selectedOnlineContainerTestId;
+    // for online test container fragment
+    private boolean isOnlineTestContainerFragmentActive;
+    private int selectedOnlineTestType;
+    private boolean isSelectedOnlineTestFinished;
 
     public UserTestSharedViewModel(@NonNull @NotNull Application application) {
         super(application);

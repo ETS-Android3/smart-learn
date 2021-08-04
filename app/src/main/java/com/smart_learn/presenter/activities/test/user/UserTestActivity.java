@@ -26,6 +26,7 @@ import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoFragment;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
+import com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
@@ -81,6 +82,15 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
             return;
         }
 
+        // From OnlineTestContainerFragment go back only to TestHistoryFragment because it is the
+        // main point for this activity. From TestHistoryFragment if going back is activated then
+        // this activity will be finished and MainActivity will be launched.
+        if(sharedViewModel.isOnlineTestContainerFragmentActive()){
+            goToUserTestHistoryFragment();
+            sharedViewModel.setOnlineTestContainerFragmentActive(false);
+            return;
+        }
+
         super.onBackPressed();
     }
 
@@ -94,6 +104,14 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
             return true;
         }
 
+        // From OnlineTestContainerFragment go back only to TestHistoryFragment because it is the
+        // main point for this activity. From TestHistoryFragment if going back is activated then
+        // this activity will be finished and MainActivity will be launched.
+        if(sharedViewModel.isOnlineTestContainerFragmentActive()){
+            goToUserTestHistoryFragment();
+            sharedViewModel.setOnlineTestContainerFragmentActive(false);
+            return true;
+        }
         return super.onSupportNavigateUp();
     }
 
@@ -169,8 +187,12 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     }
 
     public void goToUserTestResultsFragment(String testId, int testType){
+        goToUserTestResultsFragment(testId, "", testType , false);
+    }
+
+    public void goToUserTestResultsFragment(String containerTestId, String participantTestId, int testType, boolean useOnlineTestFragment){
         Bundle args = new Bundle();
-        args.putString(TestQuestionsFragment.SELECTED_TEST_KEY, testId);
+        args.putString(TestQuestionsFragment.SELECTED_TEST_KEY, containerTestId);
         switch (testType){
             case Test.Types.WORD_WRITE:
                 args.putInt(TestQuestionsFragment.QUESTION_TYPE_KEY, Question.Types.QUESTION_FULL_WRITE);
@@ -193,8 +215,14 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
                 return;
         }
 
-        navController.navigate(R.id.user_test_questions_fragment_nav_graph_activity_user_test, args,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+        if(useOnlineTestFragment){
+            args.putString(UserOnlineTestQuestionsFragment.PARTICIPANT_TEST_ONLINE_KEY_ID, participantTestId);
+            navController.navigate(R.id.user_online_test_questions_fragment_nav_graph_activity_user_test, args);
+        }
+        else{
+            navController.navigate(R.id.user_test_questions_fragment_nav_graph_activity_user_test, args,
+                    Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+        }
     }
 
     public void goToUserScheduledTestInfoFragment(){
@@ -225,7 +253,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     public void goToUserSelectWordsFragment(String lessonId) {
         Bundle args = new Bundle();
         args.putString(BasicWordsFragment.SELECTED_LESSON_KEY, lessonId);
-        navController.navigate(R.id.action_user_test_setup_fragment_to_user_select_words_fragment_nav_graph_activity_user_test, args);
+        navController.navigate(R.id.user_select_words_fragment_nav_graph_activity_user_test, args);
     }
 
     public void goToUserSelectExpressionsFragment(String lessonId) {
@@ -338,10 +366,14 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     }
 
     public void goToUserOnlineTestContainerFragment(int testType, String testId, boolean isFinished){
-
+        sharedViewModel.setSelectedOnlineContainerTestId(testId);
+        sharedViewModel.setSelectedOnlineTestType(testType);
+        sharedViewModel.setSelectedOnlineTestFinished(isFinished);
+        navController.navigate(R.id.online_test_container_fragment_nav_graph_activity_user_test, null);
     }
 
     public void goToUserSelectFriendsFragment() {
-
+        navController.navigate(R.id.user_select_friends_fragment_nav_graph_activity_user_test,null,
+                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }
