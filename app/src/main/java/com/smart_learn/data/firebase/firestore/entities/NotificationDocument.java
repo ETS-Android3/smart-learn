@@ -53,6 +53,8 @@ public class NotificationDocument {
 
         int TYPE_WORD_RECEIVED = 10;
         int TYPE_EXPRESSION_RECEIVED = 11;
+
+        int TYPE_ONLINE_TEST_INVITATION_RECEIVED = 12;
     }
 
     private DocumentMetadata documentMetadata;
@@ -218,6 +220,9 @@ public class NotificationDocument {
             case Types.TYPE_EXPRESSION_RECEIVED:
                 return R.string.expression_received_title;
 
+            case Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
+                return R.string.online_test_invitation_received_title;
+
             case Types.TYPE_NONE:
             default:
                 return R.string.new_notification_title;
@@ -275,6 +280,10 @@ public class NotificationDocument {
             case Types.TYPE_EXPRESSION_RECEIVED:
                 return applicationController.getString(R.string.expression_received_description_1) + " " + tmp + ". " +
                         applicationController.getString(R.string.expression_received_description_2);
+
+            case Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
+                return applicationController.getString(R.string.online_test_invitation_received_description_1) + " " + tmp + ". " +
+                        applicationController.getString(R.string.online_test_invitation_received_description_2);
 
             case Types.TYPE_NONE:
             default:

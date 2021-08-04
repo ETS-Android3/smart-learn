@@ -551,4 +551,9 @@
     <string name="show_only_local_in_progress">Show only local in progress</string>
     <string name="show_online">Show online</string>
 
+    <!-- NotificationDocument -->
+    <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
+    <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
+    <string name="online_test_invitation_received_title">New online test invitation</string>
+
 </resources>
