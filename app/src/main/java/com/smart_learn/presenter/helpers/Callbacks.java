@@ -90,5 +90,15 @@ public interface Callbacks {
         @NonNull
         @NotNull
         BasicFragmentForRecyclerView<?> getFragment();
+
+        // default methods
+
+        /**
+         * If after list load you want to scroll down to the last item from recycler view
+         * return true here.
+         * */
+        default boolean scrollDirectlyToLastItem(){
+            return false;
+        }
     }
 }

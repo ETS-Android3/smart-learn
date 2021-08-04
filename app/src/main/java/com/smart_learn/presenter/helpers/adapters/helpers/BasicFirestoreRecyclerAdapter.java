@@ -170,6 +170,10 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         // is user added items without refreshing, just reset currentLoad
         if(!isLoadingNewData){
             currentLoad = totalItems;
+            // also if scroll to last position is valid then scroll to last position
+            if(adapterCallback.scrollDirectlyToLastItem()){
+                scrollToNewPosition(totalItems, currentLoad);
+            }
             return true;
         }
 
@@ -177,11 +181,8 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         // then scroll down to the previous bottom, in order to preserve last position, because
         // adapter will go to the top after reloading. After that set new limit also.
 
-        // scroll only if are elements in list
-        if(currentLoad > 0){
-            // 'currentLoad - 1' will be the last item from previous list
-            helper.scrollToPosition(Math.toIntExact(currentLoad - 1));
-        }
+        // reset recycler view to new position
+        scrollToNewPosition(totalItems, currentLoad);
 
         // set new list values
         currentLoad = totalItems;
@@ -221,6 +222,10 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         // if user deleted items without refreshing, just reset currentLoad
         if(!isLoadingNewData){
             currentLoad = totalItems;
+            // also if scroll to last position is valid then scroll to last position
+            if(adapterCallback.scrollDirectlyToLastItem()){
+                scrollToNewPosition(totalItems, currentLoad);
+            }
             return true;
         }
 
@@ -231,11 +236,8 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         // set new list values
         currentLoad = totalItems;
 
-        // scroll only if are elements in list
-        if(currentLoad > 0){
-            // 'currentLoad - 1' will be the last item from previous list
-            helper.scrollToPosition(Math.toIntExact(currentLoad - 1));
-        }
+        // reset recycler view to new position
+        scrollToNewPosition(totalItems, currentLoad);
 
         // data was loaded
         isLoadingNewData = false;
@@ -243,6 +245,25 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         helper.stopRefreshing();
 
         return true;
+    }
+
+    private void scrollToNewPosition(int totalItems, long currentLoad){
+        // if recycler view must scroll directly to last item set last position including all items
+        if(adapterCallback.scrollDirectlyToLastItem()){
+            // scroll only if are elements in list
+            if(totalItems > 0){
+                // 'totalItems - 1' will be the last item from entire list
+                helper.scrollToPosition(totalItems - 1);
+                return;
+            }
+            return;
+        }
+
+        // scroll to last previous position (scroll only if are elements in list)
+        if(currentLoad > 0){
+            // 'currentLoad - 1' will be the last item from previous list
+            helper.scrollToPosition(Math.toIntExact(currentLoad - 1));
+        }
     }
 
     /**

@@ -232,8 +232,32 @@ public final class Utilities {
                                                   @Nullable ItemDecoration itemDecoration,
                                                   @Nullable RecyclerView.Adapter<? extends RecyclerView.ViewHolder> adapter,
                                                   @Nullable RecyclerView.OnScrollListener onScrollListener){
+            initializeRecyclerView(context, recyclerView, false, itemDecoration, adapter, onScrollListener);
+        }
+
+        /**
+         * Used to initialize recycler view from fragments.
+         *
+         * @param context The context for which the recycler view must be set.
+         * @param recyclerView The recycler view to be set.
+         * @param itemDecoration ItemDecoration to be set to the recycler view.
+         * @param adapter Adapter which extends RecyclerView.ViewHolder in order to be set to the
+         *                recycler view.
+         * @param onScrollListener Listener to handle scroll action on the recycler view.
+         * */
+        public static void initializeRecyclerView(@NonNull @NotNull Context context,
+                                                  @NonNull @NotNull RecyclerView recyclerView,
+                                                  boolean startFromEnd,
+                                                  @Nullable ItemDecoration itemDecoration,
+                                                  @Nullable RecyclerView.Adapter<? extends RecyclerView.ViewHolder> adapter,
+                                                  @Nullable RecyclerView.OnScrollListener onScrollListener){
 
             LinearLayoutManager manager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
+            if(startFromEnd){
+                // https://stackoverflow.com/questions/38097039/how-to-set-the-view-to-last-item-in-recyclerview/38097188#38097188
+                // https://developer.android.com/reference/android/widget/AbsListView.html#setStackFromBottom(boolean)
+                manager.setStackFromEnd(true);
+            }
             recyclerView.setLayoutManager(manager);
             if(itemDecoration != null){
                 recyclerView.addItemDecoration(itemDecoration);

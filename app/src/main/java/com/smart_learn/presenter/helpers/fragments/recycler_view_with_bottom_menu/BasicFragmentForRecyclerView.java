@@ -116,6 +116,9 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     protected void onFilter(String newText){}
     protected void onSearchActionExpand(){}
     protected void onSearchActionCollapse(){}
+    protected boolean startFromEnd(){
+       return false;
+    }
 
     /**
      * Override if you want to use a bottom sheet when action mode is active.
@@ -357,7 +360,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     }
 
     protected void setRecyclerView(){
-        Utilities.Activities.initializeRecyclerView(requireContext(), recyclerView, getRecyclerViewItemDecoration(),
+        Utilities.Activities.initializeRecyclerView(requireContext(), recyclerView, startFromEnd(), getRecyclerViewItemDecoration(),
                 viewModel.getAdapter(), new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
