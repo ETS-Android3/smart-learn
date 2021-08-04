@@ -22,7 +22,8 @@ public class UserDocument extends BasicProfileDocument {
         String NR_OF_LESSONS_FIELD_NAME = "nrOfLessons";
         String NR_OF_WORDS_FIELD_NAME = "nrOfWords";
         String NR_OF_EXPRESSIONS_FIELD_NAME = "nrOfExpressions";
-        String NR_OF_ONLINE_TESTS_FIELD_NAME = "nrOfOnlineTests";
+        String NR_OF_ONLINE_IN_PROGRESS_TESTS_FIELD_NAME = "nrOfOnlineInProgressTests";
+        String NR_OF_ONLINE_FINISHED_TESTS_FIELD_NAME = "nrOfOnlineFinishedTests";
         String NR_OF_LOCAL_UNSCHEDULED_IN_PROGRESS_TESTS_FIELD_NAME = "nrOfLocalUnscheduledInProgressTests";
         String NR_OF_LOCAL_UNSCHEDULED_FINISHED_TESTS_FIELD_NAME = "nrOfLocalUnscheduledFinishedTests";
         String NR_OF_LOCAL_SCHEDULED_TESTS_FIELD_NAME = "nrOfLocalScheduledTests";
@@ -39,7 +40,8 @@ public class UserDocument extends BasicProfileDocument {
     private long nrOfWords;
     private long nrOfExpressions;
 
-    private long nrOfOnlineTests;
+    private long nrOfOnlineInProgressTests;
+    private long nrOfOnlineFinishedTests;
     private long nrOfLocalUnscheduledInProgressTests;
     private long nrOfLocalUnscheduledFinishedTests;
     private long nrOfLocalScheduledTests;
