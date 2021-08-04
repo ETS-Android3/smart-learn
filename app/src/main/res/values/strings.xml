@@ -556,4 +556,9 @@
     <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
     <string name="online_test_invitation_received_title">New online test invitation</string>
 
+    <string name="participants_point">Participants:</string>
+    <string name="none">none</string>
+    <string name="see_test">See test</string>
+    <string name="created_by_point">Created by:</string>
+
 </resources>

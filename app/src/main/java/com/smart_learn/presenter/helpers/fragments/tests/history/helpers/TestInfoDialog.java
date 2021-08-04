@@ -16,12 +16,13 @@ import androidx.fragment.app.DialogFragment;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.Test;
+import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.databinding.LayoutDialogTestInfoBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 
 
 public class TestInfoDialog extends DialogFragment {
@@ -29,38 +30,75 @@ public class TestInfoDialog extends DialogFragment {
     private final TestInfoDialog.Callback dialogCallback;
     private final Test testInfo;
 
-    private final String generationDateDescription;
-    private final String testTypeDescription;
-    private final String valuesSelectionDescription;
-    private final String counterDescription;
-    private final String progressDescription;
-    private final String extraProgressDescription;
-    private final String totalTestTimeDescription;
+    private final boolean isOnlineTest;
+    private final boolean isOnlineTestContainer;
+
+    private String generationDateDescription = "";
+    private String testTypeDescription = "";
+    private String valuesSelectionDescription = "";
+    private String counterDescription = "";
+    private String progressDescription = "";
+    private String extraProgressDescription = "";
+    private String totalTestTimeDescription = "";
+    private String participantsDescription = "";
+    private String createdByDescription = "";
 
 
-    public TestInfoDialog(@NonNull @NotNull Test test, @NonNull @NotNull TestInfoDialog.Callback dialogCallback) {
-        this.dialogCallback = dialogCallback;
+    public TestInfoDialog(@NonNull @NotNull Test test, @NonNull @NotNull TestInfoDialog.Callback callback) {
+        this.dialogCallback = callback;
         this.testInfo = test;
+        this.isOnlineTest = false;
+        this.isOnlineTestContainer = false;
+        setDialogViewValues();
+    }
 
-        // set specific values for views
-        generationDateDescription = CoreUtilities.General.longToDate(testInfo.getTestGenerationDate());
-        testTypeDescription = Test.getTestTypeDescription(testInfo.getType());
+    public TestInfoDialog(@NonNull @NotNull Test test, boolean isOnlineTest,  boolean isOnlineTestContainer, @NonNull @NotNull TestInfoDialog.Callback callback) {
+        this.dialogCallback = callback;
+        this.testInfo = test;
+        if(isOnlineTest && isOnlineTestContainer){
+            throw new UnsupportedOperationException("test can be or an online container test or an online simple test");
+        }
+        this.isOnlineTest = isOnlineTest;
+        this.isOnlineTestContainer = isOnlineTestContainer;
+        setDialogViewValues();
+    }
+
+    private void setDialogViewValues(){
+        // set specific values for views based on test types
+
+        if(!isOnlineTest){
+            generationDateDescription = CoreUtilities.General.longToDate(testInfo.getTestGenerationDate());
+            testTypeDescription = Test.getTestTypeDescription(testInfo.getType());
+        }
+
+        if(isOnlineTestContainer && (testInfo instanceof TestDocument)){
+            ArrayList<String> participants = ((TestDocument)testInfo).getParticipants();
+            participantsDescription = (participants == null || participants.isEmpty()) ? getString(R.string.none) : String.valueOf(participants.size());
+            createdByDescription = ((TestDocument)testInfo).getUserDisplayName();
+        }
+
+        // next values ust be set only if is a local test or an online test
+        if(isOnlineTestContainer){
+            return;
+        }
+
         totalTestTimeDescription = testInfo.getTotalTimeDescription();
 
-        if(testInfo.getNrOfValuesForGenerating() == Test.USE_ALL){
-            valuesSelectionDescription = testInfo.isUseCustomSelection() ?
-                    ApplicationController.getInstance().getString(R.string.custom_selection) :
-                    ApplicationController.getInstance().getString(R.string.use_all);
-        }
-        else{
-            valuesSelectionDescription = ApplicationController.getInstance().getString(R.string.use_specific_number_of_selections) +
-                    " (" + testInfo.getNrOfValuesForGenerating() + ")";
-        }
+        if(!isOnlineTest){
+            if(testInfo.getNrOfValuesForGenerating() == Test.USE_ALL){
+                valuesSelectionDescription = testInfo.isUseCustomSelection() ?
+                        ApplicationController.getInstance().getString(R.string.custom_selection) :
+                        ApplicationController.getInstance().getString(R.string.use_all);
+            }
+            else{
+                valuesSelectionDescription = ApplicationController.getInstance().getString(R.string.use_specific_number_of_selections) +
+                        " (" + testInfo.getNrOfValuesForGenerating() + ")";
+            }
 
-        counterDescription = testInfo.getQuestionCounter() == Test.NO_COUNTER ?
-                ApplicationController.getInstance().getString(R.string.no) :
-                ApplicationController.getInstance().getString(R.string.yes) + " (" + testInfo.getQuestionCounter() + ")";
-
+            counterDescription = testInfo.getQuestionCounter() == Test.NO_COUNTER ?
+                    ApplicationController.getInstance().getString(R.string.no) :
+                    ApplicationController.getInstance().getString(R.string.yes) + " (" + testInfo.getQuestionCounter() + ")";
+        }
 
         if(testInfo.getTotalQuestions() != 0){
             if(testInfo.isFinished()){
@@ -95,6 +133,10 @@ public class TestInfoDialog extends DialogFragment {
         binding.setProgressDescription(progressDescription);
         binding.setExtraProgressDescription(extraProgressDescription);
         binding.setTotalTestTimeDescription(totalTestTimeDescription);
+        binding.setParticipantsDescription(participantsDescription);
+        binding.setIsOnlineTest(isOnlineTest);
+        binding.setIsOnlineTestContainer(isOnlineTestContainer);
+        binding.setCreatedByDescription(createdByDescription);
 
         // build dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
@@ -104,21 +146,16 @@ public class TestInfoDialog extends DialogFragment {
                 // If setCancelable is true when you click beside the dialog the dialog is dismissed.
                 .setCancelable(true);
 
-        if(testInfo.isFinished()){
-                builder.setPositiveButton(R.string.see_results, null)
-                        .setNegativeButton(R.string.close, null);
-        }
-        else {
-            // test is in progress
-            if(testInfo.getAnsweredQuestions() > 0){
-                builder.setPositiveButton(R.string.see_progress, null)
-                        .setNeutralButton(R.string.continue_test, null)
-                        .setNegativeButton(R.string.close, null);
+        if(isOnlineTestContainer || isOnlineTest){
+            if(isOnlineTestContainer){
+                setOnlineContainerDialogButtons(builder);
             }
             else{
-                builder.setNeutralButton(R.string.continue_test, null)
-                        .setNegativeButton(R.string.close, null);
+                setOnlineTestDialogButtons(builder);
             }
+        }
+        else{
+           setLocalTestDialogButtons(builder);
         }
 
         AlertDialog dialog = builder.create();
@@ -152,6 +189,44 @@ public class TestInfoDialog extends DialogFragment {
         });
 
         return dialog;
+    }
+
+    private void setOnlineContainerDialogButtons(AlertDialog.Builder builder){
+            builder.setPositiveButton(R.string.see_test, null)
+                    .setNegativeButton(R.string.close, null);
+    }
+
+    private void setOnlineTestDialogButtons(AlertDialog.Builder builder){
+        if(testInfo.isFinished()){
+            builder.setPositiveButton(R.string.see_results, null)
+                    .setNegativeButton(R.string.close, null);
+            return;
+        }
+
+        if(testInfo.getAnsweredQuestions() > 0){
+            builder.setPositiveButton(R.string.see_progress, null);
+        }
+
+        builder.setNegativeButton(R.string.close, null);
+    }
+
+    private void setLocalTestDialogButtons(AlertDialog.Builder builder){
+        if(testInfo.isFinished()){
+            builder.setPositiveButton(R.string.see_results, null)
+                    .setNegativeButton(R.string.close, null);
+            return;
+        }
+
+        // test is in progress
+        if(testInfo.getAnsweredQuestions() > 0){
+            builder.setPositiveButton(R.string.see_progress, null)
+                    .setNeutralButton(R.string.continue_test, null)
+                    .setNegativeButton(R.string.close, null);
+        }
+        else{
+            builder.setNeutralButton(R.string.continue_test, null)
+                    .setNegativeButton(R.string.close, null);
+        }
     }
 
 
