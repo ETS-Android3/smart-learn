@@ -11,8 +11,7 @@ import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
-import com.smart_learn.data.firebase.firestore.entities.WordDocument;
-import com.smart_learn.presenter.activities.test.user.fragments.select_words.UserSelectWordsFragment;
+import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.select.UserBasicSelectExpressionsViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,6 +68,36 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
 
         fragment.showProgressDialog("", fragment.getString(R.string.generating_test));
 
+        // for online tests must exists a connexion while generating tests because notifications
+        // must be send to friends
+        if((test instanceof TestDocument) && ((TestDocument)test).isOnline()){
+            new ConnexionChecker(new ConnexionChecker.Callback() {
+                @Override
+                public void isConnected() {
+                    continueWithGeneratingTest(fragment, test, selectedExpressions, true);
+                }
+                @Override
+                public void networkDisabled() {
+                    liveToastMessage.postValue(fragment.getString(R.string.error_no_network));
+                }
+
+                @Override
+                public void internetNotAvailable() {
+                    liveToastMessage.postValue(fragment.getString(R.string.error_no_internet_connection));
+                }
+                @Override
+                public void notConnected() {
+                    fragment.requireActivity().runOnUiThread(fragment::closeProgressDialog);
+                }
+            }).check();
+        }
+        else{
+            // test is local so generate
+            continueWithGeneratingTest(fragment, test, selectedExpressions, false);
+        }
+    }
+
+    private void continueWithGeneratingTest(UserSelectExpressionsFragment fragment, Test test, ArrayList<ExpressionDocument> selectedExpressions, boolean isOnline){
         TestService.getInstance().generateUserExpressionTest(selectedExpressions, test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
@@ -88,7 +117,7 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
                     }
 
                     // otherwise go to test fragment
-                    fragment.navigateToTestFragment(test.getType(), testId);
+                    fragment.navigateToTestFragment(test.getType(), testId, isOnline);
                 });
             }
         });

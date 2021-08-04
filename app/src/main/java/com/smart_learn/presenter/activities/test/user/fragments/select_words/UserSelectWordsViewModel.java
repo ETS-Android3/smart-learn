@@ -4,8 +4,6 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
@@ -14,7 +12,6 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
-import com.smart_learn.presenter.activities.test.user.fragments.test_types.mixed.UserMixedTestViewModel;
 import com.smart_learn.presenter.helpers.fragments.words.user.select.UserBasicSelectWordsViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -67,6 +64,36 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
 
         fragment.showProgressDialog("", fragment.getString(R.string.generating_test));
 
+        // for online tests must exists a connexion while generating tests because notifications
+        // must be send to friends
+        if((test instanceof TestDocument) && ((TestDocument)test).isOnline()){
+            new ConnexionChecker(new ConnexionChecker.Callback() {
+                @Override
+                public void isConnected() {
+                    continueWithGeneratingTest(fragment, test, selectedWords, true);
+                }
+                @Override
+                public void networkDisabled() {
+                    liveToastMessage.postValue(fragment.getString(R.string.error_no_network));
+                }
+
+                @Override
+                public void internetNotAvailable() {
+                    liveToastMessage.postValue(fragment.getString(R.string.error_no_internet_connection));
+                }
+                @Override
+                public void notConnected() {
+                    fragment.requireActivity().runOnUiThread(fragment::closeProgressDialog);
+                }
+            }).check();
+        }
+        else{
+            // test is local so generate
+            continueWithGeneratingTest(fragment, test, selectedWords, false);
+        }
+    }
+
+    private void continueWithGeneratingTest(UserSelectWordsFragment fragment, Test test, ArrayList<WordDocument> selectedWords, boolean isOnline){
         TestService.getInstance().generateUserWordTest(selectedWords, test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
@@ -86,7 +113,7 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
                     }
 
                     // otherwise go to test fragment
-                    fragment.navigateToTestFragment(test.getType(), testId);
+                    fragment.navigateToTestFragment(test.getType(), testId, isOnline);
                 });
             }
         });

@@ -48,7 +48,12 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
             showMessage(R.string.error_can_not_continue);
             return;
         }
-        ((UserTestActivity)requireActivity()).goToActivateTestFragment(test.getType(), item.getId());
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(test.getType(), item.getId(), test.isOnline());
+    }
+
+    @Override
+    protected void onContinueWithOnlineTest(@NonNull @NotNull DocumentSnapshot item) {
+        viewModel.onContinueWithOnlineTest(UserTestHistoryFragment.this, item);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
         super.onResume();
         ((TestActivity<?>)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedTestHistoryId("");
+        sharedViewModel.setSelectedOnlineContainerTestId("");
         sharedViewModel.setTestHistoryFragmentActive(true);
     }
 
@@ -92,6 +98,10 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
         }
 
         ((UserTestActivity)requireActivity()).goToUserTestResultsFragment(testSnapshot.getId(), test.getType());
+    }
+
+    protected void goToUserOnlineTestContainerFragment(int testType, String testId, boolean isFinished){
+        ((UserTestActivity)requireActivity()).goToUserOnlineTestContainerFragment(testType, testId, isFinished);
     }
 
 }

@@ -50,13 +50,13 @@ public class UserSelectWordsFragment extends UserBasicSelectWordsFragment<UserSe
         sharedViewModel = new ViewModelProvider(requireActivity()).get(UserTestSharedViewModel.class);
     }
 
-    protected void navigateToTestFragment(int type, String testId){
+    protected void navigateToTestFragment(int type, String testId, boolean isOnline){
         if(sharedViewModel.getGeneratedTest() == null){
             showMessage(R.string.error_can_not_continue);
             return;
         }
 
-        ((UserTestActivity)requireActivity()).goToActivateTestFragment(type, testId);
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(type, testId, isOnline);
     }
 
     protected void navigateToUserScheduledTestsFragment(){

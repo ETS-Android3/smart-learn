@@ -12,9 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.Test;
@@ -25,6 +29,8 @@ import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecycler
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
+
+import timber.log.Timber;
 
 
 public class UserTestHistoryAdapter extends BasicFirestoreRecyclerAdapter<TestDocument, UserTestHistoryAdapter.TestViewHolder, UserTestHistoryAdapter.Callback> {
@@ -98,15 +104,61 @@ public class UserTestHistoryAdapter extends BasicFirestoreRecyclerAdapter<TestDo
 
         @Override
         protected void bind(@NonNull @NotNull TestDocument item, int position) {
-            liveTest.setValue(item);
+            if(!item.isOnline()){
+                viewHolderBinding.toolbarLayoutCardViewTestHistory.setVisibility(View.VISIBLE);
 
-            if(item.isFinished()){
-                liveExtraDescription.setValue(CoreUtilities.General.formatFloatValue(item.getSuccessRate()) + " %");
+                liveTest.setValue(item);
+
+                if(item.isFinished()){
+                    liveExtraDescription.setValue(CoreUtilities.General.formatFloatValue(item.getSuccessRate()) + " %");
+                    return;
+                }
+
+                // here item is in progress
+                liveExtraDescription.setValue(item.getAnsweredQuestions() + "/" + item.getTotalQuestions());
                 return;
             }
 
-            // here item is in progress
-            liveExtraDescription.setValue(item.getAnsweredQuestions() + "/" + item.getTotalQuestions());
+            // Here is online test, so extract user test from test container participants collection
+            // and use that data to update views.
+            viewHolderBinding.toolbarLayoutCardViewTestHistory.setVisibility(View.GONE);
+
+            TestService.getInstance()
+                    .getOnlineTestParticipantsCollectionReference(getSnapshots().getSnapshot(position).getId())
+                    .document(UserService.getInstance().getUserUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                            if(!task.isSuccessful() || task.getResult() == null){
+                                Timber.w("result is not valid ==> can not load participant test");
+                                // if value fails to be loaded use container test values
+                                liveItemInfo.postValue(item);
+                                liveExtraDescription.postValue("");
+                                return;
+                            }
+
+                            TestDocument participantTest = task.getResult().toObject(TestDocument.class);
+                            if(participantTest == null){
+                                Timber.w("participantTest is null ==> can not load participant test");
+                                // if value fails to be loaded use container test values
+                                liveItemInfo.postValue(item);
+                                liveExtraDescription.postValue("");
+                                return;
+                            }
+
+                            liveTest.postValue(participantTest);
+
+                            if(participantTest.isFinished()){
+                                liveExtraDescription.postValue(CoreUtilities.General.formatFloatValue(participantTest.getSuccessRate()) + " %");
+                                return;
+                            }
+
+                            // here item is in progress
+                            liveExtraDescription.postValue(participantTest.getAnsweredQuestions() + "/" + participantTest.getTotalQuestions());
+                        }
+                    });
+
         }
 
         private void setListeners(){
@@ -141,6 +193,11 @@ public class UserTestHistoryAdapter extends BasicFirestoreRecyclerAdapter<TestDo
 
                     int id = item.getItemId();
                     if(id == R.id.action_user_hide_menu_card_view_test_history){
+                        TestDocument test = getSnapshots().getSnapshot(position).toObject(TestDocument.class);
+                        if(test == null || test.isOnline()){
+                            // for online test hide is disabled
+                            return true;
+                        }
                         TestService.getInstance().markAsHidden(getSnapshots().getSnapshot(position), null);
                         return true;
                     }

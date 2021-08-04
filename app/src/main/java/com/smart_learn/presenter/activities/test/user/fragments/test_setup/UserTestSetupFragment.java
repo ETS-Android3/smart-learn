@@ -70,7 +70,8 @@ public class UserTestSetupFragment extends LocalTestSetupFragment<UserTestSetupV
             return;
         }
 
-        ((UserTestActivity)requireActivity()).goToActivateTestFragment(type, testId);
+        // only local tests can have test setup so call method directly with false
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(type, testId, false);
     }
 
     protected void navigateToUserScheduledTestsFragment(){

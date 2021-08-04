@@ -560,5 +560,6 @@
     <string name="none">none</string>
     <string name="see_test">See test</string>
     <string name="created_by_point">Created by:</string>
+    <string name="continue_value">Continue</string>
 
 </resources>

@@ -12,20 +12,22 @@ import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
+import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.LayoutBottomSheetShowUserTestOptionsBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoFragment;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.mixed.MixedTestFragment;
@@ -144,28 +146,24 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         bottomSheetBinding.btnStartUserOnlineTestLayoutBottomSheetShowUserTestOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ConnexionChecker(new ConnexionChecker.Callback() {
-                    @Override
-                    public void isConnected() {
-                        UserTestActivity.this.runOnUiThread(() -> {
-                            // do action for online test
-                        });
-                    }
-                    @Override
-                    public void networkDisabled() {
-                        UserTestActivity.this.runOnUiThread(() ->
-                                GeneralUtilities.showShortToastMessage(UserTestActivity.this, UserTestActivity.this.getString(R.string.error_no_network)));
-                    }
-                    @Override
-                    public void internetNotAvailable() {
-                        UserTestActivity.this.runOnUiThread(() ->
-                                GeneralUtilities.showShortToastMessage(UserTestActivity.this, UserTestActivity.this.getString(R.string.error_no_internet_connection)));
-                    }
-                    @Override
-                    public void notConnected() {
-                        // no action needed here
-                    }
-                }).check();
+                SingleLineEditableLayoutDialog dialog = new SingleLineEditableLayoutDialog(
+                        getString(R.string.test_name),
+                        "",
+                        getString(R.string.name),
+                        DataUtilities.Limits.MAX_TEST_CUSTOM_NAME,
+                        getString(R.string.continue_value),
+                        new SingleLineEditableLayoutDialog.Callback() {
+                            @Override
+                            public void onUpdate(String oldValue, String newValue,
+                                                 @NonNull @NotNull TextInputLayout textInputLayout,
+                                                 @NonNull @NotNull SingleLineEditableLayoutDialog.Listener listener) {
+                                sharedViewModel.addNewOnlineTest(UserTestActivity.this, newValue, textInputLayout, listener);
+                            }
+                        }
+                );
+
+                dialog.show(getSupportFragmentManager(), "UserTestActivity");
+                bottomSheetDialog.dismiss();
             }
         });
     }
@@ -236,54 +234,61 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         navController.navigate(R.id.action_user_test_setup_fragment_to_user_select_expressions_fragment_nav_graph_activity_user_test, args);
     }
 
-    public void goToActivateTestFragment(int type, String testId){
+    public void goToActivateTestFragment(int type, String testId, boolean isOnline){
+        if(isOnline){
+            // here test will start so can not be finished, so give 'false' to isFinished
+            goToUserOnlineTestContainerFragment(type, testId, false);
+            return;
+        }
+
+        // here will be only local tests
         switch (type){
             case Test.Types.WORD_WRITE:
-                goToUserWordsFullWriteTestFragment(testId);
+                goToUserWordsFullWriteLocalTestFragment(testId);
                 return;
             case Test.Types.WORD_QUIZ:
-                goToUserWordsQuizTestFragment(testId);
+                goToUserWordsQuizLocalTestFragment(testId);
                 return;
             case Test.Types.WORD_MIXED_LETTERS:
-                goToUserWordsMixedLettersTestFragment(testId);
+                goToUserWordsMixedLettersLocalTestFragment(testId);
                 return;
             case Test.Types.EXPRESSION_MIXED_WORDS:
-                goToUserExpressionsMixedTestFragment(testId);
+                goToUserExpressionsMixedLocalTestFragment(testId);
                 return;
             case Test.Types.EXPRESSION_TRUE_OR_FALSE:
-                goToUserExpressionsTrueOrFalseTestFragment(testId);
+                goToUserExpressionsTrueOrFalseLocalTestFragment(testId);
                 return;
             default:
                 GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
         }
     }
 
-    private void goToUserWordsFullWriteTestFragment(String testId) {
+    private void goToUserWordsFullWriteLocalTestFragment(String testId) {
         Bundle args = new Bundle();
         args.putString(BasicTestTypeFragment.TEST_ID_KEY, String.valueOf(testId));
         navController.navigate(R.id.user_full_write_test_fragment_nav_graph_activity_user_test, args);
     }
 
-    private void goToUserWordsQuizTestFragment(String testId) {
+    private void goToUserWordsQuizLocalTestFragment(String testId) {
         Bundle args = new Bundle();
         args.putString(BasicTestTypeFragment.TEST_ID_KEY, testId);
         navController.navigate(R.id.user_quiz_test_fragment_nav_graph_activity_user_test, args);
     }
 
-    private void goToUserExpressionsTrueOrFalseTestFragment(String testId) {
+    private void goToUserExpressionsTrueOrFalseLocalTestFragment(String testId) {
         Bundle args = new Bundle();
         args.putString(BasicTestTypeFragment.TEST_ID_KEY, testId);
         navController.navigate(R.id.user_true_or_false_test_fragment_nav_graph_activity_user_test, args);
     }
 
-    private void goToUserExpressionsMixedTestFragment(String testId) {
+    private void goToUserExpressionsMixedLocalTestFragment(String testId) {
         Bundle args = new Bundle();
         args.putString(BasicTestTypeFragment.TEST_ID_KEY, testId);
         args.putBoolean(MixedTestFragment.IS_MIXED_LETTERS_TEST_KEY, false);
         navController.navigate(R.id.user_mixed_test_fragment_nav_graph_activity_user_test, args);
     }
 
-    private void goToUserWordsMixedLettersTestFragment(String testId) {
+    private void goToUserWordsMixedLettersLocalTestFragment(String testId) {
         Bundle args = new Bundle();
         args.putString(BasicTestTypeFragment.TEST_ID_KEY, testId);
         args.putBoolean(MixedTestFragment.IS_MIXED_LETTERS_TEST_KEY, true);
@@ -332,4 +337,11 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         navController.navigate(R.id.user_finalize_test_fragment_nav_graph_activity_user_test, args);
     }
 
+    public void goToUserOnlineTestContainerFragment(int testType, String testId, boolean isFinished){
+
+    }
+
+    public void goToUserSelectFriendsFragment() {
+
+    }
 }

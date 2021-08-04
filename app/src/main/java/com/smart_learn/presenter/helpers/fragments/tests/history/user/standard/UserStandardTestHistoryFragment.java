@@ -27,6 +27,7 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
 
     protected abstract void onSeeTestResultPress(@NonNull @NotNull DocumentSnapshot item);
     protected abstract void onContinueTestPress(@NonNull @NotNull DocumentSnapshot item);
+    protected abstract void onContinueWithOnlineTest(@NonNull @NotNull DocumentSnapshot item);
 
     @Override
     protected boolean useToolbarMenu() {
@@ -68,14 +69,27 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
             return;
         }
 
-        DialogFragment dialogFragment = new TestInfoDialog(test, new TestInfoDialog.Callback() {
+        // In this fragment if test is online, then is a test online container document, but not an
+        // online test document. Always isOnline test will be false in this fragment.
+        boolean isOnlineTestContainer = test.isOnline();
+        DialogFragment dialogFragment = new TestInfoDialog(test, false, isOnlineTestContainer, new TestInfoDialog.Callback() {
             @Override
             public void onSeeResults() {
-                onSeeTestResultPress(item);
+                if(isOnlineTestContainer){
+                    onContinueWithOnlineTest(item);
+                }
+                else{
+                    onSeeTestResultPress(item);
+                }
             }
 
             @Override
             public void onContinueTest() {
+                // on continue test button is disabled if isOnlineTestContainer but double check it
+                if(isOnlineTestContainer){
+                    // no action needed here
+                    return;
+                }
                 onContinueTestPress(item);
             }
         });
