@@ -109,6 +109,30 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // From these fragments go back to GuestActivity.
+        if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
+            sharedViewModel.setTestHistoryFragmentActive(false);
+            sharedViewModel.setScheduledTestFragmentActive(false);
+            goToGuestActivity();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // From these fragments go back to GuestActivity.
+        if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
+            sharedViewModel.setTestHistoryFragmentActive(false);
+            sharedViewModel.setScheduledTestFragmentActive(false);
+            goToGuestActivity();
+            return true;
+        }
+        return super.onSupportNavigateUp();
+    }
+
     public void goToGuestTestResultsFragment(int testId, int testType){
         Bundle args = new Bundle();
         args.putString(TestQuestionsFragment.SELECTED_TEST_KEY, String.valueOf(testId));

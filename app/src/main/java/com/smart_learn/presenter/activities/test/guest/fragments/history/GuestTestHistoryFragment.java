@@ -49,6 +49,13 @@ public class GuestTestHistoryFragment extends GuestStandardTestHistoryFragment<G
         super.onResume();
         ((TestActivity<?>)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedTestHistoryId(GuestTestSharedViewModel.NO_ITEM_SELECTED);
+        sharedViewModel.setTestHistoryFragmentActive(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sharedViewModel.setTestHistoryFragmentActive(false);
     }
 
     @Override

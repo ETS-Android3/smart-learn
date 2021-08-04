@@ -51,6 +51,13 @@ public class GuestScheduledTestsFragment extends GuestStandardScheduledTestsFrag
         super.onResume();
         ((TestActivity<?>)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setGeneratedTest(null);
+        sharedViewModel.setScheduledTestFragmentActive(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sharedViewModel.setScheduledTestFragmentActive(false);
     }
 
     @Override

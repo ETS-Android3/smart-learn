@@ -25,6 +25,10 @@ public abstract class TestSharedViewModel extends BasicAndroidViewModel {
     @Nullable
     private Test generatedTest;
 
+    // from this fragments will go back directly to MainActivity/GuestActivity
+    private boolean isTestHistoryFragmentActive;
+    private boolean isScheduledTestFragmentActive;
+
     public TestSharedViewModel(@NonNull @NotNull Application application) {
         super(application);
     }
