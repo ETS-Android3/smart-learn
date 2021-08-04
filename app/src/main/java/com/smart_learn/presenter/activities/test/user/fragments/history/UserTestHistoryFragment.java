@@ -56,6 +56,13 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
         super.onResume();
         ((TestActivity<?>)requireActivity()).showBottomNavigationMenu();
         sharedViewModel.setSelectedTestHistoryId("");
+        sharedViewModel.setTestHistoryFragmentActive(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sharedViewModel.setTestHistoryFragmentActive(false);
     }
 
     @Override

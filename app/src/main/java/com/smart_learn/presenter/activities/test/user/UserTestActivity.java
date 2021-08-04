@@ -70,6 +70,32 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     }
 
     @Override
+    public void onBackPressed() {
+        // From these fragments go back to MainActivity.
+        if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
+            sharedViewModel.setTestHistoryFragmentActive(false);
+            sharedViewModel.setScheduledTestFragmentActive(false);
+            goToMainActivity();
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // From these fragments go back to MainActivity.
+        if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
+            sharedViewModel.setTestHistoryFragmentActive(false);
+            sharedViewModel.setScheduledTestFragmentActive(false);
+            goToMainActivity();
+            return true;
+        }
+
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
     protected void setLayoutUtilities(){
         super.setLayoutUtilities();
 
