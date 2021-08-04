@@ -20,14 +20,12 @@ import com.smart_learn.databinding.LayoutDialogSingleLineEditableLayoutBinding;
 
 import org.jetbrains.annotations.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 public class SingleLineEditableLayoutDialog extends DialogFragment {
 
     private final SingleLineEditableLayoutDialog.Callback callback;
     private final String title;
+    private final String positiveButtonTitle;
     private final String previousValue;
     private final MutableLiveData<String> liveValue;
     private final String hint;
@@ -35,12 +33,24 @@ public class SingleLineEditableLayoutDialog extends DialogFragment {
 
     public SingleLineEditableLayoutDialog(String title, String value, String hint, int maximLength,
                                           @NonNull @NotNull SingleLineEditableLayoutDialog.Callback callback) {
+        this.positiveButtonTitle = this.getString(R.string.update);
         this.callback = callback;
         this.title = title == null ? "" : title;
         this.previousValue = value == null ? "" : value;
         this.liveValue = new MutableLiveData<>(this.previousValue);
         this.hint = hint == null ? "" : hint;
         this.maximLength = maximLength;
+    }
+
+    public SingleLineEditableLayoutDialog(String title, String value, String hint, int maximLength, String positiveButtonTitle,
+                                          @NonNull @NotNull SingleLineEditableLayoutDialog.Callback callback) {
+        this.callback = callback;
+        this.title = title == null ? "" : title;
+        this.previousValue = value == null ? "" : value;
+        this.liveValue = new MutableLiveData<>(this.previousValue);
+        this.hint = hint == null ? "" : hint;
+        this.maximLength = maximLength;
+        this.positiveButtonTitle = positiveButtonTitle == null ? "" : positiveButtonTitle;
     }
 
 
@@ -68,7 +78,7 @@ public class SingleLineEditableLayoutDialog extends DialogFragment {
                 // add action buttons
 
                 // Set to null. We override the onclick.
-                .setPositiveButton(R.string.update, null)
+                .setPositiveButton(positiveButtonTitle, null)
 
                 // No need for a listener because I do no action when BUTTON_NEGATIVE is pressed.
                 // Dialog will be dismissed automatically.
