@@ -15,7 +15,6 @@ import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.QuestionTrueOrFalse;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -67,7 +66,6 @@ public class UserTestQuestionsViewModel extends TestQuestionsViewModel {
                                 return;
                         }
 
-                        fragment.requireActivity().runOnUiThread(() -> Utilities.Activities.changeTextViewStatus(questions.isEmpty(), fragment.getEmptyLabel()));
                         if(adapter != null){
                             adapter.setItems(new ArrayList<>(questions));
                         }

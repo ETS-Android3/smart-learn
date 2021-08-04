@@ -53,7 +53,13 @@ public class GuestTestQuestionsFragment extends TestQuestionsFragment<GuestTestQ
 
     private void setAdapter(int testId, int type){
 
-        viewModel.setAdapter(new QuestionsAdapter(type));
+        viewModel.setAdapter(new QuestionsAdapter(type, new QuestionsAdapter.Callback() {
+            @Override
+            public void onListLoadAction(boolean isEmpty) {
+                requireActivity().runOnUiThread(() -> Utilities.Activities.changeTextViewStatus(isEmpty, emptyLabel));
+            }
+        }));
+
         TestService.getInstance().getLiveTest(testId).observe(this, new Observer<RoomTest>() {
             @Override
             public void onChanged(RoomTest test) {
@@ -81,7 +87,6 @@ public class GuestTestQuestionsFragment extends TestQuestionsFragment<GuestTestQ
                         return;
                 }
 
-                Utilities.Activities.changeTextViewStatus(questions.isEmpty(), emptyLabel);
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().setItems(new ArrayList<>(questions));
                 }

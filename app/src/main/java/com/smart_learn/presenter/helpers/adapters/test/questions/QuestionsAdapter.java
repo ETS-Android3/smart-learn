@@ -49,8 +49,9 @@ import timber.log.Timber;
 public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHolder> implements PresenterHelpers.AdapterHelper {
 
     private final int questionType;
+    private final QuestionsAdapter.Callback adapterCallback;
 
-    public QuestionsAdapter(int questionType) {
+    public QuestionsAdapter(int questionType, @NonNull @NotNull QuestionsAdapter.Callback adapterCallback) {
         super(new DiffUtil.ItemCallback<Question>(){
             @Override
             public boolean areItemsTheSame(@NonNull Question oldItem, @NonNull Question newItem) {
@@ -73,6 +74,7 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
             }
         });
         this.questionType = questionType;
+        this.adapterCallback = adapterCallback;
     }
 
     public void setItems(List<Question> items) {
@@ -84,6 +86,7 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
             }
         }
         submitList(newList);
+        adapterCallback.onListLoadAction(newList.isEmpty());
     }
 
     @NonNull
@@ -445,6 +448,10 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
         SpannableStringBuilder spannedValue = new SpannableStringBuilder(Question.getQuestionDescription(type) + ":");
         spannedValue.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, spannedValue.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         return new SpannableString(spannedValue.append(" ").append(questionValue));
+    }
+
+    public interface Callback {
+        void onListLoadAction(boolean isEmpty);
     }
 
 }
