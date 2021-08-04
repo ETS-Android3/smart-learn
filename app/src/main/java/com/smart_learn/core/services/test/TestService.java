@@ -143,8 +143,8 @@ public class TestService {
         userTestServiceInstance.addLocalTest(testDocument, callback);
     }
 
-    public void updateLocalTest(DocumentSnapshot testSnapshot, DataCallbacks.General callback){
-        userTestServiceInstance.updateLocalTest(testSnapshot, callback);
+    public void updateTest(TestDocument updatedTest, DocumentSnapshot updatedTestSnapshot, DataCallbacks.General callback){
+        userTestServiceInstance.updateTest(updatedTest, updatedTestSnapshot, callback);
     }
 
     public void deleteScheduledTest(DocumentSnapshot testSnapshot, DataCallbacks.General callback){

@@ -156,8 +156,8 @@ class UserTestService extends BasicFirestoreService<TestDocument, UserTestReposi
         repositoryInstance.addLocalTest(testDocument, newTestDocumentReference, callback);
     }
 
-    protected void updateLocalTest(DocumentSnapshot testSnapshot, DataCallbacks.General callback){
-        if(DataUtilities.Firestore.notGoodDocumentSnapshot(testSnapshot)){
+    protected void updateTest(TestDocument updatedTest, DocumentSnapshot updatedTestSnapshot, DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(updatedTestSnapshot)){
             if(callback != null){
                 callback.onFailure();
             }
@@ -165,30 +165,29 @@ class UserTestService extends BasicFirestoreService<TestDocument, UserTestReposi
         }
 
         if(callback == null){
-            callback = DataUtilities.General.generateGeneralCallback("Test document " + testSnapshot.getId() + " updated",
-                    "Test document " + testSnapshot.getId() + " was NOT updated");
+            callback = DataUtilities.General.generateGeneralCallback("Test document " + updatedTestSnapshot.getId() + " updated",
+                    "Test document " + updatedTestSnapshot.getId() + " was NOT updated");
         }
 
-        TestDocument test = testSnapshot.toObject(TestDocument.class);
-        if(test == null){
+        if(updatedTest == null){
             Timber.w("test is null");
             callback.onFailure();
             return;
         }
 
-        if(TextUtils.isEmpty(test.getTestName())){
+        if(TextUtils.isEmpty(updatedTest.getTestName())){
             Timber.w("name must not be null or empty");
             callback.onFailure();
             return;
         }
 
-        if(test.getDocumentMetadata() == null){
+        if(updatedTest.getDocumentMetadata() == null){
             Timber.w("getDocumentMetadata() is null");
             callback.onFailure();
             return;
         }
 
-        repositoryInstance.updateLocalTest(test, testSnapshot.getReference(), callback);
+        repositoryInstance.updateLocalTest(updatedTest, updatedTestSnapshot.getReference(), callback);
     }
 
     protected void deleteScheduledTest(DocumentSnapshot testSnapshot, DataCallbacks.General callback){

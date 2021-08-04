@@ -62,6 +62,6 @@ public class UserQuizTestViewModel extends QuizTestViewModel {
 
     @Override
     protected void updateTest(@NonNull @NotNull Test test, @NonNull @NotNull DataCallbacks.General callback) {
-        TestService.getInstance().updateDocument(TestDocument.convertDocumentToHashMap((TestDocument) test), extractedTestSnapshot, callback);
+        TestService.getInstance().updateTest((TestDocument) test, extractedTestSnapshot, callback);
     }
 }
