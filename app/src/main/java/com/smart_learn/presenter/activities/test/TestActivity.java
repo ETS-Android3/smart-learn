@@ -124,4 +124,13 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends AppC
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
+    public void hideToolbar(){
+        binding.toolbarActivityTest.setVisibility(View.GONE);
+    }
+
+    public void showToolbar(){
+        binding.toolbarActivityTest.setVisibility(View.VISIBLE);
+    }
+
+
 }
