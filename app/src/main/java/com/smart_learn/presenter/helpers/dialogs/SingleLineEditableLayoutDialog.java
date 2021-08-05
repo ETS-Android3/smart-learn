@@ -17,6 +17,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.databinding.LayoutDialogSingleLineEditableLayoutBinding;
+import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +34,7 @@ public class SingleLineEditableLayoutDialog extends DialogFragment {
 
     public SingleLineEditableLayoutDialog(String title, String value, String hint, int maximLength,
                                           @NonNull @NotNull SingleLineEditableLayoutDialog.Callback callback) {
-        this.positiveButtonTitle = this.getString(R.string.update);
+        this.positiveButtonTitle = ApplicationController.getInstance().getString(R.string.update);
         this.callback = callback;
         this.title = title == null ? "" : title;
         this.previousValue = value == null ? "" : value;
