@@ -35,6 +35,7 @@ public class GuestHomeExpressionViewModel extends HomeExpressionViewModel {
             Timber.w("expression is null");
             return;
         }
+        liveIsOwner.setValue(true);
         liveExpression.setValue(expression);
         liveExpressionValue.setValue(expression.getExpression());
         liveExpressionNotes.setValue(expression.getNotes());

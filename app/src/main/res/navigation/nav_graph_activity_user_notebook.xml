@@ -28,7 +28,11 @@
         android:id="@+id/user_home_lesson_fragment_nav_graph_activity_user_notebook"
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_lesson.UserHomeLessonFragment"
         android:label="user_home_lesson_fragment_nav_graph_activity_user_notebook"
-        tools:layout="@layout/fragment_home_lesson"/>
+        tools:layout="@layout/fragment_home_lesson">
+        <action
+            android:id="@+id/action_user_home_lesson_fragment_to_shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/shared_lesson_participants_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
 
     <fragment
         android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
@@ -59,5 +63,11 @@
         android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_expression.UserHomeExpressionFragment"
         android:label="user_home_expression_fragment_nav_graph_activity_user_notebook"
         tools:layout="@layout/fragment_home_expression"/>
+    <fragment
+        android:id="@+id/shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.participants.SharedLessonParticipantsFragment"
+        android:label="shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
 
 </navigation>

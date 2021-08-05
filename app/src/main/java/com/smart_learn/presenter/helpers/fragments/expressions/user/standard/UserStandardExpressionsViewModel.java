@@ -32,7 +32,7 @@ public abstract class UserStandardExpressionsViewModel extends UserBasicExpressi
         isDeletingActive = new AtomicBoolean(false);
     }
 
-    public void addExpression(String expressionValue, String notes, ArrayList<Translation> translations) {
+    public void addExpression(boolean isSharedLessonSelected, String expressionValue, String notes, ArrayList<Translation> translations) {
         if(currentLessonSnapshot == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_adding_expression));
             return;
@@ -49,6 +49,7 @@ public abstract class UserStandardExpressionsViewModel extends UserBasicExpressi
                 notes,
                 false,
                 "",
+                isSharedLessonSelected,
                 Translation.fromListToJson(translations),
                 expressionValue
         );

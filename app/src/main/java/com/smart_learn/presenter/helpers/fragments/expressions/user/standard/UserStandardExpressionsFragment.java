@@ -107,7 +107,8 @@ public abstract class UserStandardExpressionsFragment <VM extends UserStandardEx
             @Override
             public void onAddExpression(@NonNull @NotNull String expressionValue, @NonNull @NotNull String notes,
                                         @NonNull @NotNull ArrayList<Translation> translations) {
-                viewModel.addExpression(expressionValue, notes, translations);
+                boolean isSharedLessonSelected = getArguments() != null && getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
+                viewModel.addExpression(isSharedLessonSelected, expressionValue, notes, translations);
             }
         });
         dialog.show(requireActivity().getSupportFragmentManager(), "UserStandardExpressionsFragment");

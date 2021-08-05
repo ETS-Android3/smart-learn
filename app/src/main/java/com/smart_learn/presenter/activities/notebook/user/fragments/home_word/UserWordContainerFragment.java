@@ -30,6 +30,8 @@ import timber.log.Timber;
 
 public class UserWordContainerFragment extends Fragment {
 
+    public static final String IS_WORD_OWNER = "IS_WORD_OWNER";
+
     @Getter
     protected FragmentUserWordContainerBinding binding;
     protected UserNotebookSharedViewModel sharedViewModel;
@@ -60,6 +62,14 @@ public class UserWordContainerFragment extends Fragment {
         NavHostFragment nestedNavHostFragment = (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nested_nav_host_fragment_user_word_container);
         if(nestedNavHostFragment != null){
             nestedNavController = nestedNavHostFragment.getNavController();
+
+            // Set arguments for start destination (word home in that case). WordHome is loaded automatically
+            // and needs isOwner argument in order to show/hide specific elements in views.
+            // https://stackoverflow.com/questions/50334550/navigation-architecture-component-passing-argument-data-to-the-startdestination
+            Bundle args = new Bundle();
+            final boolean isWordOwner = getArguments() != null && getArguments().getBoolean(IS_WORD_OWNER);
+            args.putBoolean(UserHomeWordFragment.IS_WORD_OWNER, isWordOwner);
+            nestedNavController.setGraph(R.navigation.nested_nav_graph_fragment_user_word_container, args);
         }
 
         // if navigation graph cannot be set, then stop activity
@@ -81,7 +91,10 @@ public class UserWordContainerFragment extends Fragment {
                 int position = tab.getPosition();
                 switch (position){
                     case 0: // for Word overview
-                        nestedNavController.navigate(R.id.user_home_word_fragment_nested_nav_graph_fragment_user_word_container);
+                        Bundle homeWordBundle = new Bundle();
+                        final boolean isWordOwner = getArguments() != null && getArguments().getBoolean(IS_WORD_OWNER);
+                        homeWordBundle.putBoolean(UserHomeWordFragment.IS_WORD_OWNER, isWordOwner);
+                        nestedNavController.navigate(R.id.user_home_word_fragment_nested_nav_graph_fragment_user_word_container, homeWordBundle);
                         break;
                     case 1: // fot meaning
                         // https://developer.android.com/guide/navigation/navigation-pass-data#java

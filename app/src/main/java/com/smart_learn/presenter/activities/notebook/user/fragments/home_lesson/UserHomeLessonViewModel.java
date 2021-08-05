@@ -8,12 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonViewModel;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 import lombok.Getter;
 
@@ -34,7 +37,9 @@ public class UserHomeLessonViewModel extends HomeLessonViewModel {
         liveLesson.setValue(newLesson);
         super.setLiveLessonName(newLesson.getName());
         super.setLiveLessonNotes(newLesson.getNotes());
+        super.setLiveIsOwner(newLesson.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
     }
+
 
     @Override
     protected void saveLessonName(String newValue) {
@@ -64,5 +69,14 @@ public class UserHomeLessonViewModel extends HomeLessonViewModel {
         });
     }
 
+    @NonNull
+    @NotNull
+    protected ArrayList<String> getCurrentLessonParticipants(){
+        LessonDocument lesson = liveLesson.getValue();
+        if(lesson == null){
+            return new ArrayList<>();
+        }
 
+        return lesson.getParticipants() == null ? new ArrayList<>() : lesson.getParticipants();
+    }
 }

@@ -432,7 +432,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         lesson.setNrOfExpressions(expressionList.size());
 
         // save lesson
-        DocumentReference lessonDocRef = UserLessonService.getInstance().getLessonsCollectionReference().document();
+        DocumentReference lessonDocRef = UserLessonService.getInstance().getLessonsCollectionReference(false).document();
         batch.set(lessonDocRef, LessonDocument.convertDocumentToHashMap(lesson));
 
         // 4. Add words and expressions to the current lesson collections

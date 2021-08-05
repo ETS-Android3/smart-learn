@@ -51,6 +51,7 @@ public abstract class Test {
         String DAYS_STATUS_FIELD_NAME = "daysStatus";
         String LESSON_ID_FIELD_NAME = "lessonId";
         String LESSON_NAME_FIELD_NAME = "lessonName";
+        String IS_SHARED_LESSON_FIELD_NAME = "sharedLesson";
     }
 
     public interface Types {
@@ -156,6 +157,7 @@ public abstract class Test {
     @NonNull
     @NotNull
     private String lessonName;
+    private boolean isSharedLesson;
 
     public Test(){
         // initial values
@@ -355,6 +357,7 @@ public abstract class Test {
         data.put(Fields.DAYS_STATUS_FIELD_NAME, test.getDaysStatus());
         data.put(Fields.LESSON_ID_FIELD_NAME, test.getLessonId());
         data.put(Fields.LESSON_NAME_FIELD_NAME, test.getLessonName());
+        data.put(Fields.IS_SHARED_LESSON_FIELD_NAME, test.isSharedLesson());
 
         return data;
     }
@@ -387,6 +390,7 @@ public abstract class Test {
         if (getDayOfMonth() != test.getDayOfMonth()) return false;
         if (getMonth() != test.getMonth()) return false;
         if (getYear() != test.getYear()) return false;
+        if (isSharedLesson() != test.isSharedLesson()) return false;
         if (!getTestName().equals(test.getTestName())) return false;
         if (!getCustomTestName().equals(test.getCustomTestName())) return false;
         if (!getQuestionsJson().equals(test.getQuestionsJson())) return false;
@@ -424,7 +428,7 @@ public abstract class Test {
         result = 31 * result + getDaysStatus().hashCode();
         result = 31 * result + getLessonId().hashCode();
         result = 31 * result + getLessonName().hashCode();
+        result = 31 * result + (isSharedLesson() ? 1 : 0);
         return result;
     }
-
 }

@@ -17,11 +17,17 @@ public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument
     public interface Fields {
         String IS_FAVOURITE_FIELD_NAME = "isFavourite";
         String LANGUAGE_FIELD_NAME = "language";
+        String IS_FROM_SHARED_LESSON_FIELD_NAME = "fromSharedLesson";
+        String OWNER_DISPLAY_NAME_FIELD_NAME = "ownerDisplayName";
         String TRANSLATIONS_FIELD_NAME = "translations";
     }
 
     private boolean isFavourite;
     private String language;
+    private boolean isFromSharedLesson;
+    // used for a fast access at owner display name
+    private String ownerDisplayName = "";
+
     // array list of translations transformed in string with Gson
     protected String translations;
 
@@ -29,10 +35,11 @@ public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument
         // needed for Firestore
     }
 
-    public LessonEntranceDocument(DocumentMetadata documentMetadata, String notes, boolean isFavourite, String language, String translations) {
+    public LessonEntranceDocument(DocumentMetadata documentMetadata, String notes, boolean isFavourite, String language, boolean isFromSharedLesson, String translations) {
         super(documentMetadata, notes);
         this.isFavourite = isFavourite;
         this.language = language;
+        this.isFromSharedLesson = isFromSharedLesson;
         this.translations = translations;
     }
 
@@ -44,9 +51,15 @@ public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument
         HashMap<String, Object> data = BasicNotebookCommonDocument.convertDocumentToHashMap(document);
         data.put(Fields.IS_FAVOURITE_FIELD_NAME, document.getFavourite());
         data.put(Fields.LANGUAGE_FIELD_NAME, document.getLanguage());
+        data.put(Fields.IS_FROM_SHARED_LESSON_FIELD_NAME, document.isFromSharedLesson());
+        data.put(Fields.OWNER_DISPLAY_NAME_FIELD_NAME, document.getOwnerDisplayName());
         data.put(Fields.TRANSLATIONS_FIELD_NAME, document.getTranslations());
 
         return data;
+    }
+
+    public void setOwnerDisplayName(String ownerDisplayName) {
+        this.ownerDisplayName = ownerDisplayName == null ? "" : ownerDisplayName;
     }
 
     /**

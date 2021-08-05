@@ -19,6 +19,8 @@ import timber.log.Timber;
 
 public class UserHomeWordFragment extends HomeWordFragment<UserHomeWordViewModel> {
 
+    public static final String IS_WORD_OWNER = "IS_WORD_OWNER";
+
     @Getter
     protected UserNotebookSharedViewModel sharedViewModel;
 
@@ -26,6 +28,11 @@ public class UserHomeWordFragment extends HomeWordFragment<UserHomeWordViewModel
     @Override
     protected @NotNull Class<UserHomeWordViewModel> getModelClassForViewModel() {
         return UserHomeWordViewModel.class;
+    }
+
+    @Override
+    protected boolean isWordOwner() {
+        return getArguments() != null && getArguments().getBoolean(IS_WORD_OWNER);
     }
 
     @Override

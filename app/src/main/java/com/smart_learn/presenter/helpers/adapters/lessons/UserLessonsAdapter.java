@@ -19,6 +19,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -115,17 +116,25 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
         private final MutableLiveData<SpannableString> liveLessonSpannedName;
         private final MutableLiveData<String> liveExtraInfo;
         private final AtomicBoolean isDeletingActive;
+        private boolean isLessonOwner;
 
         public LessonViewHolder(@NonNull @NotNull LayoutCardViewLessonBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveLessonSpannedName = new MutableLiveData<>(new SpannableString(""));
             liveExtraInfo = new MutableLiveData<>("");
             isDeletingActive = new AtomicBoolean(false);
+            isLessonOwner = false;
 
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewLesson, viewHolderBinding.cvLayoutCardViewLesson);
 
             // set guest menu to invisible
             viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().setGroupVisible(R.id.guest_group_menu_card_view_lesson, false);
+
+            // if is shared lesson hide share button
+            MenuItem item = viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().findItem(R.id.action_user_share_menu_card_view_lesson);
+            if(item != null){
+                item.setVisible(false);
+            }
 
             // link binding with variables
             viewHolderBinding.setLiveLessonSpannedName(liveLessonSpannedName);
@@ -141,6 +150,12 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
 
         @Override
         protected void bind(@NonNull @NotNull LessonDocument item, int position){
+            isLessonOwner = item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid());
+            if(!isLessonOwner){
+                // Show delete menu option only for owner (in that case toolbar contains only delete,
+                // so hide toolbar completely).
+                viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.GONE);
+            }
 
             if(isFiltering){
                 liveLessonSpannedName.setValue(Utilities.Activities.generateSpannedString(
@@ -179,6 +194,11 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
             viewHolderBinding.toolbarLayoutCardViewLesson.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
+                    // only lesson owner can do these actions
+                    if(!isLessonOwner){
+                        return true;
+                    }
+
                     int position = getAdapterPosition();
                     if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                         return true;

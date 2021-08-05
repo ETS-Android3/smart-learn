@@ -17,7 +17,6 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.FragmentHomeWordBinding;
-import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
 import com.smart_learn.presenter.helpers.ItemDecoration;
@@ -34,6 +33,8 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
 
     @Getter
     protected FragmentHomeWordBinding binding;
+
+    protected abstract boolean isWordOwner();
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -98,7 +99,7 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
         binding.btnAddTranslationFragmentHomeWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TranslationDialog dialog = new TranslationDialog(false,false, false, null, viewModel.getAllTranslations(),
+                TranslationDialog dialog = new TranslationDialog(false,false, false, isWordOwner(), null, viewModel.getAllTranslations(),
                         new TranslationDialog.Callback() {
                             @Override
                             public void onAddOrUpdatePositiveButtonPress(@NonNull @NotNull Translation newTranslation) {
@@ -159,11 +160,16 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
             public void onDelete(Translation translation, @NonNull @NotNull DataCallbacks.General callback) {
                 viewModel.deleteTranslation(translation, callback);
             }
+
+            @Override
+            public boolean isOwner() {
+                return isWordOwner();
+            }
         }));
     }
 
     private void showTranslationDialogForSimpleView(@NonNull @NotNull Translation translation){
-        TranslationDialog dialog = new TranslationDialog(false,true, false, translation, viewModel.getAllTranslations(),
+        TranslationDialog dialog = new TranslationDialog(false,true, false, isWordOwner(), translation, viewModel.getAllTranslations(),
                 new TranslationDialog.Callback() {
                     @Override
                     public void onViewPositiveButtonPress() {
@@ -174,7 +180,7 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
     }
 
     private void showTranslationDialogForUpdate(@NonNull @NotNull Translation translation){
-        TranslationDialog dialog = new TranslationDialog(false,false, true, translation, viewModel.getAllTranslations(),
+        TranslationDialog dialog = new TranslationDialog(false,false, true, isWordOwner(), translation, viewModel.getAllTranslations(),
                 new TranslationDialog.Callback() {
                     @Override
                     public void onAddOrUpdatePositiveButtonPress(@NonNull @NotNull Translation newTranslation) {

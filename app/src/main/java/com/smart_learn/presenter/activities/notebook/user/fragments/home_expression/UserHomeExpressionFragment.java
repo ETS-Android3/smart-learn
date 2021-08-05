@@ -19,6 +19,8 @@ import timber.log.Timber;
 
 public class UserHomeExpressionFragment extends HomeExpressionFragment<UserHomeExpressionViewModel> {
 
+    public static final String IS_EXPRESSION_OWNER = "IS_EXPRESSION_OWNER";
+
     @Getter
     protected UserNotebookSharedViewModel sharedViewModel;
 
@@ -26,6 +28,11 @@ public class UserHomeExpressionFragment extends HomeExpressionFragment<UserHomeE
     @Override
     protected @NotNull Class<UserHomeExpressionViewModel> getModelClassForViewModel() {
         return UserHomeExpressionViewModel.class;
+    }
+
+    @Override
+    protected boolean isExpressionOwner() {
+        return getArguments() != null && getArguments().getBoolean(IS_EXPRESSION_OWNER);
     }
 
     @Override

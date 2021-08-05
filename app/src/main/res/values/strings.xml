@@ -570,6 +570,15 @@
     <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
     <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
     <string name="online_test_invitation_received_title">New online test invitation</string>
+    <string name="error_add_new_shared_lesson">Can not add new shared lesson</string>
+    <string name="add_new_shared_lesson">Add new shared lesson</string>
+    <string name="sucess_add_new_shared_lesson">Lesson was added</string>
+    <string name="show_local_personal_and_received">Show local (personal and received)</string>
+    <string name="show_personal">Show personal</string>
+    <string name="show_received">Show received</string>
+    <string name="show_shared">Show shared</string>
+    <string name="no_participants">Lesson contains no participants</string>
+    <string name="created_by">created by</string>
 
 
 </resources>

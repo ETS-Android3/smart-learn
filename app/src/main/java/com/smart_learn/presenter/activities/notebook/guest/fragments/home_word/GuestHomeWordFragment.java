@@ -26,6 +26,11 @@ public class GuestHomeWordFragment extends HomeWordFragment<GuestHomeWordViewMod
     }
 
     @Override
+    protected boolean isWordOwner() {
+        return true;
+    }
+
+    @Override
     protected void setViewModel(){
         super.setViewModel();
 

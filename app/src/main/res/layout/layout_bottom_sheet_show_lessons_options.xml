@@ -31,7 +31,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@{isAllSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
-            android:text="Show all"/>
+            android:text="@string/show_local_personal_and_received"/>
 
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@{isLocalSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
-            android:text="Show only local"/>
+            android:text="@string/show_personal"/>
 
         <Button
             android:id="@+id/btn_show_received_layout_bottom_sheet_show_lessons_options"
@@ -52,7 +52,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@{isReceivedSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
-            android:text="Show only received"/>
+            android:text="@string/show_received"/>
 
         <Button
             android:id="@+id/btn_show_shared_layout_bottom_sheet_show_lessons_options"
@@ -61,8 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:drawableStart="@{isSharedSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
-            android:text="Show only shared"
-            android:visibility="gone"/>
+            android:text="@string/show_shared"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

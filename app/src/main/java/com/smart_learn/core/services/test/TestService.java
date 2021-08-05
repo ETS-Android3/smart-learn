@@ -302,7 +302,6 @@ public class TestService {
         }
 
         ThreadExecutorService.getInstance().execute(() -> {
-
             switch (testOptions.getType()){
                 case Test.Types.WORD_WRITE:
                 case Test.Types.WORD_QUIZ:
@@ -324,7 +323,7 @@ public class TestService {
 
     private void continueWithWordsExtraction(Test testOptions, int questionsNr, TestService.TestGenerationCallback callback){
         UserWordService.getInstance()
-                .getQueryForAllLessonWords(testOptions.getLessonId())
+                .getQueryForAllLessonWords(testOptions.getLessonId(), testOptions.isSharedLesson())
                 // get only fresh data
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -380,7 +379,7 @@ public class TestService {
 
     private void continueWithExpressionsExtraction(Test testOptions, int questionsNr, TestService.TestGenerationCallback callback){
         UserExpressionService.getInstance()
-                .getQueryForAllLessonExpressions(testOptions.getLessonId())
+                .getQueryForAllLessonExpressions(testOptions.getLessonId(), testOptions.isSharedLesson())
                 // get only fresh data
                 .get(Source.SERVER)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

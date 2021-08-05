@@ -32,6 +32,7 @@ public class GuestHomeWordViewModel extends HomeWordViewModel {
     public void setLiveWord(Word word){
         liveWord.setValue(word);
         liveWordValue.setValue(word.getWord());
+        liveIsOwner.setValue(true);
         liveWordPhonetic.setValue(word.getPhonetic());
         liveWordNotes.setValue(word.getNotes());
         allTranslations = word.getTranslations();

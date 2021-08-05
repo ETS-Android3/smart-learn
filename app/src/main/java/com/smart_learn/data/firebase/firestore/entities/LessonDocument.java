@@ -10,6 +10,7 @@ import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCom
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class LessonDocument extends BasicNotebookCommonDocument {
         String FROM_UID_FIELD_NAME = "fromUid";
         String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
         String FROM_DOCUMENT_REFERENCE_FIELD_NAME = "fromDocumentReference";
-        String SHARED_LESSON_DOCUMENT_REFERENCE_FIELD_NAME = "sharedLessonDocumentReference";
+        String PARTICIPANTS_FIELD_NAME = "participants";
     }
 
     public interface Types {
@@ -68,8 +69,8 @@ public class LessonDocument extends BasicNotebookCommonDocument {
 
                         These fields are used only for shared lessons
     ********************************************************************************************* */
-    // lesson will be shared so user will have access directly to the document reference
-    private DocumentReference sharedLessonDocumentReference;
+    // used to store UID of the participants for shared lessons
+    private ArrayList<String> participants = new ArrayList<>();
     /* *********************************************************************************************
                            END optional fields for shared lessons
     ********************************************************************************************* */
@@ -102,7 +103,7 @@ public class LessonDocument extends BasicNotebookCommonDocument {
         data.put(Fields.FROM_UID_FIELD_NAME, document.getFromUid());
         data.put(Fields.FROM_DISPLAY_NAME_FIELD_NAME, document.getFromDisplayName());
         data.put(Fields.FROM_DOCUMENT_REFERENCE_FIELD_NAME, document.getFromDocumentReference());
-        data.put(Fields.SHARED_LESSON_DOCUMENT_REFERENCE_FIELD_NAME, document.getSharedLessonDocumentReference());
+        data.put(Fields.PARTICIPANTS_FIELD_NAME, document.getParticipants());
 
         return data;
     }

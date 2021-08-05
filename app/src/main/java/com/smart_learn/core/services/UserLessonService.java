@@ -4,16 +4,19 @@ import android.text.TextUtils;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
+import com.smart_learn.data.firebase.firestore.entities.helpers.BasicProfileDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.repository.UserLessonRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import timber.log.Timber;
@@ -70,8 +73,15 @@ public class UserLessonService extends BasicFirestoreService<LessonDocument, Use
         }
     }
 
-    public CollectionReference getLessonsCollectionReference(){
-        return repositoryInstance.getLessonsCollectionReference();
+    public Query getQueryForSharedLessonParticipants(ArrayList<String> sharedLessonParticipants, long limit) {
+        if(sharedLessonParticipants == null){
+            sharedLessonParticipants = new ArrayList<>();
+        }
+        return repositoryInstance.getQueryForSharedLessonParticipants(sharedLessonParticipants, limit);
+    }
+
+    public CollectionReference getLessonsCollectionReference(boolean isSharedLesson){
+        return repositoryInstance.getLessonsCollectionReference(isSharedLesson);
     }
 
     /**
@@ -100,7 +110,37 @@ public class UserLessonService extends BasicFirestoreService<LessonDocument, Use
         }
 
         repositoryInstance.addEmptyLesson(lessonDocument, callback);
+    }
 
+    public void addEmptySharedLesson(LessonDocument lessonDocument, ArrayList<DocumentSnapshot> friendsSnapshotList, DataCallbacks.General callback){
+        if (lessonDocument == null){
+            Timber.w("lessonDocument is null");
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(TextUtils.isEmpty(lessonDocument.getName())){
+            Timber.w("name must not be null or empty");
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Lesson " + lessonDocument.getName() + " was added",
+                    "Lesson = " + lessonDocument.getName() + " was NOT added");
+        }
+
+        if(friendsSnapshotList == null || friendsSnapshotList.isEmpty()){
+            callback.onSuccess();
+            Timber.w("No friends to send shared lesson");
+            return;
+        }
+
+        repositoryInstance.addEmptySharedLesson(lessonDocument, friendsSnapshotList, callback);
     }
 
     public void updateLessonName(String newName, DocumentSnapshot lessonSnapshot, DataCallbacks.General callback){

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
@@ -51,6 +52,10 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
         sharedViewModel.setSelectedLesson(null);
         sharedViewModel.setSelectedWord(null);
         sharedViewModel.setSelectedExpression(null);
+        sharedViewModel.setAddNewEmptySharedLesson(false);
+        sharedViewModel.setNewEmptySharedLessonName(null);
+        sharedViewModel.setSharedLessonSelected(false);
+        sharedViewModel.setSelectedSharedLessonParticipants(null);
     }
 
     @Override
@@ -61,7 +66,6 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
         sharedViewModel = new ViewModelProvider(requireActivity()).get(UserNotebookSharedViewModel.class);
     }
 
-
     private void goToUserHomeLessonFragment(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
         if(lessonSnapshot == null){
@@ -69,12 +73,19 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
             return;
         }
 
+        LessonDocument lessonDocument = lessonSnapshot.toObject(LessonDocument.class);
+        if(lessonDocument == null){
+            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
+            return;
+        }
+
         // First set current lesson document id (lesson which is clicked) on the shared view model and
         // then you can navigate.
         sharedViewModel.setSelectedLesson(lessonSnapshot);
-        ((UserNotebookActivity)requireActivity()).goToUserHomeLessonFragment();
+        boolean isSharedLessonSelected = lessonDocument.getType() == LessonDocument.Types.SHARED;
+        sharedViewModel.setSharedLessonSelected(isSharedLessonSelected);
+        ((UserNotebookActivity)requireActivity()).goToUserHomeLessonFragment(isSharedLessonSelected);
     }
-
 
     private void shareLesson(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
@@ -86,6 +97,13 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
         // First set current lesson document id (lesson which is clicked) on the shared view model and
         // then you can navigate.
         sharedViewModel.setSelectedLesson(lessonSnapshot);
-        ((UserNotebookActivity)requireActivity()).goToSelectFriendsFragment();
+        ((UserNotebookActivity)requireActivity()).goToSelectFriendsFragment(false);
+    }
+
+    @Override
+    protected void addNewEmptySharedLesson(@NonNull @NotNull String lessonName) {
+        sharedViewModel.setAddNewEmptySharedLesson(true);
+        sharedViewModel.setNewEmptySharedLessonName(lessonName);
+        ((UserNotebookActivity)requireActivity()).goToSelectFriendsFragment(true);
     }
 }

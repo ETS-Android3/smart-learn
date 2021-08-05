@@ -38,6 +38,9 @@ public abstract class HomeWordViewModel extends BasicAndroidViewModel {
     protected final MutableLiveData<String> liveWordValue;
     protected final MutableLiveData<String> liveWordPhonetic;
     protected final MutableLiveData<String> liveWordNotes;
+    protected final MutableLiveData<Boolean> liveIsOwner;
+    protected final MutableLiveData<Boolean> liveIsFromSharedLesson;
+    protected final MutableLiveData<String> liveCreatedBy;
 
     protected abstract void saveWordValue(String newValue);
     protected abstract void saveWordPhonetic(String newValue);
@@ -51,6 +54,9 @@ public abstract class HomeWordViewModel extends BasicAndroidViewModel {
         liveWordValue = new MutableLiveData<>("");
         liveWordPhonetic = new MutableLiveData<>("");
         liveWordNotes = new MutableLiveData<>("");
+        liveIsOwner = new MutableLiveData<>(false);
+        liveIsFromSharedLesson = new MutableLiveData<>(false);
+        liveCreatedBy = new MutableLiveData<>("");
     }
 
     public LiveData<String> getLiveWordValue() {
@@ -76,6 +82,31 @@ public abstract class HomeWordViewModel extends BasicAndroidViewModel {
     public void setLiveWordNotes(String value) {
         liveWordNotes.setValue(value);
     }
+
+    public LiveData<Boolean> getLiveIsOwner() {
+        return liveIsOwner;
+    }
+
+    public void setLiveIsOwner(boolean value) {
+        liveIsOwner.setValue(value);
+    }
+
+    public LiveData<Boolean> getLiveIsFromSharedLesson() {
+        return liveIsFromSharedLesson;
+    }
+
+    public void setLiveIsFromSharedLesson(boolean value) {
+        liveIsFromSharedLesson.setValue(value);
+    }
+
+    public LiveData<String> getLiveCreatedBy() {
+        return liveCreatedBy;
+    }
+
+    public void setLiveCreatedBy(String value) {
+        liveCreatedBy.setValue(value);
+    }
+
 
     protected void updateWordValue(String oldValue, String newValue, @NonNull @NotNull TextInputLayout textInputLayout,
                                    @NonNull @NotNull SingleLineEditableLayoutDialog.Listener listener) {

@@ -22,6 +22,7 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_USERS = "users";
     public static final String COLLECTION_FRIENDS = "friends";
     public static final String COLLECTION_LESSONS = "lessons";
+    public static final String COLLECTION_SHARED_LESSONS = "shared_lessons";
     public static final String COLLECTION_WORDS = "words";
     public static final String COLLECTION_EXPRESSIONS = "expressions";
     public static final String COLLECTION_LOCAL_TESTS = "local_tests";

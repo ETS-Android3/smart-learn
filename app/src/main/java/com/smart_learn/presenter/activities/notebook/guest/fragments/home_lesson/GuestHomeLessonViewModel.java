@@ -30,6 +30,7 @@ public class GuestHomeLessonViewModel extends HomeLessonViewModel {
         liveLesson.setValue(lesson);
         super.setLiveLessonName(lesson.getName());
         super.setLiveLessonNotes(lesson.getNotes());
+        super.setLiveIsOwner(true);
     }
 
     @Override

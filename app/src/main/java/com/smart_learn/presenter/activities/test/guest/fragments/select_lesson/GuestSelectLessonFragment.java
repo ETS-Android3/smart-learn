@@ -56,6 +56,7 @@ public class GuestSelectLessonFragment extends GuestStandardLessonsFragment<Gues
         if(sharedViewModel.getGeneratedTest() != null){
             sharedViewModel.getGeneratedTest().setLessonId(String.valueOf(GuestTestSharedViewModel.NO_ITEM_SELECTED));
             sharedViewModel.getGeneratedTest().setLessonName("");
+            sharedViewModel.getGeneratedTest().setSharedLesson(false);
             sharedViewModel.setNrOfLessonWords(TestSharedViewModel.NO_VALUE);
             sharedViewModel.setNrOfLessonExpressions(TestSharedViewModel.NO_VALUE);
         }
@@ -87,6 +88,7 @@ public class GuestSelectLessonFragment extends GuestStandardLessonsFragment<Gues
                 // set values
                 sharedViewModel.getGeneratedTest().setLessonId(String.valueOf(lesson.getLessonId()));
                 sharedViewModel.getGeneratedTest().setLessonName(lesson.getName());
+                sharedViewModel.getGeneratedTest().setSharedLesson(false);
                 sharedViewModel.setNrOfLessonWords(nrOfWords);
                 sharedViewModel.setNrOfLessonExpressions(nrOfExpressions);
                 // and navigate to next fragment

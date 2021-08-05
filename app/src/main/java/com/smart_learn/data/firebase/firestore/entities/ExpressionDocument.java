@@ -35,8 +35,8 @@ public class ExpressionDocument extends LessonEntranceDocument  {
     }
 
     public ExpressionDocument(DocumentMetadata documentMetadata, String notes, boolean isFavourite,
-                              String language, String translations, String expression) {
-        super(documentMetadata, notes, isFavourite, language, translations);
+                              String language, boolean isFromSharedLesson, String translations, String expression) {
+        super(documentMetadata, notes, isFavourite, language, isFromSharedLesson, translations);
         this.expression = expression;
     }
 

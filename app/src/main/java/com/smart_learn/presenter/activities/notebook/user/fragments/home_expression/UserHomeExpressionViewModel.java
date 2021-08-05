@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserExpressionService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
@@ -27,6 +28,9 @@ public class UserHomeExpressionViewModel extends HomeExpressionViewModel {
 
     public void setLiveExpression(DocumentSnapshot newSnapshot, ExpressionDocument newExpression){
         expressionSnapshot = newSnapshot;
+        liveIsOwner.setValue(newExpression.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
+        liveIsFromSharedLesson.setValue(newExpression.isFromSharedLesson());
+        liveCreatedBy.setValue(newExpression.getOwnerDisplayName());
         liveExpressionValue.setValue(newExpression.getExpression());
         liveExpressionNotes.setValue(newExpression.getNotes());
         allTranslations = Translation.fromJsonToList(newExpression.getTranslations());

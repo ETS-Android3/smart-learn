@@ -36,6 +36,9 @@ public abstract class HomeExpressionViewModel extends BasicAndroidViewModel {
 
     protected final MutableLiveData<String> liveExpressionValue;
     protected final MutableLiveData<String> liveExpressionNotes;
+    protected final MutableLiveData<Boolean> liveIsOwner;
+    protected final MutableLiveData<Boolean> liveIsFromSharedLesson;
+    protected final MutableLiveData<String> liveCreatedBy;
 
     protected abstract void saveExpressionValue(String newValue);
     protected abstract void saveExpressionNotes(String newValue);
@@ -47,6 +50,9 @@ public abstract class HomeExpressionViewModel extends BasicAndroidViewModel {
         allTranslations = new ArrayList<>();
         liveExpressionValue = new MutableLiveData<>("");
         liveExpressionNotes = new MutableLiveData<>("");
+        liveIsOwner = new MutableLiveData<>(false);
+        liveIsFromSharedLesson = new MutableLiveData<>(false);
+        liveCreatedBy = new MutableLiveData<>("");
     }
 
     public LiveData<String> getLiveExpressionValue() {
@@ -63,6 +69,30 @@ public abstract class HomeExpressionViewModel extends BasicAndroidViewModel {
 
     public void setLiveExpressionNotes(String value) {
         liveExpressionNotes.setValue(value);
+    }
+
+    public LiveData<Boolean> getLiveIsOwner() {
+        return liveIsOwner;
+    }
+
+    public void setLiveIsOwner(boolean value) {
+        liveIsOwner.setValue(value);
+    }
+
+    public LiveData<Boolean> getLiveIsFromSharedLesson() {
+        return liveIsFromSharedLesson;
+    }
+
+    public void setLiveIsFromSharedLesson(boolean value) {
+        liveIsFromSharedLesson.setValue(value);
+    }
+
+    public LiveData<String> getLiveCreatedBy() {
+        return liveCreatedBy;
+    }
+
+    public void setLiveCreatedBy(String value) {
+        liveCreatedBy.setValue(value);
     }
 
     protected void updateExpressionValue(String oldValue, String newValue, @NonNull @NotNull TextInputLayout textInputLayout,

@@ -17,7 +17,6 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.FragmentHomeExpressionBinding;
-import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
@@ -35,6 +34,8 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
 
     @Getter
     protected FragmentHomeExpressionBinding binding;
+
+    protected abstract boolean isExpressionOwner();
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -81,7 +82,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
         binding.btnAddTranslationFragmentHomeExpression.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TranslationDialog dialog = new TranslationDialog(true,false, false, null, viewModel.getAllTranslations(),
+                TranslationDialog dialog = new TranslationDialog(true,false, false, isExpressionOwner(),null, viewModel.getAllTranslations(),
                         new TranslationDialog.Callback() {
                             @Override
                             public void onAddOrUpdatePositiveButtonPress(@NonNull @NotNull Translation newTranslation) {
@@ -149,14 +150,22 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
             public void onDelete(Translation translation, @NonNull @NotNull DataCallbacks.General callback) {
                 viewModel.deleteTranslation(translation, callback);
             }
+
+            @Override
+            public boolean isOwner() {
+                return isExpressionOwner();
+            }
         }));
     }
 
     private void showTranslationDialogForSimpleView(@NonNull @NotNull Translation translation){
-        TranslationDialog dialog = new TranslationDialog(true,true, false, translation, viewModel.getAllTranslations(),
+        TranslationDialog dialog = new TranslationDialog(true,true, false, isExpressionOwner(), translation, viewModel.getAllTranslations(),
                 new TranslationDialog.Callback() {
                     @Override
                     public void onViewPositiveButtonPress() {
+                        if(!isExpressionOwner()){
+                            return;
+                        }
                         showTranslationDialogForUpdate(translation);
                     }
                 });
@@ -164,7 +173,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
     }
 
     private void showTranslationDialogForUpdate(@NonNull @NotNull Translation translation){
-        TranslationDialog dialog = new TranslationDialog(true,false, true, translation, viewModel.getAllTranslations(),
+        TranslationDialog dialog = new TranslationDialog(true,false, true, isExpressionOwner(), translation, viewModel.getAllTranslations(),
                 new TranslationDialog.Callback() {
                     @Override
                     public void onAddOrUpdatePositiveButtonPress(@NonNull @NotNull Translation newTranslation) {

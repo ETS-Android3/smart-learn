@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
@@ -83,7 +84,9 @@ public class UserExpressionsFragment extends UserStandardExpressionsFragment<Use
         // First set current expression snapshot on the shared view model and specific url`s on the
         // shared view model then you can navigate.
         sharedViewModel.setSelectedExpression(expressionSnapshot);
-        ((UserNotebookActivity)requireActivity()).goToUserHomeExpressionFragment();
+
+        final boolean isExpressionOwner = expression.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid());
+        ((UserNotebookActivity)requireActivity()).goToUserHomeExpressionFragment(isExpressionOwner);
     }
 
 }

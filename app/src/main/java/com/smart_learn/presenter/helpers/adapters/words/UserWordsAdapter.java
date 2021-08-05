@@ -16,6 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.UserWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
@@ -38,7 +39,8 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
     public UserWordsAdapter(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
                             @NonNull @NotNull UserWordsAdapter.Callback adapterCallback) {
-        super(adapterCallback, getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.getFragment()), INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
+        super(adapterCallback, getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.isSharedLessonSelected() ,adapterCallback.getFragment()),
+                INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
         this.currentLessonSnapshot = currentLessonSnapshot;
     }
 
@@ -62,17 +64,19 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
     public void loadMoreData() {
         Query query;
         if(isFiltering){
-            query = UserWordService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), currentLoad + loadingStep, filteringValue);
+            query = UserWordService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(),
+                    currentLoad + loadingStep, adapterCallback.isSharedLessonSelected(), filteringValue);
         }
         else{
-            query = UserWordService.getInstance().getQueryForAllLessonWords(currentLessonSnapshot.getId(),currentLoad + loadingStep);
+            query = UserWordService.getInstance().getQueryForAllLessonWords(currentLessonSnapshot.getId(),
+                    currentLoad + loadingStep, adapterCallback.isSharedLessonSelected());
         }
         super.loadData(query, WordDocument.class, adapterCallback.getFragment());
     }
 
     private static FirestoreRecyclerOptions<WordDocument> getInitialAdapterOptions(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
-                                                                                   @NonNull @NotNull Fragment fragment) {
-        Query query = UserWordService.getInstance().getQueryForAllLessonWords(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY);
+                                                                                   boolean isSharedLessonSelected, @NonNull @NotNull Fragment fragment) {
+        Query query = UserWordService.getInstance().getQueryForAllLessonWords(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY, isSharedLessonSelected);
         return new FirestoreRecyclerOptions.Builder<WordDocument>()
                 .setLifecycleOwner(fragment)
                 .setQuery(query, WordDocument.class)
@@ -85,7 +89,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
-        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
+        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.isSharedLessonSelected(), fragment));
         // Update values here in order to avoid to remove selected items if selection mode was active
         // while filtering.
         filteringValue = "";
@@ -102,7 +106,8 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
         filteringValue = value.toLowerCase();
         isFiltering = true;
-        Query query = UserWordService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY, filteringValue);
+        Query query = UserWordService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(),
+                INITIAL_ADAPTER_CAPACITY, adapterCallback.isSharedLessonSelected(), filteringValue);
         FirestoreRecyclerOptions<WordDocument> newOptions = new FirestoreRecyclerOptions.Builder<WordDocument>()
                 .setLifecycleOwner(fragment)
                 .setQuery(query, WordDocument.class)
@@ -115,12 +120,15 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
         private final MutableLiveData<SpannableString> liveSpannedWord;
         private final MutableLiveData<Boolean> liveIsSelected;
+        private final MutableLiveData<Boolean> liveIsOwner;
         private final AtomicBoolean isDeletingActive;
+
 
         public WordViewHolder(@NonNull @NotNull LayoutCardViewWordBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedWord = new MutableLiveData<>(new SpannableString(""));
             liveIsSelected = new MutableLiveData<>(false);
+            liveIsOwner = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
 
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewWord, viewHolderBinding.cvLayoutCardViewWord);
@@ -128,6 +136,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             // link binding with variables
             viewHolderBinding.setLiveSpannedWord(liveSpannedWord);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
+            viewHolderBinding.setLiveIsOwner(liveIsOwner);
 
             setListeners();
         }
@@ -140,6 +149,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
         @Override
         protected void bind(@NonNull @NotNull WordDocument item, int position){
+            liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
 
             if (isSelectionModeActive()) {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
@@ -188,6 +198,11 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             viewHolderBinding.cvLayoutCardViewWord.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    // selection mode is available only for non-shared lessons
+                    if(adapterCallback.isSharedLessonSelected()){
+                        return true;
+                    }
+
                     // if filtering is active nothing will happen
                     if(isFiltering){
                         return true;
@@ -221,6 +236,11 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
                     int id = item.getItemId();
                     if(id == R.id.action_delete_menu_card_view_word){
+                        // only owner can delete his word
+                        if(liveIsOwner.getValue() == null || !liveIsOwner.getValue()){
+                            return true;
+                        }
+
                         // avoid multiple press until operation is finished
                         if(isDeletingActive.get()){
                             return true;
@@ -252,7 +272,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
     }
 
     public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
-
+        boolean isSharedLessonSelected();
     }
 
 }

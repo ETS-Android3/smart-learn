@@ -13,10 +13,12 @@ import com.smart_learn.core.services.NotificationService;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCommonDocument;
+import com.smart_learn.data.firebase.firestore.entities.helpers.BasicProfileDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.firebase.firestore.repository.BasicFirestoreRepository;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -24,7 +26,10 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+
+import timber.log.Timber;
 
 public class UserLessonRepository extends BasicFirestoreRepository<LessonDocument> {
 
@@ -42,34 +47,41 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
     }
 
     public Query getQueryForAllLessons(long limit) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
     public Query getQueryForLocalLessons(long limit) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.LOCAL)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
     public Query getQueryForReceivedLessons(long limit) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.RECEIVED)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
     public Query getQueryForSharedLessons(long limit) {
-        return getLessonsCollectionReference()
-                .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.SHARED)
+        return getLessonsCollectionReference(true)
+                .whereArrayContains(LessonDocument.Fields.PARTICIPANTS_FIELD_NAME, UserService.getInstance().getUserUid())
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
+    public Query getQueryForSharedLessonParticipants(ArrayList<String> sharedLessonParticipants, long limit) {
+        return FirebaseFirestore.getInstance().collection("/" + COLLECTION_USERS)
+                .whereIn(DocumentMetadata.Fields.COMPOSED_OWNER_FIELD_NAME, sharedLessonParticipants)
+                .orderBy(BasicProfileDocument.Fields.DISPLAY_NAME_FIELD_NAME, Query.Direction.ASCENDING)
+                .limit(limit);
+    }
+
     public Query getQueryForFilterForLocalLessons(long limit, @NonNull @NotNull String value) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.LOCAL)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
@@ -77,7 +89,7 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
     }
 
     public Query getQueryForFilterForReceivedLessons(long limit, @NonNull @NotNull String value) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.RECEIVED)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
@@ -85,21 +97,24 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
     }
 
     public Query getQueryForFilterForSharedLessons(long limit, @NonNull @NotNull String value) {
-        return getLessonsCollectionReference()
-                .whereEqualTo(LessonDocument.Fields.TYPE_FIELD_NAME, LessonDocument.Types.SHARED)
+        return getLessonsCollectionReference(true)
+                .whereArrayContains(LessonDocument.Fields.PARTICIPANTS_FIELD_NAME, UserService.getInstance().getUserUid())
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
     public Query getQueryForFilterForAllLessons(long limit, @NonNull @NotNull String value) {
-        return getLessonsCollectionReference()
+        return getLessonsCollectionReference(false)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public CollectionReference getLessonsCollectionReference(){
+    public CollectionReference getLessonsCollectionReference(boolean isSharedLesson){
+        if(isSharedLesson){
+            return FirebaseFirestore.getInstance().collection("/" + COLLECTION_SHARED_LESSONS);
+        }
         return FirebaseFirestore.getInstance()
                 .collection("/" + COLLECTION_USERS + "/" + UserService.getInstance().getUserUid() + "/" + COLLECTION_LESSONS);
     }
@@ -116,7 +131,7 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
         lesson.getDocumentMetadata().setCounted(true);
         lesson.setNrOfWords(0);
         lesson.setNrOfExpressions(0);
-        DocumentReference newLessonDocRef = getLessonsCollectionReference().document();
+        DocumentReference newLessonDocRef = getLessonsCollectionReference(false).document();
         batch.set(newLessonDocRef, LessonDocument.convertDocumentToHashMap(lesson));
 
         // 2. Update contour on user document and user modified time
@@ -240,6 +255,84 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
         batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 3. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
+    public void addEmptySharedLesson(@NonNull @NotNull LessonDocument lesson,
+                                     @NonNull @NotNull ArrayList<DocumentSnapshot> selectedFriends,
+                                     @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToAddEmptySharedLesson(lesson, selectedFriends, callback));
+    }
+
+    private void tryToAddEmptySharedLesson(@NonNull @NotNull LessonDocument lesson,
+                                           @NonNull @NotNull ArrayList<DocumentSnapshot> selectedFriends,
+                                           @NonNull @NotNull DataCallbacks.General callback){
+
+        ArrayList<String> participants = new ArrayList<>();
+
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. For every friend from selected friends send a notification with TYPE_SHARED_LESSON_RECEIVED.
+        for(DocumentSnapshot friendSnapshot : selectedFriends){
+            if(friendSnapshot == null){
+                continue;
+            }
+            FriendDocument friend = friendSnapshot.toObject(FriendDocument.class);
+            if(friend == null){
+                continue;
+            }
+            participants.add(friend.getFriendUid());
+
+            // Send notification.
+            NotificationDocument friendNotification = new NotificationDocument(
+                    new DocumentMetadata(friend.getFriendUid(), System.currentTimeMillis(), new ArrayList<>()),
+                    UserService.getInstance().getUserUid(),
+                    UserService.getInstance().getUserDisplayName(),
+                    UserService.getInstance().getUserDocumentReference(),
+                    NotificationDocument.Types.TYPE_SHARED_LESSON_RECEIVED
+            );
+            // use lesson name as extra info in order to show it in notification
+            friendNotification.setExtraInfo(lesson.getName());
+
+            DocumentReference friendNotificationDocRef = NotificationService.getInstance().getSpecificNotificationsCollection(friend.getFriendUid()).document();
+            batch.set(friendNotificationDocRef, NotificationDocument.convertDocumentToHashMap(friendNotification));
+        }
+
+        if(participants.isEmpty()){
+            Timber.w("participants is empty");
+            callback.onFailure();
+            return;
+        }
+
+        // 2. Current user is also a participant so add him also and send notification for current user
+        // with TYPE_SHARED_LESSON_SENT.
+        participants.add(UserService.getInstance().getUserUid());
+
+        // Send notification.
+        NotificationDocument userNotification = new NotificationDocument(
+                new DocumentMetadata(UserService.getInstance().getUserUid(), System.currentTimeMillis(), new ArrayList<>()),
+                UserService.getInstance().getUserUid(),
+                UserService.getInstance().getUserDisplayName(),
+                UserService.getInstance().getUserDocumentReference(),
+                NotificationDocument.Types.TYPE_SHARED_LESSON_SENT
+        );
+        // use lesson name as extra info in order to show it in notification
+        userNotification.setExtraInfo(lesson.getName());
+
+        DocumentReference userNotificationDocRef = NotificationService.getInstance().getNotificationsCollection().document();
+        batch.set(userNotificationDocRef, NotificationDocument.convertDocumentToHashMap(userNotification));
+
+
+        // 3. Add lesson in shared lessons collection
+        lesson.setNrOfWords(0);
+        lesson.setNrOfExpressions(0);
+        lesson.setParticipants(participants);
+        lesson.setFromDisplayName(UserService.getInstance().getUserDisplayName());
+        DocumentReference lessonRef = getLessonsCollectionReference(true).document();
+        batch.set(lessonRef, LessonDocument.convertDocumentToHashMap(lesson));
+
+        // 4. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 

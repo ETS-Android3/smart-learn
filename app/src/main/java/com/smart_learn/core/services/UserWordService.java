@@ -2,11 +2,11 @@ package com.smart_learn.core.services;
 
 import android.text.TextUtils;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
+import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
@@ -32,23 +32,19 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
         return instance;
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit) {
-        return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId, limit);
+    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson) {
+        return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId, limit, isSharedLesson);
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId) {
-        return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId);
+    public Query getQueryForAllLessonWords(String lessonDocumentId, boolean isSharedLesson) {
+        return repositoryInstance.getQueryForAllLessonWords(lessonDocumentId, isSharedLesson);
     }
 
-    public Query getQueryForFilter(String lessonDocumentId, long limit, String value) {
+    public Query getQueryForFilter(String lessonDocumentId, long limit,  boolean isSharedLesson, String value) {
         if(value == null){
             value = "";
         }
-        return repositoryInstance.getQueryForFilterForLessonWords(lessonDocumentId, limit, value);
-    }
-
-    public CollectionReference getWordsCollectionReference(String lessonDocumentId){
-        return repositoryInstance.getWordsCollectionReference(lessonDocumentId);
+        return repositoryInstance.getQueryForFilterForLessonWords(lessonDocumentId, limit, isSharedLesson, value);
     }
 
     public void addWord(DocumentSnapshot lessonSnapshot, WordDocument wordDocument, DataCallbacks.General callback){
@@ -78,7 +74,12 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
             return;
         }
 
-        repositoryInstance.addWord(lessonSnapshot.getReference(), wordDocument, callback);
+        if(wordDocument.isFromSharedLesson()){
+            repositoryInstance.addSharedLessonWord(lessonSnapshot.getReference(), wordDocument, callback);
+        }
+        else{
+            repositoryInstance.addWord(lessonSnapshot.getReference(), wordDocument, callback);
+        }
 
     }
 
@@ -190,7 +191,20 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
             return;
         }
 
-        repositoryInstance.deleteWord(lessonSnapshot.getReference(), wordSnapshot.getReference(), callback);
+        WordDocument word = wordSnapshot.toObject(WordDocument.class);
+        if(word == null){
+            callback.onFailure();
+            Timber.w("word is null");
+            return;
+        }
+
+        if(word.isFromSharedLesson()){
+            repositoryInstance.deleteSharedLessonWord(lessonSnapshot.getReference(), wordSnapshot.getReference(), callback);
+        }
+        else{
+            repositoryInstance.deleteWord(lessonSnapshot.getReference(), wordSnapshot.getReference(), callback);
+        }
+
     }
 
     public void deleteWordList(DocumentSnapshot lessonSnapshot, ArrayList<DocumentSnapshot> wordSnapshotList, DataCallbacks.General callback){
@@ -202,6 +216,17 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
             return;
         }
 
+        LessonDocument lessonDocument = lessonSnapshot.toObject(LessonDocument.class);
+        if(lessonDocument == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("lessonDocument is null");
+            return;
+        }
+
+        boolean isSharedLesson = lessonDocument.getType() == LessonDocument.Types.SHARED;
+
         ArrayList<DocumentReference> wordRefList = new ArrayList<>();
         for(DocumentSnapshot snapshot : wordSnapshotList){
             if(DataUtilities.Firestore.notGoodDocumentSnapshot(snapshot)){
@@ -210,6 +235,20 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
                 }
                 return;
             }
+
+            WordDocument word = snapshot.toObject(WordDocument.class);
+            if(word == null){
+                callback.onFailure();
+                Timber.w("word is null");
+                return;
+            }
+
+            if((word.isFromSharedLesson() && !isSharedLesson) || (!word.isFromSharedLesson() && isSharedLesson)){
+                callback.onFailure();
+                Timber.w("incompatible word and lesson");
+                return;
+            }
+
             wordRefList.add(snapshot.getReference());
         }
 
@@ -222,6 +261,11 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
             return;
         }
 
-        repositoryInstance.deleteWordList(lessonSnapshot.getReference(), wordRefList, callback);
+        if(isSharedLesson){
+            repositoryInstance.deleteSharedLessonWordList(lessonSnapshot.getReference(), wordRefList, callback);
+        }
+        else{
+            repositoryInstance.deleteWordList(lessonSnapshot.getReference(), wordRefList, callback);
+        }
     }
 }

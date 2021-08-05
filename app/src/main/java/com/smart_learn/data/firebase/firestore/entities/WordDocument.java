@@ -36,9 +36,9 @@ public class WordDocument extends LessonEntranceDocument {
         // needed for Firestore
     }
 
-    public WordDocument(DocumentMetadata documentMetadata, String notes, boolean isFavourite, String language,
+    public WordDocument(DocumentMetadata documentMetadata, String notes, boolean isFavourite, String language, boolean isFromSharedLesson,
                         String translations, String word, String phonetic) {
-        super(documentMetadata, notes, isFavourite, language, translations);
+        super(documentMetadata, notes, isFavourite, language, isFromSharedLesson, translations);
         this.word = word;
         this.phonetic = phonetic;
     }

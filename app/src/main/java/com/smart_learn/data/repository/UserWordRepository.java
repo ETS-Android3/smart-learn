@@ -42,18 +42,37 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         return instance;
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit) {
-        return getWordsCollectionReference(lessonDocumentId)
+    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson) {
+        CollectionReference collectionReference;
+        if(isSharedLesson){
+            collectionReference = getSharedLessonWordsCollectionReference(lessonDocumentId);
+        }
+        else{
+            collectionReference = getWordsCollectionReference(lessonDocumentId);
+        }
+
+        return collectionReference
                 .orderBy(WordDocument.Fields.WORD_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId) {
+    public Query getQueryForAllLessonWords(String lessonDocumentId, boolean isSharedLesson) {
+        if(isSharedLesson){
+            return getSharedLessonWordsCollectionReference(lessonDocumentId);
+        }
         return getWordsCollectionReference(lessonDocumentId);
     }
 
-    public Query getQueryForFilterForLessonWords(String lessonDocumentId, long limit, @NonNull @NotNull String value) {
-        return getWordsCollectionReference(lessonDocumentId)
+    public Query getQueryForFilterForLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson, @NonNull @NotNull String value) {
+        CollectionReference collectionReference;
+        if(isSharedLesson){
+            collectionReference = getSharedLessonWordsCollectionReference(lessonDocumentId);
+        }
+        else{
+            collectionReference = getWordsCollectionReference(lessonDocumentId);
+        }
+
+        return collectionReference
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(WordDocument.Fields.WORD_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
@@ -63,6 +82,11 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         return FirebaseFirestore.getInstance()
                 .collection("/" + COLLECTION_USERS + "/" + UserService.getInstance().getUserUid() + "/" +
                         COLLECTION_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_WORDS);
+    }
+
+    public CollectionReference getSharedLessonWordsCollectionReference(String sharedLessonDocumentId){
+        return FirebaseFirestore.getInstance()
+                .collection("/" + COLLECTION_SHARED_LESSONS + "/" + sharedLessonDocumentId + "/" + COLLECTION_WORDS);
     }
 
     public void addWord(@NonNull @NotNull DocumentReference lessonReference,
@@ -95,6 +119,34 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 4. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
+    public void addSharedLessonWord(@NonNull @NotNull DocumentReference lessonReference,
+                                    @NonNull @NotNull WordDocument word,
+                                    @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToAddSharedLessonWord(lessonReference, word, callback));
+    }
+
+    private void tryToAddSharedLessonWord(@NonNull @NotNull DocumentReference lessonReference,
+                                          @NonNull @NotNull WordDocument word,
+                                          @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Add word in words for specific shared lesson
+        word.getDocumentMetadata().setCounted(true);
+        word.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
+        DocumentReference newWordDocRef = getSharedLessonWordsCollectionReference(lessonReference.getId()).document();
+        batch.set(newWordDocRef, WordDocument.convertDocumentToHashMap(word));
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_WORDS_FIELD_NAME, FieldValue.increment(1));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 
@@ -133,6 +185,32 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         data.put(LessonEntranceDocument.Fields.TRANSLATIONS_FIELD_NAME, Translation.fromListToJson(newTranslationList));
         data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
         updateDocument(data, wordSnapshot, callback);
+    }
+
+    public void deleteSharedLessonWord(@NonNull @NotNull DocumentReference lessonReference,
+                                       @NonNull @NotNull DocumentReference wordReference,
+                                       @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToDeleteSharedLessonWord(lessonReference, wordReference, callback));
+    }
+
+
+    private void tryToDeleteSharedLessonWord(@NonNull @NotNull DocumentReference lessonReference,
+                                             @NonNull @NotNull DocumentReference wordReference,
+                                             @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Delete word from shared lessons collection
+        batch.delete(wordReference);
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_WORDS_FIELD_NAME, FieldValue.increment(-1));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
+        commitBatch(batch, callback);
     }
 
     public void deleteWord(@NonNull @NotNull DocumentReference lessonReference,
@@ -199,6 +277,36 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 4. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
+    public void deleteSharedLessonWordList(@NonNull @NotNull DocumentReference lessonReference,
+                                           @NonNull @NotNull ArrayList<DocumentReference> wordReferenceList,
+                                           @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToDeleteSharedLessonWordList(lessonReference, wordReferenceList, callback));
+    }
+
+    private void tryToDeleteSharedLessonWordList(@NonNull @NotNull DocumentReference lessonReference,
+                                                 @NonNull @NotNull ArrayList<DocumentReference> wordReferenceList,
+                                                 @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Delete every word from shared lessons words collection
+        // FIXME: batch can have only 500 operations.
+        for(DocumentReference wordRef : wordReferenceList){
+            batch.delete(wordRef);
+        }
+
+        int decrementValue = -1 * wordReferenceList.size();
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_WORDS_FIELD_NAME, FieldValue.increment(decrementValue));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 }

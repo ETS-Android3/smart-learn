@@ -106,7 +106,8 @@ public abstract class UserStandardWordsFragment <VM extends UserStandardWordsVie
             @Override
             public void onAddWord(@NonNull @NotNull String wordValue, @NonNull @NotNull String phonetic,
                                   @NonNull @NotNull String notes, @NonNull @NotNull ArrayList<Translation> translations) {
-                viewModel.addWord(wordValue, phonetic, notes, translations);
+                boolean isSharedLessonSelected = getArguments() != null && getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
+                viewModel.addWord(isSharedLessonSelected, wordValue, phonetic, notes, translations);
             }
         });
         dialog.show(requireActivity().getSupportFragmentManager(), "UserStandardWordsFragment");

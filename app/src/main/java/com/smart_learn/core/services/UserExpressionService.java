@@ -2,12 +2,12 @@ package com.smart_learn.core.services;
 
 import android.text.TextUtils;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
+import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.repository.UserExpressionRepository;
@@ -32,23 +32,19 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
         return instance;
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit) {
-        return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId, limit);
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit,  boolean isSharedLesson) {
+        return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId, limit, isSharedLesson);
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId) {
-        return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId);
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, boolean isSharedLesson) {
+        return repositoryInstance.getQueryForAllLessonExpressions(lessonDocumentId, isSharedLesson);
     }
 
-    public Query getQueryForFilter(String lessonDocumentId, long limit, String value) {
+    public Query getQueryForFilter(String lessonDocumentId, long limit,  boolean isSharedLesson, String value) {
         if(value == null){
             value = "";
         }
-        return repositoryInstance.getQueryForFilterForLessonExpressions(lessonDocumentId, limit, value);
-    }
-
-    public CollectionReference getExpressionsCollectionReference(String lessonDocumentId){
-        return repositoryInstance.getExpressionsCollectionReference(lessonDocumentId);
+        return repositoryInstance.getQueryForFilterForLessonExpressions(lessonDocumentId, limit, isSharedLesson, value);
     }
 
     public void addExpression(DocumentSnapshot lessonSnapshot, ExpressionDocument expressionDocument, DataCallbacks.General callback){
@@ -78,8 +74,12 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
             return;
         }
 
-        repositoryInstance.addExpression(lessonSnapshot.getReference(), expressionDocument, callback);
-
+        if(expressionDocument.isFromSharedLesson()){
+            repositoryInstance.addSharedLessonExpression(lessonSnapshot.getReference(), expressionDocument, callback);
+        }
+        else {
+            repositoryInstance.addExpression(lessonSnapshot.getReference(), expressionDocument, callback);
+        }
     }
 
     public void updateExpressionValue(String newValue, DocumentSnapshot expressionSnapshot, DataCallbacks.General callback){
@@ -170,11 +170,24 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
             return;
         }
 
-        repositoryInstance.deleteExpression(lessonSnapshot.getReference(), expressionSnapshot.getReference(), callback);
+        ExpressionDocument expression = expressionSnapshot.toObject(ExpressionDocument.class);
+        if(expression == null){
+            callback.onFailure();
+            Timber.w("expression is null");
+            return;
+        }
+
+        if(expression.isFromSharedLesson()){
+            repositoryInstance.deleteSharedLessonExpression(lessonSnapshot.getReference(), expressionSnapshot.getReference(), callback);
+        }
+        else {
+            repositoryInstance.deleteExpression(lessonSnapshot.getReference(), expressionSnapshot.getReference(), callback);
+        }
+
     }
 
-    public void deleteExpressionList(DocumentSnapshot lessonSnapshot, ArrayList<DocumentSnapshot> expressionSnapshot, DataCallbacks.General callback){
-        if(expressionSnapshot == null || expressionSnapshot.isEmpty()){
+    public void deleteExpressionList(DocumentSnapshot lessonSnapshot, ArrayList<DocumentSnapshot> expressionSnapshotList, DataCallbacks.General callback){
+        if(expressionSnapshotList == null || expressionSnapshotList.isEmpty()){
             if(callback != null){
                 callback.onFailure();
             }
@@ -182,14 +195,39 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
             return;
         }
 
+        LessonDocument lessonDocument = lessonSnapshot.toObject(LessonDocument.class);
+        if(lessonDocument == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("lessonDocument is null");
+            return;
+        }
+
+        boolean isSharedLesson = lessonDocument.getType() == LessonDocument.Types.SHARED;
+
         ArrayList<DocumentReference> expressionRefList = new ArrayList<>();
-        for(DocumentSnapshot snapshot : expressionSnapshot){
+        for(DocumentSnapshot snapshot : expressionSnapshotList){
             if(DataUtilities.Firestore.notGoodDocumentSnapshot(snapshot)){
                 if(callback != null){
                     callback.onFailure();
                 }
                 return;
             }
+
+            ExpressionDocument expression = snapshot.toObject(ExpressionDocument.class);
+            if(expression == null){
+                callback.onFailure();
+                Timber.w("expression is null");
+                return;
+            }
+
+            if((expression.isFromSharedLesson() && !isSharedLesson) || (!expression.isFromSharedLesson() && isSharedLesson)){
+                callback.onFailure();
+                Timber.w("incompatible expression and lesson");
+                return;
+            }
+
             expressionRefList.add(snapshot.getReference());
         }
 
@@ -202,6 +240,11 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
             return;
         }
 
-        repositoryInstance.deleteExpressionList(lessonSnapshot.getReference(), expressionRefList, callback);
+        if(isSharedLesson){
+            repositoryInstance.deleteSharedLessonExpressionList(lessonSnapshot.getReference(), expressionRefList, callback);
+        }
+        else{
+            repositoryInstance.deleteExpressionList(lessonSnapshot.getReference(), expressionRefList, callback);
+        }
     }
 }

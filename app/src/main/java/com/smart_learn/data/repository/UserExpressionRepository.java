@@ -42,18 +42,37 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         return instance;
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit) {
-        return getExpressionsCollectionReference(lessonDocumentId)
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit, boolean isSharedLesson) {
+        CollectionReference collectionReference;
+        if(isSharedLesson){
+            collectionReference = getSharedLessonExpressionsCollectionReference(lessonDocumentId);
+        }
+        else{
+            collectionReference = getExpressionsCollectionReference(lessonDocumentId);
+        }
+
+        return collectionReference
                 .orderBy(ExpressionDocument.Fields.EXPRESSION_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId) {
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, boolean isSharedLesson) {
+        if(isSharedLesson){
+            return getSharedLessonExpressionsCollectionReference(lessonDocumentId);
+        }
         return getExpressionsCollectionReference(lessonDocumentId);
     }
 
-    public Query getQueryForFilterForLessonExpressions(String lessonDocumentId, long limit, @NonNull @NotNull String value) {
-        return getExpressionsCollectionReference(lessonDocumentId)
+    public Query getQueryForFilterForLessonExpressions(String lessonDocumentId, long limit, boolean isSharedLesson, @NonNull @NotNull String value) {
+        CollectionReference collectionReference;
+        if(isSharedLesson){
+            collectionReference = getSharedLessonExpressionsCollectionReference(lessonDocumentId);
+        }
+        else{
+            collectionReference = getExpressionsCollectionReference(lessonDocumentId);
+        }
+
+        return collectionReference
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(ExpressionDocument.Fields.EXPRESSION_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
@@ -63,6 +82,11 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         return FirebaseFirestore.getInstance()
                 .collection("/" + COLLECTION_USERS + "/" + UserService.getInstance().getUserUid() + "/" +
                         COLLECTION_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_EXPRESSIONS);
+    }
+
+    public CollectionReference getSharedLessonExpressionsCollectionReference(String sharedLessonDocumentId){
+        return FirebaseFirestore.getInstance()
+                .collection("/" + COLLECTION_SHARED_LESSONS + "/" + sharedLessonDocumentId + "/" + COLLECTION_EXPRESSIONS);
     }
 
     public void addExpression(@NonNull @NotNull DocumentReference lessonReference,
@@ -95,6 +119,34 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 4. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
+    public void addSharedLessonExpression(@NonNull @NotNull DocumentReference lessonReference,
+                                         @NonNull @NotNull ExpressionDocument expression,
+                                         @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToAddSharedLessonExpression(lessonReference, expression, callback));
+    }
+
+    private void tryToAddSharedLessonExpression(@NonNull @NotNull DocumentReference lessonReference,
+                                                @NonNull @NotNull ExpressionDocument expression,
+                                                @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Add expression in expressions collection for specific shared lesson
+        expression.getDocumentMetadata().setCounted(true);
+        expression.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
+        DocumentReference newExpressionDocRef = getSharedLessonExpressionsCollectionReference(lessonReference.getId()).document();
+        batch.set(newExpressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_EXPRESSIONS_FIELD_NAME, FieldValue.increment(1));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 
@@ -157,6 +209,31 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         commitBatch(batch, callback);
     }
 
+    public void deleteSharedLessonExpression(@NonNull @NotNull DocumentReference lessonReference,
+                                             @NonNull @NotNull DocumentReference expressionReference,
+                                             @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToDeleteSharedLessonExpression(lessonReference, expressionReference, callback));
+    }
+
+    private void tryToDeleteSharedLessonExpression(@NonNull @NotNull DocumentReference lessonReference,
+                                                    @NonNull @NotNull DocumentReference expressionReference,
+                                                    @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Delete expression from shared lessons collection
+        batch.delete(expressionReference);
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_EXPRESSIONS_FIELD_NAME, FieldValue.increment(-1));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
     public void deleteExpressionList(@NonNull @NotNull DocumentReference lessonReference,
                                      @NonNull @NotNull ArrayList<DocumentReference> expressionReferenceList,
                                      @NonNull @NotNull DataCallbacks.General callback){
@@ -190,6 +267,36 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         batch.update(UserService.getInstance().getUserDocumentReference(), userData);
 
         // 4. Transaction is complete so commit
+        commitBatch(batch, callback);
+    }
+
+    public void deleteSharedLessonExpressionList(@NonNull @NotNull DocumentReference lessonReference,
+                                                 @NonNull @NotNull ArrayList<DocumentReference> expressionReferenceList,
+                                                 @NonNull @NotNull DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToDeleteSharedLessonExpressionList(lessonReference, expressionReferenceList, callback));
+    }
+
+    private void tryToDeleteSharedLessonExpressionList(@NonNull @NotNull DocumentReference lessonReference,
+                                                       @NonNull @NotNull ArrayList<DocumentReference> expressionReferenceList,
+                                                       @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation will be necessary a transaction
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+
+        // 1. Delete every expression from shared lessons expressions collection
+        // FIXME: batch can have only 500 operations.
+        for(DocumentReference expressionRef : expressionReferenceList){
+            batch.delete(expressionRef);
+        }
+
+        int decrementValue = -1 * expressionReferenceList.size();
+
+        // 2. Update counter on shared lesson document
+        HashMap<String, Object> lessonData = new HashMap<>();
+        lessonData.put(LessonDocument.Fields.NR_OF_EXPRESSIONS_FIELD_NAME, FieldValue.increment(decrementValue));
+        lessonData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(lessonReference, lessonData);
+
+        // 3. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 }

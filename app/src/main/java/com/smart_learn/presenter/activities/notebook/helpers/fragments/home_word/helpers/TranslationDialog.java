@@ -29,6 +29,7 @@ public class TranslationDialog extends DialogFragment {
     private final boolean forExpression;
     private final boolean view;
     private final boolean update;
+    private final boolean isOwner;
     private final Translation translation;
     private final ArrayList<Translation> allTranslations;
     private TranslationDialogViewModel dialogViewModel;
@@ -36,7 +37,7 @@ public class TranslationDialog extends DialogFragment {
     private final int saveButtonTitle;
     private final int dialogTitle;
 
-    public TranslationDialog(boolean forExpression, boolean view, boolean update, Translation translation,
+    public TranslationDialog(boolean forExpression, boolean view, boolean update, boolean isOwner, Translation translation,
                              @NonNull ArrayList<Translation> allTranslations, @NonNull TranslationDialog.Callback callback) {
         if(view && update){
             throw new UnsupportedOperationException("Must choose or view or update");
@@ -47,9 +48,16 @@ public class TranslationDialog extends DialogFragment {
         this.forExpression = forExpression;
         this.view = view;
         this.update = update;
+        this.isOwner = isOwner;
         this.translation = translation;
         this.allTranslations = allTranslations;
         this.callback = callback;
+
+        if(!isOwner){
+            saveButtonTitle = R.string.close;
+            dialogTitle = R.string.translation_overview;
+            return;
+        }
 
         if(view || update){
             if(view){
@@ -94,14 +102,15 @@ public class TranslationDialog extends DialogFragment {
         builder.setTitle(dialogTitle)
                 .setView(binding.getRoot())
                 // If setCancelable is true when you click beside the dialog the dialog is dismissed.
-                .setCancelable(true)
-                // add action buttons
+                .setCancelable(true);
 
-                // Set to null. We override the onclick.
-                .setPositiveButton(saveButtonTitle, null)
+        if(!isOwner){
+            builder.setNegativeButton(R.string.close, null);
+            return builder.create();
+        }
 
-                // No need for a listener because I do no action when BUTTON_NEGATIVE is pressed.
-                // Dialog will be dismissed automatically.
+        // here is owner
+        builder.setPositiveButton(saveButtonTitle, null)
                 .setNegativeButton(R.string.cancel, null);
 
         AlertDialog dialog = builder.create();

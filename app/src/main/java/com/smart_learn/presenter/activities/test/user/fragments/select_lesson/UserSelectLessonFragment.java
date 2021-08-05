@@ -60,6 +60,7 @@ public class UserSelectLessonFragment extends UserStandardLessonsFragment<UserSe
         if(sharedViewModel.getGeneratedTest() != null){
             sharedViewModel.getGeneratedTest().setLessonId("");
             sharedViewModel.getGeneratedTest().setLessonName("");
+            sharedViewModel.getGeneratedTest().setSharedLesson(false);
             sharedViewModel.setNrOfLessonWords(TestSharedViewModel.NO_VALUE);
             sharedViewModel.setNrOfLessonExpressions(TestSharedViewModel.NO_VALUE);
         }
@@ -96,6 +97,7 @@ public class UserSelectLessonFragment extends UserStandardLessonsFragment<UserSe
         // set values
         sharedViewModel.getGeneratedTest().setLessonId(lessonSnapshot.getId());
         sharedViewModel.getGeneratedTest().setLessonName(lesson.getName());
+        sharedViewModel.getGeneratedTest().setSharedLesson(lesson.getType() == LessonDocument.Types.SHARED);
         sharedViewModel.setNrOfLessonWords(nrOfWords);
         sharedViewModel.setNrOfLessonExpressions(nrOfExpressions);
         // and navigate to next fragment

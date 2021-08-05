@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonViewModel" />
@@ -48,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{' ' + viewModel.liveExtraInfo}"
+                    android:text="@{viewModel.liveExtraInfo}"
                     android:textSize="16sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -132,6 +133,7 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:visibility="@{viewModel.liveIsOwner ? View.VISIBLE : View.GONE}"
                     android:id="@+id/btn_update_lesson_name_fragment_home_lesson"
                     style="@style/AppTheme.ButtonStyle.Borderless.Update.White"
                     android:layout_width="50dp"
@@ -185,6 +187,7 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:visibility="@{viewModel.liveIsOwner ? View.VISIBLE : View.GONE}"
                     android:id="@+id/btn_update_lesson_notes_fragment_home_lesson"
                     style="@style/AppTheme.ButtonStyle.Borderless.Update.White"
                     android:layout_width="50dp"

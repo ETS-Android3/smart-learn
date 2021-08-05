@@ -16,6 +16,8 @@ import lombok.Getter;
 
 public class FriendsFragment extends SelectFriendsFragment<FriendsViewModel> {
 
+    public static final String SELECT_FRIEND_FOR_NEW_EMPTY_SHARED_LESSON = "SELECT_FRIEND_FOR_NEW_EMPTY_SHARED_LESSON";
+
     @Getter
     private UserNotebookSharedViewModel sharedViewModel;
 
@@ -26,13 +28,24 @@ public class FriendsFragment extends SelectFriendsFragment<FriendsViewModel> {
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected int getFloatingActionButtonIconResourceId() {
-        return R.drawable.ic_baseline_share_24;
+        boolean addNewSharedEmptyLesson = getArguments() != null && getArguments().getBoolean(SELECT_FRIEND_FOR_NEW_EMPTY_SHARED_LESSON);
+        return addNewSharedEmptyLesson ? R.drawable.ic_baseline_navigate_next_24 : R.drawable.ic_baseline_share_24;
     }
 
     @Override
     protected void onFloatingActionButtonPress() {
-        viewModel.shareLesson(FriendsFragment.this, sharedViewModel.getSelectedLesson());
+        if(sharedViewModel.isAddNewEmptySharedLesson()){
+            viewModel.addNewEmptySharedLesson(FriendsFragment.this, sharedViewModel.getNewEmptySharedLessonName());
+        }
+        else{
+            viewModel.shareLesson(FriendsFragment.this, sharedViewModel.getSelectedLesson());
+        }
     }
 
     @Override

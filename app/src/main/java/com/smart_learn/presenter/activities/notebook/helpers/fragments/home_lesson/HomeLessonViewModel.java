@@ -30,6 +30,7 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
     private final MutableLiveData<String> liveExtraInfo;
     private final MutableLiveData<Integer> liveNumberOfWords;
     private final MutableLiveData<Integer> liveNumberOfExpressions;
+    private final MutableLiveData<Boolean> liveIsOwner;
 
     protected abstract void saveLessonName(String newValue);
     protected abstract void saveLessonNotes(String newValue);
@@ -43,6 +44,7 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
         liveExtraInfo = new MutableLiveData<>("");
         liveNumberOfWords = new MutableLiveData<>(0);
         liveNumberOfExpressions = new MutableLiveData<>(0);
+        liveIsOwner = new MutableLiveData<>(false);
     }
 
     public LiveData<String> getLiveLessonName() {
@@ -55,6 +57,14 @@ public abstract class HomeLessonViewModel extends BasicAndroidViewModel {
 
     public LiveData<String> getLiveLessonNotes() {
         return liveLessonNotes;
+    }
+
+    public LiveData<Boolean> getLiveIsOwner() {
+        return liveIsOwner;
+    }
+
+    public void setLiveIsOwner(boolean value) {
+        liveIsOwner.setValue(value);
     }
 
     public void setLiveLessonNotes(String value) {

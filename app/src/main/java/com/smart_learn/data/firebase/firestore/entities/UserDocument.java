@@ -36,6 +36,7 @@ public class UserDocument extends BasicProfileDocument {
 
     // counters
     private long nrOfUnreadNotifications;
+    // only local and received lessons
     private long nrOfLessons;
     private long nrOfWords;
     private long nrOfExpressions;

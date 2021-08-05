@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.UserWordService;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -27,6 +28,9 @@ public class UserHomeWordViewModel extends HomeWordViewModel {
 
     public void setLiveWord(DocumentSnapshot newSnapshot, WordDocument newWord){
         wordSnapshot = newSnapshot;
+        liveIsOwner.setValue(newWord.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
+        liveIsFromSharedLesson.setValue(newWord.isFromSharedLesson());
+        liveCreatedBy.setValue(newWord.getOwnerDisplayName());
         liveWordValue.setValue(newWord.getWord());
         liveWordPhonetic.setValue(newWord.getPhonetic());
         liveWordNotes.setValue(newWord.getNotes());

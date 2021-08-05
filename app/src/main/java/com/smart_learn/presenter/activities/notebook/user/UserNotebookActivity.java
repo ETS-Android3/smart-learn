@@ -9,8 +9,15 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
+import com.smart_learn.presenter.activities.notebook.user.fragments.friends.FriendsFragment;
+import com.smart_learn.presenter.activities.notebook.user.fragments.home_expression.UserHomeExpressionFragment;
+import com.smart_learn.presenter.activities.notebook.user.fragments.home_lesson.UserHomeLessonFragment;
+import com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserWordContainerFragment;
 import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.fragments.expressions.BasicExpressionsFragment;
+import com.smart_learn.presenter.helpers.fragments.expressions.user.UserBasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.words.BasicWordsFragment;
+import com.smart_learn.presenter.helpers.fragments.words.user.UserBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,12 +57,14 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
                             case R.id.user_words_fragment_nav_graph_activity_user_notebook:
                                 Bundle wordArgs = new Bundle();
                                 wordArgs.putString(BasicWordsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLesson().getId());
+                                wordArgs.putBoolean(UserBasicWordsFragment.IS_SHARED_LESSON_SELECTED, sharedViewModel.isSharedLessonSelected());
                                 navController.navigate(R.id.user_words_fragment_nav_graph_activity_user_notebook, wordArgs,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
                             case R.id.user_expressions_fragment_nav_graph_activity_user_notebook:
                                 Bundle expressionArgs = new Bundle();
-                                expressionArgs.putString(BasicWordsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLesson().getId());
+                                expressionArgs.putString(BasicExpressionsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLesson().getId());
+                                expressionArgs.putBoolean(UserBasicExpressionsFragment.IS_SHARED_LESSON_SELECTED, sharedViewModel.isSharedLessonSelected());
                                 navController.navigate(R.id.user_expressions_fragment_nav_graph_activity_user_notebook, expressionArgs,
                                         Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
@@ -66,22 +75,35 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
 
     }
 
-    public void goToUserHomeLessonFragment(){
-        navController.navigate(R.id.action_user_lessons_fragment_to_user_home_lesson_fragment_nav_graph_activity_user_notebook,null,
+    public void goToUserHomeLessonFragment(boolean isSharedLessonSelected){
+        Bundle args = new Bundle();
+        args.putBoolean(UserHomeLessonFragment.IS_SHARED_LESSON_SELECTED, isSharedLessonSelected);
+        navController.navigate(R.id.action_user_lessons_fragment_to_user_home_lesson_fragment_nav_graph_activity_user_notebook, args,
                 Utilities.Activities.getEnterBottomMenuNavOptions(R.id.user_home_lesson_fragment_nav_graph_activity_user_notebook));
     }
 
-    public void goToSelectFriendsFragment(){
-        navController.navigate(R.id.action_user_lessons_fragment_to_friends_fragment_nav_graph_activity_user_notebook);
+    public void goToSelectFriendsFragment(boolean addNewEmptySharedLesson){
+        Bundle args = new Bundle();
+        args.putBoolean(FriendsFragment.SELECT_FRIEND_FOR_NEW_EMPTY_SHARED_LESSON, addNewEmptySharedLesson);
+        navController.navigate(R.id.action_user_lessons_fragment_to_friends_fragment_nav_graph_activity_user_notebook, args);
     }
 
-    public void goToUserWordContainerFragment(){
-        navController.navigate(R.id.action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook,null,
+    public void goToUserWordContainerFragment(boolean isWordOwner){
+        Bundle args = new Bundle();
+        args.putBoolean(UserWordContainerFragment.IS_WORD_OWNER, isWordOwner);
+        navController.navigate(R.id.action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook, args,
                 Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
-    public void goToUserHomeExpressionFragment(){
+    public void goToUserHomeExpressionFragment(boolean isExpressionOwner){
+        Bundle args = new Bundle();
+        args.putBoolean(UserHomeExpressionFragment.IS_EXPRESSION_OWNER, isExpressionOwner);
         navController.navigate(R.id.action_user_expressions_fragment_to_user_home_expression_fragment_nav_graph_activity_user_notebook,
-                null, Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                args, Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+    }
+
+    public void goToSharedLessonParticipantsFragment(){
+        navController.navigate(R.id.action_user_home_lesson_fragment_to_shared_lesson_participants_fragment_nav_graph_activity_user_notebook, null,
+                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }

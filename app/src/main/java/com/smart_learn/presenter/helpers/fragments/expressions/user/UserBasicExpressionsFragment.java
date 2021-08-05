@@ -18,6 +18,7 @@ import timber.log.Timber;
 public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressionsViewModel> extends BasicExpressionsFragment<DocumentSnapshot, VM> {
 
     public static final String NO_LESSON_SELECTED = "";
+    public static final String IS_SHARED_LESSON_SELECTED = "IS_SHARED_LESSON_SELECTED";
     protected String currentLessonId = NO_LESSON_SELECTED;
 
     protected void afterAdapterIsSet(){}
@@ -38,8 +39,9 @@ public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressi
             return;
         }
 
+        boolean isSharedLessonSelected = getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
         UserLessonService.getInstance()
-                .getLessonsCollectionReference()
+                .getLessonsCollectionReference(isSharedLessonSelected)
                 .document(currentLessonId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -56,6 +58,11 @@ public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressi
                         viewModel.setCurrentLessonSnapshot(lessonSnapshot);
 
                         viewModel.setAdapter(new UserExpressionsAdapter(lessonSnapshot, new UserExpressionsAdapter.Callback() {
+                            @Override
+                            public boolean isSharedLessonSelected() {
+                                return getArguments() != null && getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
+                            }
+
                             @Override
                             public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
                                 onAdapterSimpleClick(item);

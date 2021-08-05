@@ -26,6 +26,11 @@ public class GuestHomeExpressionFragment extends HomeExpressionFragment<GuestHom
     }
 
     @Override
+    protected boolean isExpressionOwner() {
+        return true;
+    }
+
+    @Override
     protected void setViewModel(){
         super.setViewModel();
 

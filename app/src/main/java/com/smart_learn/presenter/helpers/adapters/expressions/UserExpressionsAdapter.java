@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserExpressionService;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -41,7 +42,8 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
     public UserExpressionsAdapter(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
                                   @NonNull @NotNull UserExpressionsAdapter.Callback adapterCallback) {
-        super(adapterCallback, getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.getFragment()), INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
+        super(adapterCallback, getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.isSharedLessonSelected(), adapterCallback.getFragment()),
+                INITIAL_ADAPTER_CAPACITY, LOADING_STEP);
         this.currentLessonSnapshot = currentLessonSnapshot;
     }
 
@@ -65,17 +67,20 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
     public void loadMoreData() {
         Query query;
         if(isFiltering){
-            query = UserExpressionService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), currentLoad + loadingStep, filteringValue);
+            query = UserExpressionService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), currentLoad + loadingStep,
+                    adapterCallback.isSharedLessonSelected(), filteringValue);
         }
         else{
-            query = UserExpressionService.getInstance().getQueryForAllLessonExpressions(currentLessonSnapshot.getId(),currentLoad + loadingStep);
+            query = UserExpressionService.getInstance().getQueryForAllLessonExpressions(currentLessonSnapshot.getId(),
+                    currentLoad + loadingStep, adapterCallback.isSharedLessonSelected());
         }
         super.loadData(query, ExpressionDocument.class, adapterCallback.getFragment());
     }
 
     private static FirestoreRecyclerOptions<ExpressionDocument> getInitialAdapterOptions(@NonNull @NotNull DocumentSnapshot currentLessonSnapshot,
+                                                                                         boolean isSharedLessonSelected,
                                                                                          @NonNull @NotNull Fragment fragment) {
-        Query query = UserExpressionService.getInstance().getQueryForAllLessonExpressions(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY);
+        Query query = UserExpressionService.getInstance().getQueryForAllLessonExpressions(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY, isSharedLessonSelected);
         return new FirestoreRecyclerOptions.Builder<ExpressionDocument>()
                 .setLifecycleOwner(fragment)
                 .setQuery(query, ExpressionDocument.class)
@@ -88,7 +93,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
      * @param fragment Fragment where adapter must be shown.
      * */
     public void setInitialOption(@NonNull @NotNull Fragment fragment){
-        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, fragment));
+        updateOptions(getInitialAdapterOptions(currentLessonSnapshot, adapterCallback.isSharedLessonSelected(), fragment));
         // Update values here in order to avoid to remove selected items if selection mode was active
         // while filtering.
         filteringValue = "";
@@ -105,7 +110,8 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
         filteringValue = value.toLowerCase();
         isFiltering = true;
-        Query query = UserExpressionService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY, filteringValue);
+        Query query = UserExpressionService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY,
+                adapterCallback.isSharedLessonSelected(), filteringValue);
         FirestoreRecyclerOptions<ExpressionDocument> newOptions = new FirestoreRecyclerOptions.Builder<ExpressionDocument>()
                 .setLifecycleOwner(fragment)
                 .setQuery(query, ExpressionDocument.class)
@@ -118,12 +124,14 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
         private final MutableLiveData<SpannableString> liveSpannedExpression;
         private final MutableLiveData<Boolean> liveIsSelected;
+        private final MutableLiveData<Boolean> liveIsOwner;
         private final AtomicBoolean isDeletingActive;
 
         public ExpressionViewHolder(@NonNull @NotNull LayoutCardViewExpressionBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedExpression = new MutableLiveData<>(new SpannableString(""));
             liveIsSelected = new MutableLiveData<>(false);
+            liveIsOwner = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
 
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewExpression, viewHolderBinding.cvLayoutCardViewExpression);
@@ -131,6 +139,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
             // link binding with variables
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
+            viewHolderBinding.setLiveIsOwner(liveIsOwner);
 
             setListeners();
         }
@@ -143,6 +152,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
         @Override
         protected void bind(@NonNull @NotNull ExpressionDocument item, int position){
+            liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
 
             if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
@@ -195,6 +205,11 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
             viewHolderBinding.cvLayoutCardViewExpression.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    // selection mode is available only for non-shared lessons
+                    if(adapterCallback.isSharedLessonSelected()){
+                        return true;
+                    }
+
                     // if filtering is active nothing will happen
                     if(isFiltering){
                         return true;
@@ -228,6 +243,11 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
                     int id = item.getItemId();
                     if(id == R.id.action_delete_menu_card_view_expression){
+                        // only owner can delete his word
+                        if(liveIsOwner.getValue() == null || !liveIsOwner.getValue()){
+                            return true;
+                        }
+
                         if(isDeletingActive.get()){
                             return true;
                         }
@@ -259,6 +279,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
     }
 
     public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
+        boolean isSharedLessonSelected();
     }
 
 }

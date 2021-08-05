@@ -94,6 +94,10 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
                 viewHolderBinding.tvPhoneticLayoutCardViewTranslation.setVisibility(View.GONE);
             }
 
+            if(!callback.isOwner()){
+                viewHolderBinding.toolbarLayoutCardViewTranslation.setVisibility(View.GONE);
+            }
+
             setListeners();
         }
 
@@ -135,6 +139,11 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
             viewHolderBinding.toolbarLayoutCardViewTranslation.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
+                    // only for translation owner toolbar is activated
+                    if(!callback.isOwner()){
+                        return true;
+                    }
+
                     int position = getAdapterPosition();
                     if(!Utilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
@@ -187,6 +196,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
         AppCompatActivity getActivity();
         void onSimpleClick(@NonNull @NotNull Translation translation);
         void onDelete(Translation translation, @NonNull @NotNull DataCallbacks.General callback);
+        boolean isOwner();
     }
 }
 

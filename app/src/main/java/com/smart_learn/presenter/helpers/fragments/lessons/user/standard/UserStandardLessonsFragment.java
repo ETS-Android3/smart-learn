@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class UserStandardLessonsFragment <VM extends UserStandardLessonsViewModel> extends UserBasicLessonsFragment<VM> {
 
+    protected void addNewEmptySharedLesson(@NonNull @NotNull String lessonName){}
+
     @Override
     protected boolean showFloatingActionButton() {
         return true;
@@ -150,7 +152,18 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
         DialogFragment dialogFragment = new LessonDialog(new LessonDialog.Callback() {
             @Override
             public void onAddLesson(@NonNull @NotNull String lessonName) {
-                viewModel.addLessonByName(lessonName);
+                int option = SettingsService.getInstance().getUserLessonShowOption();
+                switch (option){
+                    case UserLessonService.SHOW_ONLY_SHARED_LESSONS:
+                        addNewEmptySharedLesson(lessonName);
+                        break;
+                    case UserLessonService.SHOW_ALL_LESSONS:
+                    case UserLessonService.SHOW_ONLY_LOCAL_LESSONS:
+                    case UserLessonService.SHOW_ONLY_RECEIVED_LESSONS:
+                    default:
+                        viewModel.addLessonByName(lessonName);
+                        break;
+                }
             }
         });
         dialogFragment.show(requireActivity().getSupportFragmentManager(), "UserStandardLessonsFragment");

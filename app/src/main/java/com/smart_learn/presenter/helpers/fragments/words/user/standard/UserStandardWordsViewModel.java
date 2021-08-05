@@ -32,7 +32,7 @@ public abstract class UserStandardWordsViewModel extends UserBasicWordsViewModel
         isDeletingActive = new AtomicBoolean(false);
     }
 
-    public void addWord(String wordValue, String phonetic, String notes, ArrayList<Translation> translations) {
+    public void addWord(boolean isSharedLessonSelected, String wordValue, String phonetic, String notes, ArrayList<Translation> translations) {
         if(currentLessonSnapshot == null){
             liveToastMessage.setValue(ApplicationController.getInstance().getString(R.string.error_adding_word));
             return;
@@ -49,6 +49,7 @@ public abstract class UserStandardWordsViewModel extends UserBasicWordsViewModel
                 notes,
                 false,
                 "",
+                isSharedLessonSelected,
                 Translation.fromListToJson(translations),
                 wordValue,
                 phonetic

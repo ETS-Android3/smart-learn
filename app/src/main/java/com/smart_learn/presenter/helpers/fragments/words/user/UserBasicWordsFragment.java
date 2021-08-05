@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.core.services.UserLessonService;
 import com.smart_learn.core.utilities.CoreUtilities;
@@ -18,6 +19,7 @@ import timber.log.Timber;
 public abstract class UserBasicWordsFragment <VM extends UserBasicWordsViewModel> extends BasicWordsFragment<DocumentSnapshot, VM> {
 
     public static final String NO_LESSON_SELECTED = "";
+    public static final String IS_SHARED_LESSON_SELECTED = "IS_SHARED_LESSON_SELECTED";
     protected String currentLessonId = NO_LESSON_SELECTED;
 
     protected void afterAdapterIsSet(){}
@@ -38,8 +40,9 @@ public abstract class UserBasicWordsFragment <VM extends UserBasicWordsViewModel
             return;
         }
 
+        boolean isSharedLessonSelected = getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
         UserLessonService.getInstance()
-                .getLessonsCollectionReference()
+                .getLessonsCollectionReference(isSharedLessonSelected)
                 .document(currentLessonId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -56,6 +59,11 @@ public abstract class UserBasicWordsFragment <VM extends UserBasicWordsViewModel
                         viewModel.setCurrentLessonSnapshot(lessonSnapshot);
 
                         viewModel.setAdapter(new UserWordsAdapter(lessonSnapshot, new UserWordsAdapter.Callback() {
+                            @Override
+                            public boolean isSharedLessonSelected() {
+                                return getArguments() != null && getArguments().getBoolean(IS_SHARED_LESSON_SELECTED);
+                            }
+
                             @Override
                             public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
                                 onAdapterSimpleClick(item);
