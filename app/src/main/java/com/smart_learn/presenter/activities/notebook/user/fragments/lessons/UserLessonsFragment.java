@@ -28,6 +28,11 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void onAdapterSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
         super.onAdapterSimpleClick(item);
         goToUserHomeLessonFragment(item);

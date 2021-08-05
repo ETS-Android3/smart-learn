@@ -28,6 +28,11 @@ public class GuestLessonsFragment extends GuestStandardLessonsFragment<GuestLess
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void onAdapterSimpleClick(@NonNull @NotNull Lesson item) {
         super.onAdapterSimpleClick(item);
         goToGuestHomeLessonFragment(item);
