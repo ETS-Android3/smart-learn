@@ -25,6 +25,7 @@ import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
 import com.smart_learn.presenter.activities.community.CommunityActivity;
 import com.smart_learn.presenter.activities.guest.GuestActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
+import com.smart_learn.presenter.activities.settings.UserSettingsActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -126,8 +127,10 @@ public class MainActivity extends BasicActivity {
                     case R.id.nav_test_menu_nav_drawer_activity_main:
                         startActivity(new Intent(MainActivity.this, UserTestActivity.class));
                         break;
-                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_settings_menu_nav_drawer_activity_main:
+                        startActivity(new Intent(MainActivity.this, UserSettingsActivity.class));
+                        break;
+                    case R.id.nav_account_menu_nav_drawer_activity_main:
                     case R.id.nav_help_menu_nav_drawer_activity_main:
                         break;
                     default:

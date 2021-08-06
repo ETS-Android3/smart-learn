@@ -17,6 +17,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
+import com.smart_learn.presenter.activities.settings.GuestSettingsActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -100,6 +101,8 @@ public class GuestActivity extends BasicActivity {
                         startActivity(new Intent(GuestActivity.this, GuestTestActivity.class));
                         break;
                     case R.id.nav_settings_menu_nav_drawer_activity_guest:
+                        startActivity(new Intent(GuestActivity.this, GuestSettingsActivity.class));
+                        break;
                     case R.id.nav_help_menu_nav_drawer_activity_guest:
                         break;
                     default:

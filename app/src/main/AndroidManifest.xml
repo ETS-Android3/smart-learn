@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".presenter.helpers.BasicActivity" />
+        <activity android:name=".presenter.activities.settings.GuestSettingsActivity" />
+        <activity android:name=".presenter.activities.settings.UserSettingsActivity" />
+        <activity android:name=".presenter.activities.settings.SettingsActivity" />
         <activity android:name=".presenter.activities.test.user.UserTestActivity" />
         <activity android:name=".presenter.activities.test.guest.GuestTestActivity" />
         <activity android:name=".presenter.activities.test.TestActivity" />
