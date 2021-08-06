@@ -130,12 +130,6 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
             // set guest menu to invisible
             viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().setGroupVisible(R.id.guest_group_menu_card_view_lesson, false);
 
-            // if is shared lesson hide share button
-            MenuItem item = viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().findItem(R.id.action_user_share_menu_card_view_lesson);
-            if(item != null){
-                item.setVisible(false);
-            }
-
             // link binding with variables
             viewHolderBinding.setLiveLessonSpannedName(liveLessonSpannedName);
             viewHolderBinding.setLiveExtraInfo(liveExtraInfo);
@@ -155,6 +149,14 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
                 // Show delete menu option only for owner (in that case toolbar contains only delete,
                 // so hide toolbar completely).
                 viewHolderBinding.toolbarLayoutCardViewLesson.setVisibility(View.GONE);
+            }
+
+            if(item.getType() == LessonDocument.Types.SHARED){
+                // if is shared lesson hide share button
+                MenuItem menuItem = viewHolderBinding.toolbarLayoutCardViewLesson.getMenu().findItem(R.id.action_user_share_menu_card_view_lesson);
+                if(menuItem != null){
+                    menuItem.setVisible(false);
+                }
             }
 
             if(isFiltering){
