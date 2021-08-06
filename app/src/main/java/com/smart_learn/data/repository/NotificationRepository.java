@@ -426,7 +426,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         lesson.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
         lesson.setFromUid(notificationDocument.getFromUid());
         lesson.setFromDisplayName(notificationDocument.getFromDisplayName());
-        lesson.setFromDocumentReference(notificationDocument.getFromDocumentReference());
         lesson.setType(LessonDocument.Types.RECEIVED);
         lesson.setNrOfWords(wordList.size());
         lesson.setNrOfExpressions(expressionList.size());

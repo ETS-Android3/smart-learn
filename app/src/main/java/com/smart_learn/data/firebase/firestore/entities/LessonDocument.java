@@ -2,7 +2,6 @@ package com.smart_learn.data.firebase.firestore.entities;
 
 import android.text.SpannableString;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.Gson;
 import com.smart_learn.R;
@@ -29,7 +28,6 @@ public class LessonDocument extends BasicNotebookCommonDocument {
         String NR_OF_EXPRESSIONS_FIELD_NAME = "nrOfExpressions";
         String FROM_UID_FIELD_NAME = "fromUid";
         String FROM_DISPLAY_NAME_FIELD_NAME = "fromDisplayName";
-        String FROM_DOCUMENT_REFERENCE_FIELD_NAME = "fromDocumentReference";
         String PARTICIPANTS_FIELD_NAME = "participants";
     }
 
@@ -57,8 +55,6 @@ public class LessonDocument extends BasicNotebookCommonDocument {
     private String fromUid;
     // These will be the display name of the user who sent the lesson.
     private String fromDisplayName;
-    // for fromUserReference
-    private DocumentReference fromDocumentReference;
     /* *********************************************************************************************
                            END optional fields for received and shared lessons
     ********************************************************************************************* */
@@ -102,7 +98,6 @@ public class LessonDocument extends BasicNotebookCommonDocument {
         data.put(Fields.NR_OF_EXPRESSIONS_FIELD_NAME, document.getNrOfExpressions());
         data.put(Fields.FROM_UID_FIELD_NAME, document.getFromUid());
         data.put(Fields.FROM_DISPLAY_NAME_FIELD_NAME, document.getFromDisplayName());
-        data.put(Fields.FROM_DOCUMENT_REFERENCE_FIELD_NAME, document.getFromDocumentReference());
         data.put(Fields.PARTICIPANTS_FIELD_NAME, document.getParticipants());
 
         return data;
