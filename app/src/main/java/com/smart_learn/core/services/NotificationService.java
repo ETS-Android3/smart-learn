@@ -150,6 +150,13 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
                 repositoryInstance.processNotificationForNormalLessonReceived(notification, notificationSnapshot.getReference(), callback);
                 break;
 
+            case NotificationDocument.Types.TYPE_SHARED_LESSON_SENT:
+                repositoryInstance.processNotificationForSharedLessonSent(notificationSnapshot, callback);
+                break;
+            case NotificationDocument.Types.TYPE_SHARED_LESSON_RECEIVED:
+                repositoryInstance.processNotificationForSharedLessonReceived(notificationSnapshot, callback);
+                break;
+
             case NotificationDocument.Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
                 repositoryInstance.processNotificationForOnlineTestInvitationReceived(notificationSnapshot.getReference(), callback);
                 break;

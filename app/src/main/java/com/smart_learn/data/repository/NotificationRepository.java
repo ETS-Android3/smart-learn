@@ -458,6 +458,24 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         commitBatch(batch, callback);
     }
 
+    public void processNotificationForSharedLessonSent(@NonNull @NotNull DocumentSnapshot notificationSnapshot,
+                                                       @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation is needed only to set notification to finish
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, notificationSnapshot, callback);
+    }
+
+    public void processNotificationForSharedLessonReceived(@NonNull @NotNull DocumentSnapshot notificationSnapshot,
+                                                       @NonNull @NotNull DataCallbacks.General callback){
+        // for this operation is needed only to set notification to finish
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(NotificationDocument.Fields.FINISHED_FIELD_NAME, true);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        updateDocument(data, notificationSnapshot, callback);
+    }
+
     public void processNotificationForOnlineTestInvitationReceived(@NonNull @NotNull DocumentReference notificationDocRef,
                                                                   @NonNull @NotNull DataCallbacks.General callback){
         ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForOnlineTestInvitationReceived(notificationDocRef, callback));
