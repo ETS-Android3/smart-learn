@@ -2,21 +2,28 @@ package com.smart_learn.data.repository;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.core.services.NotificationService;
 import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.services.UserService;
+import com.smart_learn.core.services.UserWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
+import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCommonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.BasicProfileDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
@@ -26,7 +33,6 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import timber.log.Timber;
@@ -156,17 +162,88 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
                                   @NonNull @NotNull ArrayList<String> friendUidList,
                                   @NonNull @NotNull DataCallbacks.General callback){
 
-        String wordList = ""; // use to transform object to json with GSON
-        String expressionList = "";  // use to transform object to json with GSON
+        // Steps:
+        // 1. Extract lesson words and convert them intro a JSON string in order to be attached to
+        //    the notification.
+        // 2. Extract lesson expressions and convert them intro a JSON string in order to be attached
+        //    to the notification.
+        // 3. Send notification.
 
-        // TODO
         // 1. Get all lesson words
+        continueWithWordsExtraction(lessonDocumentId, lesson, friendUidList, callback);
+    }
 
-        // TODO
-        // 2. Get all lesson expression
+    private void continueWithWordsExtraction(@NonNull @NotNull String lessonDocumentId,
+                                             @NonNull @NotNull LessonDocument lesson,
+                                             @NonNull @NotNull ArrayList<String> friendUidList,
+                                             @NonNull @NotNull DataCallbacks.General callback){
+        UserWordService.getInstance()
+                .getQueryForAllLessonWords(lessonDocumentId, lesson.getType() == LessonDocument.Types.SHARED)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        if(!task.isSuccessful() || task.getResult() == null){
+                            Timber.w(task.getException());
+                            callback.onFailure();
+                            return;
+                        }
 
+                        // get words
+                        ArrayList<WordDocument> wordList = new ArrayList<>();
+                        for(DocumentSnapshot snapshot : task.getResult().getDocuments()){
+                            if(snapshot == null){
+                                continue;
+                            }
+                            WordDocument word = snapshot.toObject(WordDocument.class);
+                            if(word != null){
+                                wordList.add(word);
+                            }
+                        }
 
-        continueWithLessonShare(lesson.getName(), LessonDocument.convertDocumentToJson(lesson), wordList, expressionList, friendUidList, callback);
+                        // will be stored as JSON in order to be attached to notification
+                        String wordListJson = WordDocument.fromListToJson(wordList);
+                        // 2. Get all lesson expressions
+                        continueWithExpressionsExtraction(lessonDocumentId, lesson, friendUidList, wordListJson, callback);
+                    }
+                });
+    }
+
+    private void continueWithExpressionsExtraction(@NonNull @NotNull String lessonDocumentId,
+                                                   @NonNull @NotNull LessonDocument lesson,
+                                                   @NonNull @NotNull ArrayList<String> friendUidList,
+                                                   @NonNull @NotNull String wordList,
+                                                   @NonNull @NotNull DataCallbacks.General callback){
+        UserExpressionService.getInstance()
+                .getQueryForAllLessonExpressions(lessonDocumentId, lesson.getType() == LessonDocument.Types.SHARED)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        if(!task.isSuccessful() || task.getResult() == null){
+                            Timber.w(task.getException());
+                            callback.onFailure();
+                            return;
+                        }
+
+                        // get expressions
+                        ArrayList<ExpressionDocument> expressionsList = new ArrayList<>();
+                        for(DocumentSnapshot snapshot : task.getResult().getDocuments()){
+                            if(snapshot == null){
+                                continue;
+                            }
+                            ExpressionDocument expression = snapshot.toObject(ExpressionDocument.class);
+                            if(expression != null){
+                                expressionsList.add(expression);
+                            }
+                        }
+
+                        // will be stored as JSON in order to be attached to notification
+                        String expressionListJson = ExpressionDocument.fromListToJson(expressionsList);
+                        // 3. Send notification.
+                        continueWithLessonShare(lesson.getName(), LessonDocument.convertDocumentToJson(lesson), wordList, expressionListJson, friendUidList, callback);
+                    }
+                });
     }
 
     private void continueWithLessonShare(@NonNull @NotNull String lessonName,

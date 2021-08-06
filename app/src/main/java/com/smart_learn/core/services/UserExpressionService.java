@@ -2,6 +2,7 @@ package com.smart_learn.core.services;
 
 import android.text.TextUtils;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -45,6 +46,10 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
             value = "";
         }
         return repositoryInstance.getQueryForFilterForLessonExpressions(lessonDocumentId, limit, isSharedLesson, value);
+    }
+
+    public CollectionReference getExpressionsCollectionReference(String lessonDocumentId, boolean isFromSharedLesson){
+        return repositoryInstance.getExpressionsCollectionReference(lessonDocumentId, isFromSharedLesson);
     }
 
     public void addExpression(DocumentSnapshot lessonSnapshot, ExpressionDocument expressionDocument, DataCallbacks.General callback){

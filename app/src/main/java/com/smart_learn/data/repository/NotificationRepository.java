@@ -15,8 +15,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.services.UserLessonService;
 import com.smart_learn.core.services.UserService;
+import com.smart_learn.core.services.UserWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
@@ -415,9 +417,8 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         batch.update(notificationDocRef, notificationData);
 
         // 2. Extract words and expressions
-        // TODO
-        ArrayList<WordDocument> wordList = new ArrayList<>();
-        ArrayList<ExpressionDocument> expressionList = new ArrayList<>();
+        ArrayList<WordDocument> wordList = WordDocument.fromJsonToList(notificationDocument.getReceivedLessonWordList());
+        ArrayList<ExpressionDocument> expressionList = ExpressionDocument.fromJsonToList(notificationDocument.getReceivedLessonExpressionList());
 
         // 3. Extract lesson and add it to the lesson collection
         LessonDocument lesson = LessonDocument.convertJsonToDocument(notificationDocument.getReceivedLesson());
@@ -435,8 +436,21 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         batch.set(lessonDocRef, LessonDocument.convertDocumentToHashMap(lesson));
 
         // 4. Add words and expressions to the current lesson collections
-        // TODO
+        CollectionReference wordsCollection = UserWordService.getInstance().getWordsCollectionReference(lessonDocRef.getId(), false);
+        for(WordDocument word : wordList){
+            word.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+            word.setFromSharedLesson(false);
+            DocumentReference wordDocRef = wordsCollection.document();
+            batch.set(wordDocRef, WordDocument.convertDocumentToHashMap(word));
+        }
 
+        CollectionReference expressionsCollection = UserExpressionService.getInstance().getExpressionsCollectionReference(lessonDocRef.getId(), false);
+        for(ExpressionDocument expression : expressionList){
+            expression.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+            expression.setFromSharedLesson(false);
+            DocumentReference expressionDocRef = expressionsCollection.document();
+            batch.set(expressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
+        }
 
         // 5. Update contours on user document and user modified time
         HashMap<String, Object> userData = new HashMap<>();

@@ -2,6 +2,7 @@ package com.smart_learn.core.services;
 
 import android.text.TextUtils;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -30,6 +31,10 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
             instance = new UserWordService();
         }
         return instance;
+    }
+
+    public CollectionReference getWordsCollectionReference(String lessonDocumentId, boolean isFromSharedLesson){
+        return repositoryInstance.getWordsCollectionReference(lessonDocumentId, isFromSharedLesson);
     }
 
     public Query getQueryForAllLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson) {
