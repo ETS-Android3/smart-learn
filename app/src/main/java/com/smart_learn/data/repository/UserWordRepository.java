@@ -103,6 +103,7 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
 
         // 1. Add word in user words for specific lesson
         word.getDocumentMetadata().setCounted(true);
+        word.setFromSharedLesson(false);
         DocumentReference newWordDocRef = getWordsCollectionReference(lessonReference.getId()).document();
         batch.set(newWordDocRef, WordDocument.convertDocumentToHashMap(word));
 
@@ -136,6 +137,7 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
 
         // 1. Add word in words for specific shared lesson
         word.getDocumentMetadata().setCounted(true);
+        word.setFromSharedLesson(true);
         word.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
         DocumentReference newWordDocRef = getSharedLessonWordsCollectionReference(lessonReference.getId()).document();
         batch.set(newWordDocRef, WordDocument.convertDocumentToHashMap(word));

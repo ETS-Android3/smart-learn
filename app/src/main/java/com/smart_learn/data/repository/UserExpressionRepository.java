@@ -103,6 +103,7 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
 
         // 1. Add expression in user expressions for specific lesson
         expression.getDocumentMetadata().setCounted(true);
+        expression.setFromSharedLesson(false);
         DocumentReference newExpressionDocRef = getExpressionsCollectionReference(lessonReference.getId()).document();
         batch.set(newExpressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
 
@@ -136,6 +137,7 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
 
         // 1. Add expression in expressions collection for specific shared lesson
         expression.getDocumentMetadata().setCounted(true);
+        expression.setFromSharedLesson(true);
         expression.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
         DocumentReference newExpressionDocRef = getSharedLessonExpressionsCollectionReference(lessonReference.getId()).document();
         batch.set(newExpressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
