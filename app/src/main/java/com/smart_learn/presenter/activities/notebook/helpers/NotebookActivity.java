@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -19,12 +18,13 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityNotebookBinding;
 import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
+import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class NotebookActivity <VM extends NotebookSharedViewModel> extends AppCompatActivity {
+public abstract class NotebookActivity <VM extends NotebookSharedViewModel> extends BasicActivity {
 
     protected ActivityNotebookBinding binding;
     protected VM sharedViewModel;

@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
@@ -21,11 +20,12 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityAuthenticationBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
+import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.LoadingDialog;
 
 import timber.log.Timber;
 
-public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends BasicActivity {
 
     private static final int GOOGLE_SIGN_IN = 9001;
     private AuthenticationSharedViewModel sharedViewModel;

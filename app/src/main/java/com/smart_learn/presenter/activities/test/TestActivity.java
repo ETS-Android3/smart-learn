@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -16,11 +15,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityTest2Binding;
+import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TestActivity <VM extends TestSharedViewModel> extends AppCompatActivity {
+public abstract class TestActivity <VM extends TestSharedViewModel> extends BasicActivity {
 
     protected ActivityTest2Binding binding;
     protected VM sharedViewModel;

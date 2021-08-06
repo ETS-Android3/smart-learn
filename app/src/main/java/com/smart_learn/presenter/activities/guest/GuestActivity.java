@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
@@ -19,11 +18,12 @@ import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
+import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;
 
-public class GuestActivity extends AppCompatActivity {
+public class GuestActivity extends BasicActivity {
 
     private ActivityGuestBinding binding;
     private NavController navController;

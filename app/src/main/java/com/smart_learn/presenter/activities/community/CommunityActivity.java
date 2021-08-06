@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 
@@ -15,11 +14,12 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityCommunityBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
+import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
-public class CommunityActivity extends AppCompatActivity {
+public class CommunityActivity extends BasicActivity {
 
     private ActivityCommunityBinding binding;
     private NavController navController;
