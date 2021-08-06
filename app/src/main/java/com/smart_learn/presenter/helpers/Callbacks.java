@@ -76,6 +76,7 @@ public interface Callbacks {
      * */
     interface StandardAlertDialogCallback {
         void onPositiveButtonPress();
+        default void onNegativeButtonPress(){}
     }
 
     /**

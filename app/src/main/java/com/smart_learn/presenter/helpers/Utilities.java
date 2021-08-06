@@ -877,7 +877,12 @@ public final class Utilities {
                         })
                         // No need for a listener because no action will be done when BUTTON_NEGATIVE is pressed.
                         // Dialog will be dismissed automatically.
-                        .setNegativeButton(android.R.string.cancel, null)
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                standardAlertDialogCallback.onNegativeButtonPress();
+                            }
+                        })
                         .setIcon(R.drawable.ic_baseline_warning_24)
                         .show();
         }
@@ -907,7 +912,12 @@ public final class Utilities {
                     })
                     // No need for a listener because no action will be done when BUTTON_NEGATIVE is pressed.
                     // Dialog will be dismissed automatically.
-                    .setNegativeButton(android.R.string.cancel, null)
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            standardAlertDialogCallback.onNegativeButtonPress();
+                        }
+                    })
                     .setIcon(R.drawable.ic_baseline_warning_24)
                     .show();
         }
