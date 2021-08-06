@@ -42,51 +42,32 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         return instance;
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson) {
-        CollectionReference collectionReference;
-        if(isSharedLesson){
-            collectionReference = getSharedLessonWordsCollectionReference(lessonDocumentId);
-        }
-        else{
-            collectionReference = getWordsCollectionReference(lessonDocumentId);
-        }
-
-        return collectionReference
+    public Query getQueryForAllLessonWords(String lessonDocumentId, long limit, boolean isFromSharedLesson) {
+        return getWordsCollectionReference(lessonDocumentId, isFromSharedLesson)
                 .orderBy(WordDocument.Fields.WORD_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public Query getQueryForAllLessonWords(String lessonDocumentId, boolean isSharedLesson) {
-        if(isSharedLesson){
-            return getSharedLessonWordsCollectionReference(lessonDocumentId);
-        }
-        return getWordsCollectionReference(lessonDocumentId);
+    public Query getQueryForAllLessonWords(String lessonDocumentId, boolean isFromSharedLesson) {
+        return getWordsCollectionReference(lessonDocumentId, isFromSharedLesson);
     }
 
-    public Query getQueryForFilterForLessonWords(String lessonDocumentId, long limit, boolean isSharedLesson, @NonNull @NotNull String value) {
-        CollectionReference collectionReference;
-        if(isSharedLesson){
-            collectionReference = getSharedLessonWordsCollectionReference(lessonDocumentId);
-        }
-        else{
-            collectionReference = getWordsCollectionReference(lessonDocumentId);
-        }
-
-        return collectionReference
+    public Query getQueryForFilterForLessonWords(String lessonDocumentId, long limit, boolean isFromSharedLesson, @NonNull @NotNull String value) {
+        return getWordsCollectionReference(lessonDocumentId, isFromSharedLesson)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(WordDocument.Fields.WORD_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public CollectionReference getWordsCollectionReference(String lessonDocumentId){
+    public CollectionReference getWordsCollectionReference(String lessonDocumentId, boolean isFromSharedLesson){
+        if(isFromSharedLesson){
+            return FirebaseFirestore.getInstance()
+                    .collection("/" + COLLECTION_SHARED_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_WORDS);
+        }
+
         return FirebaseFirestore.getInstance()
                 .collection("/" + COLLECTION_USERS + "/" + UserService.getInstance().getUserUid() + "/" +
                         COLLECTION_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_WORDS);
-    }
-
-    public CollectionReference getSharedLessonWordsCollectionReference(String sharedLessonDocumentId){
-        return FirebaseFirestore.getInstance()
-                .collection("/" + COLLECTION_SHARED_LESSONS + "/" + sharedLessonDocumentId + "/" + COLLECTION_WORDS);
     }
 
     public void addWord(@NonNull @NotNull DocumentReference lessonReference,
@@ -104,7 +85,7 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         // 1. Add word in user words for specific lesson
         word.getDocumentMetadata().setCounted(true);
         word.setFromSharedLesson(false);
-        DocumentReference newWordDocRef = getWordsCollectionReference(lessonReference.getId()).document();
+        DocumentReference newWordDocRef = getWordsCollectionReference(lessonReference.getId(), false).document();
         batch.set(newWordDocRef, WordDocument.convertDocumentToHashMap(word));
 
         // 2. Update counter on lesson document
@@ -139,7 +120,7 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
         word.getDocumentMetadata().setCounted(true);
         word.setFromSharedLesson(true);
         word.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
-        DocumentReference newWordDocRef = getSharedLessonWordsCollectionReference(lessonReference.getId()).document();
+        DocumentReference newWordDocRef = getWordsCollectionReference(lessonReference.getId(), true).document();
         batch.set(newWordDocRef, WordDocument.convertDocumentToHashMap(word));
 
         // 2. Update counter on shared lesson document

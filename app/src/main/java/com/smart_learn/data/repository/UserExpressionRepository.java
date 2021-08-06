@@ -42,51 +42,32 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         return instance;
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit, boolean isSharedLesson) {
-        CollectionReference collectionReference;
-        if(isSharedLesson){
-            collectionReference = getSharedLessonExpressionsCollectionReference(lessonDocumentId);
-        }
-        else{
-            collectionReference = getExpressionsCollectionReference(lessonDocumentId);
-        }
-
-        return collectionReference
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, long limit, boolean isFromSharedLesson) {
+        return getExpressionsCollectionReference(lessonDocumentId, isFromSharedLesson)
                 .orderBy(ExpressionDocument.Fields.EXPRESSION_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public Query getQueryForAllLessonExpressions(String lessonDocumentId, boolean isSharedLesson) {
-        if(isSharedLesson){
-            return getSharedLessonExpressionsCollectionReference(lessonDocumentId);
-        }
-        return getExpressionsCollectionReference(lessonDocumentId);
+    public Query getQueryForAllLessonExpressions(String lessonDocumentId, boolean isFromSharedLesson) {
+        return getExpressionsCollectionReference(lessonDocumentId, isFromSharedLesson);
     }
 
-    public Query getQueryForFilterForLessonExpressions(String lessonDocumentId, long limit, boolean isSharedLesson, @NonNull @NotNull String value) {
-        CollectionReference collectionReference;
-        if(isSharedLesson){
-            collectionReference = getSharedLessonExpressionsCollectionReference(lessonDocumentId);
-        }
-        else{
-            collectionReference = getExpressionsCollectionReference(lessonDocumentId);
-        }
-
-        return collectionReference
+    public Query getQueryForFilterForLessonExpressions(String lessonDocumentId, long limit, boolean isFromSharedLesson, @NonNull @NotNull String value) {
+        return getExpressionsCollectionReference(lessonDocumentId, isFromSharedLesson)
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(ExpressionDocument.Fields.EXPRESSION_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
     }
 
-    public CollectionReference getExpressionsCollectionReference(String lessonDocumentId){
+    public CollectionReference getExpressionsCollectionReference(String lessonDocumentId, boolean isFromSharedLesson){
+        if(isFromSharedLesson){
+            return FirebaseFirestore.getInstance()
+                    .collection("/" + COLLECTION_SHARED_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_EXPRESSIONS);
+        }
+
         return FirebaseFirestore.getInstance()
                 .collection("/" + COLLECTION_USERS + "/" + UserService.getInstance().getUserUid() + "/" +
                         COLLECTION_LESSONS + "/" + lessonDocumentId + "/" + COLLECTION_EXPRESSIONS);
-    }
-
-    public CollectionReference getSharedLessonExpressionsCollectionReference(String sharedLessonDocumentId){
-        return FirebaseFirestore.getInstance()
-                .collection("/" + COLLECTION_SHARED_LESSONS + "/" + sharedLessonDocumentId + "/" + COLLECTION_EXPRESSIONS);
     }
 
     public void addExpression(@NonNull @NotNull DocumentReference lessonReference,
@@ -104,7 +85,7 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         // 1. Add expression in user expressions for specific lesson
         expression.getDocumentMetadata().setCounted(true);
         expression.setFromSharedLesson(false);
-        DocumentReference newExpressionDocRef = getExpressionsCollectionReference(lessonReference.getId()).document();
+        DocumentReference newExpressionDocRef = getExpressionsCollectionReference(lessonReference.getId(), false).document();
         batch.set(newExpressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
 
         // 2. Update counter on lesson document
@@ -139,7 +120,7 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
         expression.getDocumentMetadata().setCounted(true);
         expression.setFromSharedLesson(true);
         expression.setOwnerDisplayName(UserService.getInstance().getUserDisplayName());
-        DocumentReference newExpressionDocRef = getSharedLessonExpressionsCollectionReference(lessonReference.getId()).document();
+        DocumentReference newExpressionDocRef = getExpressionsCollectionReference(lessonReference.getId(), true).document();
         batch.set(newExpressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
 
         // 2. Update counter on shared lesson document
