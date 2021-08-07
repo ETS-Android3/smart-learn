@@ -107,7 +107,7 @@ public class ApplicationController extends Application {
                             }
 
                             // here notification was counted but not processed
-                            NotificationService.getInstance().processNotification(document, new DataCallbacks.General() {
+                            NotificationService.getInstance().processNotificationInCurrentThread(document, new DataCallbacks.General() {
                                 @Override
                                 public void onSuccess() {
                                     Timber.i("Processed notification with document id = [%s]", document.getId());

@@ -189,6 +189,13 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     }
 
 
+
+    /* *********************************************************************************************
+    *                            Notifications processing
+    * *********************************************************************************************/
+
+
+
     public void processNotificationForFriendRequestSent(@NonNull @NotNull DocumentSnapshot notificationSnapshot,
                                                         @NonNull @NotNull DataCallbacks.General callback){
         // for this operation is needed only to set notification to finish
@@ -210,12 +217,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     public void processNotificationForFriendRequestReceived(@NonNull @NotNull NotificationDocument notificationDocument,
                                                             @NonNull @NotNull DocumentReference notificationDocRef,
                                                             @NonNull @NotNull DataCallbacks.General callback){
-        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForFriendRequestReceived(notificationDocument, notificationDocRef, callback));
-    }
-
-    private void tryToProcessNotificationForFriendRequestReceived(@NonNull @NotNull NotificationDocument notificationDocument,
-                                                                  @NonNull @NotNull DocumentReference notificationDocRef,
-                                                                  @NonNull @NotNull DataCallbacks.General callback){
         // for this operation will be necessary a transaction
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
 
@@ -234,14 +235,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     public void processNotificationForFriendRequestAccepted(@NonNull @NotNull NotificationDocument notificationDocument,
                                                             @NonNull @NotNull DocumentReference notificationDocRef,
                                                             @NonNull @NotNull DataCallbacks.General callback){
-        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForFriendRequestAccepted(notificationDocument,
-                notificationDocRef, callback));
-    }
-
-
-    private void tryToProcessNotificationForFriendRequestAccepted(@NonNull @NotNull NotificationDocument notificationDocument,
-                                                                  @NonNull @NotNull DocumentReference notificationDocRef,
-                                                                  @NonNull @NotNull DataCallbacks.General callback){
 
         // for this operation will be necessary a transaction
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
@@ -339,13 +332,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     public void processNotificationForFriendRemovedYou(@NonNull @NotNull NotificationDocument notificationDocument,
                                                        @NonNull @NotNull DocumentReference notificationDocRef,
                                                        @NonNull @NotNull DataCallbacks.General callback){
-        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForFriendRemovedYou(notificationDocument,
-                notificationDocRef, callback));
-    }
-
-    private void tryToProcessNotificationForFriendRemovedYou(@NonNull @NotNull NotificationDocument notificationDocument,
-                                                             @NonNull @NotNull DocumentReference notificationDocRef,
-                                                             @NonNull @NotNull DataCallbacks.General callback){
 
         // for this operation will be necessary a transaction
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
@@ -399,13 +385,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
     public void processNotificationForNormalLessonReceived(@NonNull @NotNull NotificationDocument notificationDocument,
                                                            @NonNull @NotNull DocumentReference notificationDocRef,
                                                            @NonNull @NotNull DataCallbacks.General callback){
-        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForNormalLessonReceived(notificationDocument,
-                notificationDocRef, callback));
-    }
-
-    private void tryToProcessNotificationForNormalLessonReceived(@NonNull @NotNull NotificationDocument notificationDocument,
-                                                                 @NonNull @NotNull DocumentReference notificationDocRef,
-                                                                 @NonNull @NotNull DataCallbacks.General callback){
 
         // for this operation will be necessary a transaction
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
@@ -491,11 +470,6 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
 
     public void processNotificationForOnlineTestInvitationReceived(@NonNull @NotNull DocumentReference notificationDocRef,
                                                                   @NonNull @NotNull DataCallbacks.General callback){
-        ThreadExecutorService.getInstance().execute(() -> tryToProcessNotificationForOnlineTestInvitationReceived(notificationDocRef, callback));
-    }
-
-    private void tryToProcessNotificationForOnlineTestInvitationReceived(@NonNull @NotNull DocumentReference notificationDocRef,
-                                                                         @NonNull @NotNull DataCallbacks.General callback){
         // for this operation will be necessary a transaction
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
 

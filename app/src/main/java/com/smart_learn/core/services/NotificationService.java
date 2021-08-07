@@ -105,7 +105,15 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
         repositoryInstance.setNotificationsAsCounted(notificationsList, callback);
     }
 
-    public void processNotification(DocumentSnapshot notificationSnapshot, DataCallbacks.General callback){
+    public void processNotificationInCurrentThread(DocumentSnapshot notificationSnapshot, DataCallbacks.General callback){
+        processNotification(notificationSnapshot, callback);
+    }
+
+    public void processNotificationInBackgroundThread(DocumentSnapshot notificationSnapshot, DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> processNotification(notificationSnapshot, callback));
+    }
+
+    private void processNotification(DocumentSnapshot notificationSnapshot, DataCallbacks.General callback){
         if(DataUtilities.Firestore.notGoodDocumentSnapshot(notificationSnapshot)){
             if(callback != null){
                 callback.onFailure();
