@@ -22,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class TestActivity <VM extends TestSharedViewModel> extends BasicActivity {
 
+    public static final String CALLED_BY_SCHEDULED_TEST_KEY = "CALLED_BY_SCHEDULED_TEST_KEY";
+    public static final String SCHEDULED_TEST_ID_KEY = "SCHEDULED_TEST_ID_KEY";
+
     protected ActivityTest2Binding binding;
     protected VM sharedViewModel;
 
@@ -31,6 +34,7 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
     protected FloatingActionButton fabNewTest;
 
     protected abstract void onFabClick();
+    protected abstract void processScheduledTestNotification(@NonNull @NotNull String scheduledTestId);
 
 
     /**
@@ -59,6 +63,25 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // first extract arguments if any
+        Bundle args = getIntent().getExtras();
+        boolean calledByScheduledTest = false;
+        String scheduledTestId = "";
+        if(args != null){
+            calledByScheduledTest = args.getBoolean(CALLED_BY_SCHEDULED_TEST_KEY);
+            if(calledByScheduledTest){
+                scheduledTestId = args.getString(SCHEDULED_TEST_ID_KEY);
+                if(scheduledTestId == null || scheduledTestId.isEmpty()){
+                    GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+                    onBackPressed();
+                    this.finish();
+                    return;
+                }
+            }
+        }
+
+        // set data binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_test2);
         binding.setLifecycleOwner(this);
         setSupportActionBar(binding.toolbarActivityTest);
@@ -78,6 +101,11 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
         navController.setGraph(getNavigationGraphResource());
 
         setViewModel();
+
+        sharedViewModel.setCalledByScheduledTest(calledByScheduledTest);
+        if(calledByScheduledTest){
+            processScheduledTestNotification(scheduledTestId);
+        }
     }
 
 

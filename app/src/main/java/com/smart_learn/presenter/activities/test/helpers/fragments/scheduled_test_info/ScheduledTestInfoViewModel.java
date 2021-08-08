@@ -10,6 +10,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.Test;
+import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
@@ -462,6 +463,11 @@ public abstract class ScheduledTestInfoViewModel extends BasicAndroidViewModel {
         if(newTest == null){
             liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
             return;
+        }
+
+        // if is for update disable old alarm
+        if(isForUpdate){
+            newTest.cancelAlarm(testId, newTest instanceof TestDocument);
         }
 
         // set test values

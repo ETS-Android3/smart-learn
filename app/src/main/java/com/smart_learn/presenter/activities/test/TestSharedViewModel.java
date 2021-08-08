@@ -29,6 +29,9 @@ public abstract class TestSharedViewModel extends BasicAndroidViewModel {
     private boolean isTestHistoryFragmentActive;
     private boolean isScheduledTestFragmentActive;
 
+    // if is called by alarm when go back go to start activity (Main or Guest).
+    private boolean calledByScheduledTest;
+
     public TestSharedViewModel(@NonNull @NotNull Application application) {
         super(application);
     }

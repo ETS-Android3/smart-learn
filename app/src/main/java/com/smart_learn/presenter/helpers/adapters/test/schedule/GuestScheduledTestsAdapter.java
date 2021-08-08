@@ -129,7 +129,13 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                        }
                     }
 
-                    roomTest.setScheduleActive(isChecked);
+                    if(isChecked){
+                        roomTest.setAlarm(String.valueOf(roomTest.getTestId()), false);
+                    }
+                    else{
+                        roomTest.cancelAlarm(String.valueOf(roomTest.getTestId()), false);
+                    }
+
                     TestService.getInstance().update(roomTest, new DataCallbacks.General() {
                        @Override
                        public void onSuccess() {
@@ -193,6 +199,10 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
         }
 
         private void deleteItem(RoomTest test){
+            // first deactivate alarm
+            test.cancelAlarm(String.valueOf(test.getTestId()), false);
+
+            // and then you can delete scheduled test
             TestService.getInstance().delete(test, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {

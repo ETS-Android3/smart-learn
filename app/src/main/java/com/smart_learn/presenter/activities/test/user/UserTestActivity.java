@@ -64,6 +64,11 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         showAddNewTestOptions();
     }
 
+    @Override
+    protected void processScheduledTestNotification(@NonNull @NotNull String scheduledTestId) {
+        sharedViewModel.processScheduledTestNotification(UserTestActivity.this, scheduledTestId);
+    }
+
     public void goToMainActivity(){
         // When going back to MainActivity clear backstack and finish current activity,
         // because MainActivity is central point when user is logged in.
@@ -75,6 +80,13 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
 
     @Override
     public void onBackPressed() {
+        // if this is last activity then go to MainActivity in order to avoid to exit from application
+        // https://stackoverflow.com/questions/5975811/how-to-check-if-an-activity-is-the-last-one-in-the-activity-stack-for-an-applica/15664268#15664268
+        if(isTaskRoot()){
+            goToMainActivity();
+            return;
+        }
+
         // From these fragments go back to MainActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);
@@ -97,6 +109,13 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
 
     @Override
     public boolean onSupportNavigateUp() {
+        // if this is last activity then go to MainActivity in order to avoid to exit from application
+        // https://stackoverflow.com/questions/5975811/how-to-check-if-an-activity-is-the-last-one-in-the-activity-stack-for-an-applica/15664268#15664268
+        if(isTaskRoot()){
+            goToMainActivity();
+            return true;
+        }
+
         // From these fragments go back to MainActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);

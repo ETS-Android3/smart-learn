@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".presenter.helpers.ApplicationController"
@@ -37,6 +38,16 @@
         <activity android:name=".presenter.activities.TestSettingsActivity" />
         <activity android:name=".presenter.activities.TestGenerationActivity" />
         <activity android:name=".presenter.activities.TestOnlineActivity" />
+
+        <receiver android:name=".core.services.test.TestService$ScheduledTestAlarmManager$ScheduledTestAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

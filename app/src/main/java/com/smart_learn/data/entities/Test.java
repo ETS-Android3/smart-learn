@@ -1,6 +1,8 @@
 package com.smart_learn.data.entities;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.test.TestService;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,6 +50,7 @@ public abstract class Test {
         String DAY_OF_MONTH_FIELD_NAME = "dayOfMonth";
         String MONTH_FIELD_NAME = "month";
         String YEAR_FIELD_NAME = "year";
+        String ALARM_ID_FIELD_NAME = "alarmId";
         String DAYS_STATUS_FIELD_NAME = "daysStatus";
         String LESSON_ID_FIELD_NAME = "lessonId";
         String LESSON_NAME_FIELD_NAME = "lessonName";
@@ -143,6 +146,8 @@ public abstract class Test {
     private int dayOfMonth;
     private int month;
     private int year;
+    // used to manage alarms by AlarmService
+    private int alarmId;
 
     // If test is recurrent mark in what days at specified hour, test should start. This will be
     // actioned by type converter in Room, while Firestore can handle Array of Boolean values.
@@ -168,6 +173,7 @@ public abstract class Test {
         dayOfMonth = NO_DATE_TIME;
         month = NO_DATE_TIME;
         year = NO_DATE_TIME;
+        alarmId = NO_DATE_TIME;
         // avoid null values
         testName = "";
         customTestName = "";
@@ -324,6 +330,98 @@ public abstract class Test {
         return value;
     }
 
+    public void setAlarm(String scheduledTestId, boolean forUser){
+        // if is already set do not set again
+        if(isScheduleActive){
+            return;
+        }
+        isScheduleActive = true;
+        if(oneTime){
+            alarmId = TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(scheduledTestId, forUser,
+                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year));
+            return;
+        }
+
+        alarmId = TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
+                scheduledTestId,
+                forUser,
+                hour,
+                minute,
+                daysStatus.get(0),
+                daysStatus.get(1),
+                daysStatus.get(2),
+                daysStatus.get(3),
+                daysStatus.get(4),
+                daysStatus.get(5),
+                daysStatus.get(6)
+        );
+    }
+
+    private void setAlarm(int alarmId, String scheduledTestId, boolean forUser){
+        // if is already set do not set again
+        if(isScheduleActive){
+            return;
+        }
+        isScheduleActive = true;
+        if(oneTime){
+            TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(alarmId, scheduledTestId, forUser,
+                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year));
+            return;
+        }
+
+        TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
+                alarmId,
+                scheduledTestId,
+                forUser,
+                hour,
+                minute,
+                daysStatus.get(0),
+                daysStatus.get(1),
+                daysStatus.get(2),
+                daysStatus.get(3),
+                daysStatus.get(4),
+                daysStatus.get(5),
+                daysStatus.get(6)
+        );
+    }
+
+    public void resetAlarm(String scheduledTestId, boolean forUser){
+        final int sameAlarmId = alarmId;
+        // if alarm is already set deactivate it
+        if(isScheduleActive){
+            cancelAlarm(scheduledTestId, forUser);
+        }
+        // and set alarm again with same id
+        setAlarm(sameAlarmId, scheduledTestId, forUser);
+    }
+
+    public void cancelAlarm(String scheduledTestId, boolean forUser){
+        // if is already stopped, not cancel again
+        if(!isScheduleActive){
+            return;
+        }
+        isScheduleActive = false;
+        if(oneTime){
+            TestService.ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, forUser, alarmId);
+            alarmId = NO_DATE_TIME;
+            return;
+        }
+
+        TestService.ScheduledTestAlarmManager.getInstance().cancelAlarmRepeatingInSpecificDays(
+                scheduledTestId,
+                forUser,
+                alarmId,
+                daysStatus.get(0),
+                daysStatus.get(1),
+                daysStatus.get(2),
+                daysStatus.get(3),
+                daysStatus.get(4),
+                daysStatus.get(5),
+                daysStatus.get(6)
+        );
+        alarmId = NO_DATE_TIME;
+    }
+
     public static HashMap<String, Object> convertDocumentToHashMap(Test test){
         if(test == null){
             return new HashMap<>();
@@ -354,6 +452,7 @@ public abstract class Test {
         data.put(Fields.DAY_OF_MONTH_FIELD_NAME, test.getDayOfMonth());
         data.put(Fields.MONTH_FIELD_NAME, test.getMonth());
         data.put(Fields.YEAR_FIELD_NAME, test.getYear());
+        data.put(Fields.ALARM_ID_FIELD_NAME, test.getAlarmId());
         data.put(Fields.DAYS_STATUS_FIELD_NAME, test.getDaysStatus());
         data.put(Fields.LESSON_ID_FIELD_NAME, test.getLessonId());
         data.put(Fields.LESSON_NAME_FIELD_NAME, test.getLessonName());
@@ -390,6 +489,7 @@ public abstract class Test {
         if (getDayOfMonth() != test.getDayOfMonth()) return false;
         if (getMonth() != test.getMonth()) return false;
         if (getYear() != test.getYear()) return false;
+        if (getAlarmId() != test.getAlarmId()) return false;
         if (isSharedLesson() != test.isSharedLesson()) return false;
         if (!getTestName().equals(test.getTestName())) return false;
         if (!getCustomTestName().equals(test.getCustomTestName())) return false;
@@ -425,6 +525,7 @@ public abstract class Test {
         result = 31 * result + getDayOfMonth();
         result = 31 * result + getMonth();
         result = 31 * result + getYear();
+        result = 31 * result + getAlarmId();
         result = 31 * result + getDaysStatus().hashCode();
         result = 31 * result + getLessonId().hashCode();
         result = 31 * result + getLessonName().hashCode();

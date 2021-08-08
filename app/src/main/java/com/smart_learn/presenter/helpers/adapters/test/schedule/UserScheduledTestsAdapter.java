@@ -148,16 +148,24 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                         }
                     }
 
-                    TestService.getInstance().setSchedule(getSnapshots().getSnapshot(position), isChecked, new DataCallbacks.General() {
-                        @Override
-                        public void onSuccess() {
-                            // no action needed here
-                        }
+                    if(isChecked){
+                        testDocument.setAlarm(getSnapshots().getSnapshot(position).getId(), true);
+                    }
+                    else{
+                        testDocument.cancelAlarm(getSnapshots().getSnapshot(position).getId(), true);
+                    }
 
-                        @Override
-                        public void onFailure() {
-                            showMessage(R.string.error_can_not_set_schedule);
-                        }
+                    TestService.getInstance().updateDocument(TestDocument.convertDocumentToHashMap(testDocument), getSnapshots().getSnapshot(position),
+                            new DataCallbacks.General() {
+                                @Override
+                                public void onSuccess() {
+                                    // no action needed here
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    showMessage(R.string.error_can_not_set_schedule);
+                                }
                     });
                 }
             });
@@ -192,7 +200,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                             return true;
                         }
                         isDeletingActive.set(true);
-                        deleteItem(getSnapshots().getSnapshot(position));
+                        deleteItem(getSnapshots().get(position), getSnapshots().getSnapshot(position));
                         return true;
                     }
                     return true;
@@ -200,7 +208,11 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
             });
         }
 
-        private void deleteItem(DocumentSnapshot testSnapshot){
+        private void deleteItem(TestDocument testDocument, DocumentSnapshot testSnapshot){
+            // first deactivate alarm
+            testDocument.cancelAlarm(testSnapshot.getId(), true);
+
+            // and then you can delete scheduled test
             TestService.getInstance().deleteScheduledTest(testSnapshot, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {
