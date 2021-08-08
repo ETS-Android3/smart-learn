@@ -60,6 +60,7 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
         // because GuestActivity is central point when user is not logged in.
         Intent intent = new Intent(this, GuestActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         this.finish();
     }
 
@@ -111,11 +112,11 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
 
     @Override
     public void onBackPressed() {
-        // From these fragments go back to GuestActivity.
+        // From these fragments go back to GuestActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);
             sharedViewModel.setScheduledTestFragmentActive(false);
-            goToGuestActivity();
+            this.finish();
             return;
         }
         super.onBackPressed();
@@ -123,11 +124,11 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
 
     @Override
     public boolean onSupportNavigateUp() {
-        // From these fragments go back to GuestActivity.
+        // From these fragments go back to GuestActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);
             sharedViewModel.setScheduledTestFragmentActive(false);
-            goToGuestActivity();
+            this.finish();
             return true;
         }
         return super.onSupportNavigateUp();

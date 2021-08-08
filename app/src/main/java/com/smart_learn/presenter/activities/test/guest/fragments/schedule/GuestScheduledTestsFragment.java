@@ -70,7 +70,7 @@ public class GuestScheduledTestsFragment extends GuestStandardScheduledTestsFrag
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if(id == android.R.id.home){
-            ((GuestTestActivity)requireActivity()).goToGuestActivity();
+            ((GuestTestActivity)requireActivity()).onSupportNavigateUp();
             return true;
         }
         return true;

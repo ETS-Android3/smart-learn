@@ -76,7 +76,7 @@ public class UserScheduledTestsFragment extends UserStandardScheduledTestsFragme
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if(id == android.R.id.home){
-            ((UserTestActivity)requireActivity()).goToMainActivity();
+            ((UserTestActivity)requireActivity()).onSupportNavigateUp();
             return true;
         }
         return true;

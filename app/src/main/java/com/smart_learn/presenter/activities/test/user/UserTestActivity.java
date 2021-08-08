@@ -69,16 +69,17 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         // because MainActivity is central point when user is logged in.
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         this.finish();
     }
 
     @Override
     public void onBackPressed() {
-        // From these fragments go back to MainActivity.
+        // From these fragments go back to MainActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);
             sharedViewModel.setScheduledTestFragmentActive(false);
-            goToMainActivity();
+            this.finish();
             return;
         }
 
@@ -96,11 +97,11 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
 
     @Override
     public boolean onSupportNavigateUp() {
-        // From these fragments go back to MainActivity.
+        // From these fragments go back to MainActivity. In order to do that finish current activity.
         if(sharedViewModel.isTestHistoryFragmentActive() || sharedViewModel.isScheduledTestFragmentActive()){
             sharedViewModel.setTestHistoryFragmentActive(false);
             sharedViewModel.setScheduledTestFragmentActive(false);
-            goToMainActivity();
+            this.finish();
             return true;
         }
 

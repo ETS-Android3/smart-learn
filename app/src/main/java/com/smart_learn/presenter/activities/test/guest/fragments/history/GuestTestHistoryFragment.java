@@ -63,7 +63,7 @@ public class GuestTestHistoryFragment extends GuestStandardTestHistoryFragment<G
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         if(id == android.R.id.home){
-            ((GuestTestActivity)requireActivity()).goToGuestActivity();
+            ((GuestTestActivity)requireActivity()).onSupportNavigateUp();
             return true;
         }
         return true;
