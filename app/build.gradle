@@ -138,6 +138,10 @@ dependencies {
 
     /* END Firebase */
 
+    // For showing App Inspection -> Background task inspector
+    // https://developer.android.com/jetpack/androidx/releases/work
+    implementation 'androidx.work:work-runtime:2.5.0'
+
     // for flexbox layout for recycler view
     // https://github.com/google/flexbox-layout
     // https://stackoverflow.com/questions/39436115/auto-fit-according-to-screen-size-in-grid-layout-android/62279449#62279449
