@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -16,7 +17,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.smart_learn.BuildConfig;
 import com.smart_learn.core.services.NotificationService;
+import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
+import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 
 import java.util.ArrayList;
@@ -62,6 +65,7 @@ public class ApplicationController extends Application {
                 }
                 else{
                     addNotificationsCollectionListener();
+                    addAlarmListener();
                 }
             }
         };
@@ -131,4 +135,52 @@ public class ApplicationController extends Application {
 
     }
 
+    private void addAlarmListener(){
+        // When a new scheduled active test is added/modified, alarm will be reset on device also.
+        // When a scheduled active test is removed, his alarm will be unset from device.
+
+        // https://stackoverflow.com/questions/54837988/android-firestore-view-changes-between-snapshots-from-document
+        TestService.getInstance()
+                .getQueryForAllScheduledActiveLocalTests()
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Timber.e(error);
+                            return;
+                        }
+
+                        if(value == null){
+                            Timber.i("value is null");
+                            return;
+                        }
+
+                        for (DocumentChange change : value.getDocumentChanges()) {
+                            TestDocument test = change.getDocument().toObject(TestDocument.class);
+
+                            // Do not update test in Firestore db after alarm is reset/canceled
+                            // because it will trigger listener on the other device and then the
+                            // other device will do same thing (reset/cancel alarm and update) and
+                            // this will trigger an infinite loop.
+                            switch (change.getType()) {
+                                case ADDED:
+                                case MODIFIED:
+                                    Timber.i("Test for alarm [" + test.getAlarmId() + "] was added or modified. Alarm is resetting.");
+                                    test.resetAlarm(change.getDocument().getId(), true);
+                                    break;
+                                case REMOVED:
+                                    Timber.i("Test for alarm [" + test.getAlarmId() + "] was removed. Alarm is canceling.");
+                                    // TODO: When the alarm is oneTime alarm, then alarm will be canceled
+                                    //  when is triggered, and test will be updated. That will trigger
+                                    //  this and canceling alarm will be made again. Also if multiple
+                                    //  devices with same account will trigger same oneTime alarm, then
+                                    //  every device will do update, and this 'cancelAlarm' method
+                                    //  will be called for every device. Try to avoid that.
+                                    test.cancelAlarm(change.getDocument().getId(), true);
+                                    break;
+                            }
+                        }
+                    }
+                });
+    }
 }
