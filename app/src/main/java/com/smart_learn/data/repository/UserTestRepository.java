@@ -104,6 +104,12 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
                 .limit(limit);
     }
 
+    public Query getQueryForAllScheduledActiveLocalTests() {
+        return getLocalTestsCollection()
+                .whereEqualTo(Test.Fields.IS_SCHEDULED_FIELD_NAME, true)
+                .whereEqualTo(Test.Fields.IS_SCHEDULE_ACTIVE_FIELD_NAME, true);
+    }
+
     public Query getQueryForAllVisibleOnlineTests(long limit) {
         return getOnlineTestsCollection()
                 .whereArrayContains(TestDocument.Fields.PARTICIPANTS_FIELD_NAME, UserService.getInstance().getUserUid())

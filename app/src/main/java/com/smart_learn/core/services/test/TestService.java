@@ -136,6 +136,10 @@ public class TestService {
         return userTestServiceInstance.getQueryForOnlineTestParticipantsRanking(testDocumentId, limit);
     }
 
+    public Query getQueryForAllScheduledActiveLocalTests() {
+        return userTestServiceInstance.getQueryForAllScheduledActiveLocalTests();
+    }
+
     public CollectionReference getLocalTestsCollection(){
         return userTestServiceInstance.getLocalTestsCollection();
     }

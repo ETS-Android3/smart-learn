@@ -49,6 +49,10 @@ class UserTestService extends BasicFirestoreService<TestDocument, UserTestReposi
         }
     }
 
+    protected Query getQueryForAllScheduledActiveLocalTests() {
+        return repositoryInstance.getQueryForAllScheduledActiveLocalTests();
+    }
+
     protected Query getQueryForOnlineTestChatMessages(String testDocumentId, long limit) {
         return repositoryInstance.getQueryForOnlineTestChatMessages(testDocumentId, limit);
     }
