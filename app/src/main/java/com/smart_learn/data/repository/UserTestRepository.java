@@ -135,13 +135,6 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
         updateDocument(data, testSnapshot, callback);
     }
 
-    public void setSchedule(@NonNull @NotNull DocumentSnapshot testSnapshot, boolean isScheduleActive, @NonNull @NotNull DataCallbacks.General callback){
-        Map<String,Object> data = new HashMap<>();
-        data.put(Test.Fields.IS_SCHEDULE_ACTIVE_FIELD_NAME, isScheduleActive);
-        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
-        updateDocument(data, testSnapshot, callback);
-    }
-
     public void addLocalTest(@NonNull @NotNull TestDocument test,
                              @NonNull @NotNull DocumentReference newTestDocumentReference,
                              @NonNull @NotNull DataCallbacks.General callback){

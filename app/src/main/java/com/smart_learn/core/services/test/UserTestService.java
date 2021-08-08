@@ -89,23 +89,6 @@ class UserTestService extends BasicFirestoreService<TestDocument, UserTestReposi
         repositoryInstance.markAsHidden(testSnapshot, callback);
     }
 
-    protected void setSchedule(DocumentSnapshot testSnapshot, boolean isScheduleActive, DataCallbacks.General callback){
-        if(DataUtilities.Firestore.notGoodDocumentSnapshot(testSnapshot)){
-            if(callback != null){
-                callback.onFailure();
-            }
-            return;
-        }
-
-        if(callback == null){
-            callback = DataUtilities.General.generateGeneralCallback(
-                    "Document " + testSnapshot.getId() + " updated schedule active to  [" + isScheduleActive + "]",
-                    "Document " + testSnapshot.getId() + " can NOT update schedule active to [" + isScheduleActive + "]");
-        }
-
-        repositoryInstance.setSchedule(testSnapshot, isScheduleActive, callback);
-    }
-
     protected void addTest(TestDocument testDocument, DocumentReference newTestDocumentReference, DataCallbacks.General callback){
         if (newTestDocumentReference == null){
             Timber.w("newTestDocumentReference is null");

@@ -171,10 +171,6 @@ public class TestService {
         userTestServiceInstance.markAsHidden(testSnapshot, callback);
     }
 
-    public void setSchedule(DocumentSnapshot testSnapshot, boolean isScheduleActive, DataCallbacks.General callback){
-        userTestServiceInstance.setSchedule(testSnapshot, isScheduleActive, callback);
-    }
-
     public void updateTest(TestDocument updatedTest, DocumentSnapshot updatedTestSnapshot, DataCallbacks.General callback){
         userTestServiceInstance.updateTest(updatedTest, updatedTestSnapshot, callback);
     }
