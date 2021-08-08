@@ -22,6 +22,10 @@ import timber.log.Timber;
  * */
 public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
 
+    // Use this value if row id must be unset and must be auto-incremented automatically. Any other
+    // value will be set directly on db without auto-increment.
+    public static final int UNSET_ROW_ID = 0;
+
     // https://androidx.de/androidx/room/EntityInsertionAdapter.html#insertAndReturnId(T)
     // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
     protected final static int INSERTION_FAILED = -1;
