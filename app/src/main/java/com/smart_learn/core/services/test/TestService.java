@@ -91,6 +91,10 @@ public class TestService {
         return guestTestServiceInstance.getAllLiveNotHiddenScheduledTests();
     }
 
+    public List<RoomTest> getAllNotHiddenScheduledActiveTests(){
+        return guestTestServiceInstance.getAllNotHiddenScheduledActiveTests();
+    }
+
     public LiveData<List<RoomTest>> getAllLiveNonScheduledTests() {
         return guestTestServiceInstance.getAllLiveNotHiddenNonScheduledTests();
     }

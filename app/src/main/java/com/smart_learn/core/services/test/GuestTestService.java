@@ -35,6 +35,10 @@ class GuestTestService extends BasicRoomService<RoomTest, GuestTestRepository> {
         return repositoryInstance.getAllLiveNotHiddenScheduledTests();
     }
 
+    protected List<RoomTest> getAllNotHiddenScheduledActiveTests(){
+        return repositoryInstance.getAllNotHiddenScheduledActiveTests();
+    }
+
     protected LiveData<List<RoomTest>> getAllLiveNotHiddenNonScheduledTests() {
         return repositoryInstance.getAllLiveNotHiddenNonScheduledTests();
     }

@@ -30,6 +30,10 @@ public class GuestTestRepository extends BasicRoomRepository<RoomTest, RoomTestD
         return dao.getAllLiveNotHiddenScheduledTests();
     }
 
+    public List<RoomTest> getAllNotHiddenScheduledActiveTests(){
+        return dao.getAllNotHiddenScheduledActiveTests();
+    }
+
     public LiveData<List<RoomTest>> getAllLiveNotHiddenNonScheduledTests() {
         return dao.getAllLiveNotHiddenNonScheduledTests();
     }

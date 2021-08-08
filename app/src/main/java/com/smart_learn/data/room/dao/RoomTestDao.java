@@ -15,6 +15,9 @@ public interface RoomTestDao extends BasicDao<RoomTest> {
     @Query("SELECT * FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled AND isHidden == 0")
     LiveData<List<RoomTest>> getAllLiveNotHiddenScheduledTests();
 
+    @Query("SELECT * FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled AND isHidden == 0 AND isScheduleActive == 1")
+    List<RoomTest> getAllNotHiddenScheduledActiveTests();
+
     @Query("SELECT * FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0 AND isHidden == 0")
     LiveData<List<RoomTest>> getAllLiveNotHiddenNonScheduledTests();
 
