@@ -12,11 +12,18 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class UserBasicScheduledTestsFragment <VM extends UserBasicScheduledTestsViewModel> extends BasicTestFragment<DocumentSnapshot, VM> {
 
+    protected abstract void onAdapterCompleteCreateLocalTestFromScheduledTest(int type, @NonNull @NotNull String testId);
+
     @Override
     protected void setViewModel(){
         super.setViewModel();
 
         viewModel.setAdapter(new UserScheduledTestsAdapter(new UserScheduledTestsAdapter.Callback() {
+            @Override
+            public void onCompleteCreateLocalTestFromScheduledTest(int type, @NonNull @NotNull String testId) {
+                onAdapterCompleteCreateLocalTestFromScheduledTest(type, testId);
+            }
+
             @Override
             public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
                 onAdapterSimpleClick(item);

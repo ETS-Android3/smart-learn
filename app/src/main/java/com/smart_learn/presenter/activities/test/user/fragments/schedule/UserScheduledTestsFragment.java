@@ -83,6 +83,11 @@ public class UserScheduledTestsFragment extends UserStandardScheduledTestsFragme
     }
 
     @Override
+    protected void onAdapterCompleteCreateLocalTestFromScheduledTest(int type, @NonNull @NotNull String testId) {
+        ((UserTestActivity)requireActivity()).goToActivateTestFragment(type, testId, false);
+    }
+
+    @Override
     protected void setViewModel(){
         super.setViewModel();
 

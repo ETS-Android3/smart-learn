@@ -54,6 +54,7 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
         private final MutableLiveData<String> liveTimeDescription;
         private final MutableLiveData<String> liveDateDescription;
         private final AtomicBoolean isDeletingActive;
+        private final AtomicBoolean isLaunchingActive;
 
         public TestViewHolder(@NonNull LayoutCardViewTestScheduleBinding viewHolderBinding) {
             super(viewHolderBinding);
@@ -61,6 +62,7 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
             liveTimeDescription = new MutableLiveData<>("");
             liveDateDescription = new MutableLiveData<>("");
             isDeletingActive = new AtomicBoolean(false);
+            isLaunchingActive = new AtomicBoolean(false);
 
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewTestSchedule, viewHolderBinding.cvLayoutCardViewTestSchedule);
 
@@ -193,6 +195,14 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                         deleteItem(test);
                         return true;
                     }
+                    if(id == R.id.action_guest_launch_now_menu_card_view_test_schedule){
+                        if(isLaunchingActive.get()){
+                            return true;
+                        }
+                        isLaunchingActive.set(true);
+                        launchScheduledTest(test);
+                        return true;
+                    }
                     return true;
                 }
             });
@@ -218,9 +228,38 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
             });
         }
 
+        private void launchScheduledTest(RoomTest scheduledTest){
+            adapterCallback.getFragment().showProgressDialog("", adapterCallback.getFragment().getString(R.string.preparing_test));
+
+            TestService.getInstance().createTestFromScheduledTest(scheduledTest, false, new TestService.TestGenerationCallback() {
+                @Override
+                public void onComplete(@NonNull @NotNull String testId) {
+                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        adapterCallback.getFragment().closeProgressDialog();
+                        isLaunchingActive.set(false);
+
+                        if(testId.equals(TestService.NO_TEST_ID)){
+                            showMessage(R.string.error_can_not_continue);
+                            return;
+                        }
+
+                        int testIdInteger;
+                        try {
+                            testIdInteger = Integer.parseInt(testId);
+                        }
+                        catch (NumberFormatException ex){
+                            Timber.w(ex);
+                            showMessage(R.string.error_can_not_continue);
+                            return;
+                        }
+                        adapterCallback.onCompleteCreateLocalTestFromScheduledTest(scheduledTest.getType(), testIdInteger);
+                    });
+                }
+            });
+        }
     }
 
     public interface Callback extends BasicListAdapter.Callback<RoomTest> {
-
+        void onCompleteCreateLocalTestFromScheduledTest(int type, int testId);
     }
 }

@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
+import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
@@ -73,6 +74,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
         private final MutableLiveData<String> liveTimeDescription;
         private final MutableLiveData<String> liveDateDescription;
         private final AtomicBoolean isDeletingActive;
+        private final AtomicBoolean isLaunchingActive;
 
         public TestViewHolder(@NonNull @NotNull LayoutCardViewTestScheduleBinding viewHolderBinding) {
             super(viewHolderBinding);
@@ -80,6 +82,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
             liveTimeDescription = new MutableLiveData<>("");
             liveDateDescription = new MutableLiveData<>("");
             isDeletingActive = new AtomicBoolean(false);
+            isLaunchingActive = new AtomicBoolean(false);
 
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewTestSchedule, viewHolderBinding.cvLayoutCardViewTestSchedule);
 
@@ -203,6 +206,14 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                         deleteItem(getSnapshots().get(position), getSnapshots().getSnapshot(position));
                         return true;
                     }
+                    if(id == R.id.action_user_launch_now_menu_card_view_test_schedule){
+                        if(isLaunchingActive.get()){
+                            return true;
+                        }
+                        isLaunchingActive.set(true);
+                        launchScheduledTest(getSnapshots().get(position), getSnapshots().getSnapshot(position));
+                        return true;
+                    }
                     return true;
                 }
             });
@@ -227,10 +238,60 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                 }
             });
         }
+
+        private void launchScheduledTest(TestDocument scheduledTest, DocumentSnapshot scheduledTestSnapshot){
+            adapterCallback.getFragment().showProgressDialog("", adapterCallback.getFragment().getString(R.string.preparing_test));
+
+            if(scheduledTest.isGenerated()) {
+                createTestFromScheduledTest(scheduledTest);
+                return;
+            }
+
+            // here test is not generated so internet must be available in order to generate it
+            new ConnexionChecker(new ConnexionChecker.Callback() {
+                @Override
+                public void isConnected() {
+                    createTestFromScheduledTest(scheduledTest);
+                }
+
+                @Override
+                public void networkDisabled() {
+                    showMessage(R.string.error_no_network);
+                }
+
+                @Override
+                public void internetNotAvailable() {
+                    showMessage(R.string.error_no_internet_connection);
+                }
+                @Override
+                public void notConnected() {
+                    adapterCallback.getFragment().requireActivity().runOnUiThread(adapterCallback.getFragment()::closeProgressDialog);
+                    isLaunchingActive.set(false);
+                }
+            }).check();
+        }
+
+        private void createTestFromScheduledTest(TestDocument scheduledTest){
+            TestService.getInstance().createTestFromScheduledTest(scheduledTest, true, new TestService.TestGenerationCallback() {
+                @Override
+                public void onComplete(@NonNull @NotNull String testId) {
+                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        adapterCallback.getFragment().closeProgressDialog();
+                        isLaunchingActive.set(false);
+
+                        if(testId.equals(TestService.NO_TEST_ID)){
+                            showMessage(R.string.error_can_not_continue);
+                            return;
+                        }
+                        adapterCallback.onCompleteCreateLocalTestFromScheduledTest(scheduledTest.getType(), testId);
+                    });
+                }
+            });
+        }
     }
 
     public interface Callback extends BasicFirestoreRecyclerAdapter.Callback  {
-
+        void onCompleteCreateLocalTestFromScheduledTest(int type, @NonNull @NotNull String testId);
     }
 
 }

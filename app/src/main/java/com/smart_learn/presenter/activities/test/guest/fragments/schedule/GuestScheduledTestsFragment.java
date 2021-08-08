@@ -77,6 +77,11 @@ public class GuestScheduledTestsFragment extends GuestStandardScheduledTestsFrag
     }
 
     @Override
+    protected void onAdapterCompleteCreateLocalTestFromScheduledTest(int type, int testId) {
+        ((GuestTestActivity)requireActivity()).goToActivateTestFragment(type, testId);
+    }
+
+    @Override
     protected void setViewModel(){
         super.setViewModel();
 

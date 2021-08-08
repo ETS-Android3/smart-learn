@@ -17,6 +17,8 @@ import java.util.List;
 
 public abstract class GuestBasicScheduledTestsFragment <VM extends GuestBasicScheduledTestsViewModel> extends BasicTestFragment<RoomTest, VM> {
 
+    protected abstract void onAdapterCompleteCreateLocalTestFromScheduledTest(int type, int testId);
+
     @Override
     protected void setLayoutUtilities() {
         super.setLayoutUtilities();
@@ -31,6 +33,11 @@ public abstract class GuestBasicScheduledTestsFragment <VM extends GuestBasicSch
         super.setViewModel();
 
         viewModel.setAdapter(new GuestScheduledTestsAdapter(new GuestScheduledTestsAdapter.Callback() {
+            @Override
+            public void onCompleteCreateLocalTestFromScheduledTest(int type, int testId) {
+                onAdapterCompleteCreateLocalTestFromScheduledTest(type, testId);
+            }
+
             @Override
             public void onSimpleClick(@NonNull @NotNull RoomTest item) {
                 onAdapterSimpleClick(item);

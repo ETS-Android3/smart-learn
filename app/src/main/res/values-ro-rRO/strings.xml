@@ -571,6 +571,8 @@
     <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
     <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
     <string name="online_test_invitation_received_title">New online test invitation</string>
+
+
     <string name="error_add_new_shared_lesson">Can not add new shared lesson</string>
     <string name="add_new_shared_lesson">Add new shared lesson</string>
     <string name="sucess_add_new_shared_lesson">Lesson was added</string>
@@ -586,6 +588,7 @@
     <string name="preparing_test">Preparing test</string>
     <string name="scheduled_test_alarm_notification_title">It\'s time to make a test</string>
     <string name="scheduled_test_alarm_notification_message">Click if you want to start test</string>
+    <string name="launch_now">Launch now</string>
 
     <string-array name="languages">
         <item>Engleza</item>
