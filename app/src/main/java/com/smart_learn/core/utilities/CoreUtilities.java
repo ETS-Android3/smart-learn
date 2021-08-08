@@ -242,6 +242,23 @@ public abstract class CoreUtilities {
             return day >= MIN_MONTH_DAY && day <= MAX_MONTH_DAY;
         }
 
+        /**
+         * Check if day is a day of week.
+         *
+         * @param day Day to be checked.
+         *
+         * @return true if is valid, false otherwise.
+         * */
+        private static boolean isDayOfWeekValid(int day){
+            return day == Calendar.MONDAY ||
+                    day == Calendar.TUESDAY ||
+                    day == Calendar.WEDNESDAY ||
+                    day == Calendar.THURSDAY ||
+                    day == Calendar.FRIDAY ||
+                    day == Calendar.SATURDAY ||
+                    day == Calendar.SUNDAY;
+        }
+
 
         /**
          * Check if month is in INTERVAL [MIN_MONTH, MAX_MONTH]
@@ -324,6 +341,55 @@ public abstract class CoreUtilities {
             Date currentDate = new GregorianCalendar(currentYear, currentMonth, currentDayOfMonth).getTime();
             Date givenDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
             return currentDate.compareTo(givenDate) <= 0;
+        }
+
+        /**
+         * Convert date to long.
+         *
+         * @param hour Hour to be converted.
+         * @param minute Minute to be converted.
+         * @param dayOfMonth Day to be converted.
+         * @param month Month to pe converted.
+         * @param year Year to be converted.
+         *
+         * @return long value in milliseconds.
+         * */
+        public static long timeToLong(int hour, int minute, int dayOfMonth, int month, int year){
+            if(!isHourValid(hour) || !isMinuteValid(minute) || !isDayValid(dayOfMonth) || !isMonthValid(month) || !isYearValid(year)){
+                // TODO: here an exception throw can be made
+                return 0;
+            }
+            return new GregorianCalendar(year, month, dayOfMonth, hour, minute).getTimeInMillis();
+        }
+
+        /**
+         * Convert custom time of a day in long.
+         *
+         * @param hour Hour to be converted.
+         * @param minute Minute to be converted.
+         * @param dayOfWeek Day of week to be converted.
+         *
+         * @return long value in milliseconds.
+         * */
+        public static long timeToLong(int hour, int minute, int dayOfWeek){
+            if(!isHourValid(hour) || !isMinuteValid(minute) || !isDayOfWeekValid(dayOfWeek)){
+                // TODO: here an exception throw can be made
+                return 0;
+            }
+
+            // Calendar.getInstance() returns a new object of type GregorianCalendar.
+            Calendar calendar = Calendar.getInstance();
+
+            // This function was created when alarm for scheduled test was added so check this info
+            // if necessary.
+            // https://stackoverflow.com/questions/17894067/set-repeat-days-of-week-alarm-in-android
+            calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            return calendar.getTimeInMillis();
         }
 
 
