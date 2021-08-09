@@ -1710,7 +1710,10 @@ public class TestService {
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
                 // notificationId is a unique int for each notification that you must define
-                notificationManager.notify(1, builder.build());
+                // https://stackoverflow.com/questions/39607856/what-is-notification-id-in-android
+                // TODO: try to generate specific id's and save id's in DB
+                int uniqueId = (int) System.currentTimeMillis();
+                notificationManager.notify(uniqueId, builder.build());
             }
         }
     }
