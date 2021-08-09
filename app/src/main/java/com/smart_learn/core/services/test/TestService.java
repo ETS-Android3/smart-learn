@@ -1323,34 +1323,21 @@ public class TestService {
             Timber.i("Alarm [" + alarmId +  "] was set for time [" + CoreUtilities.General.longToDateTime(time) + "]");
         }
 
-        public int setAlarmRepeatingInSpecificDays(String scheduledTestId, String message, boolean forUser, int hour, int minute,
-                                                   boolean monday, boolean tuesday, boolean wednesday,
-                                                   boolean thursday, boolean friday, boolean sunday,
-                                                   boolean saturday){
+        public int setAlarmRepeatingInSpecificDays(@NotNull @NonNull Test test, String scheduledTestId, String message, boolean forUser){
             // this will be the base id from which the other id's will be constructed
             int baseId = getUniqueAlarmId();
             setAlarmRepeatingInSpecificDays(
                     baseId,
+                    test,
                     scheduledTestId,
                     message,
-                    forUser,
-                    hour,
-                    minute,
-                    monday,
-                    tuesday,
-                    wednesday,
-                    thursday,
-                    friday,
-                    saturday,
-                    sunday
+                    forUser
             );
             return baseId;
         }
 
-        public void setAlarmRepeatingInSpecificDays(int baseAlarmId, String scheduledTestId, String message, boolean forUser, int hour, int minute,
-                                                   boolean monday, boolean tuesday, boolean wednesday,
-                                                   boolean thursday, boolean friday, boolean sunday,
-                                                   boolean saturday){
+        public void setAlarmRepeatingInSpecificDays(int baseAlarmId, @NotNull @NonNull Test test, String scheduledTestId,
+                                                    String message, boolean forUser){
             // https://stackoverflow.com/questions/8469705/how-to-set-multiple-alarms-using-alarm-manager-in-android
             // https://stackoverflow.com/questions/17894067/set-repeat-days-of-week-alarm-in-android
             // https://stackoverflow.com/questions/28262650/what-is-the-difference-between-rtc-and-rtc-wakeup-of-alarmmanager?rq=1
@@ -1358,45 +1345,47 @@ public class TestService {
             Context context = ApplicationController.getInstance().getApplicationContext();
 
             // for every selected day must be set an alarm with an unique id with repeating interval of one week
-            long weekInterval = 7 * AlarmManager.INTERVAL_DAY;
+            final long weekInterval = 7 * AlarmManager.INTERVAL_DAY;
+            final int hour = test.getHour();
+            final int minute = test.getMinute();
 
-            if(monday){
+            if(test.isRepeatActiveMonday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.MONDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 1, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 1 +  "] was set for [MONDAY at " + hour + ":" + minute + "]");
             }
 
-            if(tuesday){
+            if(test.isRepeatActiveTuesday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.TUESDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 2, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 2 +  "] was set for [TUESDAY at " + hour + ":" + minute + "]");
             }
 
-            if(wednesday){
+            if(test.isRepeatActiveWednesday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.WEDNESDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 3, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 3 +  "] was set for [WEDNESDAY at " + hour + ":" + minute + "]");
             }
 
-            if(thursday){
+            if(test.isRepeatActiveThursday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.THURSDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 4, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 4 +  "] was set for [THURSDAY at " + hour + ":" + minute + "]");
             }
 
-            if(friday){
+            if(test.isRepeatActiveFriday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.FRIDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 5, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 5 +  "] was set for [FRIDAY at " + hour + ":" + minute + "]");
             }
 
-            if(saturday){
+            if(test.isRepeatActiveSaturday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.SATURDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 6, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 6 +  "] was set for [SATURDAY at " + hour + ":" + minute + "]");
             }
 
-            if(sunday){
+            if(test.isRepeatActiveSunday()){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.SUNDAY);
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 7, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 7 +  "] was set for [SUNDAY at " + hour + ":" + minute + "]");
@@ -1413,36 +1402,33 @@ public class TestService {
             Timber.i("Alarm [" + id +  "] was canceled.");
         }
 
-        public void cancelAlarmRepeatingInSpecificDays(String scheduledTestId, String message, boolean forUser, int baseId,
-                                                       boolean monday, boolean tuesday, boolean wednesday,
-                                                       boolean thursday, boolean friday, boolean sunday,
-                                                       boolean saturday){
-            if(monday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 1);
+        public void cancelAlarmRepeatingInSpecificDays(int baseAlarmId, @NotNull @NonNull Test test, String scheduledTestId, String message, boolean forUser){
+            if(test.isRepeatActiveMonday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 1);
             }
 
-            if(tuesday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 2);
+            if(test.isRepeatActiveTuesday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 2);
             }
 
-            if(wednesday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 3);
+            if(test.isRepeatActiveWednesday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 3);
             }
 
-            if(thursday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 4);
+            if(test.isRepeatActiveThursday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 4);
             }
 
-            if(friday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 5);
+            if(test.isRepeatActiveFriday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 5);
             }
 
-            if(saturday) {
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 6);
+            if(test.isRepeatActiveSaturday()) {
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 6);
             }
 
-            if(sunday){
-                cancelAlarm(scheduledTestId, message, forUser, baseId + 7);
+            if(test.isRepeatActiveSunday()){
+                cancelAlarm(scheduledTestId, message, forUser, baseAlarmId + 7);
             }
 
         }

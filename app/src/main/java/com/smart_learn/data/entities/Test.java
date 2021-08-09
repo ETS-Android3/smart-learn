@@ -330,6 +330,51 @@ public abstract class Test {
         return value;
     }
 
+    public boolean isRepeatActiveMonday() {
+        return isRepeatActive(DaysIndexes.MONDAY);
+    }
+
+    public boolean isRepeatActiveTuesday() {
+        return isRepeatActive(DaysIndexes.TUESDAY);
+    }
+
+    public boolean isRepeatActiveWednesday() {
+        return isRepeatActive(DaysIndexes.WEDNESDAY);
+    }
+
+    public boolean isRepeatActiveThursday() {
+        return isRepeatActive(DaysIndexes.THURSDAY);
+    }
+
+    public boolean isRepeatActiveFriday() {
+        return isRepeatActive(DaysIndexes.FRIDAY);
+    }
+
+    public boolean isRepeatActiveSaturday() {
+        return isRepeatActive(DaysIndexes.SATURDAY);
+    }
+
+    public boolean isRepeatActiveSunday() {
+        return isRepeatActive(DaysIndexes.SUNDAY);
+    }
+
+    private boolean isDayIndexValid(int dayIndex) {
+        return dayIndex == DaysIndexes.MONDAY ||
+                dayIndex == DaysIndexes.TUESDAY ||
+                dayIndex == DaysIndexes.WEDNESDAY ||
+                dayIndex == DaysIndexes.THURSDAY ||
+                dayIndex == DaysIndexes.FRIDAY ||
+                dayIndex == DaysIndexes.SATURDAY ||
+                dayIndex == DaysIndexes.SUNDAY;
+    }
+
+    private boolean isRepeatActive(int dayIndex){
+        if((daysStatus.size() != NR_OF_WEEK_DAYS) || !isDayIndexValid(dayIndex)){
+            return false;
+        }
+        return daysStatus.get(dayIndex);
+    }
+
     public void setAlarm(String scheduledTestId, boolean forUser){
         // if is already set do not set again
         if(isScheduleActive){
@@ -347,18 +392,10 @@ public abstract class Test {
         }
 
         alarmId = TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
+                this,
                 scheduledTestId,
                 getAlarmNotificationMessage(),
-                forUser,
-                hour,
-                minute,
-                daysStatus.get(0),
-                daysStatus.get(1),
-                daysStatus.get(2),
-                daysStatus.get(3),
-                daysStatus.get(4),
-                daysStatus.get(5),
-                daysStatus.get(6)
+                forUser
         );
     }
 
@@ -381,18 +418,10 @@ public abstract class Test {
 
         TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
                 alarmId,
+                this,
                 scheduledTestId,
                 getAlarmNotificationMessage(),
-                forUser,
-                hour,
-                minute,
-                daysStatus.get(0),
-                daysStatus.get(1),
-                daysStatus.get(2),
-                daysStatus.get(3),
-                daysStatus.get(4),
-                daysStatus.get(5),
-                daysStatus.get(6)
+                forUser
         );
     }
 
@@ -424,17 +453,11 @@ public abstract class Test {
         }
 
         TestService.ScheduledTestAlarmManager.getInstance().cancelAlarmRepeatingInSpecificDays(
+                alarmId,
+                this,
                 scheduledTestId,
                 getAlarmNotificationMessage(),
-                forUser,
-                alarmId,
-                daysStatus.get(0),
-                daysStatus.get(1),
-                daysStatus.get(2),
-                daysStatus.get(3),
-                daysStatus.get(4),
-                daysStatus.get(5),
-                daysStatus.get(6)
+                forUser
         );
         alarmId = NO_DATE_TIME;
     }
