@@ -191,6 +191,8 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
                 userData.put(UserDocument.Fields.NR_OF_ONLINE_FINISHED_TESTS_FIELD_NAME, FieldValue.increment(1));
                 userData.put(UserDocument.Fields.NR_OF_ONLINE_IN_PROGRESS_TESTS_FIELD_NAME, FieldValue.increment(-1));
                 userData.put(UserDocument.Fields.TOTAL_SUCCESS_RATE_FIELD_NAME, FieldValue.increment(updatedTest.getSuccessRate()));
+                userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+                batch.update(UserService.getInstance().getUserDocumentReference(), userData);
             }
         }
         else{
@@ -199,14 +201,13 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
                 userData.put(UserDocument.Fields.NR_OF_LOCAL_UNSCHEDULED_FINISHED_TESTS_FIELD_NAME, FieldValue.increment(1));
                 userData.put(UserDocument.Fields.NR_OF_LOCAL_UNSCHEDULED_IN_PROGRESS_TESTS_FIELD_NAME, FieldValue.increment(-1));
                 userData.put(UserDocument.Fields.TOTAL_SUCCESS_RATE_FIELD_NAME, FieldValue.increment(updatedTest.getSuccessRate()));
+                userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+                batch.update(UserService.getInstance().getUserDocumentReference(), userData);
             }
         }
 
-        userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
-        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
-
         // 2. Update test
-        batch.update(updatedTestReference, Test.convertDocumentToHashMap(updatedTest));
+        batch.update(updatedTestReference, TestDocument.convertDocumentToHashMap(updatedTest));
 
         // 3. Transaction is complete so commit
         commitBatch(batch, callback);
