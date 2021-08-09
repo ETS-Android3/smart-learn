@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class SettingsService {
 
@@ -18,6 +19,9 @@ public class SettingsService {
 
     private static final String LANGUAGE_KEY = "LANGUAGE_KEY";
     private static final String LANGUAGE_OPTION = "LANGUAGE_OPTION";
+
+    private static final String SIMULATED_DEVICE_ID_KEY = "SIMULATED_DEVICE_ID_KEY";
+    private static final String SIMULATED_DEVICE_ID = "SIMULATED_DEVICE_ID";
 
     public interface Languages {
         interface Options{
@@ -98,7 +102,7 @@ public class SettingsService {
      *
      * @param baseContext Context used to update configuration.
      * */
-    public void loadLanguageConfiguration(Context baseContext){
+    public synchronized void loadLanguageConfiguration(Context baseContext){
         // https://stackoverflow.com/questions/2900023/change-app-language-programmatically-in-android
         // https://www.youtube.com/watch?v=zILw5eV9QBQ&ab_channel=AtifPervaiz
         if(baseContext == null){
@@ -123,5 +127,25 @@ public class SettingsService {
         Configuration configuration = new Configuration();
         configuration.setLocale(newLocale);
         baseContext.getResources().updateConfiguration(configuration, baseContext.getResources().getDisplayMetrics());
+    }
+
+    /**
+     * Use to get a simulated unique id for device where application is installed.
+     * */
+    public synchronized String getSimulatedDeviceId(){
+        // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id/7929810#7929810
+        SharedPreferences preferences = ApplicationController.getInstance().getSharedPreferences(SIMULATED_DEVICE_ID_KEY, Context.MODE_PRIVATE);
+        String simulatedDeviceId = preferences.getString(SIMULATED_DEVICE_ID, "");
+
+        // if id does not exist create it
+        if(simulatedDeviceId == null || simulatedDeviceId.isEmpty()){
+            simulatedDeviceId = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(SIMULATED_DEVICE_ID, simulatedDeviceId);
+            editor.apply();
+            return simulatedDeviceId;
+        }
+
+        return simulatedDeviceId;
     }
 }
