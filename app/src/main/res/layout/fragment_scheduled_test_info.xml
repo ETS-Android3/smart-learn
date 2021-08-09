@@ -18,8 +18,8 @@
             android:id="@+id/linear_layout_date_fragment_scheduled_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_time_fragment_scheduled_info"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
                 style="@style/AppTheme.ButtonStyle.Borderless.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="5dp"
                 android:drawableStart="@drawable/ic_baseline_date_range_24"
                 android:drawablePadding="5dp"
                 android:text="@string/date_point" />
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.liveDate}"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -48,8 +48,8 @@
             android:id="@+id/linear_layout_time_fragment_scheduled_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_repeat_fragment_scheduled_info"
@@ -62,7 +62,7 @@
                 style="@style/AppTheme.ButtonStyle.Borderless.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="5dp"
                 android:drawableStart="@drawable/ic_baseline_date_range_24"
                 android:drawablePadding="5dp"
                 android:text="@string/time_point" />
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.liveTime}"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -79,8 +79,8 @@
             android:id="@+id/linear_layout_repeat_fragment_scheduled_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_custom_name_fragment_scheduled_info"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,12 +95,13 @@
                 android:gravity="center_horizontal"
                 android:text="@string/repeat"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:padding="5dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -108,57 +109,87 @@
                     android:id="@+id/cb_monday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatMonday}"
-                    android:text="@string/monday_small" />
+                    android:text="@string/monday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_tuesday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatTuesday}"
-                    android:text="@string/tuesday_small" />
+                    android:text="@string/tuesday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_wednesday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatWednesday}"
-                    android:text="@string/wednesday_small" />
+                    android:text="@string/wednesday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_thursday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatThursday}"
-                    android:text="@string/thursday_small" />
+                    android:text="@string/thursday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_friday_fragment_scheduled_test_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatFriday}"
-                    android:text="@string/friday_small" />
+                    android:text="@string/friday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_saturday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatSaturday}"
-                    android:text="@string/saturday_small" />
+                    android:text="@string/saturday_small"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <CheckBox
                     android:id="@+id/cb_sunday_fragment_scheduled_test_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:checked="@={viewModel.liveIsRepeatSunday}"
-                    android:text="@string/sunday_small" />
+                    android:text="@string/sunday_small"
+                    android:textSize="12sp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -168,8 +199,8 @@
             android:id="@+id/linear_layout_custom_name_fragment_scheduled_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
             android:padding="10dp"
@@ -222,9 +253,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:drawableStart="@drawable/ic_baseline_navigate_next_24"
             android:drawablePadding="10dp"
             android:text="@string/select_test_options"
@@ -234,15 +265,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout_custom_name_fragment_scheduled_info"
-            app:layout_constraintVertical_bias="0.729" />
+            app:layout_constraintVertical_bias="0.859" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_test_info_fragment_scheduled_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:padding="10dp"
             android:orientation="vertical"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/btn_save_fragment_scheduled_test_info"
@@ -271,10 +303,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/from_lesson_point"
-                    android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -297,10 +329,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/test_type_point"
-                    android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -323,10 +355,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/values_selection_point"
-                    android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -349,10 +381,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:text="@string/use_counter_point"
-                    android:textStyle="bold"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -373,8 +405,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
             android:drawableStart="@drawable/ic_baseline_save_alt_24"
             android:drawablePadding="10dp"
