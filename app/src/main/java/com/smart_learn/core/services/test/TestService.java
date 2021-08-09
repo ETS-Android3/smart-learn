@@ -1576,7 +1576,7 @@ public class TestService {
 
                     // everything is ok
                     checkIfAlarmMustBeCanceled(true, scheduledTestId);
-                    launchNotification(context, true, scheduledTestId, message);
+                    launchNotification(context, true, scheduledTestId, message, alarmId);
                 }
                 else {
                     // If is an alarm for guest but user is logged in cancel alarm and return.
@@ -1588,7 +1588,7 @@ public class TestService {
 
                     // everything is ok
                     checkIfAlarmMustBeCanceled(false, scheduledTestId);
-                    launchNotification(context, false, scheduledTestId, message);
+                    launchNotification(context, false, scheduledTestId, message, alarmId);
                 }
             }
 
@@ -1663,7 +1663,7 @@ public class TestService {
                 }
             }
 
-            private void launchNotification(Context context, boolean forUser, String scheduledTestId, String message){
+            private void launchNotification(Context context, boolean forUser, String scheduledTestId, String message, int alarmId){
                 // prepare activity which will be opened when click on notification is made
                 Intent testIntent;
                 if(forUser){
@@ -1704,9 +1704,10 @@ public class TestService {
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
                 // notificationId is a unique int for each notification that you must define
                 // https://stackoverflow.com/questions/39607856/what-is-notification-id-in-android
-                // TODO: try to generate specific id's and save id's in DB
-                int uniqueId = (int) System.currentTimeMillis();
-                notificationManager.notify(uniqueId, builder.build());
+                // Alarm id can be used as unique id because must exist one notification per alarm,
+                // so every notification will have a different id because every alarm will have a
+                // different id.
+                notificationManager.notify(alarmId, builder.build());
             }
         }
     }
