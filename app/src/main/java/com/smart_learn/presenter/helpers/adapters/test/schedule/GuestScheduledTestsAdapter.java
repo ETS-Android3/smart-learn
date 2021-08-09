@@ -141,7 +141,12 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                     TestService.getInstance().update(roomTest, new DataCallbacks.General() {
                        @Override
                        public void onSuccess() {
-                           // no action needed here
+                           if(roomTest.isScheduleActive()){
+                               showMessage(R.string.success_set_schedule);
+                           }
+                           else{
+                               showMessage(R.string.success_cancel_schedule);
+                           }
                        }
 
                        @Override
