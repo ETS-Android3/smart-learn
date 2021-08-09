@@ -594,6 +594,7 @@
     <string name="normal_lesson_received_description_push">You\'ve receive a new lesson.  Check your notification center for more info.</string>
     <string name="shared_lesson_received_description_push">You\'ve receive access to a shared lesson.  Check your notification center for more info.</string>
     <string name="online_test_invitation_received_description_push">You;ve received an online test invitation.  Check your notification center for more info.</string>
+    <string name="from_lesson">from lesson</string>
 
     <string-array name="languages">
         <item>Engleza</item>

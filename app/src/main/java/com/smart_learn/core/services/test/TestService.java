@@ -1285,6 +1285,7 @@ public class TestService {
         public static final String FOR_USER_KEY = "FOR_USER_KEY";
         private static final String USER_UID_KEY = "USER_UID_KEY";
         private static final String ALARM_ID_KEY = "ALARM_ID_KEY";
+        private static final String MESSAGE_KEY = "MESSAGE_KEY";
 
         private static final int NO_ALARM_ID = -1;
 
@@ -1309,20 +1310,20 @@ public class TestService {
             return (int) System.currentTimeMillis();
         }
 
-        public int setExactAlarm(String scheduledTestId, boolean forUser, long time){
+        public int setExactAlarm(String scheduledTestId, String message, boolean forUser, long time){
             final int id = getUniqueAlarmId();
-            setExactAlarm(id, scheduledTestId, forUser, time);
+            setExactAlarm(id, scheduledTestId, message, forUser, time);
             return id;
         }
 
-        public void setExactAlarm(int alarmId, String scheduledTestId, boolean forUser, long time){
+        public void setExactAlarm(int alarmId, String scheduledTestId, String message, boolean forUser, long time){
             final Context context = ApplicationController.getInstance().getApplicationContext();
             // https://stackoverflow.com/questions/28262650/what-is-the-difference-between-rtc-and-rtc-wakeup-of-alarmmanager?rq=1
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, getPendingIntent(context, alarmId, scheduledTestId, forUser));
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, getPendingIntent(context, alarmId, scheduledTestId, message, forUser));
             Timber.i("Alarm [" + alarmId +  "] was set for time [" + CoreUtilities.General.longToDateTime(time) + "]");
         }
 
-        public int setAlarmRepeatingInSpecificDays(String scheduledTestId, boolean forUser, int hour, int minute,
+        public int setAlarmRepeatingInSpecificDays(String scheduledTestId, String message, boolean forUser, int hour, int minute,
                                                    boolean monday, boolean tuesday, boolean wednesday,
                                                    boolean thursday, boolean friday, boolean sunday,
                                                    boolean saturday){
@@ -1331,6 +1332,7 @@ public class TestService {
             setAlarmRepeatingInSpecificDays(
                     baseId,
                     scheduledTestId,
+                    message,
                     forUser,
                     hour,
                     minute,
@@ -1345,7 +1347,7 @@ public class TestService {
             return baseId;
         }
 
-        public void setAlarmRepeatingInSpecificDays(int baseAlarmId, String scheduledTestId, boolean forUser, int hour, int minute,
+        public void setAlarmRepeatingInSpecificDays(int baseAlarmId, String scheduledTestId, String message, boolean forUser, int hour, int minute,
                                                    boolean monday, boolean tuesday, boolean wednesday,
                                                    boolean thursday, boolean friday, boolean sunday,
                                                    boolean saturday){
@@ -1360,96 +1362,97 @@ public class TestService {
 
             if(monday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.MONDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 1, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 1, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 1 +  "] was set for [MONDAY at " + hour + ":" + minute + "]");
             }
 
             if(tuesday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.TUESDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 2, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 2, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 2 +  "] was set for [TUESDAY at " + hour + ":" + minute + "]");
             }
 
             if(wednesday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.WEDNESDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 3, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 3, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 3 +  "] was set for [WEDNESDAY at " + hour + ":" + minute + "]");
             }
 
             if(thursday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.THURSDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 4, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 4, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 4 +  "] was set for [THURSDAY at " + hour + ":" + minute + "]");
             }
 
             if(friday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.FRIDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 5, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 5, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 5 +  "] was set for [FRIDAY at " + hour + ":" + minute + "]");
             }
 
             if(saturday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.SATURDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 6, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 6, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 6 +  "] was set for [SATURDAY at " + hour + ":" + minute + "]");
             }
 
             if(sunday){
                 long time = CoreUtilities.General.timeToLong(hour, minute, Calendar.SUNDAY);
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 7, scheduledTestId, forUser));
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, weekInterval, getPendingIntent(context, baseAlarmId + 7, scheduledTestId, message, forUser));
                 Timber.i("Repeating alarm [" + baseAlarmId + 7 +  "] was set for [SUNDAY at " + hour + ":" + minute + "]");
             }
         }
 
 
-        public void cancelAlarm(String scheduledTestId, boolean forUser, int id){
+        public void cancelAlarm(String scheduledTestId, String message, boolean forUser, int id){
             if(id == NO_ALARM_ID){
                 Timber.w("Alarm id [ " + id +  "] is not valid. Cannot cancel alarm.");
                 return;
             }
-            alarmManager.cancel(getPendingIntent(ApplicationController.getInstance().getApplicationContext(), id, scheduledTestId, forUser));
+            alarmManager.cancel(getPendingIntent(ApplicationController.getInstance().getApplicationContext(), id, scheduledTestId, message, forUser));
             Timber.i("Alarm [" + id +  "] was canceled.");
         }
 
-        public void cancelAlarmRepeatingInSpecificDays(String scheduledTestId, boolean forUser, int baseId,
+        public void cancelAlarmRepeatingInSpecificDays(String scheduledTestId, String message, boolean forUser, int baseId,
                                                        boolean monday, boolean tuesday, boolean wednesday,
                                                        boolean thursday, boolean friday, boolean sunday,
                                                        boolean saturday){
             if(monday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 1);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 1);
             }
 
             if(tuesday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 2);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 2);
             }
 
             if(wednesday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 3);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 3);
             }
 
             if(thursday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 4);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 4);
             }
 
             if(friday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 5);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 5);
             }
 
             if(saturday) {
-                cancelAlarm(scheduledTestId, forUser, baseId + 6);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 6);
             }
 
             if(sunday){
-                cancelAlarm(scheduledTestId, forUser, baseId + 7);
+                cancelAlarm(scheduledTestId, message, forUser, baseId + 7);
             }
 
         }
 
-        private PendingIntent getPendingIntent(Context context, int alarmId, String scheduledTestId, boolean forUser){
+        private PendingIntent getPendingIntent(Context context, int alarmId, String scheduledTestId, String message, boolean forUser){
             Intent intent = new Intent(context, ScheduledTestAlarmReceiver.class);
             intent.putExtra(SCHEDULED_TEST_ID_KEY, scheduledTestId);
             intent.putExtra(FOR_USER_KEY, forUser);
             intent.putExtra(ALARM_ID_KEY, alarmId);
+            intent.putExtra(MESSAGE_KEY, message);
             if(forUser){
                 // This will be used to avoid launching an alarm for user A if user B is logged in.
                 intent.putExtra(USER_UID_KEY, UserService.getInstance().getUserUid());
@@ -1560,6 +1563,10 @@ public class TestService {
                     Timber.w("scheduledTestId is null. Alarm can not be processed.");
                     return;
                 }
+                String message = args.getString(MESSAGE_KEY);
+                if(message == null){
+                    message = "";
+                }
                 int alarmId = args.getInt(ALARM_ID_KEY, NO_ALARM_ID);
                 boolean forUser = args.getBoolean(FOR_USER_KEY);
 
@@ -1569,7 +1576,7 @@ public class TestService {
                     // If is an alarm for user but user is not logged in cancel alarm and return.
                     if(!CoreUtilities.Auth.isUserLoggedIn()){
                         Timber.w("Alarm [" + alarmId + "] is for user [" + alarmUserUid + "] but user is not logged in.");
-                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, true, alarmId);
+                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, message, true, alarmId);
                         return;
                     }
 
@@ -1577,25 +1584,25 @@ public class TestService {
                     final String loggedInUserUid = UserService.getInstance().getUserUid();
                     if(loggedInUserUid != null && !loggedInUserUid.equals(alarmUserUid)){
                         Timber.w("Alarm [" + alarmId + "] is for user [" + alarmUserUid + "] while user [" + loggedInUserUid + "] is logged in.");
-                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, true, alarmId);
+                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, message, true, alarmId);
                         return;
                     }
 
                     // everything is ok
                     checkIfAlarmMustBeCanceled(true, scheduledTestId);
-                    launchNotification(context, true, scheduledTestId);
+                    launchNotification(context, true, scheduledTestId, message);
                 }
                 else {
                     // If is an alarm for guest but user is logged in cancel alarm and return.
                     if(CoreUtilities.Auth.isUserLoggedIn()){
                         Timber.w("Alarm [" + alarmId + " ] is for guest but [" + UserService.getInstance().getUserUid() + "] user is not logged in.");
-                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, false, alarmId);
+                        ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, message, false, alarmId);
                         return;
                     }
 
                     // everything is ok
                     checkIfAlarmMustBeCanceled(false, scheduledTestId);
-                    launchNotification(context, false, scheduledTestId);
+                    launchNotification(context, false, scheduledTestId, message);
                 }
             }
 
@@ -1670,7 +1677,7 @@ public class TestService {
                 }
             }
 
-            private void launchNotification(Context context, boolean forUser, String scheduledTestId){
+            private void launchNotification(Context context, boolean forUser, String scheduledTestId, String message){
                 // prepare activity which will be opened when click on notification is made
                 Intent testIntent;
                 if(forUser){
@@ -1693,7 +1700,7 @@ public class TestService {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentTitle(context.getString(R.string.scheduled_test_alarm_notification_title))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(context.getString(R.string.scheduled_test_alarm_notification_message)))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                         .setAutoCancel(true)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)

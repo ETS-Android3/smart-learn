@@ -337,13 +337,18 @@ public abstract class Test {
         }
         isScheduleActive = true;
         if(oneTime){
-            alarmId = TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(scheduledTestId, forUser,
-                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year));
+            alarmId = TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(
+                    scheduledTestId,
+                    getAlarmNotificationMessage(),
+                    forUser,
+                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year)
+            );
             return;
         }
 
         alarmId = TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
                 scheduledTestId,
+                getAlarmNotificationMessage(),
                 forUser,
                 hour,
                 minute,
@@ -364,14 +369,20 @@ public abstract class Test {
         }
         isScheduleActive = true;
         if(oneTime){
-            TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(alarmId, scheduledTestId, forUser,
-                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year));
+            TestService.ScheduledTestAlarmManager.getInstance().setExactAlarm(
+                    alarmId,
+                    scheduledTestId,
+                    getAlarmNotificationMessage(),
+                    forUser,
+                    CoreUtilities.General.timeToLong(hour, minute, dayOfMonth, month, year)
+            );
             return;
         }
 
         TestService.ScheduledTestAlarmManager.getInstance().setAlarmRepeatingInSpecificDays(
                 alarmId,
                 scheduledTestId,
+                getAlarmNotificationMessage(),
                 forUser,
                 hour,
                 minute,
@@ -402,13 +413,19 @@ public abstract class Test {
         }
         isScheduleActive = false;
         if(oneTime){
-            TestService.ScheduledTestAlarmManager.getInstance().cancelAlarm(scheduledTestId, forUser, alarmId);
+            TestService.ScheduledTestAlarmManager.getInstance().cancelAlarm(
+                    scheduledTestId,
+                    getAlarmNotificationMessage(),
+                    forUser,
+                    alarmId
+            );
             alarmId = NO_DATE_TIME;
             return;
         }
 
         TestService.ScheduledTestAlarmManager.getInstance().cancelAlarmRepeatingInSpecificDays(
                 scheduledTestId,
+                getAlarmNotificationMessage(),
                 forUser,
                 alarmId,
                 daysStatus.get(0),
@@ -420,6 +437,15 @@ public abstract class Test {
                 daysStatus.get(6)
         );
         alarmId = NO_DATE_TIME;
+    }
+
+    private String getAlarmNotificationMessage(){
+        if(customTestName.isEmpty()){
+            return ApplicationController.getInstance().getString(R.string.scheduled_test_alarm_notification_message) + " " +
+                    ApplicationController.getInstance().getString(R.string.from_lesson) + " " + lessonName;
+        }
+        return ApplicationController.getInstance().getString(R.string.scheduled_test_alarm_notification_message) + " " + customTestName + " "
+                + ApplicationController.getInstance().getString(R.string.from_lesson) + " " + lessonName;
     }
 
     public static HashMap<String, Object> convertDocumentToHashMap(Test test){
