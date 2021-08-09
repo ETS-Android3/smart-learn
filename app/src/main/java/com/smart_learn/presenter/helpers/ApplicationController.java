@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.smart_learn.BuildConfig;
 import com.smart_learn.core.services.NotificationService;
@@ -33,6 +34,9 @@ public class ApplicationController extends Application {
     public static final String LOGGED_IN = "LOGGED_IN";
 
     private static ApplicationController applicationController;
+
+    private ListenerRegistration notificationsListener;
+    private ListenerRegistration alarmsListener;
 
     public static ApplicationController getInstance() {return applicationController;}
 
@@ -61,7 +65,9 @@ public class ApplicationController extends Application {
                     editor.putBoolean(LOGGED_IN, false);
                     editor.apply();
 
-                    // TODO: disable addNotificationsCollectionListener listener
+                    // remove listeners because user is not logged in anymore
+                    removeNotificationsListener();
+                    removeAlarmsListener();
                 }
                 else{
                     addNotificationsCollectionListener();
@@ -75,8 +81,10 @@ public class ApplicationController extends Application {
     }
 
     private void addNotificationsCollectionListener(){
+        // first remove old listener (if any)
+        removeNotificationsListener();
 
-        NotificationService.getInstance().getNotificationsCollection()
+        notificationsListener = NotificationService.getInstance().getNotificationsCollection()
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot snapshots,
@@ -135,12 +143,22 @@ public class ApplicationController extends Application {
 
     }
 
+    private void removeNotificationsListener(){
+        if (notificationsListener != null){
+            notificationsListener.remove();
+            notificationsListener = null;
+        }
+    }
+
     private void addAlarmListener(){
+        // first remove old listener (if any)
+        removeAlarmsListener();
+
         // When a new scheduled active test is added/modified, alarm will be reset on device also.
         // When a scheduled active test is removed, his alarm will be unset from device.
 
         // https://stackoverflow.com/questions/54837988/android-firestore-view-changes-between-snapshots-from-document
-        TestService.getInstance()
+        alarmsListener = TestService.getInstance()
                 .getQueryForAllScheduledActiveLocalTests()
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -182,5 +200,12 @@ public class ApplicationController extends Application {
                         }
                     }
                 });
+    }
+
+    private void removeAlarmsListener(){
+        if (alarmsListener != null){
+            alarmsListener.remove();
+            alarmsListener = null;
+        }
     }
 }
