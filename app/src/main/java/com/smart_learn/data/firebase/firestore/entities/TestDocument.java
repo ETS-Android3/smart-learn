@@ -29,6 +29,8 @@ public class TestDocument extends Test {
         String USER_EMAIL_FIELD_NAME = "userEmail";
         String USER_PROFILE_PHOTO_URL_FIELD_NAME = "userProfilePhotoUrl";
         String PARTICIPANTS_FIELD_NAME = "participants";
+        String ALARM_DEVICE_ID_FIELD_NAME = "alarmDeviceId";
+        String ALARM_WAS_LAUNCHED_FIELD_NAME = "alarmWasLaunched";
     }
 
     @Getter
@@ -47,6 +49,11 @@ public class TestDocument extends Test {
     private String userDisplayName = "";
     private String userEmail = "";
     private String userProfilePhotoUrl = "";
+
+    // used for users which are logged on multiple devices for sync alarms
+    private String alarmDeviceId;
+    // used for oneTime alarms to mark that alarm was triggered on other device
+    private boolean alarmWasLaunched;
 
     @Exclude
     @Nullable
@@ -81,6 +88,10 @@ public class TestDocument extends Test {
         this.participants = participants == null ? new ArrayList<>() : participants;
     }
 
+    public void setAlarmDeviceId(String alarmDeviceId) {
+        this.alarmDeviceId = alarmDeviceId == null ? "" : alarmDeviceId;
+    }
+
     public static HashMap<String, Object> convertDocumentToHashMap(TestDocument testDocument){
         if(testDocument == null){
             return new HashMap<>();
@@ -95,6 +106,8 @@ public class TestDocument extends Test {
         data.put(Fields.USER_EMAIL_FIELD_NAME, testDocument.getUserEmail());
         data.put(Fields.USER_PROFILE_PHOTO_URL_FIELD_NAME, testDocument.getUserProfilePhotoUrl());
         data.put(Fields.PARTICIPANTS_FIELD_NAME, testDocument.getParticipants());
+        data.put(Fields.ALARM_DEVICE_ID_FIELD_NAME, testDocument.getAlarmDeviceId());
+        data.put(Fields.ALARM_WAS_LAUNCHED_FIELD_NAME, testDocument.isAlarmWasLaunched());
 
         return data;
     }

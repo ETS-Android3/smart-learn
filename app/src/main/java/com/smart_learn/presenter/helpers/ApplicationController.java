@@ -18,6 +18,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.smart_learn.BuildConfig;
 import com.smart_learn.core.services.NotificationService;
+import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
@@ -178,6 +179,13 @@ public class ApplicationController extends Application {
 
                         for (DocumentChange change : value.getDocumentChanges()) {
                             TestDocument test = change.getDocument().toObject(TestDocument.class);
+                            // If update was made on this device means that alarm was set/canceled
+                            // already when update was made.
+                            if(test.getAlarmDeviceId().equals(SettingsService.getInstance().getSimulatedDeviceId())){
+                                Timber.i("Alarm [" + test.getAlarmId() + "] was modified on current device [" + test.getAlarmDeviceId() +
+                                        "] . No other modification is needed.");
+                                continue;
+                            }
 
                             // Do not update test in Firestore db after alarm is reset/canceled
                             // because it will trigger listener on the other device and then the
@@ -187,16 +195,26 @@ public class ApplicationController extends Application {
                                 case ADDED:
                                 case MODIFIED:
                                     Timber.i("Test for alarm [" + test.getAlarmId() + "] was added or modified. Alarm is resetting.");
+                                    // If alarm was launched on other device avoid to reset alarm,
+                                    // because this is oneTime alarm and it will be canceled after
+                                    // it is launched on this device also.
+                                    if(test.isOneTime() && test.isAlarmWasLaunched()){
+                                        Timber.i("Alarm [" + test.getAlarmId() + "] was already launched on other devices. Alarm will not be reset.");
+                                        break;
+                                    }
+
                                     test.resetAlarm(change.getDocument().getId(), true);
                                     break;
                                 case REMOVED:
                                     Timber.i("Test for alarm [" + test.getAlarmId() + "] was removed. Alarm is canceling.");
-                                    // TODO: When the alarm is oneTime alarm, then alarm will be canceled
-                                    //  when is triggered, and test will be updated. That will trigger
-                                    //  this and canceling alarm will be made again. Also if multiple
-                                    //  devices with same account will trigger same oneTime alarm, then
-                                    //  every device will do update, and this 'cancelAlarm' method
-                                    //  will be called for every device. Try to avoid that.
+                                    // If alarm was launched on other device avoid to cancel alarm,
+                                    // because this is one time alarm and it will be canceled after
+                                    // it is launched on this device also.
+                                    if(test.isOneTime() && test.isAlarmWasLaunched()){
+                                        Timber.i("Alarm [" + test.getAlarmId() + "] was already launched on other devices. Alarm will not be canceled.");
+                                        break;
+                                    }
+
                                     test.cancelAlarm(change.getDocument().getId(), true);
                                     break;
                             }

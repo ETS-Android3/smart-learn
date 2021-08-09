@@ -16,6 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
+import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.utilities.ConnexionChecker;
 import com.smart_learn.core.utilities.CoreUtilities;
@@ -153,10 +154,18 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
 
                     if(isChecked){
                         testDocument.setAlarm(getSnapshots().getSnapshot(position).getId(), true);
+                        // if is oneTime alarm then mark that was not launched on device
+                        if(testDocument.isOneTime()){
+                            testDocument.setAlarmWasLaunched(false);
+                        }
                     }
                     else{
                         testDocument.cancelAlarm(getSnapshots().getSnapshot(position).getId(), true);
                     }
+
+                    // Set an unique id in order to identify device where alarm was updated if user
+                    // is logged on multiple devices.
+                    testDocument.setAlarmDeviceId(SettingsService.getInstance().getSimulatedDeviceId());
 
                     TestService.getInstance().updateDocument(TestDocument.convertDocumentToHashMap(testDocument), getSnapshots().getSnapshot(position),
                             new DataCallbacks.General() {

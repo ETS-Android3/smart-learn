@@ -504,6 +504,10 @@ public abstract class ScheduledTestInfoViewModel extends BasicAndroidViewModel {
 
 
         if(forUpdate){
+            // if is an user oneTime scheduled test then mark that alarm was not triggered on device
+            if((newTest instanceof TestDocument) && newTest.isOneTime()){
+                ((TestDocument) newTest).setAlarmWasLaunched(false);
+            }
             // here test already exists so update it in db
             fragment.updateTest(newTest);
         }

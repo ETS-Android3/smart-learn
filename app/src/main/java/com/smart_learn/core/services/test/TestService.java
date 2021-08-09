@@ -27,6 +27,7 @@ import com.google.firebase.firestore.Source;
 import com.smart_learn.R;
 import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.services.UserService;
@@ -1281,8 +1282,10 @@ public class TestService {
      * */
     public static class ScheduledTestAlarmManager {
 
-        public static final String SCHEDULED_TEST_ID_KEY = "SCHEDULED_TEST_ID_KEY";
-        public static final String FOR_USER_KEY = "FOR_USER_KEY";
+        private static final String BUNDLE_ARGS_KEY = "BUNDLE_ARGS_KEY";
+
+        private static final String SCHEDULED_TEST_ID_KEY = "SCHEDULED_TEST_ID_KEY";
+        private static final String FOR_USER_KEY = "FOR_USER_KEY";
         private static final String USER_UID_KEY = "USER_UID_KEY";
         private static final String ALARM_ID_KEY = "ALARM_ID_KEY";
         private static final String MESSAGE_KEY = "MESSAGE_KEY";
@@ -1345,7 +1348,7 @@ public class TestService {
             Context context = ApplicationController.getInstance().getApplicationContext();
 
             // for every selected day must be set an alarm with an unique id with repeating interval of one week
-            final long weekInterval = 7 * AlarmManager.INTERVAL_DAY;
+            final long weekInterval = 7L * AlarmManager.INTERVAL_DAY;
             final int hour = test.getHour();
             final int minute = test.getMinute();
 
@@ -1435,14 +1438,16 @@ public class TestService {
 
         private PendingIntent getPendingIntent(Context context, int alarmId, String scheduledTestId, String message, boolean forUser){
             Intent intent = new Intent(context, ScheduledTestAlarmReceiver.class);
-            intent.putExtra(SCHEDULED_TEST_ID_KEY, scheduledTestId);
-            intent.putExtra(FOR_USER_KEY, forUser);
-            intent.putExtra(ALARM_ID_KEY, alarmId);
-            intent.putExtra(MESSAGE_KEY, message);
+            Bundle args = new Bundle();
+            args.putString(SCHEDULED_TEST_ID_KEY, scheduledTestId);
+            args.putBoolean(FOR_USER_KEY, forUser);
+            args.putInt(ALARM_ID_KEY, alarmId);
+            args.putString(MESSAGE_KEY, message);
             if(forUser){
                 // This will be used to avoid launching an alarm for user A if user B is logged in.
-                intent.putExtra(USER_UID_KEY, UserService.getInstance().getUserUid());
+                args.putString(USER_UID_KEY, UserService.getInstance().getUserUid());
             }
+            intent.putExtra(BUNDLE_ARGS_KEY, args);
             // https://stackoverflow.com/questions/67045607/how-to-resolve-missing-pendingintent-mutability-flag-lint-warning-in-android-a
             return PendingIntent.getBroadcast(context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         }
@@ -1538,7 +1543,7 @@ public class TestService {
             }
 
             private void processAlarm(Context context, Intent intent){
-                Bundle args = intent.getExtras();
+                Bundle args = intent.getBundleExtra(BUNDLE_ARGS_KEY);
                 if(args == null){
                     Timber.w("Bundle args is null. Alarm can not be processed.");
                     return;
@@ -1626,16 +1631,51 @@ public class TestService {
                                 }
 
                                 if(scheduledTest.isOneTime()){
-                                    scheduledTest.cancelAlarm(scheduledTestId, true);
+                                    Timber.i("Alarm [" + scheduledTest.getAlarmId() + "] is oneTime alarm and must be " +
+                                            "canceled because was already launched.");
+                                    // Set an unique id in order to identify device where alarm was updated if user
+                                    // is logged on multiple devices.
+                                    scheduledTest.setAlarmDeviceId(SettingsService.getInstance().getSimulatedDeviceId());
 
-                                    // TODO: This update will trigger alarmListener from ApplicationController,
-                                    //  on removed case, and alarm will be canceled again. try to find
-                                    //  another way to do that.
-                                    //
-                                    // TODO: Important: alarm must be canceled even if application
-                                    //  is not open, so if alarmListener is not in a background service
-                                    //  cancel must be done here, when alarm is triggered.
-                                    TestService.getInstance().updateTest(scheduledTest, task.getResult(), null);
+                                    // Mark that alarm was launched on this device. This flag will be
+                                    // used to notify other devices that alarm was already launched
+                                    // and should not be canceled.
+                                    scheduledTest.setAlarmWasLaunched(true);
+
+                                    // This update must be done before 'scheduledTest.cancelAlarm()'
+                                    // and will trigger alarmListener from ApplicationController,
+                                    // on modified case. This update is needed in order to notify
+                                    // other devices that alarm was launched and should not be removed.
+                                    // If update is made after 'scheduledTest.cancelAlarm()' then
+                                    // alarmListener from ApplicationController will enter on removed
+                                    // case and new updated data will not be available, because in
+                                    // removed case only previous document is given.
+                                    TestService.getInstance().updateTest(scheduledTest, task.getResult(), new DataCallbacks.General() {
+                                        @Override
+                                        public void onSuccess() {
+                                            // Canceling alarm will set scheduleActive flag with false, and
+                                            // after the following update document will be removed from
+                                            // active scheduled tests query.
+                                            scheduledTest.cancelAlarm(scheduledTestId, true);
+
+                                            // This update will trigger alarmListener from ApplicationController,
+                                            // on removed case and because of the previous update, flag
+                                            // alarmWasLaunched will be available.
+                                            TestService.getInstance().updateTest(scheduledTest, task.getResult(), null);
+                                        }
+
+                                        @Override
+                                        public void onFailure() {
+                                            // If update fails do nothing. Alarm was already canceled
+                                            // by alarm manager because is oneTime alarm. Alarm will
+                                            // remain in DB as activated but in AlarmManger is not
+                                            // set so it will not be triggered. User can deactivate
+                                            // alarm manually (by deactivating I mean to turn off
+                                            // the switch representing that alarm is active/not active
+                                            // on scheduled tests adapter card view).
+                                        }
+                                    });
+
                                 }
                             }
                         });

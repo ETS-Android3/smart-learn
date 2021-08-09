@@ -378,7 +378,8 @@ public abstract class CoreUtilities {
             }
 
             // Calendar.getInstance() returns a new object of type GregorianCalendar.
-            Calendar calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+            calendar.setFirstDayOfWeek(Calendar.MONDAY);
 
             // This function was created when alarm for scheduled test was added so check this info
             // if necessary.
