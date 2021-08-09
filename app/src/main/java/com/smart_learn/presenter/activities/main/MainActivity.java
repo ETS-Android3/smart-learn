@@ -34,6 +34,8 @@ import timber.log.Timber;
 
 public class MainActivity extends BasicActivity {
 
+    public static final String CALLED_BY_PUSH_NOTIFICATION_KEY = "CALLED_BY_PUSH_NOTIFICATION_KEY";
+
     private ActivityMainBinding binding;
     private NavController navController;
 
@@ -67,6 +69,13 @@ public class MainActivity extends BasicActivity {
         }
 
         setNavigationDrawer();
+
+        // check if is called by push notification
+        Bundle args = getIntent().getExtras();
+        if(args != null && args.getBoolean(CALLED_BY_PUSH_NOTIFICATION_KEY)){
+            processPushNotification();
+            //return;
+        }
     }
 
     @Override
@@ -175,5 +184,10 @@ public class MainActivity extends BasicActivity {
         }
 
         goToGuestActivity();
+    }
+
+    private void processPushNotification(){
+        // processing push notification means only to navigate to the notifications center
+        navController.navigate(R.id.notifications_fragment_nav_graph_activity_main, null, null);
     }
 }

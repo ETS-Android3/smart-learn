@@ -1,11 +1,14 @@
 package com.smart_learn.data.firebase.firestore.entities;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.presenter.helpers.ApplicationController;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -286,6 +289,37 @@ public class NotificationDocument {
                         applicationController.getString(R.string.online_test_invitation_received_description_2);
 
             case Types.TYPE_NONE:
+            default:
+                return applicationController.getString(R.string.empty);
+        }
+    }
+
+
+    /**
+     * Use to generate a custom description based on the notification type for push notifications.
+     *
+     * @param type The notification type.
+     *
+     * @return A string which represents the custom description.
+     * */
+    @NotNull
+    @NonNull
+    public static String generatePushNotificationDescription(int type){
+        ApplicationController applicationController = ApplicationController.getInstance();
+        switch (type){
+            case Types.TYPE_FRIEND_REQUEST_RECEIVED:
+                return applicationController.getString(R.string.friend_request_received_description_push);
+            case Types.TYPE_FRIEND_REQUEST_ACCEPTED:
+                return applicationController.getString(R.string.friend_request_accepted_description_push);
+            case Types.TYPE_NORMAL_LESSON_RECEIVED:
+                return applicationController.getString(R.string.normal_lesson_received_description_push);
+            case Types.TYPE_SHARED_LESSON_RECEIVED:
+                return applicationController.getString(R.string.shared_lesson_received_description_push);
+            case Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
+                return applicationController.getString(R.string.online_test_invitation_received_description_push);
+
+            // For the other type of notifications will not be used a push notification so no message
+            // is needed.
             default:
                 return applicationController.getString(R.string.empty);
         }

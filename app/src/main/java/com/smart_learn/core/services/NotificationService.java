@@ -1,24 +1,37 @@
 package com.smart_learn.core.services;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.util.Pair;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.smart_learn.R;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.repository.NotificationRepository;
+import com.smart_learn.presenter.activities.main.MainActivity;
 
 import java.util.ArrayList;
 
 import timber.log.Timber;
 
 public class NotificationService extends BasicFirestoreService<NotificationDocument, NotificationRepository> {
+
+    private final static String CHANNEL_ID = "smart-learn-firestore-cloud-notification-channel-id";
+    private final static String CHANNEL_NAME = "smart-learn-firestore-cloud-notification-channel-name";
 
     private static NotificationService instance;
 
@@ -176,6 +189,68 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
                 Timber.e("default");
                 break;
         }
+    }
+
+    public void showPushNotification(Context context, NotificationDocument notification){
+        if(context == null || notification == null){
+            Timber.w("Context [" + context + "] and/or Notification [" + notification + "] is/are null" );
+            return;
+        }
+
+        switch (notification.getType()) {
+            case NotificationDocument.Types.TYPE_FRIEND_REQUEST_RECEIVED:
+            case NotificationDocument.Types.TYPE_FRIEND_REQUEST_ACCEPTED:
+            case NotificationDocument.Types.TYPE_NORMAL_LESSON_RECEIVED:
+            case NotificationDocument.Types.TYPE_SHARED_LESSON_RECEIVED:
+            case NotificationDocument.Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
+                final String title = context.getString(NotificationDocument.generateNotificationTitle(notification.getType()));
+                final String message = NotificationDocument.generatePushNotificationDescription(notification.getType());
+                launchPushNotification(context, title, message);
+                break;
+            // For the other type of notifications will not be used a push notification.
+            default:
+                break;
+        }
+    }
+
+    private void launchPushNotification(Context context, String title, String message){
+        // prepare activity which will be opened when click on notification is made
+        Intent activityIntent = new Intent(context, MainActivity.class);
+
+        // https://stackoverflow.com/questions/3913592/start-an-activity-with-a-parameter
+        activityIntent.putExtra(MainActivity.CALLED_BY_PUSH_NOTIFICATION_KEY, true);
+        activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // https://stackoverflow.com/questions/67045607/how-to-resolve-missing-pendingintent-mutability-flag-lint-warning-in-android-a
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(context, 0, activityIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        // https://developer.android.com/training/notify-user/build-notification.html#java
+        // https://www.youtube.com/watch?v=CZ575BuLBo4&ab_channel=CodinginFlow
+        // prepare notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(title)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
+                .setContentIntent(notifyPendingIntent);
+
+        // https://developer.android.com/training/notify-user/build-notification.html#java
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this.
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        // notificationId is a unique int for each notification that you must define
+        // https://stackoverflow.com/questions/39607856/what-is-notification-id-in-android
+        // TODO: try to generate specific unique id's and save id's in DB
+        int uniqueId = (int) System.currentTimeMillis();
+        notificationManager.notify(uniqueId, builder.build());
     }
 
 }

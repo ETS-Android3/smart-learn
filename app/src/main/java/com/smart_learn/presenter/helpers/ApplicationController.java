@@ -123,6 +123,9 @@ public class ApplicationController extends Application {
                                 @Override
                                 public void onSuccess() {
                                     Timber.i("Processed notification with document id = [%s]", document.getId());
+                                    // launch also a push notification in order to notify user
+                                    NotificationService.getInstance()
+                                            .showPushNotification(ApplicationController.getInstance().getApplicationContext(), notification);
                                 }
                                 @Override
                                 public void onFailure() {
