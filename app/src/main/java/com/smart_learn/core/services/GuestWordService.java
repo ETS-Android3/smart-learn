@@ -54,6 +54,10 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
         return repositoryInstance.getSampleLiveWord(wordId);
     }
 
+    public Word getSampleWord(int wordId) {
+        return repositoryInstance.getSampleWord(wordId);
+    }
+
     public void deleteSelectedItems(int lessonId){ repositoryInstance.deleteSelectedItems(lessonId); }
 
     public void updateSelectAll(boolean isSelected, int lessonId){ repositoryInstance.updateSelectAll(isSelected,lessonId); }

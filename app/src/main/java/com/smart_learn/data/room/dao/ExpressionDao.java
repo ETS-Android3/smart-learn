@@ -16,6 +16,9 @@ public interface ExpressionDao extends BasicDao<Expression> {
     @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE id == :expressionId")
     LiveData<Expression> getSampleLiveExpression(int expressionId);
 
+    @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE id == :expressionId")
+    Expression getSampleExpression(int expressionId);
+
     @Transaction
     @Query("SELECT * FROM " + AppRoomDatabase.EXPRESSIONS_TABLE + " WHERE fk_lesson_id == :lessonId")
     LiveData<List<Expression>> getLessonLiveExpressions(int lessonId);

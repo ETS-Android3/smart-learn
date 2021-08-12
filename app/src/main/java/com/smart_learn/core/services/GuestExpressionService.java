@@ -54,6 +54,10 @@ public class GuestExpressionService extends BasicRoomService<Expression, GuestEx
         return repositoryInstance.getSampleLiveExpression(expressionId);
     }
 
+    public Expression getSampleExpression(int expressionId) {
+        return repositoryInstance.getSampleExpression(expressionId);
+    }
+
     public void deleteSelectedItems(int lessonId){ repositoryInstance.deleteSelectedItems(lessonId); }
 
     public void updateSelectAll(boolean isSelected, int lessonId){ repositoryInstance.updateSelectAll(isSelected,lessonId); }

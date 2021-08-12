@@ -16,6 +16,9 @@ public interface WordDao extends BasicDao<Word>  {
     @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE id == :wordId")
     LiveData<Word> getSampleLiveWord(int wordId);
 
+    @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE id == :wordId")
+    Word getSampleWord(int wordId);
+
     @Transaction
     @Query("SELECT * FROM " + AppRoomDatabase.WORDS_TABLE + " WHERE fk_lesson_id == :lessonId")
     LiveData<List<Word>> getLessonLiveWords(int lessonId);

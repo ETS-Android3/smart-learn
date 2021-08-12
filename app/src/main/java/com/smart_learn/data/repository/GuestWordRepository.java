@@ -47,6 +47,10 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
         return dao.getSampleLiveWord(wordId);
     }
 
+    public Word getSampleWord(int wordId) {
+        return dao.getSampleWord(wordId);
+    }
+
     public void deleteSelectedItems(int lessonId){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             dao.deleteSelectedItems(lessonId);

@@ -47,6 +47,10 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
         return dao.getSampleLiveExpression(expressionId);
     }
 
+    public Expression getSampleExpression(int expressionId) {
+        return dao.getSampleExpression(expressionId);
+    }
+
     public void deleteSelectedItems(int lessonId){
         AppRoomDatabase.databaseWriteExecutor.execute(() -> {
             dao.deleteSelectedItems(lessonId);
