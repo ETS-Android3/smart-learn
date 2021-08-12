@@ -422,7 +422,27 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
         updateTest(extractedTest, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                fragment.requireActivity().runOnUiThread(callback::onSuccessFinishProcessing);
+                // here progress is saved
+
+                // if test is online is no need to update statistics so go directly to next question
+                if(isOnline){
+                    fragment.requireActivity().runOnUiThread(callback::onSuccessFinishProcessing);
+                    return;
+                }
+
+                // here is local test so update statistics
+                TestService.getInstance().updateStatistics(processedQuestion, new DataCallbacks.General() {
+                    @Override
+                    public void onSuccess() {
+                        fragment.requireActivity().runOnUiThread(callback::onSuccessFinishProcessing);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        liveToastMessage.postValue(fragment.getString(R.string.error_progress_saved));
+                        fragment.requireActivity().runOnUiThread(callback::onFailureFinishProcessing);
+                    }
+                });
             }
 
             @Override

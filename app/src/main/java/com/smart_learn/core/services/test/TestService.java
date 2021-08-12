@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.util.Pair;
 import androidx.lifecycle.LiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
@@ -36,6 +38,8 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.LessonEntrance;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.QuestionFullWrite;
+import com.smart_learn.data.entities.QuestionIdentifier;
+import com.smart_learn.data.entities.QuestionMetadata;
 import com.smart_learn.data.entities.QuestionMixed;
 import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.QuestionTrueOrFalse;
@@ -60,8 +64,12 @@ import com.smart_learn.presenter.helpers.ApplicationController;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -1073,6 +1081,271 @@ public class TestService {
             test.setTestName(ApplicationController.getInstance().getString(R.string.test_name) + " " + newTotalTests);
             saveGuestTest(test, callback);
         }
+    }
+
+
+
+    public void updateStatistics(Question question, DataCallbacks.General callback){
+        if(question == null){
+            Timber.w("question is null");
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback =  DataUtilities.General.generateGeneralCallback("Statistics for question " + question.getId() + " updated",
+                    "Statistics for question " + question.getId() + " was NOT updated");
+        }
+
+        final DataCallbacks.General finalCallback = callback;
+        final int userType = question.getQuestionMetadata().getUserType();
+        switch (userType){
+            case QuestionMetadata.Users.GUEST:
+                ThreadExecutorService.getInstance().execute(() -> updateGuestStatistics(question, finalCallback));
+                return;
+            case QuestionMetadata.Users.USER_LOGGED_IN:
+                ThreadExecutorService.getInstance().execute(() -> updateUserStatistics(question, finalCallback));
+                return;
+            default:
+                Timber.w("userType [" + userType + "] is not valid");
+                callback.onFailure();
+                //return;
+        }
+    }
+
+    private void updateUserStatistics(Question question, DataCallbacks.General callback){
+        // Update every element but ignore if some element can not be updated. Do not use a transaction
+        // for updating all items at once. Update one item at a time because is important to have
+        // statistics at least for some items. If transaction will be used and a single item will
+        // have a problem then update will fail for all.
+
+        // IMPORTANT: If you decide to use callback.OnSuccess() or callback.onFailure() after update
+        // use a transaction. You can not update une item at a time and call every time the callback
+        // method because errors will appear. Callback must be called once, after update is made for
+        // all.
+
+
+        // IMPORTANT: If you use callback without taking into account the update, do not forget to
+        // call callback.onSuccess() or callback.onFailure() before exiting the function. If you
+        // forget errors can appear while caller will wait until callback is called.
+
+        ArrayList<QuestionIdentifier> identifiersList = question.getQuestionMetadata().getQuestionIdentifiers(question.isReversed());
+        for(QuestionIdentifier item : identifiersList){
+            if(item == null){
+                continue;
+            }
+
+            final String identifierId = item.getId();
+            if(identifierId.isEmpty()){
+                Timber.w("identifierId is not selected");
+                continue;
+            }
+
+            final int identifierType = item.getType();
+            switch (identifierType){
+                case QuestionIdentifier.Identifiers.WORD:
+                    updateUserWordStatistics(identifierId, item.getTranslationsIds(), question);
+                    continue;
+                case QuestionIdentifier.Identifiers.EXPRESSION:
+                    updateUserExpressionStatistics(identifierId, item.getTranslationsIds(), question);
+                    continue;
+                default:
+                    Timber.w("identifierType [" + identifierType + "] is not valid");
+                    //continue;
+            }
+        }
+
+        // Ignore if statistics update is made or not and return directly onSuccess().
+        callback.onSuccess();
+    }
+
+    private void updateGuestStatistics(Question question, DataCallbacks.General callback){
+        // Update every element but ignore if some element can not be updated. Do not use a transaction
+        // for updating all items at once. Update one item at a time because is important to have
+        // statistics at least for some items. If transaction will be used and a single item will
+        // have a problem then update will fail for all.
+
+        // IMPORTANT: if you decide to use callback.OnSuccess() or callback.onFailure() after update
+        // use a transaction. You can not update une item at a time and call every time the callback
+        // method because errors will appear. Callback must be called once, after update is made for
+        // all.
+
+        // IMPORTANT: If you use callback without taking into account the update, do not forget to
+        // call callback.onSuccess() or callback.onFailure() before exiting the function. If you
+        // forget errors can appear while caller will wait until callback is called.
+
+        ArrayList<QuestionIdentifier> identifiersList = question.getQuestionMetadata().getQuestionIdentifiers(question.isReversed());
+        for(QuestionIdentifier item : identifiersList) {
+            final int identifierId = item.getIdInteger();
+            if (identifierId == QuestionIdentifier.NO_IDENTIFIER_ID_INTEGER) {
+                Timber.w("identifierId is not selected");
+                continue;
+            }
+
+            final int identifierType = item.getType();
+            switch (identifierType) {
+                case QuestionIdentifier.Identifiers.WORD:
+                    updateGuestWordStatistics(identifierId, item.getTranslationsIds(), question);
+                    continue;
+                case QuestionIdentifier.Identifiers.EXPRESSION:
+                    updateGuestExpressionStatistics(identifierId, item.getTranslationsIds(), question);
+                    continue;
+                default:
+                    Timber.w("identifierType [" + identifierType + "] is not valid");
+                    //continue;
+            }
+        }
+
+        // Ignore if statistics update is made or not and return directly onSuccess().
+        callback.onSuccess();
+    }
+
+    private void updateUserWordStatistics(String documentPath, HashSet<Long> ids, Question question){
+        // extract word from db
+        FirebaseFirestore.getInstance()
+                .document(documentPath)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(!task.isSuccessful() || task.getResult() == null){
+                            Timber.w("result is not valid");
+                            return;
+                        }
+
+                        WordDocument word = task.getResult().toObject(WordDocument.class);
+                        if(word == null){
+                            Timber.w("word is null");
+                            return;
+                        }
+
+                        // update word statistic
+                        word.getStatistics().updateScore(question.isAnswerCorrect(), question.getAnswerTimeInMilliseconds());
+                        // update statistic for every translation from question
+                        word.setTranslations(updateTranslationsStatistics(question, ids, word.getTranslations()));
+                        // make final update in db
+                        UserWordService.getInstance().updateDocument(WordDocument.convertDocumentToHashMap(word), documentPath, new DataCallbacks.General() {
+                            @Override
+                            public void onSuccess() {
+                                // no action needed here
+                            }
+
+                            @Override
+                            public void onFailure() {
+                                Timber.w("word [" + word.toString() + "] was not updated.");
+                            }
+                        });
+
+                    }
+                });
+    }
+
+    private void updateUserExpressionStatistics(String documentPath, HashSet<Long> ids, Question question){
+        // extract word from db
+        FirebaseFirestore.getInstance()
+                .document(documentPath)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(!task.isSuccessful() || task.getResult() == null){
+                            Timber.w("result is not valid");
+                            return;
+                        }
+
+                        ExpressionDocument expression = task.getResult().toObject(ExpressionDocument.class);
+                        if(expression == null){
+                            Timber.w("expression is null");
+                            return;
+                        }
+
+                        // update word statistic
+                        expression.getStatistics().updateScore(question.isAnswerCorrect(), question.getAnswerTimeInMilliseconds());
+                        // update statistic for every translation from question
+                        expression.setTranslations(updateTranslationsStatistics(question, ids, expression.getTranslations()));
+                        // make final update in db
+                        UserExpressionService.getInstance().updateDocument(ExpressionDocument.convertDocumentToHashMap(expression),
+                                documentPath, new DataCallbacks.General() {
+                                    @Override
+                                    public void onSuccess() {
+                                        // no action needed here
+                                    }
+
+                                    @Override
+                                    public void onFailure() {
+                                        Timber.w("expression [" + expression.toString() + "] was not updated.");
+                                    }
+                                });
+                    }
+                });
+    }
+
+    private void updateGuestWordStatistics(int identifierId, HashSet<Long> ids, Question question){
+        // extract word from db
+        Word word = GuestWordService.getInstance().getSampleWord(identifierId);
+        if(word == null){
+            Timber.w("word is null");
+            return;
+        }
+        // update word statistic
+        word.getStatistics().updateScore(question.isAnswerCorrect(), question.getAnswerTimeInMilliseconds());
+        // update statistic for every translation from question
+        word.setTranslations(updateTranslationsStatistics(question, ids, word.getTranslations()));
+        // make final update in db
+        GuestWordService.getInstance().update(word, new DataCallbacks.General() {
+            @Override
+            public void onSuccess() {
+                // no action needed here
+            }
+
+            @Override
+            public void onFailure() {
+                Timber.w("word [" + word.toString() + "] was not updated.");
+            }
+        });
+    }
+
+    private void updateGuestExpressionStatistics(int identifierId, HashSet<Long> ids, Question question){
+        // extract expression from db
+        Expression expression = GuestExpressionService.getInstance().getSampleExpression(identifierId);
+        if(expression == null){
+            Timber.w("expression is null");
+            return;
+        }
+        // update expression statistic
+        expression.getStatistics().updateScore(question.isAnswerCorrect(), question.getAnswerTimeInMilliseconds());
+        // update statistic for every translation from question
+        expression.setTranslations(updateTranslationsStatistics(question, ids, expression.getTranslations()));
+        // make final update in db
+        GuestExpressionService.getInstance().update(expression, new DataCallbacks.General() {
+            @Override
+            public void onSuccess() {
+                // no action needed here
+            }
+
+            @Override
+            public void onFailure() {
+                Timber.w("expression [" + expression.toString() + "] was not updated.");
+            }
+        });
+    }
+
+    private ArrayList<Translation> updateTranslationsStatistics(Question question, HashSet<Long> ids, ArrayList<Translation> translationsList){
+        final boolean correctAnswer = question.isAnswerCorrect();
+        final long answerTime = question.getAnswerTimeInMilliseconds();
+        for(Translation item : translationsList){
+            if(ids.contains(item.getId())){
+                item.getStatistics().updateScore(correctAnswer, answerTime);
+            }
+        }
+
+        return translationsList;
+    }
+
+    private String updateTranslationsStatistics(Question question, HashSet<Long> ids, String translationsList){
+        return Translation.fromListToJson(updateTranslationsStatistics(question, ids, Translation.fromJsonToList(translationsList)));
     }
 
 
