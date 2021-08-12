@@ -279,7 +279,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     public void goToUserSelectExpressionsFragment(String lessonId) {
         Bundle args = new Bundle();
         args.putString(BasicWordsFragment.SELECTED_LESSON_KEY, lessonId);
-        navController.navigate(R.id.action_user_test_setup_fragment_to_user_select_expressions_fragment_nav_graph_activity_user_test, args);
+        navController.navigate(R.id.user_select_expressions_fragment_nav_graph_activity_user_test, args);
     }
 
     public void goToActivateTestFragment(int type, String testId, boolean isOnline){
