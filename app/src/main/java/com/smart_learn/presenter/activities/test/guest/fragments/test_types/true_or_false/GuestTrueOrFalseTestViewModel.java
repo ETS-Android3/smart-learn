@@ -31,7 +31,7 @@ public class GuestTrueOrFalseTestViewModel extends TrueOrFalseTestViewModel {
                 fragment.requireActivity().runOnUiThread(fragment::goBack);
                 return;
             }
-            fragment.requireActivity().runOnUiThread(() -> super.setExtractedTest(fragment, test));
+            fragment.requireActivity().runOnUiThread(() -> super.setExtractedTest(fragment, test, false));
         });
     }
 

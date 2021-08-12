@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
+import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.helpers.DataCallbacks;
@@ -36,6 +37,8 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
     private String testId;
     // this will be test retrieved from db from which questions will be extracted
     private Test extractedTest;
+    // mark that retrieved test is online or not
+    private boolean isOnline;
     // here will be stored all test questions for a faster access and update
     private ArrayList<Question> allTestQuestions;
     // here will be stored questions for a faster access
@@ -94,13 +97,14 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
         }
     }
 
-    protected void setExtractedTest(@NonNull @NotNull BasicTestTypeFragment<?> fragment, Test test){
+    protected void setExtractedTest(@NonNull @NotNull BasicTestTypeFragment<?> fragment, Test test, boolean isOnlineTest){
         if(test == null){
             Timber.w("test is null");
             fragment.goBack();
             return;
         }
 
+        isOnline = isOnlineTest;
         extractedTest = test;
         if(extractedTest.getTestTotalTime() >= Test.MAX_TEST_TIME_SECONDS){
             liveToastMessage.setValue(fragment.getString(R.string.test_time_finished));

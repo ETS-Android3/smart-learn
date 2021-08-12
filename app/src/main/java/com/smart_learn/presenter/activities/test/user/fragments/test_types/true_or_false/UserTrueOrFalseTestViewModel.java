@@ -54,7 +54,7 @@ public class UserTrueOrFalseTestViewModel extends TrueOrFalseTestViewModel {
                             Timber.w("test is null");
                             return;
                         }
-                        fragment.requireActivity().runOnUiThread(() -> UserTrueOrFalseTestViewModel.super.setExtractedTest(fragment, test));
+                        fragment.requireActivity().runOnUiThread(() -> UserTrueOrFalseTestViewModel.super.setExtractedTest(fragment, test, false));
                     }
                 });
 

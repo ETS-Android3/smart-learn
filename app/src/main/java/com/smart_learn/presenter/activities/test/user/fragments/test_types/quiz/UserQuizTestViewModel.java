@@ -54,7 +54,7 @@ public class UserQuizTestViewModel extends QuizTestViewModel {
                             Timber.w("test is null");
                             return;
                         }
-                        fragment.requireActivity().runOnUiThread(() -> UserQuizTestViewModel.super.setExtractedTest(fragment, test));
+                        fragment.requireActivity().runOnUiThread(() -> UserQuizTestViewModel.super.setExtractedTest(fragment, test, false));
                     }
                 });
 

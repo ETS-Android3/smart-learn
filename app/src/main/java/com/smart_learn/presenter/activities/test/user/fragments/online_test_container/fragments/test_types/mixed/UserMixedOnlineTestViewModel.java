@@ -66,7 +66,7 @@ public class UserMixedOnlineTestViewModel extends MixedTestViewModel {
                             Timber.w("test is null");
                             return;
                         }
-                        fragment.requireActivity().runOnUiThread(() -> UserMixedOnlineTestViewModel.super.setExtractedTest(fragment, test));
+                        fragment.requireActivity().runOnUiThread(() -> UserMixedOnlineTestViewModel.super.setExtractedTest(fragment, test, true));
                     }
                 });
 

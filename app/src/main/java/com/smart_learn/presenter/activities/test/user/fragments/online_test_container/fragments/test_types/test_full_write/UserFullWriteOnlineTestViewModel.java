@@ -66,7 +66,7 @@ public class UserFullWriteOnlineTestViewModel extends FullWriteTestViewModel {
                             Timber.w("test is null");
                             return;
                         }
-                        fragment.requireActivity().runOnUiThread(() -> UserFullWriteOnlineTestViewModel.super.setExtractedTest(fragment, test));
+                        fragment.requireActivity().runOnUiThread(() -> UserFullWriteOnlineTestViewModel.super.setExtractedTest(fragment, test, true));
                     }
                 });
 
