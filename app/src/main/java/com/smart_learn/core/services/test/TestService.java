@@ -63,6 +63,7 @@ import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -72,6 +73,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -87,12 +89,17 @@ public class TestService {
 
     private static TestService instance;
 
+    @NonNull @NotNull
     private final GuestTestService guestTestServiceInstance;
+    @NonNull @NotNull
     private final UserTestService userTestServiceInstance;
+    @NonNull @NotNull
+    private final SecureRandom secureRandom;
 
     private TestService() {
         guestTestServiceInstance = GuestTestService.getInstance();
         userTestServiceInstance = UserTestService.getInstance();
+        secureRandom = CoreUtilities.General.getSecureRandomInstance();
     }
 
     public static TestService getInstance() {
@@ -735,6 +742,12 @@ public class TestService {
      * */
     private void continueWithTestGeneration(boolean isForUser, ArrayList<LessonEntrance> valueList, Test testOptions,
                                             int questionsNr, TestService.TestGenerationCallback callback){
+        valueList = filterValues(valueList);
+        if(valueList.isEmpty()){
+            callback.onComplete(NO_TEST_ID);
+            return;
+        }
+
         // For tests which are NOT scheduled questions must be generated always base on the value
         // list and questionsNr.
         //
@@ -761,31 +774,46 @@ public class TestService {
         }
 
         // generate test questions
+
+        // questionNr are nr of questions which will be generated, so maximum for generated questions
+        // can be valueList.size()
+        if(questionsNr > valueList.size()){
+            questionsNr = valueList.size();
+        }
+
+        int userType;
+        if(isForUser){
+            userType = QuestionMetadata.Users.USER_LOGGED_IN;
+        }
+        else{
+            userType = QuestionMetadata.Users.GUEST;
+        }
+
         String questionsJson;
         int generatedQuestionsNr;
         switch (testOptions.getType()){
             case Test.Types.WORD_WRITE:
-                ArrayList<QuestionFullWrite> A = generateQuestionsForWordsFullWriteTest(valueList, questionsNr, testOptions.isUseCustomSelection());
+                ArrayList<QuestionFullWrite> A = generateQuestionsForWordsFullWriteTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = A.size();
                 questionsJson = DataUtilities.General.fromListToJson(A);
                 break;
             case Test.Types.WORD_QUIZ:
-                ArrayList<QuestionQuiz> B = generateQuestionsForWordsQuizTest(valueList, questionsNr, testOptions.isUseCustomSelection());
+                ArrayList<QuestionQuiz> B = generateQuestionsForWordsQuizTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = B.size();
                 questionsJson = DataUtilities.General.fromListToJson(B);
                 break;
             case Test.Types.WORD_MIXED_LETTERS:
-                ArrayList<QuestionMixed> C = generateQuestionsForWordsMixedLettersTest(valueList, questionsNr, testOptions.isUseCustomSelection());
+                ArrayList<QuestionMixed> C = generateQuestionsForWordsMixedLettersTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = C.size();
                 questionsJson = DataUtilities.General.fromListToJson(C);
                 break;
             case Test.Types.EXPRESSION_MIXED_WORDS:
-                ArrayList<QuestionMixed> D = generateQuestionsForExpressionsMixedWordsTest(valueList, questionsNr, testOptions.isUseCustomSelection());
+                ArrayList<QuestionMixed> D = generateQuestionsForExpressionsMixedWordsTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = D.size();
                 questionsJson = DataUtilities.General.fromListToJson(D);
                 break;
             case Test.Types.EXPRESSION_TRUE_OR_FALSE:
-                ArrayList<QuestionTrueOrFalse> E = generateQuestionsForExpressionsTrueOrFalseTest(valueList, questionsNr, testOptions.isUseCustomSelection());
+                ArrayList<QuestionTrueOrFalse> E = generateQuestionsForExpressionsTrueOrFalseTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = E.size();
                 questionsJson = DataUtilities.General.fromListToJson(E);
                 break;
@@ -825,6 +853,18 @@ public class TestService {
         else{
             saveGuestTest(testOptions, callback);
         }
+    }
+
+    private ArrayList<LessonEntrance> filterValues(ArrayList<LessonEntrance> valueList){
+        // get items which have at least 1 translation
+        ArrayList<LessonEntrance> newList = new ArrayList<>();
+        for(LessonEntrance item : valueList){
+            if(item.getTranslations().isEmpty()){
+                continue;
+            }
+            newList.add(item);
+        }
+        return newList;
     }
 
     private void saveGuestTest(Test test, TestService.TestGenerationCallback callback){
@@ -878,32 +918,938 @@ public class TestService {
 
 
 
-    private ArrayList<QuestionFullWrite> generateQuestionsForWordsFullWriteTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return new ArrayList<>();
+
+    @NonNull @NotNull
+    private ArrayList<LessonEntrance> extractValues(ArrayList<LessonEntrance> valueList, int questionsNr){
+        if(valueList == null || valueList.isEmpty()){
+            return new ArrayList<>();
+        }
+
+        // If number of questions which should be generated is bigger or the same as the actually
+        // list size, return the entire list.
+        if(questionsNr >= valueList.size()) {
+            return valueList;
+        }
+
+        // Here list contains more values that we need, so extract only 'questionsNr' values.
+
+        // Add all values in an HashMap with (key, value) = (score, all values with that score)
+        HashMap<Double, ArrayList<LessonEntrance>> hashMap = new HashMap<>();
+        for(LessonEntrance item : valueList){
+            if(item == null){
+                continue;
+            }
+
+            double key = item.getStatistics().getScore();
+            if(hashMap.containsKey(key)){
+                ArrayList<LessonEntrance> currentList = hashMap.get(key);
+                if(currentList == null){
+                    currentList = new ArrayList<>();
+                }
+                currentList.add(item);
+                hashMap.put(key, currentList);
+            }
+            else {
+                hashMap.put(key, new ArrayList<>(Collections.singletonList(item)));
+            }
+        }
+
+        // Sort hash map keys (score) ascending.
+        ArrayList<Double> keySet = new ArrayList<>(hashMap.keySet());
+        Collections.sort(keySet);
+
+        // And extract only 'questionsNr' values.
+        ArrayList<LessonEntrance> finalList = new ArrayList<>();
+        for(Double score : keySet){
+            // If all 'questionsNr' where extracted then is no need to continue.
+            if(questionsNr < 1){
+                break;
+            }
+
+            // Get all values for current score.
+            ArrayList<LessonEntrance> currentList = hashMap.get(score);
+
+            // If are no values then is nothing to extract so continue.
+            if(currentList == null || currentList.isEmpty()){
+                continue;
+            }
+
+            // If 'questionsNr' is bigger then currentList values that means all currentList values
+            // can be added to the final list.
+            int lim = currentList.size();
+            if(questionsNr >= lim){
+                finalList.addAll(currentList);
+                questionsNr -= lim;
+                continue;
+            }
+
+            // Here values from 'currentList' are more then we need to complete finalList so extract
+            // only 'questionsNr' values.
+
+            // Add all currentList indexes into a list and shuffle list in order to give a randomness.
+            ArrayList<Integer> shuffledIndexes = new ArrayList<>();
+            for(int i = 0; i < lim; i++){
+                shuffledIndexes.add(i);
+            }
+            Collections.shuffle(shuffledIndexes, secureRandom);
+
+            // Extract first 'questionsNr' values using shuffled indexes.
+            for(int i = 0; i < questionsNr; i++){
+                LessonEntrance extractedItem = currentList.get(shuffledIndexes.get(i));
+                finalList.add(extractedItem);
+            }
+        }
+
+        return finalList;
     }
 
-    private ArrayList<QuestionMixed> generateQuestionsForWordsMixedLettersTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return generateQuestionsForMixedTest(valueList, questionsNr, isCustomSelection);
+    @NonNull @NotNull
+    private LinkedList<LessonEntrance> generateAllValuesQueue(ArrayList<LessonEntrance> valueList){
+        if(valueList == null || valueList.isEmpty()){
+            throw new UnsupportedOperationException("Here valueList can not be null or empty");
+        }
+
+        LinkedList<LessonEntrance> queue = new LinkedList<>(valueList);
+        // Queue will be shuffles in order to give a randomness.
+        Collections.shuffle(queue, secureRandom);
+        return queue;
     }
 
-    private ArrayList<QuestionQuiz> generateQuestionsForWordsQuizTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return new ArrayList<>();
+    @NonNull @NotNull
+    private LinkedList<Pair<String,Translation>> generateAllTranslationsQueue(ArrayList<LessonEntrance> valueList){
+        if(valueList == null || valueList.isEmpty()){
+            throw new UnsupportedOperationException("Here translation can not be null or empty");
+        }
+
+        // Translations will be associated with values in order to know from what item is it, using
+        // a pair of (valueId, translation).
+
+        // Add all translations in an HashMap with (key, value) where:
+        //   - key   --> score
+        //   - value --> all translation with same score stored as Pair(itemId,translation)
+        HashMap<Double, ArrayList<Pair<String,Translation>>> hashMap = new HashMap<>();
+
+        // Go to every item.
+        for(LessonEntrance item : valueList){
+            if(item == null){
+                continue;
+            }
+
+            // And save every item translation.
+            for(Translation translation : item.getTranslations()){
+                if(translation == null || translation.getTranslation().isEmpty()){
+                    continue;
+                }
+
+                double key = translation.getStatistics().getScore();
+                if(hashMap.containsKey(key)){
+                    ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
+                    if(currentList == null){
+                        currentList = new ArrayList<>();
+                    }
+                    currentList.add(new Pair<>(item.getId(), translation));
+                    hashMap.put(key, currentList);
+                }
+                else {
+                    hashMap.put(key, new ArrayList<>(Collections.singletonList(new Pair<>(item.getId(), translation))));
+                }
+            }
+        }
+
+        // Shuffle all translations with same score in order to give some randomness.
+        for(Double key : hashMap.keySet()){
+            ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
+            if(currentList == null){
+                hashMap.remove(key);
+                continue;
+            }
+            Collections.shuffle(currentList, secureRandom);
+            hashMap.put(key, currentList);
+        }
+
+        // Sort hash map keys (score) ascending.
+        ArrayList<Double> sortedKeySet = new ArrayList<>(hashMap.keySet());
+        Collections.sort(sortedKeySet);
+
+        // Add final values in a queue.
+        LinkedList<Pair<String,Translation>> queue = new LinkedList<>();
+        for(Double key : sortedKeySet){
+            ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
+            if(currentList == null){
+                continue;
+            }
+            queue.addAll(currentList);
+        }
+
+        return queue;
     }
 
-    private ArrayList<QuestionMixed> generateQuestionsForExpressionsMixedWordsTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return generateQuestionsForMixedTest(valueList, questionsNr, isCustomSelection);
+    @NonNull @NotNull
+    private LinkedList<Translation> generateItemTranslationsQueue(LessonEntrance item){
+        if(item == null){
+            throw new UnsupportedOperationException("Here item can not be null or empty");
+        }
+        // Process all item translations.
+        LinkedList<Pair<String, Translation>> tmp = generateAllTranslationsQueue(new ArrayList<>(Collections.singletonList(item)));
+
+        // And get only translations because is no need for item id.
+        LinkedList<Translation> queue = new LinkedList<>();
+        for(Pair<String, Translation> pair : tmp){
+            queue.add(pair.second);
+        }
+
+        return queue;
     }
 
-    private ArrayList<QuestionTrueOrFalse> generateQuestionsForExpressionsTrueOrFalseTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return new ArrayList<>();
+    @NonNull @NotNull
+    private Translation getNextItemTranslation(LinkedList<Translation> translations){
+        if(translations == null || translations.isEmpty()){
+            throw new UnsupportedOperationException("Here translation can not be null or empty");
+        }
+
+        // Extract first translation and add it at final in order to simulate a circular queue.
+        Translation extractedTranslation = translations.poll();
+        translations.add(extractedTranslation);
+
+        // Before returning check if extracted translation value is valid.
+        if(extractedTranslation == null){
+            throw new UnsupportedOperationException("Here translation can not be null");
+        }
+
+        return extractedTranslation;
     }
 
-    private ArrayList<QuestionMixed> generateQuestionsForMixedTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        return new ArrayList<>();
+    @NonNull @NotNull
+    private Pair<String,Translation> getNextGeneralTranslation(LinkedList<Pair<String,Translation>> translations){
+        if(translations == null || translations.isEmpty()){
+            throw new UnsupportedOperationException("Here translation can not be null or empty");
+        }
+
+        // Extract first pair of (itemId,translation) from queue and add it at final in order to
+        // simulate a circular queue.
+        Pair<String,Translation> extractedTranslation = translations.poll();
+        translations.add(extractedTranslation);
+
+        // Before returning check if extracted translation value is valid.
+        if(extractedTranslation == null){
+            throw new UnsupportedOperationException("Here extractedTranslation can not be null");
+        }
+        if(extractedTranslation.first == null || extractedTranslation.first.isEmpty()){
+            throw new UnsupportedOperationException("Here id can not be null or empty");
+        }
+        if(extractedTranslation.second == null || extractedTranslation.second.getTranslation().isEmpty()){
+            throw new UnsupportedOperationException("Here Translation can not be null or with an empty value");
+        }
+
+        return extractedTranslation;
+    }
+
+    @NonNull @NotNull
+    private Pair<String,Translation> getNextDifferentGeneralTranslation(LinkedList<Pair<String,Translation>> translations, HashSet<Long> ids){
+        if(translations == null || translations.isEmpty()){
+            throw new UnsupportedOperationException("Here translation can not be null or empty");
+        }
+
+        if(ids == null){
+            ids = new HashSet<>();
+        }
+
+        // Try to get a translations which is not already in id's. If is not possible return any
+        // translation. Max number of trials will be the actually size of the translations queue.
+        int currentTry = 0;
+        int nrOfTrials = translations.size();
+        Pair<String,Translation> tmp;
+        while (true){
+            // Extract value.
+            tmp = getNextGeneralTranslation(translations);
+
+            // If number of trials is over return current value.
+            if(currentTry > nrOfTrials){
+                return tmp;
+            }
+
+            // Otherwise if translation is not different continue.
+            if(ids.contains(tmp.second.getId())){
+                currentTry++;
+                continue;
+            }
+
+            // But if translation is different return it.
+            return tmp;
+        }
+    }
+
+    @NonNull @NotNull
+    private LessonEntrance getNextGeneralItem(LinkedList<LessonEntrance> items){
+        if(items == null || items.isEmpty()){
+            throw new UnsupportedOperationException("Here items can not be null or empty");
+        }
+
+        // Extract first item from queue and add it at final in order to simulate a circular queue.
+        LessonEntrance extractedItem = items.poll();
+        items.add(extractedItem);
+
+        // Before returning check if extracted translation value is valid.
+        if(extractedItem == null){
+            throw new UnsupportedOperationException("Here extractedItem can not be null");
+        }
+
+        return extractedItem;
+    }
+
+    @NonNull @NotNull
+    private LessonEntrance getNextDifferentGeneralItem(LinkedList<LessonEntrance> items, HashSet<String> ids){
+        if(items == null || items.isEmpty()){
+            throw new UnsupportedOperationException("Here items can not be null or empty");
+        }
+
+        if(ids == null){
+            ids = new HashSet<>();
+        }
+
+        // Try to get an item which is not already in id's. If is not possible return any
+        // item. Max number of trials will be the actually size of the items queue.
+        int currentTry = 0;
+        int nrOfTrials = items.size();
+        LessonEntrance tmp;
+        while (true){
+            // Extract value.
+            tmp = getNextGeneralItem(items);
+
+            // If number of trials is over return current value.
+            if(currentTry > nrOfTrials){
+                return tmp;
+            }
+
+            // Otherwise if item is not different continue.
+            if(ids.contains(tmp.getId())){
+                currentTry++;
+                continue;
+            }
+
+            // But if item is different return it.
+            return tmp;
+        }
+    }
+
+    private int generateRandomIndex(int lim){
+        // generate in interval [0, lim)
+        return secureRandom.nextInt(lim);
     }
 
 
 
+
+
+
+
+    private ArrayList<QuestionFullWrite> generateQuestionsForWordsFullWriteTest(int usertype, ArrayList<LessonEntrance> valueList,
+                                                                                int questionsNr, boolean isCustomSelection){
+        if(isCustomSelection){
+            // If is custom selection will be used all values from valueList because these values were
+            // selected by user/guest.
+           return tryToGenerateQuestionsForWordsFullWriteTest(usertype, valueList);
+        }
+
+        // Otherwise use extracted values.
+        return tryToGenerateQuestionsForWordsFullWriteTest(usertype, extractValues(valueList, questionsNr));
+    }
+
+    private ArrayList<QuestionFullWrite> tryToGenerateQuestionsForWordsFullWriteTest(int userType, ArrayList<LessonEntrance> valueList){
+        // Go to every entrance and generate question.
+        ArrayList<QuestionFullWrite> questions = new ArrayList<>();
+        // for every test will be 'size' questions so 'idx' can be used as unique id for the question.
+        int size = valueList.size();
+        for(int idx = 0; idx < size; idx++){
+            LessonEntrance word = valueList.get(idx);
+            LinkedList<Translation> wordTranslationsQueue = generateItemTranslationsQueue(word);
+
+            // 1.1 Normal value is actually current word.
+            String questionValue = word.getValue();
+
+            // 1.2 Reversed value will be a random translation of the current word.
+            Translation qvrTranslation = getNextItemTranslation(wordTranslationsQueue);
+            String questionValueReversed = qvrTranslation.getTranslation();
+
+            // 1.3 Add correct normal answers (a correct normal answer will be any of the translations
+            //     of the current word). Also at this full iteration save translations id's.
+            ArrayList<String> correctAnswers = new ArrayList<>();
+            HashSet<Long> translationIds = new HashSet<>();
+            for(Translation translation : word.getTranslations()){
+                correctAnswers.add(translation.getTranslation());
+                // Also add translation id to identifiers.
+                translationIds.add(translation.getId());
+            }
+
+            // 1.4 Add reversed correct answer (reversed correct answer will be actually the current word).
+            ArrayList<String> correctAnswersReversed = new ArrayList<>(Collections.singletonList(word.getValue()));
+
+            // 2. Create question
+
+            // 2.1  Extract identifiers.
+            ArrayList<QuestionIdentifier> identifiersArrayList = new ArrayList<>(
+                    Collections.singletonList(
+                            new QuestionIdentifier(
+                                    QuestionIdentifier.Identifiers.WORD,
+                                    word.getId(),
+                                    translationIds
+                            )
+                    )
+            );
+
+            ArrayList<QuestionIdentifier> reversedIdentifiersArrayList = new ArrayList<>(
+                    Collections.singletonList(
+                            new QuestionIdentifier(
+                                    QuestionIdentifier.Identifiers.WORD,
+                                    word.getId(),
+                                    new HashSet<>(Collections.singletonList(qvrTranslation.getId()))
+                            )
+                    )
+            );
+
+            // 2.2 Create metadata values.
+            QuestionMetadata metadata = new QuestionMetadata(
+                    userType,
+                    identifiersArrayList,
+                    reversedIdentifiersArrayList
+            );
+
+            // 2.3 Create current type question
+            QuestionFullWrite tmp = new QuestionFullWrite(
+                    idx, // counter 'idx' can be used as unique id
+                    Question.Types.QUESTION_FULL_WRITE,
+                    questionValue,
+                    questionValueReversed,
+                    metadata,
+                    correctAnswers,
+                    correctAnswersReversed
+            );
+
+            // 2.4 And finally add the question at questions list.
+            questions.add(tmp);
+        }
+
+        return questions;
+    }
+
+
+    private ArrayList<QuestionQuiz> generateQuestionsForWordsQuizTest(int usertype, ArrayList<LessonEntrance> valueList,
+                                                                      int questionsNr, boolean isCustomSelection){
+        if(isCustomSelection){
+            // If is custom selection will be used all values from valueList because these values were
+            // selected by user/guest.
+            return tryToGenerateQuestionsForWordsQuizTest(usertype, valueList);
+        }
+
+        // Otherwise use extracted values.
+        return tryToGenerateQuestionsForWordsQuizTest(usertype, extractValues(valueList, questionsNr));
+    }
+
+    private ArrayList<QuestionQuiz> tryToGenerateQuestionsForWordsQuizTest(int userType, ArrayList<LessonEntrance> valueList){
+        // 1. Add 2 queues:
+        //      - For storing all words from value list.
+        //      - For storing all translations from every word.
+        LinkedList<LessonEntrance> allWordsQueue = generateAllValuesQueue(valueList);
+        LinkedList<Pair<String,Translation>> allTranslationsQueue = generateAllTranslationsQueue(valueList);
+
+        // 2. Go to every entrance and generate question.
+        ArrayList<QuestionQuiz> questions = new ArrayList<>();
+        // for every test will be 'size' questions so 'idx' can be used as unique id for the question.
+        int size = valueList.size();
+        for(int idx = 0; idx < size; idx++){
+            LessonEntrance word = valueList.get(idx);
+            LinkedList<Translation> wordTranslationsQueue = generateItemTranslationsQueue(word);
+
+            // Used to save identifiers: (key, value) = (wordId, associated translations id's)
+            HashMap<String, HashSet<Long>> normalIdentifiers = new HashMap<>();
+            HashMap<String, HashSet<Long>> reversedIdentifiers = new HashMap<>();
+
+            // 2.1 Set question values.
+
+            // 2.1.1 Normal value is actually current word.
+            String questionValue = word.getValue();
+
+            // 2.1.2 Reversed value will be a random translation of the current word.
+            Translation qvrTranslation = getNextItemTranslation(wordTranslationsQueue);
+            String questionValueReversed = qvrTranslation.getTranslation();
+            reversedIdentifiers.put(word.getId(), new HashSet<>(Collections.singletonList(qvrTranslation.getId())));
+
+            // 2.1.3 Add normal answer options.
+            ArrayList<Pair<String, Translation>> normalOptionsPairs = new ArrayList<>();
+
+            // Correct answer value will be a random translation of the current word.
+            Translation cavTranslation = getNextItemTranslation(wordTranslationsQueue);
+            normalOptionsPairs.add(new Pair<>(word.getId(), cavTranslation));
+            normalIdentifiers.put(word.getId(), new HashSet<>(Collections.singletonList(cavTranslation.getId())));
+
+            // Add the rest of the normal options. Options should be all different but accept same
+            // options after a number of trials in order to avoid an infinite loop. In order to check
+            // translations a set of the selected translations id's will be used.
+            HashSet<Long> normalOptionIds = new HashSet<>();
+            normalOptionIds.add(cavTranslation.getId());
+            for(int i = 0; i < QuestionQuiz.OPTIONS_NR - 1; i++){
+                // Extract and add option (here option will be actually a translation).
+                Pair<String, Translation> tmp = getNextDifferentGeneralTranslation(allTranslationsQueue, normalOptionIds);
+                normalOptionsPairs.add(new Pair<>(tmp.first, tmp.second));
+                normalOptionIds.add(tmp.second.getId());
+
+                // Add translation id associated with word id.
+                HashSet<Long> currentList = normalIdentifiers.get(tmp.first);
+                if(currentList == null){
+                    normalIdentifiers.put(tmp.first, new HashSet<>(Collections.singletonList(tmp.second.getId())));
+                }
+                else{
+                    currentList.add(tmp.second.getId());
+                    normalIdentifiers.put(tmp.first, currentList);
+                }
+            }
+
+            // 2.1.4 Add reversed answer options.
+            ArrayList<String> reversedOptions = new ArrayList<>();
+            // Correct reversed value will be current word.
+            reversedOptions.add(word.getValue());
+
+            // Add the rest of the reversed options. Options should be all different but accept same
+            // options after a number of trials in order to avoid an infinite loop. In order to check
+            // items a set of the selected items id's will be used.
+            HashSet<String> reversedOptionIds = new HashSet<>();
+            reversedOptionIds.add(word.getId());
+            for(int i = 0; i < QuestionQuiz.OPTIONS_NR - 1; i++){
+                // Extract and add reversed option (here reversed option will be another word).
+                LessonEntrance tmp = getNextDifferentGeneralItem(allWordsQueue, reversedOptionIds);
+                reversedOptions.add(tmp.getValue());
+                reversedOptionIds.add(tmp.getId());
+
+                // And add word identifier id if does not exists already.
+                if(!reversedIdentifiers.containsKey(tmp.getId())){
+                    reversedIdentifiers.put(tmp.getId(), new HashSet<>());
+                }
+            }
+
+
+            // 2.1.5 Shuffle normal options and save correct answers.
+            // Get first option before shuffle in order to avoid index lost.
+            String firstOption = normalOptionsPairs.get(0).second.getTranslation().trim().toLowerCase();
+            Collections.shuffle(normalOptionsPairs, secureRandom);
+            ArrayList<Integer> correctAnswers = new ArrayList<>();
+            int lim = normalOptionsPairs.size();
+            for(int i = 0; i < lim; i++){
+                // Every correct translation which is from current word or is equal with first option
+                // will be added, so if two or more options are the same user can choose any of them.
+                boolean isSameValue = normalOptionsPairs.get(i).second.getTranslation().trim().toLowerCase().equals(firstOption);
+                boolean isFromSameWord = word.getId().equals(normalOptionsPairs.get(i).first);
+                if(isSameValue || isFromSameWord){
+                    correctAnswers.add(i);
+                }
+            }
+
+            // Extract normal options from pairs.
+            ArrayList<String> normalOptions = new ArrayList<>();
+            normalOptionsPairs.forEach(pair -> normalOptions.add(pair.second.getTranslation()));
+
+            // 2.1.6 Shuffle reversed options and save correct reversed answers.
+            // Get first reversed option before shuffle in order to avoid index lost.
+            String firstReversedOption = reversedOptions.get(0).trim().toLowerCase();
+            Collections.shuffle(reversedOptions, secureRandom);
+            ArrayList<Integer> correctAnswersReversed = new ArrayList<>();
+            lim = reversedOptions.size();
+            for(int i = 0; i < lim; i++){
+                // Every correct option will be added, so if two options are the same user can choose
+                // any of them. Hre every correct option means every word which has same value as
+                // firstReversedOption (which is current word).
+                if(reversedOptions.get(i).trim().toLowerCase().equals(firstReversedOption)){
+                    correctAnswersReversed.add(i);
+                }
+            }
+
+            // 2.2 Create question
+
+            // 2.2.1 Extract identifiers.
+            ArrayList<QuestionIdentifier> normalIdentifiersArrayList = new ArrayList<>();
+            normalIdentifiers.forEach((key,value) -> normalIdentifiersArrayList.add(new QuestionIdentifier(QuestionIdentifier.Identifiers.WORD, key, value)));
+
+            ArrayList<QuestionIdentifier> reversedIdentifiersArrayList = new ArrayList<>();
+            reversedIdentifiers.forEach((key,value) -> reversedIdentifiersArrayList.add(new QuestionIdentifier(QuestionIdentifier.Identifiers.WORD, key, value)));
+
+            // 2.2.2 Create metadata values
+            QuestionMetadata metadata = new QuestionMetadata(
+                    userType,
+                    normalIdentifiersArrayList,
+                    reversedIdentifiersArrayList
+            );
+
+            // 2.2.3 Create current type question.
+            QuestionQuiz tmp = new QuestionQuiz(
+                    idx, // counter 'idx' can be used as unique id
+                    Question.Types.QUESTION_QUIZ,
+                    questionValue,
+                    questionValueReversed,
+                    metadata,
+                    normalOptions,
+                    reversedOptions,
+                    correctAnswers,
+                    correctAnswersReversed
+            );
+
+            // 2.2.4 And finally add the question at questions list.
+            questions.add(tmp);
+        }
+
+        return questions;
+    }
+
+
+    private ArrayList<QuestionTrueOrFalse> generateQuestionsForExpressionsTrueOrFalseTest(int usertype, ArrayList<LessonEntrance> valueList,
+                                                                                          int questionsNr, boolean isCustomSelection){
+        if(isCustomSelection){
+            // If is custom selection will be used all values from valueList because these values were
+            // selected by user/guest.
+            return tryToGenerateQuestionsForExpressionsTrueOrFalseTest(usertype, valueList);
+        }
+
+        // Otherwise use extracted values.
+        return tryToGenerateQuestionsForExpressionsTrueOrFalseTest(usertype, extractValues(valueList, questionsNr));
+    }
+
+    private ArrayList<QuestionTrueOrFalse> tryToGenerateQuestionsForExpressionsTrueOrFalseTest(int userType, ArrayList<LessonEntrance> valueList){
+        // 1. Add 2 queues:
+        //      - For storing all expressions from value list.
+        //      - For storing all translations from every expression.
+        LinkedList<LessonEntrance> allExpressionsQueue = generateAllValuesQueue(valueList);
+        LinkedList<Pair<String,Translation>> allTranslationsQueue = generateAllTranslationsQueue(valueList);
+
+        // 2. Go to every entrance and generate question.
+        ArrayList<QuestionTrueOrFalse> questions = new ArrayList<>();
+        // for every test will be 'size' questions so 'idx' can be used as unique id for the question.
+        int size = valueList.size();
+        for(int idx = 0; idx < size; idx++){
+            LessonEntrance expression = valueList.get(idx);
+            LinkedList<Translation> expressionTranslationsQueue = generateItemTranslationsQueue(expression);
+
+            // Used to save identifiers.
+            ArrayList<QuestionIdentifier> normalIdentifiers = new ArrayList<>();
+            ArrayList<QuestionIdentifier> reversedIdentifiers = new ArrayList<>();
+
+            // 2.1 Set question values.
+
+            // 2.1.1 Normal question value is actually the current expression.
+            String questionValue = expression.getValue();
+
+            // 2.1.2 Reversed question value will be a random translation of the current expression.
+            Translation qvrTranslation = getNextItemTranslation(expressionTranslationsQueue);
+            String questionValueReversed = qvrTranslation.getTranslation();
+            reversedIdentifiers.add(
+                    new QuestionIdentifier(
+                            QuestionIdentifier.Identifiers.EXPRESSION,
+                            expression.getId(),
+                            new HashSet<>(Collections.singletonList(qvrTranslation.getId()))
+                    )
+            );
+
+            // 2.1.3 Add normal option. This Question type is True or False so answer can be true or
+            //       false. Use a uniform variable in order to determine from where to get option. If
+            //       option will be taken from queue that are big chances to have correctResponse with
+            //       False value, but if option is not from queue then are 100 % chances to have
+            //       correctResponse with True value.
+            boolean getFromQueue = secureRandom.nextBoolean();
+            String normalOption;
+            int correctAnswer;
+            if(getFromQueue){
+                // Extract option (here option will be actually a translation).
+                Pair<String,Translation> tmp = getNextDifferentGeneralTranslation(
+                        allTranslationsQueue,
+                        new HashSet<>(Collections.singletonList(qvrTranslation.getId()))
+                );
+                normalOption = tmp.second.getTranslation();
+
+                // Add normal identifiers and set correctAnswer value.
+
+                // If extracted translation is for the current expression then set 1 single
+                // normal identifier ans set response to True.
+                if(tmp.first.equals(expression.getId())){
+                    correctAnswer = QuestionTrueOrFalse.RESPONSE_TRUE;
+                    normalIdentifiers.add(
+                            new QuestionIdentifier(
+                                    QuestionIdentifier.Identifiers.EXPRESSION,
+                                    expression.getId(),
+                                    new HashSet<>(Collections.singletonList(tmp.second.getId()))
+                            )
+                    );
+                }
+                else {
+                    // Here means that the extracted translation is from another expression, so
+                    // set response to False and 2 normal identifiers:
+                    //  a. for current expression which will serve as question answer value
+                    //  b. for current extracted translation which will serve as normal option
+                    correctAnswer = QuestionTrueOrFalse.RESPONSE_FALSE;
+
+                    normalIdentifiers.add(
+                            new QuestionIdentifier(
+                                    QuestionIdentifier.Identifiers.EXPRESSION,
+                                    expression.getId(),
+                                    new HashSet<>()
+                            )
+                    );
+
+                    normalIdentifiers.add(
+                            new QuestionIdentifier(
+                                    QuestionIdentifier.Identifiers.EXPRESSION,
+                                    tmp.first,
+                                    new HashSet<>(Collections.singletonList(tmp.second.getId()))
+                            )
+                    );
+                }
+            }
+            else {
+                // Here normalOption will be a random translation of the current expression.
+                Translation noTranslation = getNextItemTranslation(expressionTranslationsQueue);
+                normalOption = noTranslation.getTranslation();
+
+                // In this case response will be True.
+                correctAnswer = QuestionTrueOrFalse.RESPONSE_TRUE;
+
+                // Add normal identifier. For this question type in that case will be a single identifier
+                // (current expression and associated expression).
+                normalIdentifiers.add(new QuestionIdentifier(
+                        QuestionIdentifier.Identifiers.EXPRESSION,
+                        expression.getId(),
+                        new HashSet<>(Collections.singletonList(noTranslation.getId()))
+                ));
+            }
+
+
+            // 2.1.4 Add reversed option. This Question type is True or False so answer can be true or
+            //       false. Use a uniform variable in order to determine from where to get option. If
+            //       option will be taken from queue that are big chances to have correctReversedResponse
+            //       with False value, but if option  is not from queue then are 100 % chances to have
+            //       correctReversedResponse with True value.
+            getFromQueue = secureRandom.nextBoolean();
+            String reversedOption;
+            int correctAnswerReversed;
+            if(getFromQueue){
+                // Extract and add reversed option (here reversed option will be another expression).
+                LessonEntrance tmp = getNextDifferentGeneralItem(
+                        allExpressionsQueue,
+                        new HashSet<>(Collections.singletonList(expression.getId()))
+                );
+                reversedOption = tmp.getValue();
+
+                // Add reversed identifiers and set correctAnswerReversed value.
+
+                // If extracted expression is actually the current expression set response to True.
+                // Is no need to set a reversed identifier because it was already set when reversed
+                // option was generated.
+                if(tmp.getId().equals(expression.getId())){
+                    correctAnswerReversed = QuestionTrueOrFalse.RESPONSE_TRUE;
+                }
+                else{
+                    // Here means that the extracted expression is NOT current expression so
+                    // translation from the reversed question value is not for the extracted expression.
+                    // Set response to False and set 1 reversed identifier for extracted expression.
+                    // For current expression (not extracted one) reversed identifier was already
+                    // set when reversed option was generated.
+                    correctAnswerReversed = QuestionTrueOrFalse.RESPONSE_FALSE;
+
+                    reversedIdentifiers.add(new QuestionIdentifier(
+                            QuestionIdentifier.Identifiers.EXPRESSION,
+                            tmp.getId(),
+                            new HashSet<>()
+                    ));
+                }
+            }
+            else {
+                // Here reversedOption will be actually the current expression. Set response to True,
+                // and is no need to add a reversed identifier because it was already set when reversed
+                // option was generated.
+                reversedOption = expression.getValue();
+                correctAnswerReversed = QuestionTrueOrFalse.RESPONSE_TRUE;
+            }
+
+            // 2.2 Create question
+
+            // 2.2.1 Create metadata values.
+            QuestionMetadata metadata = new QuestionMetadata(
+                    userType,
+                    normalIdentifiers,
+                    reversedIdentifiers
+            );
+
+            // 2.2.2  Create current type question.
+            QuestionTrueOrFalse tmp = new QuestionTrueOrFalse(
+                    idx, // counter 'idx' can be used as unique id
+                    Question.Types.QUESTION_TRUE_OR_FALSE,
+                    questionValue,
+                    questionValueReversed,
+                    metadata,
+                    normalOption,
+                    reversedOption,
+                    correctAnswer,
+                    correctAnswerReversed
+            );
+
+            // 2.2.3 And finally add the question at questions list.
+            questions.add(tmp);
+        }
+
+        return questions;
+    }
+
+
+    private ArrayList<QuestionMixed> generateQuestionsForWordsMixedLettersTest(int usertype, ArrayList<LessonEntrance> valueList,
+                                                                               int questionsNr, boolean isCustomSelection){
+        return generateQuestionsForMixedTest(true, usertype, valueList, questionsNr, isCustomSelection);
+    }
+
+    private ArrayList<QuestionMixed> generateQuestionsForExpressionsMixedWordsTest(int usertype, ArrayList<LessonEntrance> valueList,
+                                                                                   int questionsNr, boolean isCustomSelection){
+        return generateQuestionsForMixedTest(false, usertype, valueList, questionsNr, isCustomSelection);
+    }
+
+    private ArrayList<QuestionMixed> generateQuestionsForMixedTest(boolean isWordTest, int usertype, ArrayList<LessonEntrance> valueList,
+                                                                   int questionsNr, boolean isCustomSelection){
+        if(isCustomSelection){
+            // If is custom selection will be used all values from valueList because these values were
+            // selected by user/guest.
+            return tryToGenerateQuestionsForMixedTest(isWordTest, usertype, valueList);
+        }
+
+        // Otherwise use extracted values.
+        return tryToGenerateQuestionsForMixedTest(isWordTest, usertype, extractValues(valueList, questionsNr));
+    }
+
+    private ArrayList<QuestionMixed> tryToGenerateQuestionsForMixedTest(boolean isWordTest, int userType, ArrayList<LessonEntrance> valueList){
+        // Go to every entrance and generate question.
+        ArrayList<QuestionMixed> questions = new ArrayList<>();
+        // for every test will be 'size' questions so 'idx' can be used as unique id for the question.
+        int size = valueList.size();
+        for(int idx = 0; idx < size; idx++){
+            LessonEntrance item = valueList.get(idx);
+            // 1. Set question values.
+
+            // 1.1 Remove all two or more adjacent spaces/new lines and split item value in words.
+            String[] values = CoreUtilities.General.removeAdjacentSpacesAndNewLines(item.getValue()).split(" ");
+            ArrayList<String> wordsList = new ArrayList<>(Arrays.asList(values));
+
+            // 1.2 Create question value and correct answer order.
+            ArrayList<String> correctAnswerOrder = new ArrayList<>();
+            if(isWordTest){
+                // For words test, questionValue will be a random word from the split and should be
+                // an words with more than 1 letter.
+                List<String> tmp = wordsList.stream()
+                        .filter(s -> s != null && s.length() > 1)
+                        .collect(Collectors.toList());
+
+                // If no word with more that '1' letter exist ignore current item, because test has
+                // no sens with one letter.
+                if(tmp.isEmpty()){
+                    continue;
+                }
+
+                // Here words with more than '1' letter existed so extract a random word.
+                String randomWord = tmp.get(generateRandomIndex(tmp.size()));
+
+                // Correct answer order will be randomWord split in letters.
+                for(Character c : randomWord.toCharArray()){
+                    correctAnswerOrder.add(String.valueOf(c));
+                }
+            }
+            else {
+                // For expressions test, questionValue will be a number of adjacent words from the split.
+                // This number will be MAX_WORDS_FOR_MIXING if are more than MAX_WORDS_FOR_MIXING words in
+                // the expression split or a number in interval [MIN_WORDS_FOR_MIXING, MAX_WORDS_FOR_MIXING]
+                // if words number is <= MAX_WORDS_FOR_MIXING.
+
+                // If are not enough words in the expression ignore item.
+                if(wordsList.size() < QuestionMixed.MIN_WORDS_FOR_MIXING){
+                    continue;
+                }
+
+                // If in the expression are more words that we need, choose only 'MAX_WORDS_FOR_MIXING'
+                // adjacent words. Otherwise all words will be extracted.
+                if(wordsList.size() > QuestionMixed.MAX_WORDS_FOR_MIXING){
+                    // startIdx will be in interval [0, wordsList.size() - QuestionMixed.MAX_WORDS_FOR_MIXING)
+                    int startIdx = secureRandom.nextInt(wordsList.size() - QuestionMixed.MAX_WORDS_FOR_MIXING);
+                    // Extract sublist: [startIdx, startIdx + QuestionMixed.MAX_WORDS_FOR_MIXING)
+                    wordsList = new ArrayList<>(wordsList.subList(startIdx, startIdx + QuestionMixed.MAX_WORDS_FOR_MIXING));
+                }
+
+                // Construct correct answer order which will be actually list of extracted words.
+                correctAnswerOrder.addAll(wordsList);
+            }
+
+            // 1.3 Create start order:
+            //     For words test, start order will be correctAnswerOrder with letters shuffled.
+            //     For expressions test, start order will be correctAnswerOrder with words shuffled.
+
+            // Start order should be different than correct answer oder.
+            ArrayList<String> startOrder = new ArrayList<>(correctAnswerOrder);
+            int currentTry = 0;
+            int nrOfTrials = 2 * startOrder.size();
+            boolean isSameOrder = true;
+            while (true){
+                if(currentTry > nrOfTrials){
+                    break;
+                }
+                currentTry++;
+
+                Collections.shuffle(startOrder, secureRandom);
+                if(!startOrder.equals(correctAnswerOrder)){
+                    isSameOrder = false;
+                    break;
+                }
+            }
+
+            // If startOrder is same as correctOrder is no sense for question so ignore it.
+            if(isSameOrder){
+                continue;
+            }
+
+            // 1.4 Create question value:
+            //     For words test, questionValue will contain all letters from startOrder.
+            //     For expressions test, questionValue will contain all words from startOrder.
+            StringBuilder stringBuilder = new StringBuilder();
+            for(String element : startOrder){
+                stringBuilder.append(element).append(" ");
+            }
+            // Get value without last space.
+            String questionValue = stringBuilder.substring(0, stringBuilder.length() - 1);
+
+
+            // 2. Create question
+
+            // 2.1 Extract identifiers.
+            ArrayList<QuestionIdentifier> identifiersArrayList = new ArrayList<>();
+            if(isWordTest){
+                identifiersArrayList.add(new QuestionIdentifier(QuestionIdentifier.Identifiers.WORD, item.getId(), new HashSet<>()));
+            }
+            else{
+                identifiersArrayList.add(new QuestionIdentifier(QuestionIdentifier.Identifiers.EXPRESSION, item.getId(), new HashSet<>()));
+            }
+
+            // 2.2 Create metadata values.
+            QuestionMetadata metadata = new QuestionMetadata(
+                    userType,
+                    // At this question type ere normal identifiers are same as reversed identifiers.
+                    identifiersArrayList,
+                    identifiersArrayList
+            );
+
+            // 2.3 Create current type question.
+            QuestionMixed tmp = new QuestionMixed(
+                    idx, // counter 'idx' can be used as unique id
+                    Question.Types.QUESTION_MIXED,
+                    questionValue,
+                    metadata,
+                    startOrder,
+                    correctAnswerOrder
+            );
+
+            // 2.4 And finally add the question at questions list.
+            questions.add(tmp);
+        }
+
+        return questions;
+    }
 
     @NonNull @NotNull
     private ArrayList<LessonEntrance> convertWordsToLessonEntrance(ArrayList<Word> wordList){
