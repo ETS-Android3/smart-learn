@@ -742,12 +742,6 @@ public class TestService {
      * */
     private void continueWithTestGeneration(boolean isForUser, ArrayList<LessonEntrance> valueList, Test testOptions,
                                             int questionsNr, TestService.TestGenerationCallback callback){
-        valueList = filterValues(valueList);
-        if(valueList.isEmpty()){
-            callback.onComplete(NO_TEST_ID);
-            return;
-        }
-
         // For tests which are NOT scheduled questions must be generated always base on the value
         // list and questionsNr.
         //
@@ -774,6 +768,13 @@ public class TestService {
         }
 
         // generate test questions
+
+        // make a filter in order to keep only valid items
+        valueList = filterValues(valueList);
+        if(valueList.isEmpty()){
+            callback.onComplete(NO_TEST_ID);
+            return;
+        }
 
         // questionNr are nr of questions which will be generated, so maximum for generated questions
         // can be valueList.size()
