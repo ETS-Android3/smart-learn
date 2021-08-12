@@ -64,6 +64,6 @@ public abstract class FinalizeTestViewModel extends BasicAndroidViewModel {
         }
         // https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        liveSuccessRateDescription.setValue(decimalFormat.format((float)correctAnswers / (float)totalQuestions) + " %");
+        liveSuccessRateDescription.setValue(decimalFormat.format((((float)correctAnswers / (float)totalQuestions)) * 100) + " %");
     }
 }
