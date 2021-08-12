@@ -273,9 +273,19 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
     }
 
     private String getTotalTestTimeDescription(long currentTime){
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(currentTime);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(currentTime);
-        return minutes + ":" + seconds;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        seconds = seconds - minutes * 60;
+        minutes = minutes - hours * 60;
+        String hourString = hours < 10 ? "0" + hours : String.valueOf(hours);
+        String minutesString = minutes < 10 ? "0" + minutes : String.valueOf(minutes);
+        String secondsString = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+        if(hours < 1){
+            return minutesString + ":" + secondsString;
+        }
+        return hourString + ":" + minutesString + ":" + secondsString + " (h:m:s)";
+
     }
 
     private void startTestTotalTimeCounter(@NonNull @NotNull BasicTestTypeFragment<?> fragment){
@@ -415,7 +425,7 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
 
         // update success rate
         if(extractedTest.getTotalQuestions() != 0){
-            extractedTest.setSuccessRate((float)extractedTest.getCorrectAnswers() / (float)extractedTest.getTotalQuestions());
+            extractedTest.setSuccessRate(((float)extractedTest.getCorrectAnswers() / (float)extractedTest.getTotalQuestions()) * 100);
         }
 
         // finally update test and save progress
