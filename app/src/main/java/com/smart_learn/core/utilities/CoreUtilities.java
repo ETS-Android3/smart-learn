@@ -14,6 +14,7 @@ import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -395,6 +396,29 @@ public abstract class CoreUtilities {
 
 
         /**
+         * Use to remove all adjacent spaces and new lines from a string.
+         * All adjacent spaces/new lines will be replaced with a single space.
+         *
+         * @param value String to be processed.
+         *
+         * @return Processed string.
+         * */
+        @NonNull @NotNull
+        public static String removeAdjacentSpacesAndNewLines(String value){
+            if(value == null || value.isEmpty()){
+                return "";
+            }
+
+            // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead/2932439#2932439
+            // https://stackoverflow.com/questions/2163045/how-to-remove-line-breaks-from-a-file-in-java/2163204#2163204
+            return value
+                    .trim()
+                    .replaceAll("\\R+", " ")
+                    .replaceAll(" +", " ");
+        }
+
+
+        /**
          * Use to remove spaces from a string.
          *
          * @param value String for which space removal is made.
@@ -657,6 +681,27 @@ public abstract class CoreUtilities {
             // https://stackoverflow.com/questions/153724/how-to-round-a-number-to-n-decimal-places-in-java
             DecimalFormat decimalFormat = new DecimalFormat(pattern);
             return decimalFormat.format(value);
+        }
+
+        /**
+         * Use to get an instance of a secure random number generator (RNG).
+         *
+         * @return An instance of a secure random number generator (RNG)
+         * */
+        public static SecureRandom getSecureRandomInstance(){
+            // There is no need for seed, because it be seeded automatically when a value is requested.
+            // https://stackoverflow.com/questions/30012295/java-8-lambda-filter-by-lists
+            return new SecureRandom();
+        }
+
+        /**
+         * Use to generate an uniqueId.
+         *
+         * @return An unique id.
+         * */
+        public static long generateUniqueId(){
+            // TODO: try to find a better way to generate a unique long id.
+            return System.currentTimeMillis();
         }
     }
 
