@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.data.helpers.DataCallbacks;
 
@@ -80,6 +81,35 @@ public abstract class BasicFirestoreRepository <T> {
 
         documentSnapshot.getReference()
                 .update(updatedInfo);
+        callback.onSuccess();
+    }
+
+    public void updateDocument(@NonNull @NotNull Map<String,Object> updatedInfo, @NonNull @NotNull String documentPath,
+                               @NonNull @NotNull DataCallbacks.General callback){
+
+        // FIXME: same problem as in commitBatch method.
+        /*
+
+
+       FirebaseFirestore.getInstance()
+                .document(documentPath)
+                .update(updatedInfo)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                            callback.onSuccess();
+                            return;
+                        }
+
+                        // here update operation failed
+                        Timber.w(task.getException());
+                        callback.onFailure();
+                        }
+                });
+         */
+
+        FirebaseFirestore.getInstance().document(documentPath).update(updatedInfo);
         callback.onSuccess();
     }
 

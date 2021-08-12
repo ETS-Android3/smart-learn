@@ -67,6 +67,29 @@ public abstract class BasicFirestoreService <T, R extends BasicFirestoreReposito
         repositoryInstance.updateDocument(updatedInfo, documentSnapshot, callback);
     }
 
+    public void updateDocument(Map<String,Object> updatedInfo, String documentPath, DataCallbacks.General callback){
+        if(documentPath == null || documentPath.isEmpty()){
+            Timber.w("documentPath is null or empty");
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Document [" + documentPath + "] updated",
+                    "Document [" + documentPath + "] NOT updated");
+        }
+
+        if(updatedInfo == null){
+            Timber.w("updatedInfo is null");
+            callback.onFailure();
+            return;
+        }
+
+        repositoryInstance.updateDocument(updatedInfo, documentPath, callback);
+    }
+
     public void deleteDocument(DocumentSnapshot documentSnapshot, DataCallbacks.General callback){
         if(DataUtilities.Firestore.notGoodDocumentSnapshot(documentSnapshot)){
             if(callback != null){
