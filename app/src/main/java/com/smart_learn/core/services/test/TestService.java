@@ -238,7 +238,7 @@ public class TestService {
      * @param testOptions Options for new test.
      * @param callback Callback to manage onComplete action.
      * */
-    public void generateUserWordTest(ArrayList<WordDocument> valueList, Test testOptions, TestService.TestGenerationCallback callback){
+    public void generateUserWordTest(ArrayList<DocumentSnapshot> valueList, Test testOptions, TestService.TestGenerationCallback callback){
         if(callback == null){
             Timber.w("callback is null");
             return;
@@ -272,7 +272,7 @@ public class TestService {
      * @param testOptions Options for new test.
      * @param callback Callback to manage onComplete action.
      * */
-    public void generateUserExpressionTest(ArrayList<ExpressionDocument> valueList, Test testOptions, TestService.TestGenerationCallback callback){
+    public void generateUserExpressionTest(ArrayList<DocumentSnapshot> valueList, Test testOptions, TestService.TestGenerationCallback callback){
         if(callback == null){
             Timber.w("callback is null");
             return;
@@ -359,18 +359,7 @@ public class TestService {
                             return;
                         }
 
-                        // get words
-                        ArrayList<WordDocument> wordList = new ArrayList<>();
-                        for(DocumentSnapshot snapshot : task.getResult().getDocuments()){
-                            if(snapshot == null){
-                                continue;
-                            }
-                            WordDocument word = snapshot.toObject(WordDocument.class);
-                            if(word != null){
-                                wordList.add(word);
-                            }
-                        }
-
+                        ArrayList<DocumentSnapshot> wordList = new ArrayList<>(task.getResult().getDocuments());
                         if(wordList.isEmpty()){
                             Timber.w("no words");
                             callback.onComplete(NO_TEST_ID);
@@ -416,17 +405,7 @@ public class TestService {
                         }
 
                         // get expressions
-                        ArrayList<ExpressionDocument> expressionsList = new ArrayList<>();
-                        for(DocumentSnapshot snapshot : task.getResult().getDocuments()){
-                            if(snapshot == null){
-                                continue;
-                            }
-                            ExpressionDocument expression = snapshot.toObject(ExpressionDocument.class);
-                            if(expression != null){
-                                expressionsList.add(expression);
-                            }
-                        }
-
+                        ArrayList<DocumentSnapshot> expressionsList = new ArrayList<>(task.getResult().getDocuments());
                         if(expressionsList.isEmpty()){
                             Timber.w("no expressions");
                             callback.onComplete(NO_TEST_ID);
@@ -892,26 +871,7 @@ public class TestService {
 
 
     private ArrayList<QuestionFullWrite> generateQuestionsForWordsFullWriteTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        if(valueList == null){
-            return new ArrayList<>();
-        }
-
-        ArrayList<QuestionFullWrite> questions = new ArrayList<>();
-        if(isCustomSelection){
-            questionsNr = 10;
-        }
-
-        for(int i = 1; i <= questionsNr; i++){
-            QuestionFullWrite tmp = new QuestionFullWrite(
-                    i,
-                    Question.Types.QUESTION_FULL_WRITE,
-                    "word " + i  + " full write",
-                    "reversed word " + i + " full write",
-                    String.valueOf(i), "r" + i);
-            questions.add(tmp);
-        }
-
-        return questions;
+        return new ArrayList<>();
     }
 
     private ArrayList<QuestionMixed> generateQuestionsForWordsMixedLettersTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
@@ -919,44 +879,7 @@ public class TestService {
     }
 
     private ArrayList<QuestionQuiz> generateQuestionsForWordsQuizTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        if(valueList == null){
-            return new ArrayList<>();
-        }
-
-        ArrayList<QuestionQuiz> questions = new ArrayList<>();
-        if(isCustomSelection){
-            questionsNr = 10;
-        }
-
-        for(int i = 1; i <= questionsNr; i++){
-
-            ArrayList<String> options = new ArrayList<>();
-            options.add("word word word word word word word word word word word word word word word word word word " + i);
-            options.add("word word word word word word word word word word word word word word word word word word " + i);
-            options.add("word word word word word word word word word word word word word word word word word word " + i);
-            options.add("word word word word word word word word word word word word word word word word word word " + i);
-
-            ArrayList<String> reversedOption = new ArrayList<>();
-            reversedOption.add("A. word reversed: " + i);
-            reversedOption.add("B. word reversed: " + i);
-            reversedOption.add("C. word reversed: " + i);
-            reversedOption.add("D. word reversed: " + i);
-
-            QuestionQuiz tmp = new QuestionQuiz(
-                    i,
-                    Question.Types.QUESTION_QUIZ,
-                    "translated word" + i,
-                    "translated word reversed " + i,
-                    new ArrayList<>(options),
-                    new ArrayList<>(reversedOption),
-                    1,
-                    2
-            );
-
-            questions.add(tmp);
-        }
-
-        return questions;
+        return new ArrayList<>();
     }
 
     private ArrayList<QuestionMixed> generateQuestionsForExpressionsMixedWordsTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
@@ -964,163 +887,17 @@ public class TestService {
     }
 
     private ArrayList<QuestionTrueOrFalse> generateQuestionsForExpressionsTrueOrFalseTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        if(valueList == null){
-            return new ArrayList<>();
-        }
-
-        ArrayList<QuestionTrueOrFalse> questions = new ArrayList<>();
-        if(isCustomSelection){
-            questionsNr = 10;
-        }
-
-        for(int i = 1; i <= questionsNr; i++){
-            QuestionTrueOrFalse tmp = new QuestionTrueOrFalse(
-                    i,
-                    Question.Types.QUESTION_TRUE_OR_FALSE,
-                    "expression expression expression expression expression expression expression " +
-                            "expression expression expression expression expression expression expression" +
-                            "expression expression expression expression expression expression expression" +
-                            "expression expression expression expression expression expression expression" +
-                            "expression expression expression expression expression expression expression" +
-                            "expression expression expression expression expression expression expression" + i,
-                    "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed" +
-                            "reversed reversed reversed reversed reversed reversed reversed reversed"
-                            + i,
-                    "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" +
-                            "option option option option option option option option option option" + i,
-                    "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "option reversed option reversed option reversed option reversed option reversed" +
-                            "" + i,
-                    QuestionTrueOrFalse.RESPONSE_TRUE,
-                    QuestionTrueOrFalse.RESPONSE_FALSE);
-            questions.add(tmp);
-        }
-
-        return questions;
+        return new ArrayList<>();
     }
 
     private ArrayList<QuestionMixed> generateQuestionsForMixedTest(ArrayList<LessonEntrance> valueList, int questionsNr, boolean isCustomSelection){
-        if(valueList == null){
-            return new ArrayList<>();
-        }
-
-        ArrayList<QuestionMixed> questions = new ArrayList<>();
-        if(isCustomSelection){
-            questionsNr = 10;
-        }
-
-        ArrayList<String> startOrder = new ArrayList<>();
-        startOrder.add("a");
-        startOrder.add("d");
-        startOrder.add("b");
-        startOrder.add("c");
-        startOrder.add("e");
-        startOrder.add("f");
-        startOrder.add("g");
-
-
-        ArrayList<String> answerOrder = new ArrayList<>();
-        answerOrder.add("a");
-        answerOrder.add("b");
-        answerOrder.add("c");
-        answerOrder.add("d");
-        answerOrder.add("e");
-        answerOrder.add("f");
-        answerOrder.add("g");
-
-//        ArrayList<String> startOrder = new ArrayList<>();
-//        startOrder.add("word_1");
-//        startOrder.add("word_7");
-//        startOrder.add("word_3");
-//        startOrder.add("word_5");
-//        startOrder.add("word_4");
-//        startOrder.add("word_6");
-//        startOrder.add("word_2");
-//        startOrder.add("word_10");
-//        startOrder.add("word_9");
-//        startOrder.add("word_8");
-//        startOrder.add("word_1");
-//        startOrder.add("word_7");
-//        startOrder.add("word_3");
-//        startOrder.add("word_5");
-//        startOrder.add("word_4");
-//        startOrder.add("word_6");
-//        startOrder.add("word_2");
-//        startOrder.add("word_10");
-//        startOrder.add("word_9");
-//        startOrder.add("word_8");
-//        startOrder.add("word_1");
-//        startOrder.add("word_7");
-//        startOrder.add("word_3");
-//        startOrder.add("word_5");
-//        startOrder.add("word_4");
-//        startOrder.add("word_6");
-//        startOrder.add("word_2");
-//        startOrder.add("word_10");
-//        startOrder.add("word_9");
-//        startOrder.add("word_8");
-//        startOrder.add("word_1");
-//        startOrder.add("word_7");
-//        startOrder.add("word_3");
-//        startOrder.add("word_5");
-//        startOrder.add("word_4");
-//        startOrder.add("word_6");
-//        startOrder.add("word_2");
-//        startOrder.add("word_10");
-//        startOrder.add("word_9");
-//        startOrder.add("word_8");
-//
-//
-//        ArrayList<String> answerOrder = new ArrayList<>();
-//        answerOrder.add("word_1");
-//        answerOrder.add("word_2");
-//        answerOrder.add("word_3");
-//        answerOrder.add("word_4");
-//        answerOrder.add("word_5");
-//        answerOrder.add("word_6");
-//        answerOrder.add("word_7");
-//        answerOrder.add("word_8");
-//        answerOrder.add("word_9");
-//        answerOrder.add("word_10");
-
-
-        for(int i = 1; i <= questionsNr; i++){
-            QuestionMixed tmp = new QuestionMixed(
-                    i,
-                    Question.Types.QUESTION_MIXED,
-                    //"a d b c d d d   s s s sd s  sd s d s ds d s ds d s s d s ds ds d s ds d s ds d sd s d sd s d s" + 1,
-                    "word_1 word_1 word_1 word_1 word_1 word_1 word_1 word_1 word_1 word_1" + 1,
-                    startOrder,
-                    answerOrder
-                    );
-            questions.add(tmp);
-        }
-
-        return questions;
+        return new ArrayList<>();
     }
 
 
-    @NonNull
-    @NotNull
+
+
+    @NonNull @NotNull
     private ArrayList<LessonEntrance> convertWordsToLessonEntrance(ArrayList<Word> wordList){
         if(wordList == null || wordList.isEmpty()){
             return new ArrayList<>();
@@ -1128,13 +905,19 @@ public class TestService {
 
         ArrayList<LessonEntrance> convertedList = new ArrayList<>();
         for(Word word : wordList){
-            convertedList.add(new LessonEntrance(word.getWord(),word.getTranslations()));
+            convertedList.add(
+                    new LessonEntrance(
+                        String.valueOf(word.getWordId()),
+                        word.getWord(),
+                        word.getTranslations(),
+                        word.getStatistics()
+                    )
+            );
         }
         return convertedList;
     }
 
-    @NonNull
-    @NotNull
+    @NonNull @NotNull
     private ArrayList<LessonEntrance> convertExpressionsToLessonEntrance(ArrayList<Expression> expressionList){
         if(expressionList == null || expressionList.isEmpty()){
             return new ArrayList<>();
@@ -1142,35 +925,62 @@ public class TestService {
 
         ArrayList<LessonEntrance> convertedList = new ArrayList<>();
         for(Expression expression : expressionList){
-            convertedList.add(new LessonEntrance(expression.getExpression(),expression.getTranslations()));
+            convertedList.add(
+                    new LessonEntrance(
+                            String.valueOf(expression.getExpressionId()),
+                            expression.getExpression(),
+                            expression.getTranslations(),
+                            expression.getStatistics()
+                    )
+            );
         }
         return convertedList;
     }
 
-    @NonNull
-    @NotNull
-    private ArrayList<LessonEntrance> convertWordDocumentsToLessonEntrance(ArrayList<WordDocument> wordList){
+    @NonNull @NotNull
+    private ArrayList<LessonEntrance> convertWordDocumentsToLessonEntrance(ArrayList<DocumentSnapshot> wordList){
         if(wordList == null || wordList.isEmpty()){
             return new ArrayList<>();
         }
 
         ArrayList<LessonEntrance> convertedList = new ArrayList<>();
-        for(WordDocument word : wordList){
-            convertedList.add(new LessonEntrance(word.getWord(), Translation.fromJsonToList(word.getTranslations())));
+        for(DocumentSnapshot snapshot : wordList){
+            WordDocument word = snapshot.toObject(WordDocument.class);
+            if(word == null){
+                continue;
+            }
+            convertedList.add(
+                    new LessonEntrance(
+                            snapshot.getReference().getPath(), // for id use entire document path
+                            word.getWord(),
+                            Translation.fromJsonToList(word.getTranslations()),
+                            word.getStatistics()
+                    )
+            );
         }
         return convertedList;
     }
 
-    @NonNull
-    @NotNull
-    private ArrayList<LessonEntrance> convertExpressionDocumentsToLessonEntrance(ArrayList<ExpressionDocument> expressionList){
+    @NonNull @NotNull
+    private ArrayList<LessonEntrance> convertExpressionDocumentsToLessonEntrance(ArrayList<DocumentSnapshot> expressionList){
         if(expressionList == null || expressionList.isEmpty()){
             return new ArrayList<>();
         }
 
         ArrayList<LessonEntrance> convertedList = new ArrayList<>();
-        for(ExpressionDocument expression : expressionList){
-            convertedList.add(new LessonEntrance(expression.getExpression(),  Translation.fromJsonToList(expression.getTranslations())));
+        for(DocumentSnapshot snapshot : expressionList){
+            ExpressionDocument expression = snapshot.toObject(ExpressionDocument.class);
+            if(expression == null){
+                continue;
+            }
+            convertedList.add(
+                    new LessonEntrance(
+                            snapshot.getReference().getPath(), // for id use entire document path
+                            expression.getExpression(),
+                            Translation.fromJsonToList(expression.getTranslations()),
+                            expression.getStatistics()
+                    )
+            );
         }
         return convertedList;
     }
@@ -1310,7 +1120,7 @@ public class TestService {
             // Every alarm must have a unique id.
             // FIXME: if is an overflow from 'long' to 'int', two id's can be the same at some time,
             //  so find another way for getting a unique id.
-            return (int) System.currentTimeMillis();
+            return (int) CoreUtilities.General.generateUniqueId();
         }
 
         public int setExactAlarm(String scheduledTestId, String message, boolean forUser, long time){

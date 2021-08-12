@@ -3,6 +3,7 @@ package com.smart_learn.data.room.db;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -25,6 +26,8 @@ import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -76,46 +79,74 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
-            databaseWriteExecutor.execute(() -> {
-
-                BasicInfo basicInfo = new BasicInfo(System.currentTimeMillis());
-
-                Lesson lesson = new Lesson("notes lectia 1",false, basicInfo,"lectia 1");
-                int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
-
-                ArrayList<Translation> translations = new ArrayList<>();
-                translations.add(new Translation("trans 1","phon 1", ""));
-                translations.add(new Translation("trans 2","phon 2", ""));
-                translations.add(new Translation("trans 3","phon 3", ""));
-                translations.add(new Translation("trans 4","phon 4", ""));
-                translations.add(new Translation("trans 5","phon 5", ""));
-                translations.add(new Translation("trans 6","phon 6", ""));
-                translations.add(new Translation("trans 7","phon 7", ""));
-                translations.add(new Translation("trans 8","phon 8", ""));
-                Word word = new Word("word 1",false,
-                        basicInfo,idLesson,false,"", translations,"word 1", "phonetic 1");
-                instance.wordDao().insert(word);
-
-                word = new Word("notes word 2",false,
-                        basicInfo,idLesson,false,"", translations,"word 2", "phonetic 2");
-                instance.wordDao().insert(word);
-
-                word = new Word("notes word 3",false,
-                        basicInfo,idLesson,false,"", translations,"word 3", "phonetic 3");
-                instance.wordDao().insert(word);
-
-                word = new Word("notes word 4",false,
-                        basicInfo,idLesson,false,"", translations,"word 4", "phonetic 4");
-                instance.wordDao().insert(word);
-
-                lesson = new Lesson("notes lectia 2",false, basicInfo,"lectia 2");
-                instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 3",false, basicInfo,"lectia 3");
-                instance.lessonDao().insert(lesson);
-                lesson = new Lesson("notes lectia 4",false, basicInfo,"lectia 4");
-                instance.lessonDao().insert(lesson);
-            });
+            databaseWriteExecutor.execute(AppRoomDatabase::addInitialData);
         }
     };
+
+    private static void addInitialData(){
+        BasicInfo basicInfo = new BasicInfo(System.currentTimeMillis());
+
+        int translationsUniqueId = 0;
+
+        Lesson lesson = new Lesson("This is an example lesson",false, basicInfo,"Example lesson");
+        int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
+
+        // add words
+        ArrayList<Pair<String, ArrayList<String>>> valuesWords = new ArrayList<>();
+        valuesWords.add(new Pair<>("Hi", new ArrayList<>(Arrays.asList("Salut","Buna"))));
+        valuesWords.add(new Pair<>("Good luck", new ArrayList<>(Arrays.asList("Noroc","Numai bine"))));
+        valuesWords.add(new Pair<>("car", new ArrayList<>(Arrays.asList("masina","autoturism"))));
+        valuesWords.add(new Pair<>("orange", new ArrayList<>(Arrays.asList("portocala","portocaliu"))));
+        valuesWords.add(new Pair<>("sky", new ArrayList<>(Arrays.asList("cer","orizont"))));
+        valuesWords.add(new Pair<>("avion", new ArrayList<>(Collections.singletonList("plane"))));
+        valuesWords.add(new Pair<>("verde", new ArrayList<>(Collections.singletonList("green"))));
+        valuesWords.add(new Pair<>("curat", new ArrayList<>(Arrays.asList("clean", "fresh"))));
+        valuesWords.add(new Pair<>("univers", new ArrayList<>(Arrays.asList("universe", "cosmos"))));
+        valuesWords.add(new Pair<>("copac", new ArrayList<>(Collections.singletonList("tree"))));
+
+        ArrayList<Word> wordsList = new ArrayList<>();
+        for(Pair<String, ArrayList<String>> pair : valuesWords){
+            ArrayList<Translation> translations = new ArrayList<>();
+            for(String item : pair.second){
+                translationsUniqueId++;
+                translations.add(new Translation(translationsUniqueId, item,"", ""));
+            }
+
+            Word word = new Word("",false, basicInfo, idLesson,false,"",
+                    translations,pair.first, "");
+            wordsList.add(word);
+        }
+
+        instance.wordDao().insertAll(wordsList);
+
+
+        // add expressions
+        ArrayList<Pair<String, ArrayList<String>>> valuesExp = new ArrayList<>();
+        valuesExp.add(new Pair<>("It's a piece of cake", new ArrayList<>(Arrays.asList("Este usor", "E o nimica toata"))));
+        valuesExp.add(new Pair<>("It's raining cats and dogs", new ArrayList<>(Arrays.asList("Ploua cu galeata", "Plouă puternic"))));
+        valuesExp.add(new Pair<>("Kill two birds with one stone", new ArrayList<>(Collections.singletonList("omorî doi iepuri dintr-o împuşcătură"))));
+        valuesExp.add(new Pair<>("Let the cat out of the bag", new ArrayList<>(Arrays.asList("Da în vileag un secret","se da de gol"))));
+        valuesExp.add(new Pair<>("He has bigger fish to fry", new ArrayList<>(Collections.singletonList("Are lucruri mai mari de care să aibă grijă decât ceea ce vorbim acum"))));
+        valuesExp.add(new Pair<>("A-și lua nasul la purtare", new ArrayList<>(Collections.singletonList("to be impudent"))));
+        valuesExp.add(new Pair<>("A călca pe bec", new ArrayList<>(Collections.singletonList(" to break a rule"))));
+        valuesExp.add(new Pair<>("A fi prins cu mâța-n sac", new ArrayList<>(Collections.singletonList("be caught lying"))));
+        valuesExp.add(new Pair<>("A ieși basma curată", new ArrayList<>(Collections.singletonList("to get rid of accusations"))));
+        valuesExp.add(new Pair<>("A-l scoate din pepeni", new ArrayList<>(Collections.singletonList("to annoy someone"))));
+
+        ArrayList<Expression> expressionsList = new ArrayList<>();
+        for(Pair<String, ArrayList<String>> pair : valuesExp){
+            ArrayList<Translation> translations = new ArrayList<>();
+            for(String item : pair.second){
+                translationsUniqueId++;
+                translations.add(new Translation(translationsUniqueId, item,"", ""));
+            }
+
+            Expression expression = new Expression("",false, basicInfo, idLesson,false,"",
+                    translations,pair.first);
+            expressionsList.add(expression);
+        }
+
+        instance.expressionDao().insertAll(expressionsList);
+
+    }
 }

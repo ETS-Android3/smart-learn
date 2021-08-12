@@ -1,5 +1,7 @@
 package com.smart_learn.data.entities;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smart_learn.core.utilities.CoreUtilities;
@@ -16,16 +18,38 @@ import lombok.ToString;
 @ToString
 public class QuestionFullWrite extends Question implements PresenterHelpers.DiffUtilCallbackHelper<QuestionFullWrite> {
 
-    private final String correctAnswer;
-    private final String correctAnswerReversed;
+    private final ArrayList<String> correctAnswers;
+    private final ArrayList<String> correctAnswersReversed;
 
     private String userAnswer;
 
-    public QuestionFullWrite(int id, int type, String questionValue, String questionValueReversed, String correctAnswer,
-                             String correctAnswerReversed) {
-        super(id,type, questionValue, questionValueReversed);
-        this.correctAnswer = correctAnswer == null ? "" : correctAnswer.trim();
-        this.correctAnswerReversed = correctAnswerReversed == null ? "" : correctAnswerReversed.trim();
+    public QuestionFullWrite(long id, int type, String questionValue, String questionValueReversed, QuestionMetadata questionMetadata,
+                             ArrayList<String> correctAnswers, ArrayList<String> correctAnswersReversed) {
+        super(id,type, questionValue, questionValueReversed, questionMetadata);
+
+        if(correctAnswers == null){
+            this.correctAnswers = new ArrayList<>();
+        }
+        else{
+            this.correctAnswers = new ArrayList<>();
+            for(String value : correctAnswers){
+                if(!TextUtils.isEmpty(value)){
+                    this.correctAnswers.add(value.trim());
+                }
+            }
+        }
+
+        if(correctAnswersReversed == null){
+            this.correctAnswersReversed = new ArrayList<>();
+        }
+        else{
+            this.correctAnswersReversed = new ArrayList<>();
+            for(String value : correctAnswersReversed){
+                if(!TextUtils.isEmpty(value)){
+                    this.correctAnswersReversed.add(value.trim());
+                }
+            }
+        }
     }
 
     public void setUserAnswer(String userAnswer, boolean isReversed) {
@@ -35,11 +59,24 @@ public class QuestionFullWrite extends Question implements PresenterHelpers.Diff
         }
         this.userAnswer = userAnswer.trim();
         isAnswered = true;
+
+        userAnswer = this.userAnswer.toLowerCase();
+        isAnswerCorrect = false;
         if(isReversed){
-           isAnswerCorrect = this.userAnswer.toLowerCase().equals(correctAnswerReversed.toLowerCase());
+            for(String value : correctAnswersReversed){
+                if(userAnswer.equals(value.toLowerCase())){
+                    isAnswerCorrect = true;
+                    return;
+                }
+            }
         }
         else{
-            isAnswerCorrect = this.userAnswer.toLowerCase().equals(correctAnswer.toLowerCase());
+            for(String value : correctAnswers){
+                if(userAnswer.equals(value.toLowerCase())){
+                    isAnswerCorrect = true;
+                    return;
+                }
+            }
         }
     }
 
@@ -54,13 +91,20 @@ public class QuestionFullWrite extends Question implements PresenterHelpers.Diff
             return false;
         }
         return super.areContentsTheSame(newItem) &&
-                CoreUtilities.General.areObjectsTheSame(this.correctAnswer, newItem.getCorrectAnswer()) &&
-                CoreUtilities.General.areObjectsTheSame(this.correctAnswerReversed, newItem.getCorrectAnswerReversed()) &&
+                CoreUtilities.General.areObjectsTheSame(this.correctAnswers, newItem.getCorrectAnswers()) &&
+                CoreUtilities.General.areObjectsTheSame(this.correctAnswersReversed, newItem.getCorrectAnswersReversed()) &&
                 CoreUtilities.General.areObjectsTheSame(this.userAnswer, newItem.getUserAnswer());
     }
 
     public static QuestionFullWrite generateEmptyObject(){
-        return new QuestionFullWrite(NO_ID, Types.QUESTION_FULL_WRITE,"", "", "", "");
+        return new QuestionFullWrite(
+                NO_ID,
+                Types.QUESTION_FULL_WRITE,
+                "",
+                "",
+                QuestionMetadata.generateEmptyObject(),
+                new ArrayList<>(),
+                new ArrayList<>());
     }
 
     public static ArrayList<QuestionFullWrite> fromJsonToList(String value) {

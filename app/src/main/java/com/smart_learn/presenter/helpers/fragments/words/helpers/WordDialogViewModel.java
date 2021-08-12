@@ -48,8 +48,8 @@ public class WordDialogViewModel extends BasicAndroidViewModel {
     @Nullable
     public String getDialogSubmittedTranslation(LayoutDialogAddWordBinding dialogBinding){
         String translation = liveTranslation.getValue();
-        if(translation == null){
-            translation = "";
+        if(translation == null || translation.isEmpty()){
+            return null;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.

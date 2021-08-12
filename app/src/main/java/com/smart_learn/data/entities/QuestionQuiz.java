@@ -28,13 +28,14 @@ public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilC
     private final ArrayList<String> options;
     private final ArrayList<String> optionsReversed;
 
-    private final int correctAnswer;
-    private final int correctAnswerReversed;
+    private final ArrayList<Integer> correctAnswers;
+    private final ArrayList<Integer> correctAnswersReversed;
     private int userAnswer;
 
-    public QuestionQuiz(int id, int type, String questionValue, String questionValueReversed, ArrayList<String> options,
-                        ArrayList<String> optionsReversed, int correctAnswer, int correctAnswerReversed) {
-        super(id, type, questionValue, questionValueReversed);
+    public QuestionQuiz(long id, int type, String questionValue, String questionValueReversed, QuestionMetadata questionMetadata,
+                        ArrayList<String> options, ArrayList<String> optionsReversed, ArrayList<Integer> correctAnswers,
+                        ArrayList<Integer> correctAnswersReversed) {
+        super(id, type, questionValue, questionValueReversed, questionMetadata);
         this.userAnswer = NO_INDEX;
 
         if(options == null){
@@ -55,19 +56,30 @@ public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilC
         }
         this.optionsReversed = optionsReversed;
 
-        this.correctAnswer = correctAnswer;
-        this.correctAnswerReversed = correctAnswerReversed;
+        this.correctAnswers = correctAnswers == null ? new ArrayList<>() : correctAnswers;
+        this.correctAnswersReversed = correctAnswersReversed == null ? new ArrayList<>() : correctAnswersReversed;
     }
 
     public void setUserAnswer(int userAnswer, boolean isReversed) {
         this.isReversed = isReversed;
         this.userAnswer = userAnswer;
         isAnswered = true;
+        isAnswerCorrect = false;
         if(isReversed){
-            isAnswerCorrect = userAnswer == correctAnswerReversed;
+            for(Integer item : correctAnswersReversed){
+                if(userAnswer == item){
+                    isAnswerCorrect = true;
+                    return;
+                }
+            }
         }
         else{
-            isAnswerCorrect = userAnswer == correctAnswer;
+            for(Integer item : correctAnswers){
+                if(userAnswer == item){
+                    isAnswerCorrect = true;
+                    return;
+                }
+            }
         }
     }
 
@@ -84,14 +96,22 @@ public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilC
         return super.areContentsTheSame(newItem) &&
                 CoreUtilities.General.areObjectsTheSame(this.options, newItem.getOptions()) &&
                 CoreUtilities.General.areObjectsTheSame(this.optionsReversed, newItem.getOptionsReversed()) &&
-                this.correctAnswer == newItem.getCorrectAnswer() &&
-                this.correctAnswerReversed == newItem.getCorrectAnswerReversed() &&
+                CoreUtilities.General.areObjectsTheSame(this.correctAnswers, newItem.getCorrectAnswers()) &&
+                CoreUtilities.General.areObjectsTheSame(this.correctAnswersReversed, newItem.getCorrectAnswersReversed()) &&
                this.userAnswer == newItem.getUserAnswer();
     }
 
     public static QuestionQuiz generateEmptyObject(){
-        return new QuestionQuiz(NO_ID, Types.QUESTION_QUIZ, "", "",
-                getEmptyOptionsArray(), getEmptyOptionsArray(), 0, 0);
+        return new QuestionQuiz(
+                NO_ID,
+                Types.QUESTION_QUIZ,
+                "",
+                "",
+                QuestionMetadata.generateEmptyObject(),
+                getEmptyOptionsArray(),
+                getEmptyOptionsArray(),
+                new ArrayList<>(),
+                new ArrayList<>());
     }
 
     private static ArrayList<String> getEmptyOptionsArray(){
@@ -106,19 +126,30 @@ public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilC
         return tmp;
     }
 
-    public static String getStringAnswerValues(int option){
-        switch (option){
-            case 0:
-                return "A";
-            case 1:
-                return "B";
-            case 2:
-                return "C";
-            case 3:
-                return "D";
-            default:
-                return ApplicationController.getInstance().getString(R.string.no_response_given);
+    public static String getStringAnswerValues(ArrayList<Integer> options){
+        if(options == null || options.isEmpty()){
+            return ApplicationController.getInstance().getString(R.string.no_response_given);
         }
+
+        StringBuilder response = new StringBuilder();
+        int lim = options.size();
+        for(int i = 0; i < lim; i++){
+            switch (options.get(i)){
+                case 0:
+                    response.append("A, ");
+                    continue;
+                case 1:
+                    response.append("B, ");
+                    continue;
+                case 2:
+                    response.append("C, ");
+                    continue;
+                case 3:
+                    response.append("D, ");
+            }
+        }
+        // return without last 2 items ', '
+        return response.substring(0, response.length() - 2);
     }
 
     public static ArrayList<QuestionQuiz> fromJsonToList(String value) {

@@ -601,6 +601,7 @@
     <string name="error_word_has_no_translation">Word can not be selected because it has no translation.</string>
     <string name="error_word_can_not_be_selected">Word can not be selected.</string>
     <string name="error_expression_can_not_be_selected">Expression can not be selected</string>
+    <string name="any_of_the_followings">Any of the following options:</string>
 
     <string-array name="languages">
         <item>Engleza</item>

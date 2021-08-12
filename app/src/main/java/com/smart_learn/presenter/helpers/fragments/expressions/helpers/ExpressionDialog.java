@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutDialogAddExpressionBinding;
 
@@ -77,9 +78,11 @@ public class ExpressionDialog extends DialogFragment {
                     public void onClick(View view) {
                         String submittedExpressionValue = dialogViewModel.getDialogSubmittedExpressionValue(dialogBinding.etExpressionValueLayoutDialogAddExpression);
                         String submittedTranslation = dialogViewModel.getDialogSubmittedTranslation(dialogBinding.etTranslationLayoutDialogAddExpression);
-                        if(submittedExpressionValue != null && submittedTranslation != null){
+                        if(submittedExpressionValue != null){
                             ArrayList<Translation> translations = new ArrayList<>();
-                            translations.add(new Translation(submittedTranslation, "", ""));
+                            if(submittedTranslation != null){
+                                translations.add(new Translation(CoreUtilities.General.generateUniqueId(), submittedTranslation, "", ""));
+                            }
                             callback.onAddExpression(submittedExpressionValue, "", translations);
                             ExpressionDialog.this.dismiss();
                         }

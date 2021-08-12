@@ -1,11 +1,15 @@
 package com.smart_learn.data.firebase.firestore.entities;
 
+import com.smart_learn.data.entities.Statistics;
 import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCommonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -29,7 +33,13 @@ public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument
     private String ownerDisplayName = "";
 
     // array list of translations transformed in string with Gson
-    protected String translations;
+    private String translations;
+
+    // this will be used for generating questions
+    // (every lesson entrance will have an empty statistics by default)
+    @NotNull
+    @NonNull
+    private Statistics statistics = new Statistics();
 
     public LessonEntranceDocument() {
         // needed for Firestore
@@ -54,12 +64,17 @@ public abstract class LessonEntranceDocument extends BasicNotebookCommonDocument
         data.put(Fields.IS_FROM_SHARED_LESSON_FIELD_NAME, document.isFromSharedLesson());
         data.put(Fields.OWNER_DISPLAY_NAME_FIELD_NAME, document.getOwnerDisplayName());
         data.put(Fields.TRANSLATIONS_FIELD_NAME, document.getTranslations());
+        data.put(Statistics.Fields.STATISTICS_FIELD_NAME, Statistics.convertDocumentToHashMap(document.getStatistics()));
 
         return data;
     }
 
     public void setOwnerDisplayName(String ownerDisplayName) {
         this.ownerDisplayName = ownerDisplayName == null ? "" : ownerDisplayName;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics == null ? new Statistics() : statistics;
     }
 
     /**

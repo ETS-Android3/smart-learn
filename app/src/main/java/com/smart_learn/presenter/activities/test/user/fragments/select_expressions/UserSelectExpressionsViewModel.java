@@ -46,26 +46,6 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
             return;
         }
 
-        ArrayList<ExpressionDocument> selectedExpressions = new ArrayList<>();
-        for(DocumentSnapshot snapshot : selectedExpressionsSnapshots){
-            if(snapshot == null){
-                continue;
-            }
-            ExpressionDocument expression = snapshot.toObject(ExpressionDocument.class);
-            if (expression == null) {
-                Timber.w("expression is null");
-                liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
-                return;
-            }
-            selectedExpressions.add(expression);
-        }
-
-        if(selectedExpressions.isEmpty()){
-            Timber.w("selectedExpressions is empty");
-            liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
-            return;
-        }
-
         fragment.showProgressDialog("", fragment.getString(R.string.generating_test));
 
         // for online tests must exists a connexion while generating tests because notifications
@@ -74,7 +54,7 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
             new ConnexionChecker(new ConnexionChecker.Callback() {
                 @Override
                 public void isConnected() {
-                    continueWithGeneratingTest(fragment, test, selectedExpressions, true);
+                    continueWithGeneratingTest(fragment, test, selectedExpressionsSnapshots, true);
                 }
                 @Override
                 public void networkDisabled() {
@@ -93,12 +73,13 @@ public class UserSelectExpressionsViewModel extends UserBasicSelectExpressionsVi
         }
         else{
             // test is local so generate
-            continueWithGeneratingTest(fragment, test, selectedExpressions, false);
+            continueWithGeneratingTest(fragment, test, selectedExpressionsSnapshots, false);
         }
     }
 
-    private void continueWithGeneratingTest(UserSelectExpressionsFragment fragment, Test test, ArrayList<ExpressionDocument> selectedExpressions, boolean isOnline){
-        TestService.getInstance().generateUserExpressionTest(selectedExpressions, test, new TestService.TestGenerationCallback() {
+    private void continueWithGeneratingTest(UserSelectExpressionsFragment fragment, Test test,
+                                            ArrayList<DocumentSnapshot> selectedExpressionsSnapshots, boolean isOnline){
+        TestService.getInstance().generateUserExpressionTest(selectedExpressionsSnapshots, test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {

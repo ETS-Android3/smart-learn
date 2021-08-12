@@ -48,6 +48,8 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
     private AtomicLong totalTestTime;
     private CountDownTimer totalTestTimeCounter;
     private CountDownTimer currentQuestionTimeCounter;
+    // for round time (used for question statistics)
+    private AtomicLong roundTimeMilliseconds;
 
     // current questions shown on view
     private Question currentQuestion;
@@ -69,6 +71,7 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
         extractedTest = null;
         allTestQuestions = new ArrayList<>();
         remainingQuestions = new LinkedList<>();
+        roundTimeMilliseconds = new AtomicLong(0);
 
         liveShowQuestionCounter = new MutableLiveData<>(false);
         liveTotalTestTime = new MutableLiveData<>("");
@@ -238,6 +241,9 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
         if(extractedTest.getQuestionCounter() != Test.NO_COUNTER){
             startCurrentQuestionTimeCounter(fragment);
         }
+
+        // reset round time counter
+        roundTimeMilliseconds.set(0);
     }
 
     protected void prepareAndShowQuestion(boolean isReverseChecked){
@@ -283,6 +289,7 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
 
         totalTestTime = new AtomicLong(extractedTest.getTestTotalTime());
 
+        // step is 1 second (1000 mls)
         final long step = 1000;
         totalTestTimeCounter = new CountDownTimer(Test.MAX_TEST_TIME_SECONDS * 1000, step){
             @Override
@@ -292,6 +299,8 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
                     return;
                 }
                 liveTotalTestTime.postValue(getTotalTestTimeDescription(totalTestTime.addAndGet(step)));
+                // update round time also
+                roundTimeMilliseconds.getAndAdd(step);
             }
 
             @Override
@@ -322,7 +331,7 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
             return;
         }
 
-        currentQuestionTimeCounter = new CountDownTimer(extractedTest.getQuestionCounter() * 1000, 1000){
+        currentQuestionTimeCounter = new CountDownTimer(extractedTest.getQuestionCounter() * 1000L, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
                 if(!fragmentIsActive.get()){
@@ -349,7 +358,12 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
     }
 
     private void processCurrentQuestionResponse(@NonNull @NotNull BasicTestTypeFragment<?> fragment, @NonNull @NotNull BasicTestTypeViewModel.Callback callback){
-        // first extract processed question (will be checked if answer is correct)
+        // Set round time on question. Round time will be reset when next question will be extracted,
+        // so is no need to reset here.
+        currentQuestion.setAnswerTimeInMilliseconds(roundTimeMilliseconds.get());
+
+        // extract processed question (will be checked if answer is correct and statistics will be
+        // updated)
         Question processedQuestion = getProcessedQuestion(currentQuestion, currentQuestion.isReversed());
 
         // update question in totalQuestionsArray

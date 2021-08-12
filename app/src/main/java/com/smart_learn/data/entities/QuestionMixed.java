@@ -19,13 +19,19 @@ import lombok.ToString;
 @ToString
 public class QuestionMixed extends Question implements PresenterHelpers.DiffUtilCallbackHelper<QuestionMixed> {
 
+    // minimum of the words which should be extracted from an expression in order to create question
+    public static final int MIN_WORDS_FOR_MIXING = 2;
+    // how many words should be extracted from an expression in order to create question
+    public static final int MAX_WORDS_FOR_MIXING = 10;
+
     private final ArrayList<String> startOrder;
     private final ArrayList<String> correctAnswerOrder;
     private ArrayList<String> userAnswerOrder;
 
-    public QuestionMixed(int id, int type, String questionValue, ArrayList<String> startOrder, ArrayList<String> correctAnswerOrder) {
+    public QuestionMixed(long id, int type, String questionValue, QuestionMetadata questionMetadata,
+                         ArrayList<String> startOrder, ArrayList<String> correctAnswerOrder) {
         // here question reversed is not activated
-        super(id, type, questionValue, "");
+        super(id, type, questionValue, "", questionMetadata);
 
         this.startOrder = new ArrayList<>();
         if(startOrder == null){
@@ -88,7 +94,14 @@ public class QuestionMixed extends Question implements PresenterHelpers.DiffUtil
     }
 
     public static QuestionMixed generateEmptyObject(){
-        return new QuestionMixed(NO_ID, Types.QUESTION_MIXED,"", new ArrayList<>(), new ArrayList<>());
+        return new QuestionMixed(
+                NO_ID,
+                Types.QUESTION_MIXED,
+                "",
+                QuestionMetadata.generateEmptyObject(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
     }
 
     public static ArrayList<QuestionMixed> fromJsonToList(String value) {

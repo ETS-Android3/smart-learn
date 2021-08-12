@@ -30,9 +30,9 @@ public class QuestionTrueOrFalse extends Question implements PresenterHelpers.Di
     private final int correctAnswerReversed;
     private int userAnswer;
 
-    public QuestionTrueOrFalse(int id, int type, String questionValue, String questionValueReversed, String option, String optionReversed,
-                               int correctAnswer, int correctAnswerReversed) {
-        super(id, type, questionValue, questionValueReversed);
+    public QuestionTrueOrFalse(long id, int type, String questionValue, String questionValueReversed, QuestionMetadata questionMetadata,
+                               String option, String optionReversed, int correctAnswer, int correctAnswerReversed) {
+        super(id, type, questionValue, questionValueReversed, questionMetadata);
         this.option = option == null ? "" : option;
         this.optionReversed = option == null ? "" : optionReversed;
         this.userAnswer = NO_RESPONSE;
@@ -71,7 +71,16 @@ public class QuestionTrueOrFalse extends Question implements PresenterHelpers.Di
     }
 
     public static QuestionTrueOrFalse generateEmptyObject(){
-        return new QuestionTrueOrFalse(NO_ID, Types.QUESTION_FULL_WRITE,"", "", "", "", NO_RESPONSE, NO_RESPONSE);
+        return new QuestionTrueOrFalse(
+                NO_ID,
+                Types.QUESTION_FULL_WRITE,
+                "",
+                "",
+                QuestionMetadata.generateEmptyObject(),
+                "",
+                "",
+                NO_RESPONSE,
+                NO_RESPONSE);
     }
 
     public static ArrayList<QuestionTrueOrFalse> fromJsonToList(String value) {

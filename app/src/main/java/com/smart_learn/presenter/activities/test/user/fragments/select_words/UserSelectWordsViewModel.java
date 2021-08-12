@@ -45,23 +45,6 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
             return;
         }
 
-        ArrayList<WordDocument> selectedWords = new ArrayList<>();
-        for(DocumentSnapshot snapshot : selectedWordSnapshots){
-            if(snapshot == null){
-                continue;
-            }
-            WordDocument word = snapshot.toObject(WordDocument.class);
-            if(word != null){
-                selectedWords.add(word);
-            }
-        }
-
-        if(selectedWords.isEmpty()){
-            Timber.w("selectedWords is empty");
-            liveToastMessage.setValue(fragment.getString(R.string.no_selected_word));
-            return;
-        }
-
         fragment.showProgressDialog("", fragment.getString(R.string.generating_test));
 
         // for online tests must exists a connexion while generating tests because notifications
@@ -70,7 +53,7 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
             new ConnexionChecker(new ConnexionChecker.Callback() {
                 @Override
                 public void isConnected() {
-                    continueWithGeneratingTest(fragment, test, selectedWords, true);
+                    continueWithGeneratingTest(fragment, test, selectedWordSnapshots, true);
                 }
                 @Override
                 public void networkDisabled() {
@@ -89,12 +72,12 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
         }
         else{
             // test is local so generate
-            continueWithGeneratingTest(fragment, test, selectedWords, false);
+            continueWithGeneratingTest(fragment, test, selectedWordSnapshots, false);
         }
     }
 
-    private void continueWithGeneratingTest(UserSelectWordsFragment fragment, Test test, ArrayList<WordDocument> selectedWords, boolean isOnline){
-        TestService.getInstance().generateUserWordTest(selectedWords, test, new TestService.TestGenerationCallback() {
+    private void continueWithGeneratingTest(UserSelectWordsFragment fragment, Test test, ArrayList<DocumentSnapshot> selectedWordSnapshots, boolean isOnline){
+        TestService.getInstance().generateUserWordTest(selectedWordSnapshots, test, new TestService.TestGenerationCallback() {
             @Override
             public void onComplete(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {

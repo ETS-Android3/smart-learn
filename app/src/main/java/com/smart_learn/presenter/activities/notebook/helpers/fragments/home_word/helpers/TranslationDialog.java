@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutDialogTranslationBinding;
 
@@ -187,7 +188,8 @@ public class TranslationDialog extends DialogFragment {
                             submittedPhonetic = dialogViewModel.getDialogSubmittedPhonetic(binding.etWordPhoneticLayoutDialogTranslation);
                         }
                         if(submittedValue != null && submittedPhonetic != null){
-                            Translation newTranslation = new Translation(submittedValue, submittedPhonetic, "");
+                            Translation newTranslation = new Translation(CoreUtilities.General.generateUniqueId(),
+                                    submittedValue, submittedPhonetic, "");
                             callback.onAddOrUpdatePositiveButtonPress(newTranslation);
                             TranslationDialog.this.dismiss();
                         }

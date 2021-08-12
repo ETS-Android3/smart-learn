@@ -1,12 +1,17 @@
 package com.smart_learn.data.room.entities.helpers;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 
 import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.data.entities.Statistics;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -29,6 +34,13 @@ public abstract class LessonEntrance extends NotebookCommon {
     @ColumnInfo(name = "translations")
     protected ArrayList<Translation> translations;
 
+    // this will be used for generating questions
+    // (every lesson entrance will have an empty statistics by default)
+    @NotNull
+    @NonNull
+    @Embedded
+    private Statistics statistics = new Statistics();
+
     public LessonEntrance(String notes, boolean isSelected, BasicInfo basicInfo,
                           Integer fkLessonId, boolean isFavourite, String language,
                           ArrayList<Translation> translations) {
@@ -47,6 +59,11 @@ public abstract class LessonEntrance extends NotebookCommon {
                 CoreUtilities.General.areObjectsTheSame(this.fkLessonId, newItem.getFkLessonId()) &&
                 this.isFavourite == newItem.isFavourite() &&
                 CoreUtilities.General.areObjectsTheSame(this.language, newItem.getLanguage()) &&
-                Translation.areContentsTheSame(this.translations, newItem.getTranslations());
+                Translation.areContentsTheSame(this.translations, newItem.getTranslations()) &&
+                CoreUtilities.General.areObjectsTheSame(this.statistics, newItem.getStatistics());
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics == null ? new Statistics() : statistics;
     }
 }

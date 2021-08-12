@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutDialogAddWordBinding;
 
@@ -78,9 +79,11 @@ public class WordDialog extends DialogFragment {
                     public void onClick(View view) {
                         String submittedWordValue = dialogViewModel.getDialogSubmittedWordValue(dialogBinding);
                         String submittedTranslation = dialogViewModel.getDialogSubmittedTranslation(dialogBinding);
-                        if(submittedWordValue != null && submittedTranslation != null){
+                        if(submittedWordValue != null){
                             ArrayList<Translation> translations = new ArrayList<>();
-                            translations.add(new Translation(submittedTranslation, "", ""));
+                            if(submittedTranslation != null){
+                                translations.add(new Translation(CoreUtilities.General.generateUniqueId(), submittedTranslation, "", ""));
+                            }
                             callback.onAddWord(submittedWordValue, "", "", translations);
                             WordDialog.this.dismiss();
                         }

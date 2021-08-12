@@ -179,11 +179,15 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
     public final class QuestionFullWriteViewHolder extends BasicViewHolder<QuestionFullWrite, LayoutCardViewQuestionFullWriteBinding> {
 
         private final MutableLiveData<SpannableString> liveQuestionDescription;
+        private final MutableLiveData<String> liveCorrectAnswer;
+        private final MutableLiveData<String> liveCorrectAnswerReversed;
         private final MutableLiveData<String> liveUserAnswer;
 
         public QuestionFullWriteViewHolder(@NonNull LayoutCardViewQuestionFullWriteBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveQuestionDescription = new MutableLiveData<>(new SpannableString(""));
+            liveCorrectAnswer = new MutableLiveData<>("");
+            liveCorrectAnswerReversed = new MutableLiveData<>("");
             liveUserAnswer = new MutableLiveData<>("");
         }
 
@@ -193,6 +197,14 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
 
         public LiveData<String> getLiveUserAnswer(){
             return liveUserAnswer;
+        }
+
+        public LiveData<String> getLiveCorrectAnswer() {
+            return liveCorrectAnswer;
+        }
+
+        public LiveData<String> getLiveCorrectAnswerReversed() {
+            return liveCorrectAnswerReversed;
         }
 
         @Override
@@ -212,9 +224,50 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
 
             if(item.isReversed()){
                 liveQuestionDescription.setValue(getSpecificQuestionDescription(item.getType(), item.getQuestionValueReversed()));
+
+                if(!item.isAnswerCorrect()){
+                    // set correct reversed answer only if user did not give a correct response
+                    ArrayList<String> correctAnswersReversed = item.getCorrectAnswersReversed();
+                    int lim = correctAnswersReversed.size();
+                    if(lim < 2){
+                        // If is only one answer give answer without index in front. If no answer exist
+                        // an empty value will be set.
+                        liveCorrectAnswerReversed.setValue(lim < 1 ? "" : correctAnswersReversed.get(0));
+                    }
+                    else {
+                        StringBuilder stringBuilder = new StringBuilder(ApplicationController.getInstance().getString(R.string.any_of_the_followings));
+                        stringBuilder.append("\n");
+                        for(int i = 0; i < lim; i++){
+                            int idx = i + 1;
+                            stringBuilder.append((idx)).append(". ").append(correctAnswersReversed.get(i)).append("\n");
+                        }
+                        liveCorrectAnswerReversed.setValue(stringBuilder.substring(0, stringBuilder.length()).trim());
+                    }
+                }
+
             }
             else{
                 liveQuestionDescription.setValue(getSpecificQuestionDescription(item.getType(), item.getQuestionValue()));
+
+                if(!item.isAnswerCorrect()){
+                    // set correct answer only if user did not give a correct response
+                    ArrayList<String> correctAnswers = item.getCorrectAnswers();
+                    int lim = correctAnswers.size();
+                    if(lim < 2){
+                        // If is only one answer give answer without index in front. If no answer exist
+                        // an empty value will be set.
+                        liveCorrectAnswer.setValue(lim < 1 ? "" : correctAnswers.get(0));
+                    }
+                    else{
+                        StringBuilder stringBuilder = new StringBuilder(ApplicationController.getInstance().getString(R.string.any_of_the_followings));
+                        stringBuilder.append("\n");
+                        for(int i = 0; i < lim; i++){
+                            int idx = i + 1;
+                            stringBuilder.append(idx).append(". ").append(correctAnswers.get(i)).append("\n");
+                        }
+                        liveCorrectAnswer.setValue(stringBuilder.substring(0, stringBuilder.length()).trim());
+                    }
+                }
             }
         }
     }
@@ -274,11 +327,14 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
                 return;
             }
 
-            int correctAnswer = item.isReversed() ? item.getCorrectAnswerReversed() : item.getCorrectAnswer();
             int userAnswer = item.getUserAnswer();
-            optionsStatus.set(correctAnswer, CORRECT);
-            if(userAnswer != correctAnswer && userAnswer > 0 && userAnswer < optionsStatus.size()){
-                optionsStatus.set(userAnswer, WRONG);
+            optionsStatus.set(userAnswer, WRONG);
+            ArrayList<Integer> correctAnswers = item.isReversed() ? item.getCorrectAnswersReversed() : item.getCorrectAnswers();
+            for(Integer answer : correctAnswers){
+                optionsStatus.set(answer, CORRECT);
+                if(answer.equals(userAnswer)){
+                    optionsStatus.set(userAnswer, CORRECT);
+                }
             }
 
             int lim = optionsStatus.size();
@@ -292,14 +348,14 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
             }
 
             liveItemInfo.setValue(item);
-            liveUserAnswer.setValue(QuestionQuiz.getStringAnswerValues(item.getUserAnswer()));
+            liveUserAnswer.setValue(QuestionQuiz.getStringAnswerValues(new ArrayList<>(Collections.singletonList(item.getUserAnswer()))));
             if(item.isReversed()){
                 liveQuestionDescription.setValue(getSpecificQuestionDescription(item.getType(), item.getQuestionValueReversed()));
-                liveCorrectAnswer.setValue(QuestionQuiz.getStringAnswerValues(item.getCorrectAnswerReversed()));
+                liveCorrectAnswer.setValue(QuestionQuiz.getStringAnswerValues(item.getCorrectAnswersReversed()));
             }
             else{
                 liveQuestionDescription.setValue(getSpecificQuestionDescription(item.getType(), item.getQuestionValue()));
-                liveCorrectAnswer.setValue(QuestionQuiz.getStringAnswerValues(item.getCorrectAnswer()));
+                liveCorrectAnswer.setValue(QuestionQuiz.getStringAnswerValues(item.getCorrectAnswers()));
             }
         }
 

@@ -139,7 +139,7 @@
                     android:focusable="false"
                     android:gravity="start"
                     android:scrollbars="vertical"
-                    android:text="@{viewHolder.liveItemInfo.reversed ? viewHolder.liveItemInfo.correctAnswer : viewHolder.liveItemInfo.correctAnswerReversed}"
+                    android:text="@{viewHolder.liveItemInfo.reversed ? viewHolder.liveCorrectAnswerReversed : viewHolder.liveCorrectAnswer}"
                     android:inputType="textMultiLine|textNoSuggestions"
                     android:maxLines="4"
                     android:textColor="?android:attr/textColorSecondary"

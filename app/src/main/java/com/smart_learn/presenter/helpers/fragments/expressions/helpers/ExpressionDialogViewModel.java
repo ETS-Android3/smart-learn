@@ -48,8 +48,8 @@ public class ExpressionDialogViewModel extends BasicAndroidViewModel {
     @Nullable
     public String getDialogSubmittedTranslation(TextInputLayout textInputLayout){
         String translation = liveTranslation.getValue();
-        if(translation == null){
-            translation = "";
+        if(translation == null || translation.isEmpty()){
+            return null;
         }
 
         // This check is already made in edit text field and never should enter here, but double check it.
