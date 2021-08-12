@@ -607,4 +607,7 @@
     <string name="error_word_can_not_be_selected">Word can not be selected.</string>
     <string name="error_expression_can_not_be_selected">Expression can not be selected</string>
     <string name="any_of_the_followings">Any of the following options:</string>
+    <string name="error_not_enough_words_1">"Are not enough word for this test type. Minimum "</string>
+    <string name="error_not_enough_words_2">are required. Now lesson has</string>
+    <string name="error_not_enough_words_3">words.</string>
 </resources>

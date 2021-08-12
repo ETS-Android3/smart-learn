@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentSelectTestTypeBinding;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
@@ -72,6 +73,12 @@ public abstract class SelectTestTypeFragment <VM extends SelectTestTypeViewModel
             public void onClick(View v) {
                 if(sharedViewModel.getNrOfLessonWords() < 1){
                     showMessage(R.string.error_lesson_has_no_words);
+                    return;
+                }
+                if(sharedViewModel.getNrOfLessonWords() < QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION){
+                    String tmp = getString(R.string.error_not_enough_words_1) + " " + QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION +
+                            " " + getString(R.string.error_not_enough_words_2) + " " + sharedViewModel.getNrOfLessonWords() + " " + getString(R.string.error_not_enough_words_3);
+                    GeneralUtilities.showShortToastMessage(SelectTestTypeFragment.this.requireContext(), tmp);
                     return;
                 }
                 goToTestSetupFragment(Test.Types.WORD_QUIZ);

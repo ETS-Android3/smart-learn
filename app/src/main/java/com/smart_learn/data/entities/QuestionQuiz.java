@@ -18,6 +18,9 @@ import lombok.ToString;
 @ToString
 public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilCallbackHelper<QuestionQuiz> {
 
+    // minimum of items which are necessary for '1' question generation
+    public static final int MIN_ITEMS_NECESSARY_FOR_GENERATION = 4;
+
     public static final int OPTIONS_NR = 4;
     public static final int NO_INDEX = -1;
     public static final int INDEX_OPTION_A = 0;

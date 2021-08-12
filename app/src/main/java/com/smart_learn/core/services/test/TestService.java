@@ -799,6 +799,12 @@ public class TestService {
                 questionsJson = DataUtilities.General.fromListToJson(A);
                 break;
             case Test.Types.WORD_QUIZ:
+                // For this type test are needed minimum MIN_ITEMS_NECESSARY_FOR_GENERATION words in
+                // order to generate the test.
+                if(valueList.size() < QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION){
+                    callback.onComplete(NO_TEST_ID);
+                    return;
+                }
                 ArrayList<QuestionQuiz> B = generateQuestionsForWordsQuizTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
                 generatedQuestionsNr = B.size();
                 questionsJson = DataUtilities.General.fromListToJson(B);
