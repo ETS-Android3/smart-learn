@@ -30,6 +30,11 @@ public class GuestSelectExpressionsFragment extends GuestBasicSelectExpressionsF
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void onFloatingActionButtonPress() {
         if(sharedViewModel.getGeneratedTest() == null){
             showMessage(R.string.error_can_not_continue);

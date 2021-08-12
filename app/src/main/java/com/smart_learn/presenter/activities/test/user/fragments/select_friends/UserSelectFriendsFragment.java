@@ -33,6 +33,11 @@ public class UserSelectFriendsFragment extends SelectFriendsFragment<UserSelectF
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void onFloatingActionButtonPress() {
        goToSelectLessonFragment();
     }
@@ -40,6 +45,12 @@ public class UserSelectFriendsFragment extends SelectFriendsFragment<UserSelectF
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
         Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.selected_friends_point) + " " + value);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((UserTestActivity)requireActivity()).hideBottomNavigationMenu();
     }
 
     @Override
