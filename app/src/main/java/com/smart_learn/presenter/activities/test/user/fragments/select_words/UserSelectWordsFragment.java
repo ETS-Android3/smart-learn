@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
+import com.smart_learn.data.firebase.firestore.entities.WordDocument;
+import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.words.user.select.UserBasicSelectWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 
 public class UserSelectWordsFragment extends UserBasicSelectWordsFragment<UserSelectWordsViewModel> {
@@ -35,6 +40,21 @@ public class UserSelectWordsFragment extends UserBasicSelectWordsFragment<UserSe
             return;
         }
         viewModel.generateTest(UserSelectWordsFragment.this, sharedViewModel.getGeneratedTest());
+    }
+
+    @Override
+    protected boolean onAdapterIsSelectedItemValid(@NonNull @NotNull DocumentSnapshot item) {
+        WordDocument word = item.toObject(WordDocument.class);
+        if(word == null){
+            showMessage(R.string.error_word_can_not_be_selected);
+            return false;
+        }
+        ArrayList<Translation> translations = Translation.fromJsonToList(word.getTranslations());
+        if(translations.isEmpty()){
+            showMessage(R.string.error_word_has_no_translation);
+            return false;
+        }
+        return true;
     }
 
     @Override

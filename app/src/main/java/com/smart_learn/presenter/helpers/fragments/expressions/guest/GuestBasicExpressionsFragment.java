@@ -52,6 +52,10 @@ public abstract class GuestBasicExpressionsFragment <VM extends GuestBasicExpres
         viewModel.setCurrentLessonId(currentLessonId);
 
         viewModel.setAdapter(new GuestExpressionsAdapter(currentLessonId, new GuestExpressionsAdapter.Callback() {
+            @Override
+            public boolean isSelectedItemValid(@NonNull @NotNull Expression item) {
+                return onAdapterIsSelectedItemValid(item);
+            }
 
             @Override
             public void onSimpleClick(@NonNull @NotNull Expression item) {

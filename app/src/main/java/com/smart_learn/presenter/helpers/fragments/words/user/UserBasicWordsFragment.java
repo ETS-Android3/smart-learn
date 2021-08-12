@@ -65,6 +65,11 @@ public abstract class UserBasicWordsFragment <VM extends UserBasicWordsViewModel
                             }
 
                             @Override
+                            public boolean isSelectedItemValid(@NonNull @NotNull DocumentSnapshot item) {
+                                return onAdapterIsSelectedItemValid(item);
+                            }
+
+                            @Override
                             public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
                                 onAdapterSimpleClick(item);
                             }

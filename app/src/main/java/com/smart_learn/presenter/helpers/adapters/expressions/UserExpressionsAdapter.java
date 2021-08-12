@@ -194,7 +194,9 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(position, getSnapshots().getSnapshot(position));
+                        if(adapterCallback.isSelectedItemValid(getSnapshots().getSnapshot(position))){
+                            markItem(position, getSnapshots().getSnapshot(position));
+                        }
                         return;
                     }
 
@@ -280,6 +282,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
     public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
         boolean isSharedLessonSelected();
+        boolean isSelectedItemValid(@NonNull @NotNull DocumentSnapshot item);
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestSharedViewModel;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -35,6 +36,15 @@ public class GuestSelectExpressionsFragment extends GuestBasicSelectExpressionsF
             return;
         }
         viewModel.generateTest(GuestSelectExpressionsFragment.this, sharedViewModel.getGeneratedTest());
+    }
+
+    @Override
+    protected boolean onAdapterIsSelectedItemValid(@NonNull @NotNull Expression item) {
+        if(item.getTranslations() == null || item.getTranslations().isEmpty()){
+            showMessage(R.string.error_expression_has_no_translation);
+            return false;
+        }
+        return true;
     }
 
     @Override

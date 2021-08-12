@@ -53,6 +53,11 @@ public abstract class GuestBasicWordsFragment <VM extends GuestBasicWordsViewMod
         viewModel.setAdapter(new GuestWordsAdapter(currentLessonId, new GuestWordsAdapter.Callback() {
 
             @Override
+            public boolean isSelectedItemValid(@NonNull @NotNull Word item) {
+                return onAdapterIsSelectedItemValid(item);
+            }
+
+            @Override
             public void onSimpleClick(@NonNull @NotNull Word item) {
                 onAdapterSimpleClick(item);
             }

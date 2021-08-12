@@ -187,7 +187,9 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(position, getSnapshots().getSnapshot(position));
+                        if(adapterCallback.isSelectedItemValid(getSnapshots().getSnapshot(position))){
+                            markItem(position, getSnapshots().getSnapshot(position));
+                        }
                         return;
                     }
 
@@ -273,6 +275,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
     public interface Callback extends BasicFirestoreRecyclerAdapter.Callback {
         boolean isSharedLessonSelected();
+        boolean isSelectedItemValid(@NonNull @NotNull DocumentSnapshot item);
     }
 
 }

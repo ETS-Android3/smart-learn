@@ -195,7 +195,9 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(position, expression);
+                        if(adapterCallback.isSelectedItemValid(expression)){
+                            markItem(position, expression);
+                        }
                         return;
                     }
 
@@ -281,7 +283,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
     }
 
     public interface Callback extends BasicListAdapter.Callback<Expression> {
-
+        boolean isSelectedItemValid(@NonNull @NotNull Expression item);
     }
 
 }

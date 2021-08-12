@@ -13,6 +13,9 @@ public abstract class BasicExpressionsFragment <T, VM extends BasicExpressionsVi
 
     protected void onAdapterSimpleClick(@NonNull @NotNull T item){}
     protected void onAdapterLongClick(@NonNull @NotNull T item){}
+    protected boolean onAdapterIsSelectedItemValid(@NonNull @NotNull T item){
+        return true;
+    }
 
     @Override
     protected boolean useToolbarMenu() {

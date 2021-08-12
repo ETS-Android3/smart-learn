@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
+import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestSharedViewModel;
 import com.smart_learn.presenter.helpers.Utilities;
@@ -34,6 +35,15 @@ public class GuestSelectWordsFragment extends GuestBasicSelectWordsFragment<Gues
             return;
         }
         viewModel.generateTest(GuestSelectWordsFragment.this, sharedViewModel.getGeneratedTest());
+    }
+
+    @Override
+    protected boolean onAdapterIsSelectedItemValid(@NonNull @NotNull Word item) {
+        if(item.getTranslations() == null || item.getTranslations().isEmpty()){
+            showMessage(R.string.error_word_has_no_translation);
+            return false;
+        }
+        return true;
     }
 
     @Override

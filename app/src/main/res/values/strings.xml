@@ -602,4 +602,8 @@
     <string name="from_lesson">from lesson</string>
     <string name="success_set_schedule">Alarm was set</string>
     <string name="success_cancel_schedule">Alarm was canceled</string>
+    <string name="error_expression_has_no_translation">Expression can not be selected because has no translation</string>
+    <string name="error_word_has_no_translation">Word can not be selected because it has no translation.</string>
+    <string name="error_word_can_not_be_selected">Word can not be selected.</string>
+    <string name="error_expression_can_not_be_selected">Expression can not be selected</string>
 </resources>

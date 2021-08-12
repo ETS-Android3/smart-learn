@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
+import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
+import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
 import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.select.UserBasicSelectExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 
 public class UserSelectExpressionsFragment extends UserBasicSelectExpressionsFragment<UserSelectExpressionsViewModel> {
@@ -35,6 +40,21 @@ public class UserSelectExpressionsFragment extends UserBasicSelectExpressionsFra
             return;
         }
         viewModel.generateTest(UserSelectExpressionsFragment.this, sharedViewModel.getGeneratedTest());
+    }
+
+    @Override
+    protected boolean onAdapterIsSelectedItemValid(@NonNull @NotNull DocumentSnapshot item) {
+        ExpressionDocument expression = item.toObject(ExpressionDocument.class);
+        if(expression == null){
+            showMessage(R.string.error_expression_can_not_be_selected);
+            return false;
+        }
+        ArrayList<Translation> translations = Translation.fromJsonToList(expression.getTranslations());
+        if(translations.isEmpty()){
+            showMessage(R.string.error_expression_has_no_translation);
+            return false;
+        }
+        return true;
     }
 
     @Override

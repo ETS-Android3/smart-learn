@@ -64,6 +64,11 @@ public abstract class UserBasicExpressionsFragment <VM extends UserBasicExpressi
                             }
 
                             @Override
+                            public boolean isSelectedItemValid(@NonNull @NotNull DocumentSnapshot item) {
+                                return onAdapterIsSelectedItemValid(item);
+                            }
+
+                            @Override
                             public void onSimpleClick(@NonNull @NotNull DocumentSnapshot item) {
                                 onAdapterSimpleClick(item);
                             }

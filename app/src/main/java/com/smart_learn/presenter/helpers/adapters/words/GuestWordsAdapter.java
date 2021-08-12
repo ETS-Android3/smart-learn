@@ -188,7 +188,9 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                     }
 
                     if(isSelectionModeActive()){
-                        markItem(position, word);
+                        if(adapterCallback.isSelectedItemValid(word)){
+                            markItem(position, word);
+                        }
                         return;
                     }
 
@@ -274,7 +276,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
     }
 
     public interface Callback extends BasicListAdapter.Callback<Word> {
-
+        boolean isSelectedItemValid(@NonNull @NotNull Word item);
     }
 }
 
