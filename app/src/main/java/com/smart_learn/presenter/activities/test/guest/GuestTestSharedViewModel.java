@@ -58,14 +58,9 @@ public class GuestTestSharedViewModel extends TestSharedViewModel {
         // and create new local test
         TestService.getInstance().createTestFromScheduledTest(scheduledTest, false, new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NonNull @NotNull String testId) {
+            public void onSuccess(@NonNull @NotNull String testId) {
                 activity.runOnUiThread(() -> {
                     activity.closeProgressDialog();
-
-                    if(testId.equals(TestService.NO_TEST_ID)){
-                        liveToastMessage.setValue(activity.getString(R.string.error_can_not_continue));
-                        return;
-                    }
 
                     int testIdInteger;
                     try {
@@ -77,6 +72,14 @@ public class GuestTestSharedViewModel extends TestSharedViewModel {
                         return;
                     }
                     activity.goToActivateTestFragment(scheduledTest.getType(), testIdInteger);
+                });
+            }
+
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                activity.runOnUiThread(() -> {
+                    activity.closeProgressDialog();
+                    liveToastMessage.setValue(error);
                 });
             }
         });

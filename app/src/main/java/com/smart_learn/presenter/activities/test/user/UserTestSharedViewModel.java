@@ -152,15 +152,18 @@ public class UserTestSharedViewModel extends TestSharedViewModel {
     private void createTestFromScheduledTest(UserTestActivity activity, TestDocument scheduledTest){
         TestService.getInstance().createTestFromScheduledTest(scheduledTest, true, new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NonNull @NotNull String testId) {
+            public void onSuccess(@NonNull @NotNull String testId) {
                 activity.runOnUiThread(() -> {
                     activity.closeProgressDialog();
-
-                    if(testId.equals(TestService.NO_TEST_ID)){
-                        liveToastMessage.setValue(activity.getString(R.string.error_can_not_continue));
-                        return;
-                    }
                     activity.goToActivateTestFragment(scheduledTest.getType(), testId, false);
+                });
+            }
+
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                activity.runOnUiThread(() -> {
+                    activity.closeProgressDialog();
+                    liveToastMessage.setValue(error);
                 });
             }
         });

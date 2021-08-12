@@ -238,15 +238,10 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
 
             TestService.getInstance().createTestFromScheduledTest(scheduledTest, false, new TestService.TestGenerationCallback() {
                 @Override
-                public void onComplete(@NonNull @NotNull String testId) {
+                public void onSuccess(@NonNull @NotNull String testId) {
                     adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
                         adapterCallback.getFragment().closeProgressDialog();
                         isLaunchingActive.set(false);
-
-                        if(testId.equals(TestService.NO_TEST_ID)){
-                            showMessage(R.string.error_can_not_continue);
-                            return;
-                        }
 
                         int testIdInteger;
                         try {
@@ -258,6 +253,15 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                             return;
                         }
                         adapterCallback.onCompleteCreateLocalTestFromScheduledTest(scheduledTest.getType(), testIdInteger);
+                    });
+                }
+
+                @Override
+                public void onFailure(@NonNull @NotNull String error) {
+                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        adapterCallback.getFragment().closeProgressDialog();
+                        isLaunchingActive.set(false);
+                        showMessage(error);
                     });
                 }
             });

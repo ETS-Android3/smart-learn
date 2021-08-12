@@ -46,14 +46,9 @@ public class GuestSelectWordsViewModel extends GuestBasicSelectWordsViewModel {
 
         TestService.getInstance().generateGuestWordTest(selectedWords, test, new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NonNull @NotNull String testId) {
+            public void onSuccess(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
-
-                    if(testId.equals(TestService.NO_TEST_ID)){
-                        liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
-                        return;
-                    }
 
                     // if test is schedule job is finished
                     if(test.isScheduled()){
@@ -73,6 +68,14 @@ public class GuestSelectWordsViewModel extends GuestBasicSelectWordsViewModel {
                         return;
                     }
                     fragment.navigateToTestFragment(test.getType(), testIdInteger);
+                });
+            }
+
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                fragment.requireActivity().runOnUiThread(() -> {
+                    fragment.closeProgressDialog();
+                    liveToastMessage.setValue(error);
                 });
             }
         });

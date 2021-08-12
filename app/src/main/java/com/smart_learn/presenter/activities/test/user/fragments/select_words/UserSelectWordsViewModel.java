@@ -79,14 +79,9 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
     private void continueWithGeneratingTest(UserSelectWordsFragment fragment, Test test, ArrayList<DocumentSnapshot> selectedWordSnapshots, boolean isOnline){
         TestService.getInstance().generateUserWordTest(selectedWordSnapshots, test, new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NonNull @NotNull String testId) {
+            public void onSuccess(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
-
-                    if(testId.equals(TestService.NO_TEST_ID)){
-                        liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
-                        return;
-                    }
 
                     // if test is schedule job is finished
                     if(test.isScheduled()){
@@ -97,6 +92,14 @@ public class UserSelectWordsViewModel extends UserBasicSelectWordsViewModel {
 
                     // otherwise go to test fragment
                     fragment.navigateToTestFragment(test.getType(), testId, isOnline);
+                });
+            }
+
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                fragment.requireActivity().runOnUiThread(() -> {
+                    fragment.closeProgressDialog();
+                    liveToastMessage.setValue(error);
                 });
             }
         });

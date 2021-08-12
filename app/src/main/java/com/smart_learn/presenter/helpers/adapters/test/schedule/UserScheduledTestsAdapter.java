@@ -211,13 +211,20 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                         return true;
                     }
 
+                    DocumentSnapshot testSnapshot = getSnapshots().getSnapshot(position);
+                    TestDocument testDocument = testSnapshot.toObject(TestDocument.class);
+                    if(testDocument == null){
+                        showMessage(R.string.error_can_not_continue);
+                        return true;
+                    }
+
                     int id = item.getItemId();
                     if(id == R.id.action_user_delete_menu_card_view_test_schedule){
                         if(isDeletingActive.get()){
                             return true;
                         }
                         isDeletingActive.set(true);
-                        deleteItem(getSnapshots().get(position), getSnapshots().getSnapshot(position));
+                        deleteItem(testDocument, testSnapshot);
                         return true;
                     }
                     if(id == R.id.action_user_launch_now_menu_card_view_test_schedule){
@@ -225,7 +232,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                             return true;
                         }
                         isLaunchingActive.set(true);
-                        launchScheduledTest(getSnapshots().get(position), getSnapshots().getSnapshot(position));
+                        launchScheduledTest(testDocument, testSnapshot);
                         return true;
                     }
                     return true;
@@ -288,16 +295,20 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
         private void createTestFromScheduledTest(TestDocument scheduledTest){
             TestService.getInstance().createTestFromScheduledTest(scheduledTest, true, new TestService.TestGenerationCallback() {
                 @Override
-                public void onComplete(@NonNull @NotNull String testId) {
+                public void onSuccess(@NonNull @NotNull String testId) {
                     adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
                         adapterCallback.getFragment().closeProgressDialog();
                         isLaunchingActive.set(false);
-
-                        if(testId.equals(TestService.NO_TEST_ID)){
-                            showMessage(R.string.error_can_not_continue);
-                            return;
-                        }
                         adapterCallback.onCompleteCreateLocalTestFromScheduledTest(scheduledTest.getType(), testId);
+                    });
+                }
+
+                @Override
+                public void onFailure(@NonNull @NotNull String error) {
+                    adapterCallback.getFragment().requireActivity().runOnUiThread(() -> {
+                        adapterCallback.getFragment().closeProgressDialog();
+                        isLaunchingActive.set(false);
+                        showMessage(error);
                     });
                 }
             });

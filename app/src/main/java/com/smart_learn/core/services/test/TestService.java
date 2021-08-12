@@ -79,8 +79,6 @@ import timber.log.Timber;
 
 public class TestService {
 
-    public static String NO_TEST_ID = "NO_TEST_ID";
-
     public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS = 1;
     public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS = 2;
     public static final int SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS = 3;
@@ -88,6 +86,19 @@ public class TestService {
     public static final int SHOW_ONLY_ONLINE_TESTS = 5;
 
     private static TestService instance;
+
+    private final String errorGeneralCanNotGenerateTest;
+    private final String errorInvalidNumberOfQuestions;
+    private final String errorNoGeneratedQuestions;
+    private final String errorInvalidTestType;
+    private final String errorInvalidConnexion;
+    private final String errorCouldNotExtractWords;
+    private final String errorCouldNotExtractExpressions;
+    private final String errorNoWords;
+    private final String errorNoExpressions;
+    private final String errorNoValues;
+    private final String errorNotEnoughWordsForQuizTest;
+    private final String errorCanNotSaveTest;
 
     @NonNull @NotNull
     private final GuestTestService guestTestServiceInstance;
@@ -100,6 +111,20 @@ public class TestService {
         guestTestServiceInstance = GuestTestService.getInstance();
         userTestServiceInstance = UserTestService.getInstance();
         secureRandom = CoreUtilities.General.getSecureRandomInstance();
+
+        Context context = ApplicationController.getInstance().getApplicationContext();
+        errorGeneralCanNotGenerateTest  = context == null ? "" : context.getString(R.string.error_can_not_generate_test);
+        errorInvalidNumberOfQuestions   = context == null ? "" : context.getString(R.string.error_invalid_number_of_questions);
+        errorNoGeneratedQuestions       = context == null ? "" : context.getString(R.string.error_no_generated_questions);
+        errorInvalidTestType            = context == null ? "" : context.getString(R.string.error_invalid_test_type);
+        errorInvalidConnexion           = context == null ? "" : context.getString(R.string.error_invalid_conexion);
+        errorCouldNotExtractWords       = context == null ? "" : context.getString(R.string.error_could_not_extract_words);
+        errorCouldNotExtractExpressions = context == null ? "" : context.getString(R.string.error_could_not_extract_expressions);
+        errorNoWords                    = context == null ? "" : context.getString(R.string.error_no_words);
+        errorNoExpressions              = context == null ? "" : context.getString(R.string.error_no_expressions);
+        errorNoValues                   = context == null ? "" : context.getString(R.string.error_no_values_for_test);
+        errorNotEnoughWordsForQuizTest  = context == null ? "" : context.getString(R.string.error_no_values_for_quiz_test);
+        errorCanNotSaveTest             = context == null ? "" : context.getString(R.string.error_can_not_save_generated_test);
     }
 
     public static TestService getInstance() {
@@ -260,7 +285,7 @@ public class TestService {
         }
 
         if(!validParameters(valueList, testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -268,7 +293,7 @@ public class TestService {
             ArrayList<LessonEntrance> convertedList = convertWordDocumentsToLessonEntrance(valueList);
             if(valueList.size() != convertedList.size()){
                 Timber.w("Error at conversion");
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCouldNotExtractWords);
                 return;
             }
 
@@ -294,7 +319,7 @@ public class TestService {
         }
 
         if(!validParameters(valueList, testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -302,7 +327,7 @@ public class TestService {
             ArrayList<LessonEntrance> convertedList = convertExpressionDocumentsToLessonEntrance(valueList);
             if(valueList.size() != convertedList.size()){
                 Timber.w("Error at conversion");
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCouldNotExtractExpressions);
                 return;
             }
 
@@ -328,14 +353,14 @@ public class TestService {
         }
 
         if(testOptions == null){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             Timber.w("testOptions is null");
             return;
         }
 
         // in order to generate a new test, test should have a positive number of questions
         if(questionsNr <= 0 && questionsNr != Test.USE_ALL){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorInvalidNumberOfQuestions);
             Timber.w("questions number [" + questionsNr + "] is not valid");
             return;
         }
@@ -355,7 +380,7 @@ public class TestService {
                     return;
                 default:
                     Timber.w("test type [" + testOptions.getType() + "] is not a valid test");
-                    callback.onComplete(NO_TEST_ID);
+                    callback.onFailure(errorInvalidTestType);
             }
         });
     }
@@ -370,21 +395,22 @@ public class TestService {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                         if(!task.isSuccessful() || task.getResult() == null){
                             Timber.w(task.getException());
-                            callback.onComplete(NO_TEST_ID);
+                            // TODO: check exception and show specific error messages.
+                            callback.onFailure(errorInvalidConnexion);
                             return;
                         }
 
                         ArrayList<DocumentSnapshot> wordList = new ArrayList<>(task.getResult().getDocuments());
                         if(wordList.isEmpty()){
                             Timber.w("no words");
-                            callback.onComplete(NO_TEST_ID);
+                            callback.onFailure(errorNoWords);
                             return;
                         }
 
                         ArrayList<LessonEntrance> valueList = convertWordDocumentsToLessonEntrance(wordList);
                         if(wordList.size() != valueList.size()){
                             Timber.w("Error at conversion");
-                            callback.onComplete(NO_TEST_ID);
+                            callback.onFailure(errorCouldNotExtractWords);
                             return;
                         }
 
@@ -415,7 +441,8 @@ public class TestService {
                     public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                         if(!task.isSuccessful() || task.getResult() == null){
                             Timber.w(task.getException());
-                            callback.onComplete(NO_TEST_ID);
+                            // TODO: check exception and show specific error messages.
+                            callback.onFailure(errorInvalidConnexion);
                             return;
                         }
 
@@ -423,14 +450,14 @@ public class TestService {
                         ArrayList<DocumentSnapshot> expressionsList = new ArrayList<>(task.getResult().getDocuments());
                         if(expressionsList.isEmpty()){
                             Timber.w("no expressions");
-                            callback.onComplete(NO_TEST_ID);
+                            callback.onFailure(errorNoExpressions);
                             return;
                         }
 
                         ArrayList<LessonEntrance> valueList = convertExpressionDocumentsToLessonEntrance(expressionsList);
                         if(expressionsList.size() != valueList.size()){
                             Timber.w("Error at conversion");
-                            callback.onComplete(NO_TEST_ID);
+                            callback.onFailure(errorCouldNotExtractExpressions);
                             return;
                         }
 
@@ -466,7 +493,7 @@ public class TestService {
         }
 
         if(!isValidSimpleScheduledTest(testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -489,14 +516,15 @@ public class TestService {
                     public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
                         if(!task.isSuccessful() || task.getResult() == null){
                             Timber.w(task.getException());
-                            callback.onComplete(NO_TEST_ID);
+                            // TODO: check exception and show specific error messages.
+                            callback.onFailure(errorGeneralCanNotGenerateTest);
                             return;
                         }
 
                         UserDocument userDocument = task.getResult().toObject(UserDocument.class);
                         if(userDocument == null){
                             Timber.w("userDocument is null");
-                            callback.onComplete(NO_TEST_ID);
+                            callback.onFailure(errorGeneralCanNotGenerateTest);
                             return;
                         }
 
@@ -537,7 +565,7 @@ public class TestService {
         }
 
         if(!validParameters(valueList, testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -545,7 +573,7 @@ public class TestService {
             ArrayList<LessonEntrance> convertedList = convertWordsToLessonEntrance(valueList);
             if(valueList.size() != convertedList.size()){
                 Timber.w("Error at conversion");
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCouldNotExtractWords);
                 return;
             }
 
@@ -571,7 +599,7 @@ public class TestService {
         }
 
         if(!validParameters(valueList, testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -579,7 +607,7 @@ public class TestService {
             ArrayList<LessonEntrance> convertedList = convertExpressionsToLessonEntrance(valueList);
             if(valueList.size() != convertedList.size()){
                 Timber.w("Error at conversion");
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCouldNotExtractExpressions);
                 return;
             }
 
@@ -605,14 +633,14 @@ public class TestService {
         }
 
         if(testOptions == null){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             Timber.w("testOptions is null");
             return;
         }
 
         // in order to generate a new test, test should have a positive number of questions
         if(questionsNr <= 0 && questionsNr != Test.USE_ALL){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorInvalidNumberOfQuestions);
             Timber.w("questions number [" + questionsNr + "] is not valid");
             return;
         }
@@ -621,7 +649,7 @@ public class TestService {
         try{
             lessonId = Integer.parseInt(testOptions.getLessonId());
         } catch (NumberFormatException ex){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             Timber.w(ex);
             return;
         }
@@ -642,13 +670,13 @@ public class TestService {
                             .getLessonWords(lessonId);
                     if(wordList.isEmpty()){
                         Timber.w("no words");
-                        callback.onComplete(NO_TEST_ID);
+                        callback.onFailure(errorNoWords);
                         return;
                     }
                     valueList = convertWordsToLessonEntrance(wordList);
                     if(wordList.size() != valueList.size()){
                         Timber.w("Error at conversion");
-                        callback.onComplete(NO_TEST_ID);
+                        callback.onFailure(errorCouldNotExtractWords);
                         return;
                     }
                     break;
@@ -659,19 +687,19 @@ public class TestService {
                             .getLessonExpressions(lessonId);
                     if(expressionList.isEmpty()){
                         Timber.w("no expressions");
-                        callback.onComplete(NO_TEST_ID);
+                        callback.onFailure(errorNoExpressions);
                         return;
                     }
                     valueList = convertExpressionsToLessonEntrance(expressionList);
                     if(expressionList.size() != valueList.size()){
                         Timber.w("Error at conversion");
-                        callback.onComplete(NO_TEST_ID);
+                        callback.onFailure(errorCouldNotExtractExpressions);
                         return;
                     }
                     break;
                 default:
                     Timber.w("test type [" + testOptions.getType() + "] is not a valid test");
-                    callback.onComplete(NO_TEST_ID);
+                    callback.onFailure(errorInvalidTestType);
                     return;
             }
 
@@ -705,7 +733,7 @@ public class TestService {
         }
 
         if(!isValidSimpleScheduledTest(testOptions)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -772,7 +800,7 @@ public class TestService {
         // make a filter in order to keep only valid items
         valueList = filterValues(valueList);
         if(valueList.isEmpty()){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorNoValues);
             return;
         }
 
@@ -802,7 +830,7 @@ public class TestService {
                 // For this type test are needed minimum MIN_ITEMS_NECESSARY_FOR_GENERATION words in
                 // order to generate the test.
                 if(valueList.size() < QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION){
-                    callback.onComplete(NO_TEST_ID);
+                    callback.onFailure(errorNotEnoughWordsForQuizTest + " " + QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION);
                     return;
                 }
                 ArrayList<QuestionQuiz> B = generateQuestionsForWordsQuizTest(userType, valueList, questionsNr, testOptions.isUseCustomSelection());
@@ -826,13 +854,13 @@ public class TestService {
                 break;
             default:
                 Timber.w("test type [" + testOptions.getType() + "] is not a valid test");
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorInvalidTestType);
                 return;
         }
 
         if(generatedQuestionsNr < 1){
             Timber.w(" generated questions nr [" + generatedQuestionsNr + "] is not valid");
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorNoGeneratedQuestions);
             return;
         }
 
@@ -876,7 +904,7 @@ public class TestService {
 
     private void saveGuestTest(Test test, TestService.TestGenerationCallback callback){
         if(!(test instanceof RoomTest)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorCanNotSaveTest);
             Timber.w("test not instanceof of RoomTest");
             return;
         }
@@ -884,19 +912,19 @@ public class TestService {
         guestTestServiceInstance.insert((RoomTest) test, new DataCallbacks.RoomInsertionCallback() {
             @Override
             public void onSuccess(long id) {
-                callback.onComplete(String.valueOf(Math.toIntExact(id)));
+                callback.onSuccess(String.valueOf(Math.toIntExact(id)));
             }
 
             @Override
             public void onFailure() {
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCanNotSaveTest);
             }
         });
     }
 
     private void saveUserTest(Test test, TestService.TestGenerationCallback callback){
         if(!(test instanceof TestDocument)){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorCanNotSaveTest);
             Timber.w("test not instanceof of TestDocument");
             return;
         }
@@ -913,12 +941,12 @@ public class TestService {
         userTestServiceInstance.addTest(newTest, newTestDocumentRef, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                callback.onComplete(newTestDocumentRef.getId());
+                callback.onSuccess(newTestDocumentRef.getId());
             }
 
             @Override
             public void onFailure() {
-                callback.onComplete(NO_TEST_ID);
+                callback.onFailure(errorCanNotSaveTest);
             }
         });
     }
@@ -1955,7 +1983,7 @@ public class TestService {
 
         if(scheduledTest == null){
             Timber.w("scheduledTest is null");
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             return;
         }
 
@@ -1964,7 +1992,7 @@ public class TestService {
 
     private void tryToCreateTestFromScheduledTest(Test test, boolean isForUser, TestService.TestGenerationCallback callback){
         if(!test.isScheduled()){
-            callback.onComplete(NO_TEST_ID);
+            callback.onFailure(errorGeneralCanNotGenerateTest);
             Timber.w("test is not scheduled");
             return;
         }
@@ -2010,14 +2038,15 @@ public class TestService {
                         public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
                             if(!task.isSuccessful() || task.getResult() == null){
                                 Timber.w(task.getException());
-                                callback.onComplete(NO_TEST_ID);
+                                // TODO: check exception and show specific error messages.
+                                callback.onFailure(errorGeneralCanNotGenerateTest);
                                 return;
                             }
 
                             UserDocument userDocument = task.getResult().toObject(UserDocument.class);
                             if(userDocument == null){
                                 Timber.w("userDocument is null");
-                                callback.onComplete(NO_TEST_ID);
+                                callback.onFailure(errorGeneralCanNotGenerateTest);
                                 return;
                             }
 
@@ -2303,10 +2332,11 @@ public class TestService {
 
 
     /**
-     * This will be used to manage onComplete() action when a new test is generated.
+     * This will be used to manage onComplete actions when a new test is generated or not.
      * */
     public interface TestGenerationCallback {
-        void onComplete(@NotNull @NonNull String testId);
+        void onSuccess(@NotNull @NonNull String testId);
+        void onFailure(@NotNull @NonNull String error);
     }
 
 

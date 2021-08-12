@@ -610,4 +610,16 @@
     <string name="error_not_enough_words_1">"Are not enough word for this test type. Minimum "</string>
     <string name="error_not_enough_words_2">are required. Now lesson has</string>
     <string name="error_not_enough_words_3">words.</string>
+    <string name="error_can_not_generate_test">Can not generate test.</string>
+    <string name="error_invalid_number_of_questions">Invalid number of questions. Can not generate test.</string>
+    <string name="error_invalid_test_type">Test type is invalid. Can not generate test.</string>
+    <string name="error_could_not_extract_words">Could not extract words. Test can not be generated.</string>
+    <string name="error_could_not_extract_expressions">Could not extract expressions. Test can not be generated.</string>
+    <string name="error_invalid_conexion">Test can not be generated because could not extract data. Check your connexion.</string>
+    <string name="error_no_words">Test can not be generated because lesson has no words.</string>
+    <string name="error_no_expressions">Test can not be generated because lesson has no expressions.</string>
+    <string name="error_no_values_for_test">Test can not be generated because are no valid values extracted. Values must contain at least one translation in order to be valid.</string>
+    <string name="error_no_values_for_quiz_test">Test can not be generated because are not enough values for quiz test. Needed values:</string>
+    <string name="error_no_generated_questions">No questions were generated. Can not generate test.</string>
+    <string name="error_can_not_save_generated_test">Genrated test can not be saved.</string>
 </resources>

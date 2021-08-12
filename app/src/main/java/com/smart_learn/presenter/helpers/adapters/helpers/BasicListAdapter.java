@@ -184,6 +184,11 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.SelectionHelp
                 GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
     }
 
+    protected void showMessage(String message){
+        adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
+                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), message));
+    }
+
 
     public interface Callback <K> extends Callbacks.StandardAdapterCallback <K> {
 

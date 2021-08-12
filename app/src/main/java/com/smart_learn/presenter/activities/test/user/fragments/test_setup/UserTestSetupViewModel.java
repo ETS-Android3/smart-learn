@@ -55,17 +55,18 @@ public class UserTestSetupViewModel extends LocalTestSetupViewModel {
     private void continueWithGeneratingTest(UserTestSetupFragment fragment, Test test){
         TestService.getInstance().generateUserTest(test, test.getNrOfValuesForGenerating(), new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NotNull @NonNull String testId) {
+            public void onSuccess(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
-
-                    if(testId.equals(TestService.NO_TEST_ID)){
-                        liveToastMessage.setValue(fragment.getString(R.string.error_can_not_continue));
-                        return;
-                    }
-
                     fragment.navigateToTestFragment(test.getType(), testId);
+                });
+            }
 
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                fragment.requireActivity().runOnUiThread(() -> {
+                    fragment.closeProgressDialog();
+                    liveToastMessage.setValue(error);
                 });
             }
         });
@@ -80,16 +81,16 @@ public class UserTestSetupViewModel extends LocalTestSetupViewModel {
 
         TestService.getInstance().saveSimpleUserScheduledTest(test, new TestService.TestGenerationCallback() {
             @Override
-            public void onComplete(@NonNull @NotNull String testId) {
-                if(testId.equals(TestService.NO_TEST_ID)){
-                    liveToastMessage.postValue(fragment.getString(R.string.error_can_not_save_test));
-                    return;
-                }
-
+            public void onSuccess(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {
                     GeneralUtilities.showShortToastMessage(fragment.requireContext(), fragment.getString(R.string.test_saved));
                     fragment.navigateToUserScheduledTestsFragment();
                 });
+            }
+
+            @Override
+            public void onFailure(@NonNull @NotNull String error) {
+                liveToastMessage.postValue(error);
             }
         });
 
