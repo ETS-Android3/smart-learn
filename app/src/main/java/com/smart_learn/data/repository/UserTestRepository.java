@@ -315,7 +315,14 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
         testData.put(TestDocument.Fields.CONTAINER_TEST_ID_FIELD_NAME, newTestDocumentReference.getId());
         batch.set(newTestDocumentReference, testData);
 
-        // 4. Transaction is complete so commit
+        // 4. Update current user counters. For the other users counters will be updated when they
+        // will receive notifications.
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put(UserDocument.Fields.NR_OF_ONLINE_IN_PROGRESS_TESTS_FIELD_NAME, FieldValue.increment(1));
+        userData.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        batch.update(UserService.getInstance().getUserDocumentReference(), userData);
+
+        // 5. Transaction is complete so commit
         commitBatch(batch, callback);
     }
 
