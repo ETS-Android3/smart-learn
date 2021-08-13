@@ -17,7 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import lombok.Getter;

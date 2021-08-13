@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

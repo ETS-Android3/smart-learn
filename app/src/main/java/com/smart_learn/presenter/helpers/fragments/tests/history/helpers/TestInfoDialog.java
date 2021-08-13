@@ -18,7 +18,7 @@ import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.databinding.LayoutDialogTestInfoBinding;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

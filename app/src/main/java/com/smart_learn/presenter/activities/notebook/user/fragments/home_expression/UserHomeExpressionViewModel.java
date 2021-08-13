@@ -12,7 +12,7 @@ import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_expression.HomeExpressionViewModel;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -3,7 +3,7 @@ package com.smart_learn.data.entities;
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

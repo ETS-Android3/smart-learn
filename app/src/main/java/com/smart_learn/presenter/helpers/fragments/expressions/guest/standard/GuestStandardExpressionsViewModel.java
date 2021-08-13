@@ -11,7 +11,7 @@ import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.expressions.guest.GuestBasicExpressionsViewModel;
 
 import org.jetbrains.annotations.NotNull;

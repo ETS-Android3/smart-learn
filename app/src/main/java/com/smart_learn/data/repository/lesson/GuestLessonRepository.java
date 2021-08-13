@@ -6,7 +6,7 @@ import com.smart_learn.data.room.dao.LessonDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.repository.BasicRoomRepository;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import java.util.List;
 

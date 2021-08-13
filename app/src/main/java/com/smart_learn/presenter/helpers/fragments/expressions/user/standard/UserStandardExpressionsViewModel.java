@@ -13,7 +13,7 @@ import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.UserBasicExpressionsViewModel;
 
 import org.jetbrains.annotations.NotNull;

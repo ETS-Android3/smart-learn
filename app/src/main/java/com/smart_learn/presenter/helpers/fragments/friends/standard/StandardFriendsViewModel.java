@@ -9,7 +9,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.data.helpers.DataCallbacks;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.friends.BasicFriendsViewModel;
 
 import org.jetbrains.annotations.NotNull;

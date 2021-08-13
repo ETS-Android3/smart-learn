@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import lombok.Getter;

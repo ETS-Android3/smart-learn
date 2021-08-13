@@ -31,7 +31,7 @@ import com.smart_learn.databinding.LayoutCardViewQuestionFullWriteBinding;
 import com.smart_learn.databinding.LayoutCardViewQuestionMixedBinding;
 import com.smart_learn.databinding.LayoutCardViewQuestionQuizBinding;
 import com.smart_learn.databinding.LayoutCardViewQuestionTrueOrFalseBinding;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;

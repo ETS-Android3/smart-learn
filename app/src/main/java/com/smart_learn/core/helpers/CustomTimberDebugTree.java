@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.core.helpers;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

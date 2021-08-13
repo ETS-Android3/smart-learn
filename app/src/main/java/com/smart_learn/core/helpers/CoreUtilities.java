@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.smart_learn.R;
-import com.smart_learn.presenter.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

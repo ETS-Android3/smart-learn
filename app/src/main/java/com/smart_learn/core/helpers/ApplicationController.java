@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.core.helpers;
 
 import android.app.Application;
 import android.content.Context;

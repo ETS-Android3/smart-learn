@@ -12,7 +12,7 @@ import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 

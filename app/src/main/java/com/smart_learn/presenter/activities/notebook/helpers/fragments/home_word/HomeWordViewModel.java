@@ -14,7 +14,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;

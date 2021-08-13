@@ -17,7 +17,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.databinding.LayoutDialogSingleLineEditableLayoutBinding;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -9,7 +9,7 @@ import com.smart_learn.core.services.lesson.GuestLessonService;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.lessons.guest.GuestBasicLessonsViewModel;
 
 import org.jetbrains.annotations.NotNull;

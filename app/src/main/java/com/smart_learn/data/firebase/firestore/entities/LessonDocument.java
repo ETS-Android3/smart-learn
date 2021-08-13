@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.helpers.BasicNotebookCommonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -59,7 +59,7 @@ import com.smart_learn.data.room.repository.BasicRoomRepository;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 
 import org.jetbrains.annotations.NotNull;
 

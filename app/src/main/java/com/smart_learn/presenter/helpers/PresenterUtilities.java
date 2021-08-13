@@ -44,6 +44,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.muddzdev.styleabletoast.StyleableToast;
 import com.smart_learn.R;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 
 import org.jetbrains.annotations.NotNull;

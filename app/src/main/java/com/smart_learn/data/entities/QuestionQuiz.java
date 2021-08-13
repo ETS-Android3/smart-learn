@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 
 import java.lang.reflect.Type;
