@@ -36,7 +36,7 @@ import com.smart_learn.presenter.activities.settings.UserSettingsActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import timber.log.Timber;
 
@@ -135,7 +135,7 @@ public class MainActivity extends BasicActivity {
 
     private void setLayoutUtilities(){
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_main,
+        navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_main,
                 binding.bottomNavigationActivityMain, null, null);
 
         // set badge for notifications
@@ -193,7 +193,7 @@ public class MainActivity extends BasicActivity {
                         startActivity(new Intent(MainActivity.this, UserSettingsActivity.class));
                         break;
                     case R.id.nav_logout_menu_nav_drawer_activity_main:
-                        Utilities.Activities.showStandardAlertDialog(
+                        PresenterUtilities.Activities.showStandardAlertDialog(
                                 MainActivity.this,
                                 MainActivity.this.getString(R.string.logout),
                                 MainActivity.this.getString(R.string.logout_message),

@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer;
 import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Expression;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.expressions.GuestExpressionsAdapter;
 import com.smart_learn.presenter.helpers.fragments.expressions.BasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
@@ -93,7 +93,7 @@ public abstract class GuestBasicExpressionsFragment <VM extends GuestBasicExpres
         GuestExpressionService.getInstance().getCurrentLessonLiveExpressions(currentLessonId).observe(this, new Observer<List<Expression>>() {
             @Override
             public void onChanged(List<Expression> expressions) {
-                Utilities.Activities.changeTextViewStatus(expressions.isEmpty(), emptyLabel);
+                PresenterUtilities.Activities.changeTextViewStatus(expressions.isEmpty(), emptyLabel);
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().setItems(expressions);
                 }

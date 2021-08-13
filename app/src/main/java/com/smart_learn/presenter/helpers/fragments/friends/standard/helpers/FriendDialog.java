@@ -16,7 +16,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.databinding.LayoutDialogViewFriendBinding;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 public class FriendDialog extends DialogFragment {
 
@@ -46,7 +46,7 @@ public class FriendDialog extends DialogFragment {
                 String title = getString(R.string.remove_friend);
                 String description = getString(R.string.remove_friend_description);
                 String positiveButtonDescription = getString(R.string.remove);
-                Utilities.Activities.showStandardAlertDialog(requireContext(), title, description, positiveButtonDescription,
+                PresenterUtilities.Activities.showStandardAlertDialog(requireContext(), title, description, positiveButtonDescription,
                         new Callbacks.StandardAlertDialogCallback() {
                             @Override
                             public void onPositiveButtonPress() {

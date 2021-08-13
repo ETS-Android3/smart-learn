@@ -8,7 +8,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.guest.select.GuestBasicSelectWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -53,7 +53,7 @@ public class GuestSelectWordsFragment extends GuestBasicSelectWordsFragment<Gues
 
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
     }
 
     @Override

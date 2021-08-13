@@ -12,7 +12,7 @@ import com.smart_learn.data.entities.QuestionTrueOrFalse;
 import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.test.questions.QuestionsAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +56,7 @@ public class GuestTestQuestionsFragment extends TestQuestionsFragment<GuestTestQ
         viewModel.setAdapter(new QuestionsAdapter(type, new QuestionsAdapter.Callback() {
             @Override
             public void onListLoadAction(boolean isEmpty) {
-                requireActivity().runOnUiThread(() -> Utilities.Activities.changeTextViewStatus(isEmpty, emptyLabel));
+                requireActivity().runOnUiThread(() -> PresenterUtilities.Activities.changeTextViewStatus(isEmpty, emptyLabel));
             }
         }));
 

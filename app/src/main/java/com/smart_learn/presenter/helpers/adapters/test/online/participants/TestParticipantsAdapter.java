@@ -18,7 +18,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.databinding.LayoutCardViewTestParticipantBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -129,7 +129,7 @@ public class TestParticipantsAdapter extends BasicFirestoreRecyclerAdapter<TestD
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 

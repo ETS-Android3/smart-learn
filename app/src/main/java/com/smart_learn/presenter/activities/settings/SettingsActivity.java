@@ -9,7 +9,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivitySettingsBinding;
 import com.smart_learn.presenter.helpers.BasicActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 public abstract class SettingsActivity extends BasicActivity {
 
@@ -38,7 +38,7 @@ public abstract class SettingsActivity extends BasicActivity {
 
     private void setLayoutUtilities(){
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraph(this, R.id.nav_host_fragment_activity_settings);
+        navController = PresenterUtilities.Activities.setNavigationGraph(this, R.id.nav_host_fragment_activity_settings);
     }
 
     @Override

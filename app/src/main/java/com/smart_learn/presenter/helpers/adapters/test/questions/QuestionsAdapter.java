@@ -33,7 +33,7 @@ import com.smart_learn.databinding.LayoutCardViewQuestionQuizBinding;
 import com.smart_learn.databinding.LayoutCardViewQuestionTrueOrFalseBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 import com.smart_learn.presenter.helpers.adapters.helpers.ErrorViewHolder;
 
@@ -145,7 +145,7 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
             return;
         }
 

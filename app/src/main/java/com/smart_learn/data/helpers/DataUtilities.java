@@ -104,7 +104,7 @@ public final class DataUtilities {
     }
 
     /**
-     * Utilities related to the FirebaseFirestore.
+     * PresenterUtilities related to the FirebaseFirestore.
      * */
     public static final class Firestore {
 

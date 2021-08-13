@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.QuestionFullWrite;
@@ -16,14 +15,11 @@ import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.QuestionTrueOrFalse;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import lombok.Getter;
-import lombok.Setter;
 import timber.log.Timber;
 
 

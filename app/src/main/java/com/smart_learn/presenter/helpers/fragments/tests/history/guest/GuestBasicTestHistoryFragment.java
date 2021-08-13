@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.room.entities.RoomTest;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.test.history.GuestTestHistoryAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 import com.smart_learn.presenter.helpers.fragments.tests.BasicTestFragment;
@@ -72,7 +72,7 @@ public abstract class GuestBasicTestHistoryFragment <VM extends GuestBasicTestHi
         observer = new Observer<List<RoomTest>>() {
             @Override
             public void onChanged(List<RoomTest> tests) {
-                Utilities.Activities.changeTextViewStatus(tests.isEmpty(), emptyLabel);
+                PresenterUtilities.Activities.changeTextViewStatus(tests.isEmpty(), emptyLabel);
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().setItems(tests);
                 }

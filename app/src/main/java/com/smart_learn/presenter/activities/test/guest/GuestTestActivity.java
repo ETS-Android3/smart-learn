@@ -22,7 +22,7 @@ import com.smart_learn.presenter.activities.guest.GuestActivity;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoFragment;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.mixed.MixedTestFragment;
@@ -74,7 +74,7 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
         super.setLayoutUtilities();
 
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_test,
+        navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_test,
                 binding.bottomNavigationActivityTest, new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
@@ -179,19 +179,19 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
         }
 
         navController.navigate(R.id.guest_test_questions_fragment_nav_graph_activity_guest_test, args,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToGuestScheduledTestInfoFragment(){
         navController.navigate(R.id.action_guest_scheduled_tests_fragment_to_guest_scheduled_test_info_fragment_nav_graph_activity_guest_test, null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToGuestScheduledTestInfoFragmentForUpdate(int testId){
         Bundle args = new Bundle();
         args.putString(ScheduledTestInfoFragment.TEST_ID_KEY, String.valueOf(testId));
         navController.navigate(R.id.action_guest_scheduled_tests_fragment_to_guest_scheduled_test_info_fragment_nav_graph_activity_guest_test, args,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToGuestTestTypesFragment(){
@@ -200,7 +200,7 @@ public class GuestTestActivity extends TestActivity<GuestTestSharedViewModel> {
 
     public void goToGuestSelectLessonFragment(){
         navController.navigate(R.id.guest_select_lesson_fragment_nav_graph_activity_guest_test,null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToGuestTestSetupFragment(){

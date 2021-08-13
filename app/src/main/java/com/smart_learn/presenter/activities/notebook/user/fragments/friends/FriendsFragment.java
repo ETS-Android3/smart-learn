@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.friends.select.SelectFriendsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +50,7 @@ public class FriendsFragment extends SelectFriendsFragment<FriendsViewModel> {
 
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_friends_point) + " " + value);
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_friends_point) + " " + value);
     }
 
     @Override

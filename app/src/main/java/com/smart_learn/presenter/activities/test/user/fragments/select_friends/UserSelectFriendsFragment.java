@@ -8,7 +8,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.friends.select.SelectFriendsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +44,7 @@ public class UserSelectFriendsFragment extends SelectFriendsFragment<UserSelectF
 
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.selected_friends_point) + " " + value);
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.selected_friends_point) + " " + value);
     }
 
     @Override

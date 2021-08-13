@@ -22,7 +22,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewNotificationBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -96,7 +96,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
                     adapterCallback.onSimpleClick(getSnapshots().getSnapshot(position));
@@ -115,7 +115,7 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

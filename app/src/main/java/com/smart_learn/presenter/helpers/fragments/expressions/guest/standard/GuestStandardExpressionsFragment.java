@@ -10,7 +10,7 @@ import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.helpers.fragments.expressions.helpers.ExpressionDialog;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.guest.GuestBasicExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +77,7 @@ public abstract class GuestStandardExpressionsFragment <VM extends GuestStandard
             @Override
             public void onClick(View v) {
                 viewModel.setAllItemsAreSelected(!viewModel.isAllItemsAreSelected());
-                Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
+                PresenterUtilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
 
@@ -87,7 +87,7 @@ public abstract class GuestStandardExpressionsFragment <VM extends GuestStandard
             public void onClick(View v) {
                 viewModel.deleteSelectedExpressions();
                 viewModel.setAllItemsAreSelected(false);
-                Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
+                PresenterUtilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
     }

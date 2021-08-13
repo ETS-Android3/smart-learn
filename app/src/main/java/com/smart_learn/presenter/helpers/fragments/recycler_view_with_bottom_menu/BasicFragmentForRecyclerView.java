@@ -26,7 +26,7 @@ import com.smart_learn.databinding.FragmentBasicForRecyclerViewBinding;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.ItemDecoration;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -244,7 +244,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
         }
 
         menu.setGroupVisible(getSearchOnGroupId(), true);
-        Utilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new Callbacks.SearchActionCallback() {
+        PresenterUtilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new Callbacks.SearchActionCallback() {
                     @Override
                     public void onQueryTextChange(String newText) {
                         onFilter(newText);
@@ -281,7 +281,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(getToolbarTitle()));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(getToolbarTitle()));
         if(isCreated){
             isCreated = false;
         }
@@ -347,7 +347,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             viewStub.setLayoutResource(getBottomSheetLayout());
             viewStub.inflate();
             bottomSheetLayout = (LinearLayoutCompat) requireActivity().findViewById(getParentBottomSheetLayoutId());
-            bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(bottomSheetLayout);
+            bottomSheetBehavior = PresenterUtilities.Activities.setPersistentBottomSheet(bottomSheetLayout);
         }
 
         setSwipeRefreshLayout();
@@ -356,11 +356,11 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     }
 
     protected void setSwipeRefreshLayout(){
-        Utilities.Activities.setSwipeRefreshLayout(swipeRefreshLayout, true, true, null);
+        PresenterUtilities.Activities.setSwipeRefreshLayout(swipeRefreshLayout, true, true, null);
     }
 
     protected void setRecyclerView(){
-        Utilities.Activities.initializeRecyclerView(requireContext(), recyclerView, startFromEnd(), getRecyclerViewItemDecoration(),
+        PresenterUtilities.Activities.initializeRecyclerView(requireContext(), recyclerView, startFromEnd(), getRecyclerViewItemDecoration(),
                 viewModel.getAdapter(), new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
@@ -393,7 +393,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
 
     @Override
     public void showOrHideEmptyLabel(boolean value) {
-        Utilities.Activities.changeTextViewStatus(value, emptyLabel);
+        PresenterUtilities.Activities.changeTextViewStatus(value, emptyLabel);
     }
 
     @Override
@@ -408,10 +408,10 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 if(!showFloatingActionButton()){
-                    Utilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
+                    PresenterUtilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
                 }
                 else{
-                    Utilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
+                    PresenterUtilities.Activities.showPersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetLayout, bottomSheetBehavior);
                 }
                 actionModeCustomCallback.onCreateActionMode();
                 return true;
@@ -432,10 +432,10 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
                 mode.finish();
                 actionMode = null;
                 if(!showFloatingActionButton()){
-                    Utilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetBehavior);
+                    PresenterUtilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(),null, includeRVLayout, bottomSheetBehavior);
                 }
                 else{
-                    Utilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetBehavior);
+                    PresenterUtilities.Activities.hidePersistentBottomSheet(isFragmentWithBottomNav(), floatingActionButton, includeRVLayout, bottomSheetBehavior);
                 }
                 actionModeCustomCallback.onDestroyActionMode();
             }

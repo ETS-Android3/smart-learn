@@ -1,7 +1,6 @@
 package com.smart_learn.presenter.activities.community.fragments.users.helpers;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,6 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.LayoutDialogViewUserBinding;
-import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationDialog;
-import com.smart_learn.presenter.helpers.Utilities;
 
 import org.jetbrains.annotations.NotNull;
 

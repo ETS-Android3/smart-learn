@@ -15,7 +15,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityCommunityBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +45,7 @@ public class CommunityActivity extends BasicActivity {
 
     private void setLayoutUtilities(){
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_community,
+        navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_community,
                 binding.bottomNavigationActivityCommunity, new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
@@ -53,11 +53,11 @@ public class CommunityActivity extends BasicActivity {
                         switch (item.getItemId()){
                             case R.id.friends_fragment_nav_graph_activity_community:
                                 navController.navigate(R.id.friends_fragment_nav_graph_activity_community,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions());
+                                        PresenterUtilities.Activities.getVisibleBottomMenuNavOptions());
                                 return true;
                             case R.id.users_fragment_nav_graph_activity_community:
                                 navController.navigate(R.id.users_fragment_nav_graph_activity_community,null,
-                                        Utilities.Activities.getVisibleBottomMenuNavOptions());
+                                        PresenterUtilities.Activities.getVisibleBottomMenuNavOptions());
                                 return true;
                         }
                         return false;

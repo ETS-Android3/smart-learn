@@ -24,7 +24,7 @@ import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewTestScheduleBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -131,7 +131,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -192,7 +192,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -207,7 +207,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

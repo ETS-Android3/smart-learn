@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.smart_learn.R;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentFinalizeTestBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +65,7 @@ public abstract class FinalizeTestFragment <VM extends FinalizeTestViewModel> ex
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.test_result));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.test_result));
     }
 
     @Override

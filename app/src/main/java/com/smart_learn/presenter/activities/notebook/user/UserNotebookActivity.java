@@ -13,7 +13,7 @@ import com.smart_learn.presenter.activities.notebook.user.fragments.friends.Frie
 import com.smart_learn.presenter.activities.notebook.user.fragments.home_expression.UserHomeExpressionFragment;
 import com.smart_learn.presenter.activities.notebook.user.fragments.home_lesson.UserHomeLessonFragment;
 import com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserWordContainerFragment;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.BasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.UserBasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.words.BasicWordsFragment;
@@ -44,7 +44,7 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
         super.setLayoutUtilities();
 
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_notebook,
+        navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_notebook,
                 binding.bottomNavigationActivityNotebook, new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
@@ -52,21 +52,21 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
                         switch (item.getItemId()){
                             case R.id.user_home_lesson_fragment_nav_graph_activity_user_notebook:
                                 navController.navigate(R.id.user_home_lesson_fragment_nav_graph_activity_user_notebook,null,
-                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
+                                        PresenterUtilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
                             case R.id.user_words_fragment_nav_graph_activity_user_notebook:
                                 Bundle wordArgs = new Bundle();
                                 wordArgs.putString(BasicWordsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLesson().getId());
                                 wordArgs.putBoolean(UserBasicWordsFragment.IS_SHARED_LESSON_SELECTED, sharedViewModel.isSharedLessonSelected());
                                 navController.navigate(R.id.user_words_fragment_nav_graph_activity_user_notebook, wordArgs,
-                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
+                                        PresenterUtilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
                             case R.id.user_expressions_fragment_nav_graph_activity_user_notebook:
                                 Bundle expressionArgs = new Bundle();
                                 expressionArgs.putString(BasicExpressionsFragment.SELECTED_LESSON_KEY, sharedViewModel.getSelectedLesson().getId());
                                 expressionArgs.putBoolean(UserBasicExpressionsFragment.IS_SHARED_LESSON_SELECTED, sharedViewModel.isSharedLessonSelected());
                                 navController.navigate(R.id.user_expressions_fragment_nav_graph_activity_user_notebook, expressionArgs,
-                                        Utilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
+                                        PresenterUtilities.Activities.getBottomMenuNavOptionsForOnBackPress(R.id.user_lessons_fragment_nav_graph_activity_user_notebook));
                                 return true;
                         }
                         return false;
@@ -79,7 +79,7 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
         Bundle args = new Bundle();
         args.putBoolean(UserHomeLessonFragment.IS_SHARED_LESSON_SELECTED, isSharedLessonSelected);
         navController.navigate(R.id.action_user_lessons_fragment_to_user_home_lesson_fragment_nav_graph_activity_user_notebook, args,
-                Utilities.Activities.getEnterBottomMenuNavOptions(R.id.user_home_lesson_fragment_nav_graph_activity_user_notebook));
+                PresenterUtilities.Activities.getEnterBottomMenuNavOptions(R.id.user_home_lesson_fragment_nav_graph_activity_user_notebook));
     }
 
     public void goToSelectFriendsFragment(boolean addNewEmptySharedLesson){
@@ -92,18 +92,18 @@ public class UserNotebookActivity extends NotebookActivity<UserNotebookSharedVie
         Bundle args = new Bundle();
         args.putBoolean(UserWordContainerFragment.IS_WORD_OWNER, isWordOwner);
         navController.navigate(R.id.action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook, args,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToUserHomeExpressionFragment(boolean isExpressionOwner){
         Bundle args = new Bundle();
         args.putBoolean(UserHomeExpressionFragment.IS_EXPRESSION_OWNER, isExpressionOwner);
         navController.navigate(R.id.action_user_expressions_fragment_to_user_home_expression_fragment_nav_graph_activity_user_notebook,
-                args, Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                args, PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToSharedLessonParticipantsFragment(){
         navController.navigate(R.id.action_user_home_lesson_fragment_to_shared_lesson_participants_fragment_nav_graph_activity_user_notebook, null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }

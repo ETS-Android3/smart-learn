@@ -19,7 +19,7 @@ import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.databinding.LayoutCardViewTestScheduleBinding;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicListAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -162,7 +162,7 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -182,7 +182,7 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

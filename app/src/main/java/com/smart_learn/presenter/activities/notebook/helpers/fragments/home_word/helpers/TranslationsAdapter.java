@@ -19,7 +19,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutCardViewTranslationBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
@@ -68,7 +68,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
 
     @Override
     public void onBindViewHolder(@NonNull TranslationViewHolder holder, int position) {
-        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
             return;
         }
 
@@ -120,7 +120,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -145,7 +145,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
                     }
 
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

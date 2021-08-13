@@ -13,7 +13,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -90,7 +90,7 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.SelectionHelp
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
-        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
             return;
         }
 

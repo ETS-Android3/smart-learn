@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer;
 
 import com.smart_learn.R;
 import com.smart_learn.databinding.FragmentAccountOverviewBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +52,7 @@ public abstract class AccountOverviewFragment <VM extends AccountOverviewViewMod
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.account_overview));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.account_overview));
     }
 
 }

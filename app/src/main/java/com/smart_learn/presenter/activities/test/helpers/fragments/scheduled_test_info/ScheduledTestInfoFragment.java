@@ -21,7 +21,7 @@ import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.FragmentScheduledTestInfoBinding;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
@@ -62,7 +62,7 @@ public abstract class ScheduledTestInfoFragment <VM extends ScheduledTestInfoVie
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.test_info));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.test_info));
     }
 
     @Override

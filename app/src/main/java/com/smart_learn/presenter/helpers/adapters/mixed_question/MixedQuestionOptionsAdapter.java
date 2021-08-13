@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
 import com.smart_learn.databinding.LayoutCardViewMixedQuestionOptionBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +51,7 @@ public class MixedQuestionOptionsAdapter extends RecyclerView.Adapter<MixedQuest
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull OptionViewHolder holder, int position) {
-        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
             return;
         }
 

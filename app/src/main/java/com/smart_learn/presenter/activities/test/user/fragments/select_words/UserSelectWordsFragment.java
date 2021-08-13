@@ -10,7 +10,7 @@ import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.user.select.UserBasicSelectWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +64,7 @@ public class UserSelectWordsFragment extends UserBasicSelectWordsFragment<UserSe
 
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
     }
 
     @Override

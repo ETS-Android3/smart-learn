@@ -18,7 +18,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.FragmentUsersBinding;
 import com.smart_learn.presenter.activities.community.fragments.users.helpers.UserDialog;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -111,7 +111,7 @@ public class UsersFragment extends BasicFragment<UsersViewModel> {
         String value = first + email + second;
         ArrayList<Pair<Integer, Integer>> indexList = new ArrayList<>();
         indexList.add(new Pair<>(first.length(), first.length() + email.length()));
-        viewModel.setLiveMessageNoUserFound(Utilities.Activities.generateSpannedString(indexList, value));
+        viewModel.setLiveMessageNoUserFound(PresenterUtilities.Activities.generateSpannedString(indexList, value));
         tvNoUserFound.setVisibility(View.VISIBLE);
     }
 

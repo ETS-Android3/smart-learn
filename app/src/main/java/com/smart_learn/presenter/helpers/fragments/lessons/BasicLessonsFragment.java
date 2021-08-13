@@ -3,7 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.lessons;
 import androidx.annotation.NonNull;
 
 import com.smart_learn.R;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +52,7 @@ public abstract class BasicLessonsFragment <T, VM extends BasicLessonsViewModel<
             }
         }
 
-        Utilities.Activities.showStandardInfoDialog(requireContext(), getString(R.string.delete_lesson), message);
+        PresenterUtilities.Activities.showStandardInfoDialog(requireContext(), getString(R.string.delete_lesson), message);
     }
 
 }

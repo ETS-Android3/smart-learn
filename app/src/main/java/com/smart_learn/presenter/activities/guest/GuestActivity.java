@@ -20,7 +20,7 @@ import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity
 import com.smart_learn.presenter.activities.settings.GuestSettingsActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import timber.log.Timber;
 
@@ -71,7 +71,7 @@ public class GuestActivity extends BasicActivity {
 
     private void setLayoutUtilities(){
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraph(this, R.id.nav_host_fragment_activity_guest);
+        navController = PresenterUtilities.Activities.setNavigationGraph(this, R.id.nav_host_fragment_activity_guest);
     }
 
     private void setNavigationDrawer(){

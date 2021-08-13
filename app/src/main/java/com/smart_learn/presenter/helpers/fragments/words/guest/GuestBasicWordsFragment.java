@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer;
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Word;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.words.GuestWordsAdapter;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
 import com.smart_learn.presenter.helpers.fragments.words.BasicWordsFragment;
@@ -93,7 +93,7 @@ public abstract class GuestBasicWordsFragment <VM extends GuestBasicWordsViewMod
         GuestWordService.getInstance().getCurrentLessonLiveWords(currentLessonId).observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
-                Utilities.Activities.changeTextViewStatus(words.isEmpty(), emptyLabel);
+                PresenterUtilities.Activities.changeTextViewStatus(words.isEmpty(), emptyLabel);
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().setItems(words);
                 }

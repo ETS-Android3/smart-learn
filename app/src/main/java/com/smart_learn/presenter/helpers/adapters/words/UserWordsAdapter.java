@@ -22,7 +22,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewWordBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -171,7 +171,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
-                liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
+                liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(item.getWord().toLowerCase(), filteringValue), item.getWord()));
             }
             else {
@@ -189,7 +189,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -219,7 +219,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
                     if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
-                        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                             return true;
                         }
 
@@ -239,7 +239,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

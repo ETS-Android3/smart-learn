@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer;
 import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Lesson;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.lessons.GuestLessonsAdapter;
 import com.smart_learn.presenter.helpers.fragments.lessons.BasicLessonsFragment;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;
@@ -73,7 +73,7 @@ public abstract class GuestBasicLessonsFragment <VM extends GuestBasicLessonsVie
         GuestLessonService.getInstance().getAllLiveSampleLessons().observe(this, new Observer<List<Lesson>>() {
             @Override
             public void onChanged(List<Lesson> lessons) {
-                Utilities.Activities.changeTextViewStatus(lessons.isEmpty(), emptyLabel);
+                PresenterUtilities.Activities.changeTextViewStatus(lessons.isEmpty(), emptyLabel);
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().setItems(lessons);
                 }

@@ -19,7 +19,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentUserWordContainerBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -129,7 +129,7 @@ public class UserWordContainerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.word));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.word));
         ((NotebookActivity<?>)requireActivity()).hideBottomNavigationMenu();
     }
 

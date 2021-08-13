@@ -8,7 +8,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.guest.select.GuestBasicSelectExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +54,7 @@ public class GuestSelectExpressionsFragment extends GuestBasicSelectExpressionsF
 
     @Override
     protected void onAdapterUpdateSelectedItemsCounter(int value) {
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) this.requireActivity(), getString(R.string.selected_point) + " " + value);
     }
 
     @Override

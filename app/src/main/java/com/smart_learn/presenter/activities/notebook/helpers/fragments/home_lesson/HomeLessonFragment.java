@@ -15,7 +15,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.FragmentHomeLessonBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
@@ -89,7 +89,7 @@ public abstract class HomeLessonFragment <VM extends HomeLessonViewModel> extend
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.lesson_overview));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.lesson_overview));
         ((NotebookActivity<?>)requireActivity()).showBottomNavigationMenu();
     }
 }

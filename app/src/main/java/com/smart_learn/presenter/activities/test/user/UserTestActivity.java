@@ -27,7 +27,7 @@ import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoFragment;
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
 import com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeFragment;
@@ -140,7 +140,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         super.setLayoutUtilities();
 
         // try to set navigation graph
-        navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_test,
+        navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_test,
                 binding.bottomNavigationActivityTest, new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
@@ -241,20 +241,20 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         }
         else{
             navController.navigate(R.id.user_test_questions_fragment_nav_graph_activity_user_test, args,
-                    Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                    PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
         }
     }
 
     public void goToUserScheduledTestInfoFragment(){
         navController.navigate(R.id.action_user_scheduled_tests_fragment_to_user_scheduled_test_info_fragment_nav_graph_activity_user_test, null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToUserScheduledTestInfoFragmentForUpdate(String testId){
         Bundle args = new Bundle();
         args.putString(ScheduledTestInfoFragment.TEST_ID_KEY, testId);
         navController.navigate(R.id.action_user_scheduled_tests_fragment_to_user_scheduled_test_info_fragment_nav_graph_activity_user_test, args,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToUserTestTypesFragment(){
@@ -263,7 +263,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
 
     public void goToUserSelectLessonFragment(){
         navController.navigate(R.id.user_select_lesson_fragment_nav_graph_activity_user_test,null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 
     public void goToUserTestSetupFragment(){
@@ -394,6 +394,6 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
 
     public void goToUserSelectFriendsFragment() {
         navController.navigate(R.id.user_select_friends_fragment_nav_graph_activity_user_test,null,
-                Utilities.Activities.getExitBottomMenuNavAnimationsOptions());
+                PresenterUtilities.Activities.getExitBottomMenuNavAnimationsOptions());
     }
 }

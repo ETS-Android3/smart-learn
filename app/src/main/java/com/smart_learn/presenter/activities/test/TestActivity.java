@@ -16,7 +16,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityTest2Binding;
 import com.smart_learn.presenter.helpers.BasicActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -124,7 +124,7 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
         binding.bottomNavigationActivityTest.inflateMenu(getMenuResourceId());
 
         // set bottom sheet behaviour for bottom navigation menu layout
-        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityTest);
+        bottomSheetBehavior = PresenterUtilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityTest);
 
         fabNewTest.setOnClickListener(new View.OnClickListener() {
             @Override

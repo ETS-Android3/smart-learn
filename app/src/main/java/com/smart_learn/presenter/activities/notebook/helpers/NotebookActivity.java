@@ -20,7 +20,7 @@ import com.smart_learn.databinding.ActivityNotebookBinding;
 import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -94,7 +94,7 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
         binding.bottomNavigationActivityNotebook.inflateMenu(getMenuResourceId());
 
         // set bottom sheet behaviour for bottom navigation menu layout
-        bottomSheetBehavior = Utilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
+        bottomSheetBehavior = PresenterUtilities.Activities.setPersistentBottomSheet(binding.layoutLinearNavigationActivityNotebook);
     }
 
     protected void setViewModel(){

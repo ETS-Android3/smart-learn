@@ -22,7 +22,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewExpressionBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -174,7 +174,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
             viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
             if(isFiltering){
-                liveSpannedExpression.setValue(Utilities.Activities.generateSpannedString(
+                liveSpannedExpression.setValue(PresenterUtilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(item.getExpression().toLowerCase(), filteringValue), item.getExpression()));
                 // TODO: try to show more lines only if value is on the hidden lines
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_FILTER_LINES);
@@ -196,7 +196,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -226,7 +226,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
                     if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
-                        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                             return true;
                         }
 
@@ -246,7 +246,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

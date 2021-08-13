@@ -17,7 +17,7 @@ import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentLocalTestSetupBinding;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -109,7 +109,7 @@ public abstract class LocalTestSetupFragment <VM extends LocalTestSetupViewModel
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity)requireActivity(), getString(R.string.select_test_options));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity)requireActivity(), getString(R.string.select_test_options));
         if(sharedViewModel.getGeneratedTest() != null){
             sharedViewModel.getGeneratedTest().setNrOfValuesForGenerating(Test.USE_ALL);
             sharedViewModel.getGeneratedTest().setQuestionCounter(Test.NO_COUNTER);

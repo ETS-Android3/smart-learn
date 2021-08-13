@@ -21,7 +21,7 @@ import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
 import com.smart_learn.presenter.helpers.ItemDecoration;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
@@ -114,14 +114,14 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
     }
 
     private void setRecyclerView(){
-        Utilities.Activities.initializeRecyclerView(requireContext(), binding.rvTranslationsFragmentHomeExpression,
+        PresenterUtilities.Activities.initializeRecyclerView(requireContext(), binding.rvTranslationsFragmentHomeExpression,
                 new ItemDecoration(20), viewModel.getAdapter(), null);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.expression_overview));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.expression_overview));
         ((NotebookActivity<?>)requireActivity()).hideBottomNavigationMenu();
     }
 

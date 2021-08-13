@@ -58,10 +58,10 @@ import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
  * https://projectlombok.org/features/experimental/UtilityClass
  * https://stackoverflow.com/questions/25223553/how-can-i-create-an-utility-class
  * */
-public final class Utilities {
+public final class PresenterUtilities {
 
     /** Use a private constructor in order to avoid instantiation. */
-    private Utilities(){
+    private PresenterUtilities(){
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 

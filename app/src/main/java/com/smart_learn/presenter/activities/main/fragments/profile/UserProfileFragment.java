@@ -14,7 +14,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.databinding.FragmentUserProfileBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +58,7 @@ public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
     @Override
     public void onResume() {
         super.onResume();
-        Utilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.account));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(),getResources().getString(R.string.account));
     }
 
     private void setLayoutUtilities(){
@@ -69,7 +69,7 @@ public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
                 String title = UserProfileFragment.this.getString(R.string.delete_account);
                 String description = UserProfileFragment.this.getString(R.string.delete_account_description);
 
-                Utilities.Activities.showStandardAlertDialog(UserProfileFragment.this.requireContext(),
+                PresenterUtilities.Activities.showStandardAlertDialog(UserProfileFragment.this.requireContext(),
                         title, description, new Callbacks.StandardAlertDialogCallback() {
                     @Override
                     public void onPositiveButtonPress() {
@@ -80,7 +80,7 @@ public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
         });
 
         // layout for profile name (if is email-password provider display name can be changed, otherwise not)
-        Utilities.Activities.setCustomEditableLayout(binding.toolbarFragmentUserProfile, binding.layoutProfileNameFragmentUserProfile,
+        PresenterUtilities.Activities.setCustomEditableLayout(binding.toolbarFragmentUserProfile, binding.layoutProfileNameFragmentUserProfile,
                 binding.tvProfileNameFragmentUserProfile, new Callbacks.CustomEditableLayoutCallback() {
                     @Override
                     public void savePreviousValue() {

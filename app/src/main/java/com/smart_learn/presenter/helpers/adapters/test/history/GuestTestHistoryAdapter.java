@@ -17,13 +17,11 @@ import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.databinding.LayoutCardViewTestHistoryBinding;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicListAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.text.DecimalFormat;
 
 public class GuestTestHistoryAdapter extends BasicListAdapter<RoomTest, GuestTestHistoryAdapter.TestViewHolder, GuestTestHistoryAdapter.Callback>
         implements PresenterHelpers.AdapterHelper {
@@ -95,7 +93,7 @@ public class GuestTestHistoryAdapter extends BasicListAdapter<RoomTest, GuestTes
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -115,7 +113,7 @@ public class GuestTestHistoryAdapter extends BasicListAdapter<RoomTest, GuestTes
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

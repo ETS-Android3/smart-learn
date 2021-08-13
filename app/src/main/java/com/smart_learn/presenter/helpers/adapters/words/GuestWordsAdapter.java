@@ -20,7 +20,7 @@ import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.databinding.LayoutCardViewWordBinding;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicListAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -163,7 +163,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
-                liveSpannedWord.setValue(Utilities.Activities.generateSpannedString(
+                liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
                         CoreUtilities.General.getSubstringIndexes(item.getWord().toLowerCase(), filteringValue), item.getWord()));
             }
             else {
@@ -184,7 +184,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return;
                     }
 
@@ -215,7 +215,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
                     if(!isSelectionModeActive()) {
                         int position = getAdapterPosition();
-                        if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                        if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                             return true;
                         }
 
@@ -240,7 +240,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     int position = getAdapterPosition();
-                    if(!Utilities.Adapters.isGoodAdapterPosition(position)){
+                    if(!PresenterUtilities.Adapters.isGoodAdapterPosition(position)){
                         return true;
                     }
 

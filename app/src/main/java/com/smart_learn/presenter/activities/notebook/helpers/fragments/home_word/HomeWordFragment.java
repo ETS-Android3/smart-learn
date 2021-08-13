@@ -20,7 +20,7 @@ import com.smart_learn.databinding.FragmentHomeWordBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
 import com.smart_learn.presenter.helpers.ItemDecoration;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
@@ -131,7 +131,7 @@ public abstract class HomeWordFragment <VM extends HomeWordViewModel> extends Ba
     }
 
     private void setRecyclerView(){
-        Utilities.Activities.initializeRecyclerView(requireContext(), binding.rvTranslationsFragmentHomeWord,
+        PresenterUtilities.Activities.initializeRecyclerView(requireContext(), binding.rvTranslationsFragmentHomeWord,
                 new ItemDecoration(20), viewModel.getAdapter(), null);
     }
 

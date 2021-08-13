@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.smart_learn.presenter.activities.test.helpers.fragments.test_questions.TestQuestionsFragment;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
-import com.smart_learn.presenter.helpers.Utilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.test.questions.QuestionsAdapter;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +33,7 @@ public class UserTestQuestionsFragment extends TestQuestionsFragment<UserTestQue
         viewModel.setAdapter(new QuestionsAdapter(questionType, new QuestionsAdapter.Callback() {
             @Override
             public void onListLoadAction(boolean isEmpty) {
-                requireActivity().runOnUiThread(() -> Utilities.Activities.changeTextViewStatus(isEmpty, emptyLabel));
+                requireActivity().runOnUiThread(() -> PresenterUtilities.Activities.changeTextViewStatus(isEmpty, emptyLabel));
             }
         }));
         viewModel.setAdapterQuestions(UserTestQuestionsFragment.this, currentTestId, questionType);

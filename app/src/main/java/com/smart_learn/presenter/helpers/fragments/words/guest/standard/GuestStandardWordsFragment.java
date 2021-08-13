@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.data.room.entities.helpers.Translation;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.helpers.WordDialog;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.Utilities;
 import com.smart_learn.presenter.helpers.fragments.words.guest.GuestBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +77,7 @@ public abstract class GuestStandardWordsFragment <VM extends GuestStandardWordsV
             @Override
             public void onClick(View v) {
                 viewModel.setAllItemsAreSelected(!viewModel.isAllItemsAreSelected());
-                Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
+                PresenterUtilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
 
@@ -87,7 +87,7 @@ public abstract class GuestStandardWordsFragment <VM extends GuestStandardWordsV
             public void onClick(View v) {
                 viewModel.deleteSelectedWords();
                 viewModel.setAllItemsAreSelected(false);
-                Utilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
+                PresenterUtilities.Activities.changeSelectAllButtonStatus(viewModel.isAllItemsAreSelected(), btnSelectAll);
             }
         });
     }
