@@ -15,7 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
-import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.word.GuestWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Word;

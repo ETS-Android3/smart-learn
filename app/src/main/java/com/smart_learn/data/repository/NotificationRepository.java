@@ -18,7 +18,7 @@ import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserExpressionService;
 import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.services.UserWordService;
+import com.smart_learn.core.services.word.UserWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;

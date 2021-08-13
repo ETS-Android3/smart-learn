@@ -1,4 +1,4 @@
-package com.smart_learn.core.services;
+package com.smart_learn.core.services.word;
 
 import android.text.TextUtils;
 
@@ -11,7 +11,7 @@ import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.data.repository.UserWordRepository;
+import com.smart_learn.data.repository.word.UserWordRepository;
 import com.smart_learn.data.room.entities.helpers.Translation;
 
 import java.util.ArrayList;

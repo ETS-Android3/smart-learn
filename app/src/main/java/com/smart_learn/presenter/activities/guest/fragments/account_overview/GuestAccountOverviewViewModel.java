@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.smart_learn.R;
 import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.lesson.GuestLessonService;
-import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.word.GuestWordService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel;
 

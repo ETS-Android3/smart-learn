@@ -3,7 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.words.guest;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
-import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.word.GuestWordService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.helpers.PresenterUtilities;

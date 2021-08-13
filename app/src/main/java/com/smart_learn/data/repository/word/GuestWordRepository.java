@@ -1,4 +1,4 @@
-package com.smart_learn.data.repository;
+package com.smart_learn.data.repository.word;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
