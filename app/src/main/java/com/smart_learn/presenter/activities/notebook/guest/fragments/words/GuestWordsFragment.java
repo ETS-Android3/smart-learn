@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.guest.standard.GuestStandardWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +65,7 @@ public class GuestWordsFragment extends GuestStandardWordsFragment<GuestWordsVie
 
     private void goToGuestWordContainerFragment(Word word){
         if(word == null || word.getWordId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }
 

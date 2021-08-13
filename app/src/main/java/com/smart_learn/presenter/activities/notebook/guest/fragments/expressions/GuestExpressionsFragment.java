@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.guest.standard.GuestStandardExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +65,7 @@ public class GuestExpressionsFragment extends GuestStandardExpressionsFragment<G
 
     public void goToGuestHomeExpressionFragment(Expression expression){
         if(expression == null || expression.getExpressionId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
             return;
         }
 

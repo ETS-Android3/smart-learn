@@ -17,11 +17,11 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityAuthenticationBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.LoadingDialog;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import timber.log.Timber;
 
@@ -89,7 +89,7 @@ public class AuthenticationActivity extends BasicActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if(account == null){
-                    GeneralUtilities.showShortToastMessage(this, getString(R.string.error_google_login_failed));
+                    PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_google_login_failed));
                     return;
                 }
 
@@ -97,7 +97,7 @@ public class AuthenticationActivity extends BasicActivity {
                 sharedViewModel.signInWithGoogle(account.getIdToken(), this);
 
             } catch (ApiException e) {
-                GeneralUtilities.showShortToastMessage(this, getString(R.string.error_google_login_failed));
+                PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_google_login_failed));
                 Timber.e(e);
             }
         }
@@ -134,7 +134,7 @@ public class AuthenticationActivity extends BasicActivity {
                             }
 
                             // previous account can not be signed out ==> abort connexion
-                            GeneralUtilities.showShortToastMessage(AuthenticationActivity.this, getString(R.string.error_google_login_failed));
+                            PresenterUtilities.General.showShortToastMessage(AuthenticationActivity.this, getString(R.string.error_google_login_failed));
                             Timber.w(task.getException());
                         }
                     });
@@ -156,7 +156,7 @@ public class AuthenticationActivity extends BasicActivity {
         sharedViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(AuthenticationActivity.this, s);
+                PresenterUtilities.General.showShortToastMessage(AuthenticationActivity.this, s);
             }
         });
     }

@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.tests.history.user.standard.UserStandardTestHistoryFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -93,7 +93,7 @@ public class UserTestHistoryFragment extends UserStandardTestHistoryFragment<Use
     private void goToUserTestResultsFragment(DocumentSnapshot testSnapshot){
         TestDocument test = testSnapshot.toObject(TestDocument.class);
         if(test == null || TextUtils.isEmpty(testSnapshot.getId())){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_test_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_test_can_not_be_opened));
             return;
         }
 

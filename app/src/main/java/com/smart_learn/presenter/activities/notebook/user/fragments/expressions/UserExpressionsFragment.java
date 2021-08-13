@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.standard.UserStandardExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,13 +71,13 @@ public class UserExpressionsFragment extends UserStandardExpressionsFragment<Use
     public void goToUserHomeExpressionFragment(DocumentSnapshot expressionSnapshot){
         // when navigation is made a valid expression must be set on shared view model
         if(expressionSnapshot == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
             return;
         }
 
         ExpressionDocument expression = expressionSnapshot.toObject(ExpressionDocument.class);
         if(expression == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_expression_can_not_be_opened));
             return;
         }
 

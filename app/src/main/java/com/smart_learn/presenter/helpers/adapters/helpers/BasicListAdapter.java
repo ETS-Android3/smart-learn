@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.android.material.card.MaterialCardView;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
@@ -181,12 +180,12 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.SelectionHelp
 
     protected void showMessage(int id){
         adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
-                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
+                PresenterUtilities.General.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
     }
 
     protected void showMessage(String message){
         adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
-                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), message));
+                PresenterUtilities.General.showShortToastMessage(adapterCallback.getFragment().requireContext(), message));
     }
 
 

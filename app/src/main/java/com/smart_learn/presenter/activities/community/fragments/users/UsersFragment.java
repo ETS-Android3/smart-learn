@@ -14,7 +14,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.FragmentUsersBinding;
 import com.smart_learn.presenter.activities.community.fragments.users.helpers.UserDialog;
@@ -69,7 +68,7 @@ public class UsersFragment extends BasicFragment<UsersViewModel> {
             public void onClick(View v) {
                 // avoid multiple clicks while search is in progress
                 if(viewModel.getSearchIsInProgress().get()){
-                    GeneralUtilities.showShortToastMessage(UsersFragment.this.requireContext(), getString(R.string.search_is_in_progress));
+                    PresenterUtilities.General.showShortToastMessage(UsersFragment.this.requireContext(), getString(R.string.search_is_in_progress));
                     return;
                 }
                 viewModel.setSearchIsInProgress(true);

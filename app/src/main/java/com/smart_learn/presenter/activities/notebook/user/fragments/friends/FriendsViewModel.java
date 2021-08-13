@@ -10,11 +10,11 @@ import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.presenter.helpers.ApplicationController;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.friends.select.SelectFriendsViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +73,7 @@ public class FriendsViewModel extends SelectFriendsViewModel {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
                     (fragment.requireActivity()).onBackPressed();
-                    GeneralUtilities.showShortToastMessage(ApplicationController.getInstance(),
+                    PresenterUtilities.General.showShortToastMessage(ApplicationController.getInstance(),
                             ApplicationController.getInstance().getString(R.string.success_shared_lesson));
                 });
             }
@@ -83,7 +83,7 @@ public class FriendsViewModel extends SelectFriendsViewModel {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
                     (fragment.requireActivity()).onBackPressed();
-                    GeneralUtilities.showShortToastMessage(ApplicationController.getInstance(),
+                    PresenterUtilities.General.showShortToastMessage(ApplicationController.getInstance(),
                             ApplicationController.getInstance().getString(R.string.error_share_lesson));
                 });
             }
@@ -146,7 +146,7 @@ public class FriendsViewModel extends SelectFriendsViewModel {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
                     (fragment.requireActivity()).onBackPressed();
-                    GeneralUtilities.showShortToastMessage(ApplicationController.getInstance(),
+                    PresenterUtilities.General.showShortToastMessage(ApplicationController.getInstance(),
                             ApplicationController.getInstance().getString(R.string.sucess_add_new_shared_lesson));
                 });
             }
@@ -156,7 +156,7 @@ public class FriendsViewModel extends SelectFriendsViewModel {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
                     (fragment.requireActivity()).onBackPressed();
-                    GeneralUtilities.showShortToastMessage(ApplicationController.getInstance(),
+                    PresenterUtilities.General.showShortToastMessage(ApplicationController.getInstance(),
                             ApplicationController.getInstance().getString(R.string.error_add_new_shared_lesson));
                 });
             }

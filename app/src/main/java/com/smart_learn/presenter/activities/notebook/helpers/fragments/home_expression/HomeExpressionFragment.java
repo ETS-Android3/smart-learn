@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
@@ -181,7 +180,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
                             @Override
                             public void onSuccess() {
                                 HomeExpressionFragment.this.requireActivity().runOnUiThread(() -> {
-                                    GeneralUtilities.showShortToastMessage(HomeExpressionFragment.this.requireContext(),
+                                    PresenterUtilities.General.showShortToastMessage(HomeExpressionFragment.this.requireContext(),
                                             getString(R.string.success_update_translations));
                                 });
                             }
@@ -189,7 +188,7 @@ public abstract class HomeExpressionFragment <VM extends HomeExpressionViewModel
                             @Override
                             public void onFailure() {
                                 HomeExpressionFragment.this.requireActivity().runOnUiThread(() -> {
-                                    GeneralUtilities.showShortToastMessage(HomeExpressionFragment.this.requireContext(),
+                                    PresenterUtilities.General.showShortToastMessage(HomeExpressionFragment.this.requireContext(),
                                             getString(R.string.error_update_translations));
                                 });
                             }

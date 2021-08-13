@@ -15,7 +15,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.tabs.TabLayout;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.FragmentUserWordContainerBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
@@ -74,7 +73,7 @@ public class UserWordContainerFragment extends Fragment {
 
         // if navigation graph cannot be set, then stop activity
         if(nestedNavController == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(), getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(), getString(R.string.error_loading_screen));
             // If navigation cannot be opened finish, because navigation cannot be done.
             requireActivity().onBackPressed();
             return;

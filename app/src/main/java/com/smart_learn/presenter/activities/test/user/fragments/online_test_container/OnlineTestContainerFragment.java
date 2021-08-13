@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentOnlineTestContainerBinding;
@@ -30,6 +29,7 @@ import com.smart_learn.presenter.activities.test.helpers.fragments.test_question
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestSharedViewModel;
 import com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeFragment;
@@ -86,7 +86,7 @@ public class OnlineTestContainerFragment extends BasicFragment<OnlineTestContain
 
         // if navigation graph cannot be set, then stop activity
         if(nestedNavController == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(), getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(), getString(R.string.error_loading_screen));
             // If navigation cannot be opened finish, because navigation cannot be done.
             requireActivity().onBackPressed();
             return;
@@ -179,7 +179,7 @@ public class OnlineTestContainerFragment extends BasicFragment<OnlineTestContain
     private void goToTestTypeFragment(String containerTestId){
         if(containerTestId == null || containerTestId.isEmpty()){
             Timber.w("participantTestId can not be null or empty");
-            GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_page_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_page_can_not_be_opened));
             return;
         }
 
@@ -206,20 +206,20 @@ public class OnlineTestContainerFragment extends BasicFragment<OnlineTestContain
                 nestedNavController.navigate(R.id.user_true_or_false_online_test_fragment_nested_nav_graph_fragment_online_test_container, args);
                 break;
             default:
-                GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_page_can_not_be_opened));
+                PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_page_can_not_be_opened));
         }
     }
 
     public void goToFinalizeTestFragment(String participantTestId, int testType, int correctAnsweredQuestions, int totalQuestions){
         if (totalQuestions <= 0) {
             Timber.w("totalQuestions [" + totalQuestions + "] is not valid");
-            GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
+            PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
             return;
         }
 
         if (correctAnsweredQuestions < 0 || correctAnsweredQuestions > totalQuestions) {
             Timber.w("correctAnsweredQuestions [" + correctAnsweredQuestions + "] is not valid");
-            GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
+            PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
             return;
         }
 
@@ -232,7 +232,7 @@ public class OnlineTestContainerFragment extends BasicFragment<OnlineTestContain
                 break;
             default:
                 Timber.w("testType [" + testType + "] is not valid");
-                GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
+                PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
                 return;
         }
 
@@ -275,7 +275,7 @@ public class OnlineTestContainerFragment extends BasicFragment<OnlineTestContain
                 break;
 
             default:
-                GeneralUtilities.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
+                PresenterUtilities.General.showShortToastMessage(requireContext(), getString(R.string.error_can_not_continue));
                 Timber.w("test type [" + testType + "] is not valid");
                 return;
         }

@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.room.entities.Word;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.guest.select.GuestBasicSelectWordsViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +52,7 @@ public class GuestSelectWordsViewModel extends GuestBasicSelectWordsViewModel {
 
                     // if test is schedule job is finished
                     if(test.isScheduled()){
-                        GeneralUtilities.showShortToastMessage(fragment.requireContext(), fragment.getString(R.string.success_test_generated));
+                        PresenterUtilities.General.showShortToastMessage(fragment.requireContext(), fragment.getString(R.string.success_test_generated));
                         fragment.navigateToGuestScheduledTestsFragment();
                         return;
                     }

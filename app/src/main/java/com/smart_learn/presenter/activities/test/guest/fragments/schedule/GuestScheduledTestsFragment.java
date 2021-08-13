@@ -6,11 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.presenter.activities.test.TestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestActivity;
 import com.smart_learn.presenter.activities.test.guest.GuestTestSharedViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.tests.schedule.guest.standard.GuestStandardScheduledTestsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -92,7 +92,7 @@ public class GuestScheduledTestsFragment extends GuestStandardScheduledTestsFrag
     private void goToGuestScheduledTestInfoFragmentForUpdate(RoomTest test){
         // when navigation is made a valid test id must be set on shared view model
         if(test == null || test.getTestId() == GuestTestSharedViewModel.NO_ITEM_SELECTED){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_test_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_test_can_not_be_opened));
             return;
         }
 

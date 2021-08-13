@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.helpers.ConnexionChecker;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.presenter.activities.test.helpers.fragments.local_test_setup.LocalTestSetupViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,7 +83,7 @@ public class UserTestSetupViewModel extends LocalTestSetupViewModel {
             @Override
             public void onSuccess(@NonNull @NotNull String testId) {
                 fragment.requireActivity().runOnUiThread(() -> {
-                    GeneralUtilities.showShortToastMessage(fragment.requireContext(), fragment.getString(R.string.test_saved));
+                    PresenterUtilities.General.showShortToastMessage(fragment.requireContext(), fragment.getString(R.string.test_saved));
                     fragment.navigateToUserScheduledTestsFragment();
                 });
             }

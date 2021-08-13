@@ -13,7 +13,6 @@ import androidx.navigation.NavController;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityTest2Binding;
 import com.smart_learn.presenter.helpers.BasicActivity;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
@@ -73,7 +72,7 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
             if(calledByScheduledTest){
                 scheduledTestId = args.getString(SCHEDULED_TEST_ID_KEY);
                 if(scheduledTestId == null || scheduledTestId.isEmpty()){
-                    GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+                    PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
                     onBackPressed();
                     this.finish();
                     return;
@@ -90,7 +89,7 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
 
         // if navigation graph cannot be set, then go back from activity
         if(navController == null){
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_loading_screen));
             onBackPressed();
             this.finish();
             return;
@@ -139,7 +138,7 @@ public abstract class TestActivity <VM extends TestSharedViewModel> extends Basi
         sharedViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(TestActivity.this, s);
+                PresenterUtilities.General.showShortToastMessage(TestActivity.this, s);
             }
         });
     }

@@ -13,7 +13,6 @@ import androidx.navigation.NavController;
 
 import com.google.android.material.navigation.NavigationView;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityGuestBinding;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
@@ -41,7 +40,7 @@ public class GuestActivity extends BasicActivity {
 
         // if navigation graph cannot be set, then stop activity
         if(navController == null){
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_loading_screen));
             // If drawer cannot be opened finish activity and close application, because navigation
             // cannot be done. I close application here because on this activity onBackPressed() is
             // disabled. So this is the last point.

@@ -17,9 +17,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.databinding.LayoutDialogViewNotificationBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -110,7 +110,7 @@ public class NotificationDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if(callback == null || isAlreadyAccepted){
-                    GeneralUtilities.showShortToastMessage(NotificationDialog.this.requireContext(),
+                    PresenterUtilities.General.showShortToastMessage(NotificationDialog.this.requireContext(),
                             NotificationDialog.this.getString(R.string.error_accept_request));
                     return;
                 }

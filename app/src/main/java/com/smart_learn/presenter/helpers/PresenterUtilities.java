@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.muddzdev.styleabletoast.StyleableToast;
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 
@@ -65,6 +67,16 @@ public final class PresenterUtilities {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
+    /** All general utilities related to the presenter layer. */
+    public static final class General {
+
+        public static void showShortToastMessage(final android.content.Context context, final String message){
+            // https://www.youtube.com/watch?v=fq8TDVqpmZ0
+            // https://github.com/Muddz/StyleableToast
+            StyleableToast.makeText(context, message, Toast.LENGTH_LONG, R.style.AppTheme_CustomToast).show();
+        }
+
+    }
 
     /** All utilities related to activities or fragments. */
     public static final class Activities {

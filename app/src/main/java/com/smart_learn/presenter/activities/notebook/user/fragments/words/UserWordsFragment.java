@@ -7,11 +7,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.WordDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.user.standard.UserStandardWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,13 +71,13 @@ public class UserWordsFragment extends UserStandardWordsFragment<UserWordsViewMo
     private void goToUserWordContainerFragment(DocumentSnapshot wordSnapshot){
         // when navigation is made a valid word must be set on shared view model
         if(wordSnapshot == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }
 
         WordDocument word = wordSnapshot.toObject(WordDocument.class);
         if(word == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_word_can_not_be_opened));
             return;
         }
 

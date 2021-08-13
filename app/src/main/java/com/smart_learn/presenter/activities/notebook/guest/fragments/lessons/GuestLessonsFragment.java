@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.lessons.guest.standard.GuestStandardLessonsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +58,7 @@ public class GuestLessonsFragment extends GuestStandardLessonsFragment<GuestLess
     private void goToGuestHomeLessonFragment(Lesson lesson){
         // when navigation is made a valid lesson id must be set on shared view model
         if(lesson == null || lesson.getLessonId() == GuestNotebookSharedViewModel.NO_ITEM_SELECTED){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
 

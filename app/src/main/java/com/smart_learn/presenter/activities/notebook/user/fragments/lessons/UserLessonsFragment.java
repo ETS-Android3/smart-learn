@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookSharedViewModel;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.lessons.user.standard.UserStandardLessonsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -69,13 +69,13 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
     private void goToUserHomeLessonFragment(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
         if(lessonSnapshot == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
 
         LessonDocument lessonDocument = lessonSnapshot.toObject(LessonDocument.class);
         if(lessonDocument == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
 
@@ -90,7 +90,7 @@ public class UserLessonsFragment extends UserStandardLessonsFragment<UserLessons
     private void shareLesson(DocumentSnapshot lessonSnapshot){
         // when navigation is made a valid lesson id must be set on shared view model
         if(lessonSnapshot == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_lesson_can_not_be_opened));
             return;
         }
 

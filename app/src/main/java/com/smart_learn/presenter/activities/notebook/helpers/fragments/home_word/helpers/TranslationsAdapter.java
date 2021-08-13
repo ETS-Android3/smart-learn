@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutCardViewTranslationBinding;
@@ -174,7 +173,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
                 @Override
                 public void onSuccess() {
                     callback.getActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(callback.getActivity(),
+                        PresenterUtilities.General.showShortToastMessage(callback.getActivity(),
                                 callback.getActivity().getString(R.string.success_deleting_translation));
                     });
                     isDeleting.set(false);
@@ -182,7 +181,7 @@ public class TranslationsAdapter extends ListAdapter<Translation, TranslationsAd
                 @Override
                 public void onFailure() {
                     callback.getActivity().runOnUiThread(() -> {
-                        GeneralUtilities.showShortToastMessage(callback.getActivity(),
+                        PresenterUtilities.General.showShortToastMessage(callback.getActivity(),
                                 callback.getActivity().getString(R.string.error_deleting_translation));
                     });
                     isDeleting.set(false);

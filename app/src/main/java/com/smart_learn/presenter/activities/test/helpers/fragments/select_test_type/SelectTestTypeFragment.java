@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentSelectTestTypeBinding;
@@ -78,7 +77,7 @@ public abstract class SelectTestTypeFragment <VM extends SelectTestTypeViewModel
                 if(sharedViewModel.getNrOfLessonWords() < QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION){
                     String tmp = getString(R.string.error_not_enough_words_1) + " " + QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION +
                             " " + getString(R.string.error_not_enough_words_2) + " " + sharedViewModel.getNrOfLessonWords() + " " + getString(R.string.error_not_enough_words_3);
-                    GeneralUtilities.showShortToastMessage(SelectTestTypeFragment.this.requireContext(), tmp);
+                    PresenterUtilities.General.showShortToastMessage(SelectTestTypeFragment.this.requireContext(), tmp);
                     return;
                 }
                 goToTestSetupFragment(Test.Types.WORD_QUIZ);
@@ -121,7 +120,7 @@ public abstract class SelectTestTypeFragment <VM extends SelectTestTypeViewModel
 
     private void goToTestSetupFragment(int type){
         if(sharedViewModel.getGeneratedTest() == null){
-            GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_page_can_not_be_opened));
+            PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_page_can_not_be_opened));
             return;
         }
 

@@ -15,7 +15,6 @@ import androidx.navigation.NavController;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityNotebookBinding;
 import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
 import com.smart_learn.presenter.helpers.BasicActivity;
@@ -67,7 +66,7 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
 
         // if navigation graph cannot be set, then go back from activity
         if(navController == null){
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_loading_screen));
             onBackPressed();
             this.finish();
             return;
@@ -102,7 +101,7 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
         sharedViewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(NotebookActivity.this, s);
+                PresenterUtilities.General.showShortToastMessage(NotebookActivity.this, s);
             }
         });
     }

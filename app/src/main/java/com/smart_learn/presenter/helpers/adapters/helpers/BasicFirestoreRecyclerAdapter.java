@@ -12,9 +12,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -419,12 +419,12 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
 
     protected void showMessage(int id){
         adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
-                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
+                PresenterUtilities.General.showShortToastMessage(adapterCallback.getFragment().requireContext(), getString(id)));
     }
 
     protected void showMessage(String message){
         adapterCallback.getFragment().requireActivity().runOnUiThread(() ->
-                GeneralUtilities.showShortToastMessage(adapterCallback.getFragment().requireContext(), message));
+                PresenterUtilities.General.showShortToastMessage(adapterCallback.getFragment().requireContext(), message));
     }
 
     public interface Callback extends Callbacks.StandardAdapterCallback <DocumentSnapshot> {

@@ -11,7 +11,6 @@ import androidx.navigation.NavController;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityCommunityBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
@@ -35,7 +34,7 @@ public class CommunityActivity extends BasicActivity {
 
         // if navigation graph cannot be set, then go back from activity
         if(navController == null){
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_loading_screen));
             onBackPressed();
             this.finish();
             // return;

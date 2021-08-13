@@ -25,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.ActivityMainBinding;
 import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
@@ -68,7 +67,7 @@ public class MainActivity extends BasicActivity {
 
         // if navigation graph cannot be set, then stop activity
         if(navController == null){
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_loading_screen));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_loading_screen));
             // If drawer cannot be opened finish activity and close application, because navigation
             // cannot be done. I close application here because on this activity onBackPressed() is
             // disabled. So this is the last point.

@@ -15,9 +15,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.LayoutDialogViewUserBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -122,7 +122,7 @@ public class UserDialog extends DialogFragment {
             public void onClick(View v) {
                 // if a request was already sent then wait until finishes
                 if(requestAlreadySent){
-                    GeneralUtilities.showShortToastMessage(UserDialog.this.requireContext(), UserDialog.this.getString(R.string.request_already_sent));
+                    PresenterUtilities.General.showShortToastMessage(UserDialog.this.requireContext(), UserDialog.this.getString(R.string.request_already_sent));
                     return;
                 }
 
@@ -159,7 +159,7 @@ public class UserDialog extends DialogFragment {
             public void onClick(View v) {
                 // if a request was already sent then wait until finishes
                 if(requestAlreadySent){
-                    GeneralUtilities.showShortToastMessage(UserDialog.this.requireContext(), UserDialog.this.getString(R.string.request_already_sent));
+                    PresenterUtilities.General.showShortToastMessage(UserDialog.this.requireContext(), UserDialog.this.getString(R.string.request_already_sent));
                     return;
                 }
                 requestAlreadySent = true;

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -61,7 +61,7 @@ public abstract class BasicFragment <VM extends BasicAndroidViewModel> extends F
         viewModel.getLiveToastMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                GeneralUtilities.showShortToastMessage(requireContext(), s);
+                PresenterUtilities.General.showShortToastMessage(requireContext(), s);
             }
         });
     }
@@ -131,7 +131,7 @@ public abstract class BasicFragment <VM extends BasicAndroidViewModel> extends F
     }
 
     protected void showMessage(int id){
-        GeneralUtilities.showShortToastMessage(this.requireContext(),getString(id));
+        PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(id));
     }
 
 }

@@ -15,7 +15,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
@@ -230,7 +229,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
                 break;
 
             default:
-                GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+                PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
                 Timber.w("test type [" + testType + "] is not valid");
                 return;
         }
@@ -307,7 +306,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
                 goToUserExpressionsTrueOrFalseLocalTestFragment(testId);
                 return;
             default:
-                GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+                PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
         }
     }
 
@@ -354,13 +353,13 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
     public void goToUserFinalizeTestFragment(String testId, int testType, int correctAnsweredQuestions, int totalQuestions){
         if (totalQuestions <= 0) {
             Timber.w("totalQuestions [" + totalQuestions + "] is not valid");
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
             return;
         }
 
         if (correctAnsweredQuestions < 0 || correctAnsweredQuestions > totalQuestions) {
             Timber.w("correctAnsweredQuestions [" + correctAnsweredQuestions + "] is not valid");
-            GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+            PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
             return;
         }
 
@@ -373,7 +372,7 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
                 break;
             default:
                 Timber.w("testType [" + testType + "] is not valid");
-                GeneralUtilities.showShortToastMessage(this, getString(R.string.error_can_not_continue));
+                PresenterUtilities.General.showShortToastMessage(this, getString(R.string.error_can_not_continue));
                 return;
         }
 

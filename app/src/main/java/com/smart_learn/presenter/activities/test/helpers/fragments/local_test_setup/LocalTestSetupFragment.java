@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentLocalTestSetupBinding;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
@@ -188,7 +187,7 @@ public abstract class LocalTestSetupFragment <VM extends LocalTestSetupViewModel
                     navigateToSelectExpressionsFragment();
                     return;
                 default:
-                    GeneralUtilities.showShortToastMessage(this.requireContext(),getString(R.string.error_can_not_continue));
+                    PresenterUtilities.General.showShortToastMessage(this.requireContext(),getString(R.string.error_can_not_continue));
             }
             return;
         }
