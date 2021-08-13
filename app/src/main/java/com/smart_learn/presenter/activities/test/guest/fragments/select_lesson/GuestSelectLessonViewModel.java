@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.smart_learn.core.services.GuestExpressionService;
+import com.smart_learn.core.services.expression.GuestExpressionService;
 import com.smart_learn.core.services.word.GuestWordService;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.data.room.entities.Lesson;

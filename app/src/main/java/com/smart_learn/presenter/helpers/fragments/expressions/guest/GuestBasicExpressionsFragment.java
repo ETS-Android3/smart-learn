@@ -3,7 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.expressions.guest;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
-import com.smart_learn.core.services.GuestExpressionService;
+import com.smart_learn.core.services.expression.GuestExpressionService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.helpers.PresenterUtilities;

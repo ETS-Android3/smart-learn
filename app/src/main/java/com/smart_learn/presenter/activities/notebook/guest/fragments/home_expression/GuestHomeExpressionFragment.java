@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.smart_learn.core.services.GuestExpressionService;
+import com.smart_learn.core.services.expression.GuestExpressionService;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_expression.HomeExpressionFragment;

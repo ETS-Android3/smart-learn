@@ -1,4 +1,4 @@
-package com.smart_learn.data.repository;
+package com.smart_learn.data.repository.expression;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;

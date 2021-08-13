@@ -1,4 +1,4 @@
-package com.smart_learn.core.services;
+package com.smart_learn.core.services.expression;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.data.repository.GuestExpressionRepository;
+import com.smart_learn.data.repository.expression.GuestExpressionRepository;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.helpers.Translation;
 

@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.services.UserExpressionService;
+import com.smart_learn.core.services.expression.UserExpressionService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
