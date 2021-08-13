@@ -167,7 +167,10 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
 
-            liveExtraInfo.setValue(LessonDocument.generateLessonTypeTitle(item.getType()) + " - 1 Day Ago");
+            String extraDescription = LessonDocument.generateLessonTypeTitle(item.getType()) + " - " +
+                    adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
+            liveExtraInfo.setValue(extraDescription);
         }
 
         private void setListeners(){

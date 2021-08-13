@@ -123,6 +123,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
     public final class ExpressionViewHolder extends BasicViewHolder<ExpressionDocument, LayoutCardViewExpressionBinding> {
 
         private final MutableLiveData<SpannableString> liveSpannedExpression;
+        private final MutableLiveData<String> liveDateDifferenceDescription;
         private final MutableLiveData<Boolean> liveIsSelected;
         private final MutableLiveData<Boolean> liveIsOwner;
         private final AtomicBoolean isDeletingActive;
@@ -130,6 +131,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
         public ExpressionViewHolder(@NonNull @NotNull LayoutCardViewExpressionBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedExpression = new MutableLiveData<>(new SpannableString(""));
+            liveDateDifferenceDescription = new MutableLiveData<>("");
             liveIsSelected = new MutableLiveData<>(false);
             liveIsOwner = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
@@ -138,6 +140,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
+            viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
             viewHolderBinding.setLiveIsOwner(liveIsOwner);
 
@@ -153,6 +156,10 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
         @Override
         protected void bind(@NonNull @NotNull ExpressionDocument item, int position){
             liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
+
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
+            liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
             if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));

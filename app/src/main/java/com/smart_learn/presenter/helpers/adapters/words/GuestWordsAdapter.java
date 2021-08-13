@@ -119,12 +119,14 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
     public final class WordViewHolder extends BasicViewHolder<Word, LayoutCardViewWordBinding> {
 
         private final MutableLiveData<SpannableString> liveSpannedWord;
+        private final MutableLiveData<String> liveDateDifferenceDescription;
         private final MutableLiveData<Boolean> liveIsSelected;
         private final AtomicBoolean isDeletingActive;
 
         public WordViewHolder(@NonNull LayoutCardViewWordBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedWord = new MutableLiveData<>(new SpannableString(""));
+            liveDateDifferenceDescription = new MutableLiveData<>("");
             liveIsSelected = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
 
@@ -132,6 +134,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedWord(liveSpannedWord);
+            viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
 
             setListeners();
@@ -144,6 +147,9 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
         @Override
         protected void bind(@NonNull @NotNull Word item, int position) {
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
+            liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
             if (isSelectionModeActive()) {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));

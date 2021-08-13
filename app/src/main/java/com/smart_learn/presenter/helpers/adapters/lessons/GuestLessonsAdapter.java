@@ -153,7 +153,9 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));
             }
 
-            liveExtraInfo.setValue("1 Day ago");
+            String extraDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
+            liveExtraInfo.setValue(extraDescription);
         }
 
         private void setListeners(){

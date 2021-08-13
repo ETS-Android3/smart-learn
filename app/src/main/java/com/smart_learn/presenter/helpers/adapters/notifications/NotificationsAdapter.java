@@ -11,11 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.NotificationService;
+import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewNotificationBinding;
@@ -68,13 +71,19 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
     public final class NotificationViewHolder extends BasicViewHolder<NotificationDocument, LayoutCardViewNotificationBinding> {
 
+        private final MutableLiveData<String> liveDateDifferenceDescription;
         private final AtomicBoolean isHideActive;
 
         public NotificationViewHolder(@NonNull @NotNull LayoutCardViewNotificationBinding viewHolderBinding) {
             super(viewHolderBinding);
+            liveDateDifferenceDescription = new MutableLiveData<>("");
             isHideActive = new AtomicBoolean(false);
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewNotification, viewHolderBinding.cvLayoutCardViewNotification);
             setListeners();
+        }
+
+        public LiveData<String> getLiveDateDifferenceDescription() {
+            return liveDateDifferenceDescription;
         }
 
         private void setListeners(){
@@ -150,6 +159,9 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
                     notification.getExtraInfo()));
 
             liveItemInfo.setValue(notification);
+
+            String dateDifferenceDescription = " - " + CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(notification.getDocumentMetadata().getCreatedAt());
+            liveDateDifferenceDescription.setValue(dateDifferenceDescription);
         }
     }
 

@@ -125,12 +125,14 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
     public final class ExpressionViewHolder extends BasicViewHolder<Expression, LayoutCardViewExpressionBinding> {
 
         private final MutableLiveData<SpannableString> liveSpannedExpression;
+        private final MutableLiveData<String> liveDateDifferenceDescription;
         private final MutableLiveData<Boolean> liveIsSelected;
         private final AtomicBoolean isDeletingActive;
 
         public ExpressionViewHolder(@NonNull LayoutCardViewExpressionBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedExpression = new MutableLiveData<>(new SpannableString(""));
+            liveDateDifferenceDescription = new MutableLiveData<>("");
             liveIsSelected = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
 
@@ -138,6 +140,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
+            viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
 
             setListeners();
@@ -150,6 +153,10 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
 
         @Override
         protected void bind(@NonNull @NotNull Expression item, int position) {
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
+            liveDateDifferenceDescription.setValue(dateDifferenceDescription);
+
             if (isSelectionModeActive()) {
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
                 boolean isSelected = isSelected(item);

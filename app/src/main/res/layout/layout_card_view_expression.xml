@@ -18,6 +18,9 @@
         <variable
             name="liveIsOwner"
             type="LiveData&lt;Boolean&gt;" />
+        <variable
+            name="liveDateDifferenceDescription"
+            type="LiveData&lt;String&gt;" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -78,7 +81,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="1 Day ago"
+                android:text="@{liveDateDifferenceDescription}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"/>
 

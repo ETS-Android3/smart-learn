@@ -630,6 +630,7 @@
     <string name="one_minute_ago">1 minute ago</string>
     <string name="seconds_ago">seconds ago</string>
     <string name="one_second_ago">1 second ago</string>
+    <string name="added">Added</string>
 
     <string-array name="languages">
         <item>Engleza</item>

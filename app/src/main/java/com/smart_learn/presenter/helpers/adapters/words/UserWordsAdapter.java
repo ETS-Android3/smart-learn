@@ -119,6 +119,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
     public final class WordViewHolder extends BasicViewHolder<WordDocument, LayoutCardViewWordBinding> {
 
         private final MutableLiveData<SpannableString> liveSpannedWord;
+        private final MutableLiveData<String> liveDateDifferenceDescription;
         private final MutableLiveData<Boolean> liveIsSelected;
         private final MutableLiveData<Boolean> liveIsOwner;
         private final AtomicBoolean isDeletingActive;
@@ -127,6 +128,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
         public WordViewHolder(@NonNull @NotNull LayoutCardViewWordBinding viewHolderBinding) {
             super(viewHolderBinding);
             liveSpannedWord = new MutableLiveData<>(new SpannableString(""));
+            liveDateDifferenceDescription = new MutableLiveData<>("");
             liveIsSelected = new MutableLiveData<>(false);
             liveIsOwner = new MutableLiveData<>(false);
             isDeletingActive = new AtomicBoolean(false);
@@ -135,6 +137,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
 
             // link binding with variables
             viewHolderBinding.setLiveSpannedWord(liveSpannedWord);
+            viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
             viewHolderBinding.setLiveIsOwner(liveIsOwner);
 
@@ -150,6 +153,10 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
         @Override
         protected void bind(@NonNull @NotNull WordDocument item, int position){
             liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
+
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+                    CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
+            liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
             if (isSelectionModeActive()) {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
