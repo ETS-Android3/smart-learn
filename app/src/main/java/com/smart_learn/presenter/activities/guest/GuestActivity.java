@@ -103,8 +103,6 @@ public class GuestActivity extends BasicActivity {
                     case R.id.nav_settings_menu_nav_drawer_activity_guest:
                         startActivity(new Intent(GuestActivity.this, GuestSettingsActivity.class));
                         break;
-                    case R.id.nav_help_menu_nav_drawer_activity_guest:
-                        break;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");
                 }

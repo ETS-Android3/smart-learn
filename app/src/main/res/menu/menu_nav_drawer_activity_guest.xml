@@ -10,10 +10,6 @@
             android:id="@+id/nav_login_menu_nav_drawer_activity_guest"
             android:title="@string/login"
             android:icon="@drawable/ic_baseline_login_24"/>
-    </group>
-
-
-    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_lessons_menu_nav_drawer_activity_guest"
             android:title="@string/lessons"
@@ -26,11 +22,6 @@
             android:id="@+id/nav_settings_menu_nav_drawer_activity_guest"
             android:title="@string/settings"
             android:icon="@drawable/ic_baseline_settings_24"/>
-        <item
-            android:id="@+id/nav_help_menu_nav_drawer_activity_guest"
-            android:title="@string/help"
-            android:icon="@drawable/ic_baseline_help_24"/>
     </group>
-
 
 </menu>
