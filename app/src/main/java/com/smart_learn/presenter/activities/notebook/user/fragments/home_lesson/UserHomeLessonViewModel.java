@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.helpers.DataCallbacks;

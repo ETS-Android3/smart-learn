@@ -1,11 +1,11 @@
-package com.smart_learn.core.services;
+package com.smart_learn.core.services.lesson;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.data.repository.GuestLessonRepository;
+import com.smart_learn.data.repository.lesson.GuestLessonRepository;
 import com.smart_learn.data.room.entities.Lesson;
 
 import java.util.ArrayList;

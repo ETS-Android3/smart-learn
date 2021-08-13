@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.core.services.GuestExpressionService;
-import com.smart_learn.core.services.GuestLessonService;
+import com.smart_learn.core.services.lesson.GuestLessonService;
 import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.notebook.guest.GuestNotebookSharedViewModel;

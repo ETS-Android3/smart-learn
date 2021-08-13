@@ -16,7 +16,7 @@ import com.google.firebase.firestore.WriteBatch;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserExpressionService;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.UserWordService;
 import com.smart_learn.core.utilities.CoreUtilities;

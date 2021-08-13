@@ -1,4 +1,4 @@
-package com.smart_learn.data.repository;
+package com.smart_learn.data.repository.lesson;
 
 import androidx.annotation.NonNull;
 

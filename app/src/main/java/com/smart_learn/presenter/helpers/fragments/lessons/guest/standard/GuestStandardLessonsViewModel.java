@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.smart_learn.R;
-import com.smart_learn.core.services.GuestLessonService;
+import com.smart_learn.core.services.lesson.GuestLessonService;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.data.room.entities.helpers.BasicInfo;

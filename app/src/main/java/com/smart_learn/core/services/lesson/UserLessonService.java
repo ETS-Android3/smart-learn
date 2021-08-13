@@ -1,22 +1,19 @@
-package com.smart_learn.core.services;
+package com.smart_learn.core.services.lesson;
 
 import android.text.TextUtils;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
-import com.smart_learn.data.firebase.firestore.entities.helpers.BasicProfileDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.data.repository.UserLessonRepository;
+import com.smart_learn.data.repository.lesson.UserLessonRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import timber.log.Timber;

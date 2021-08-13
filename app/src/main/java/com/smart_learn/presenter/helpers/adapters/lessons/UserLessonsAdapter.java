@@ -18,7 +18,7 @@ import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.ThreadExecutorService;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;

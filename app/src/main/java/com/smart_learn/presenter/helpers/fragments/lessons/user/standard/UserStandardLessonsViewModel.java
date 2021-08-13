@@ -7,13 +7,12 @@ import androidx.fragment.app.Fragment;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.LessonDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
-import com.smart_learn.presenter.activities.notebook.user.fragments.lessons.UserLessonsFragment;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.lessons.user.UserBasicLessonsViewModel;
 

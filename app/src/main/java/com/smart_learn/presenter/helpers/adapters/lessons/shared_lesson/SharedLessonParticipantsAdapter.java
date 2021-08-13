@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.LayoutCardViewSharedLessonParticipantBinding;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;

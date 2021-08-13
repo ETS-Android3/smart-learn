@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
-import com.smart_learn.core.services.UserLessonService;
+import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.databinding.LayoutBottomSheetShowLessonsOptionsBinding;
 import com.smart_learn.presenter.helpers.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.helpers.fragments.lessons.user.UserBasicLessonsFragment;
