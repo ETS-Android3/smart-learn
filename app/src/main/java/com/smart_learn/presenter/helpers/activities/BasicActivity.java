@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.presenter.helpers.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;

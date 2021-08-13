@@ -7,7 +7,7 @@ import androidx.navigation.NavController;
 
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivitySettingsBinding;
-import com.smart_learn.presenter.helpers.BasicActivity;
+import com.smart_learn.presenter.helpers.activities.BasicActivity;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 public abstract class SettingsActivity extends BasicActivity {

@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityNotebookBinding;
 import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
-import com.smart_learn.presenter.helpers.BasicActivity;
+import com.smart_learn.presenter.helpers.activities.BasicActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 

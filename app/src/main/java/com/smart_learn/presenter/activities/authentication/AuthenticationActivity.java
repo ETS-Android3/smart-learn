@@ -19,8 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityAuthenticationBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
-import com.smart_learn.presenter.helpers.BasicActivity;
-import com.smart_learn.presenter.helpers.LoadingDialog;
+import com.smart_learn.presenter.helpers.activities.BasicActivity;
+import com.smart_learn.presenter.helpers.dialogs.LoadingDialog;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import timber.log.Timber;

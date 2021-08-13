@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityCommunityBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
-import com.smart_learn.presenter.helpers.BasicActivity;
+import com.smart_learn.presenter.helpers.activities.BasicActivity;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;

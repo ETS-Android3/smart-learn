@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.databinding.FragmentBasicForRecyclerViewBinding;
 import com.smart_learn.presenter.helpers.Callbacks;
-import com.smart_learn.presenter.helpers.ItemDecoration;
+import com.smart_learn.presenter.helpers.adapters.helpers.ItemDecoration;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;

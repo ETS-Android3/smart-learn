@@ -19,7 +19,7 @@ import com.smart_learn.databinding.FragmentHomeExpressionBinding;
 import com.smart_learn.presenter.activities.notebook.helpers.NotebookActivity;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialog;
 import com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter;
-import com.smart_learn.presenter.helpers.ItemDecoration;
+import com.smart_learn.presenter.helpers.adapters.helpers.ItemDecoration;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.MultiLineEditableLayoutDialog;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;

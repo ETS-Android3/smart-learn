@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.presenter.helpers.adapters.helpers;
 
 
 import android.graphics.Rect;

@@ -33,7 +33,7 @@ import com.smart_learn.presenter.activities.guest.GuestActivity;
 import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.settings.UserSettingsActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
-import com.smart_learn.presenter.helpers.BasicActivity;
+import com.smart_learn.presenter.helpers.activities.BasicActivity;
 import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 

@@ -1,4 +1,4 @@
-package com.smart_learn.presenter.helpers;
+package com.smart_learn.presenter.helpers.dialogs;
 
 import android.app.Dialog;
 import android.os.Bundle;
