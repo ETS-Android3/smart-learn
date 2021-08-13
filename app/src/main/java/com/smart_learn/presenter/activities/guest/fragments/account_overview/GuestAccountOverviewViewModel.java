@@ -3,12 +3,12 @@ package com.smart_learn.presenter.activities.guest.fragments.account_overview;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.GuestExpressionService;
 import com.smart_learn.core.services.GuestLessonService;
 import com.smart_learn.core.services.GuestWordService;
+import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,11 +23,9 @@ public class GuestAccountOverviewViewModel extends AccountOverviewViewModel {
         liveNumberOfLessons = GuestLessonService.getInstance().getLiveNumberOfLessons();
         liveNumberOfWords = GuestWordService.getInstance().getLiveNumberOfWords();
         liveNumberOfExpressions = GuestExpressionService.getInstance().getLiveNumberOfExpressions();
-
-        // TODO: link this with correct values from db
-        liveNumberOfLocalActiveTests = new MutableLiveData<>(0);
-        liveNumberOfLocalFinishedTests = new MutableLiveData<>(1);
-        liveSuccessRate = new MutableLiveData<>(12.345678f);
+        liveNumberOfLocalActiveTests = TestService.getInstance().getLiveNumberOfInProgressTests();
+        liveNumberOfLocalFinishedTests = TestService.getInstance().getLiveNumberOfFinishedTests();
+        liveSuccessRate = TestService.getInstance().getLiveSuccessRate();
 
         userHelloMessage = application.getResources().getString(R.string.hi) + "!";
     }

@@ -46,6 +46,7 @@ public class UserDocument extends BasicProfileDocument {
     private long nrOfLocalUnscheduledInProgressTests;
     private long nrOfLocalUnscheduledFinishedTests;
     private long nrOfLocalScheduledTests;
+    // calculated only for local finished and online finished tests
     private double totalSuccessRate;
 
     public UserDocument() {

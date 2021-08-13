@@ -4,13 +4,13 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
-import com.smart_learn.core.services.GuestExpressionService;
-import com.smart_learn.core.services.GuestLessonService;
-import com.smart_learn.core.services.GuestWordService;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
 
 import lombok.Getter;
 
@@ -29,10 +29,17 @@ public abstract class AccountOverviewViewModel extends BasicAndroidViewModel {
     protected LiveData<Integer> liveNumberOfOnlineActiveTests;
     protected LiveData<Integer> liveNumberOfOnlineFinishedTests;
     protected LiveData<Float> liveSuccessRate;
+    protected MutableLiveData<String> liveSuccessRateDescription;
 
     protected String userHelloMessage;
 
     public AccountOverviewViewModel(@NonNull @NotNull Application application) {
         super(application);
+        liveSuccessRateDescription = new MutableLiveData<>("");
+    }
+
+    public void setLiveSuccessRateDescription(float liveSuccessRate) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        liveSuccessRateDescription.setValue(decimalFormat.format(liveSuccessRate) + " %");
     }
 }

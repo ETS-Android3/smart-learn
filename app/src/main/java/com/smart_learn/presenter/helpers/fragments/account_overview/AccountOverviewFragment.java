@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.smart_learn.R;
 import com.smart_learn.databinding.FragmentAccountOverviewBinding;
@@ -32,6 +33,20 @@ public abstract class AccountOverviewFragment <VM extends AccountOverviewViewMod
         binding.setLifecycleOwner(this);
         binding.setViewModel(viewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewModel.getLiveSuccessRate().observe(this, new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+                if(aFloat == null){
+                    return;
+                }
+                viewModel.setLiveSuccessRateDescription(aFloat);
+            }
+        });
     }
 
     @Override
