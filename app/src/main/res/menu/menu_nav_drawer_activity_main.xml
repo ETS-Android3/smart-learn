@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    <item-->
-<!--        android:title="Home">-->
-<!--        <menu>-->
-<!--            <group android:checkableBehavior="single">-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_home_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/home"/>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_account_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/account"/>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_community_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/community"/>-->
-<!--            </group>-->
-<!--        </menu>-->
-<!--     </item>-->
-
-<!--    <item-->
-<!--        android:title="App">-->
-<!--        <menu>-->
-<!--            <group android:checkableBehavior="single">-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_lessons_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/lessons"/>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_test_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/test"/>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_settings_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/settings"/>-->
-<!--                <item-->
-<!--                    android:id="@+id/nav_help_menu_nav_drawer_activity_main"-->
-<!--                    android:title="@string/help"/>-->
-<!--            </group>-->
-<!--        </menu>-->
-<!--    </item>-->
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home_menu_nav_drawer_activity_main"
@@ -52,14 +15,6 @@
             android:title="@string/community"
             android:icon="@drawable/ic_baseline_community_24"/>
         <item
-            android:id="@+id/nav_logout_menu_nav_drawer_activity_main"
-            android:title="@string/logout"
-            android:icon="@drawable/ic_baseline_logout_24"/>
-    </group>
-
-
-    <group android:checkableBehavior="single">
-        <item
             android:id="@+id/nav_lessons_menu_nav_drawer_activity_main"
             android:title="@string/lessons"
             android:icon="@drawable/ic_baseline_lessons_24"/>
@@ -72,10 +27,9 @@
             android:title="@string/settings"
             android:icon="@drawable/ic_baseline_settings_24"/>
         <item
-            android:id="@+id/nav_help_menu_nav_drawer_activity_main"
-            android:title="@string/help"
-            android:icon="@drawable/ic_baseline_help_24"/>
+            android:id="@+id/nav_logout_menu_nav_drawer_activity_main"
+            android:title="@string/logout"
+            android:icon="@drawable/ic_baseline_logout_24"/>
     </group>
-
 
 </menu>

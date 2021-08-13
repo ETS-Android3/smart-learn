@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.smart_learn.R;
+import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.databinding.ActivityMainBinding;
@@ -28,6 +29,7 @@ import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.settings.UserSettingsActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.helpers.BasicActivity;
+import com.smart_learn.presenter.helpers.Callbacks;
 import com.smart_learn.presenter.helpers.Utilities;
 
 import timber.log.Timber;
@@ -114,7 +116,7 @@ public class MainActivity extends BasicActivity {
         LayoutNavHeaderActivityMainBinding navBinding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.layout_nav_header_activity_main, binding.navigationViewActivityMain, false);
         binding.navigationViewActivityMain.addHeaderView(navBinding.getRoot());
-        navBinding.setUserHelloMessage("Hi, " + CoreUtilities.Auth.getUserDisplayName());
+        navBinding.setUserHelloMessage(this.getString(R.string.hi) + " " + UserService.getInstance().getUserDisplayName());
 
         // set on menu item listener
         binding.navigationViewActivityMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -123,9 +125,6 @@ public class MainActivity extends BasicActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_home_menu_nav_drawer_activity_main:
-                        break;
-                    case R.id.nav_logout_menu_nav_drawer_activity_main:
-                        signOut();
                         break;
                     case R.id.nav_community_menu_nav_drawer_activity_main:
                         goToCommunityActivity();
@@ -139,9 +138,28 @@ public class MainActivity extends BasicActivity {
                     case R.id.nav_settings_menu_nav_drawer_activity_main:
                         startActivity(new Intent(MainActivity.this, UserSettingsActivity.class));
                         break;
-                    case R.id.nav_account_menu_nav_drawer_activity_main:
-                    case R.id.nav_help_menu_nav_drawer_activity_main:
-                        break;
+                    case R.id.nav_logout_menu_nav_drawer_activity_main:
+                        Utilities.Activities.showStandardAlertDialog(
+                                MainActivity.this,
+                                MainActivity.this.getString(R.string.logout),
+                                MainActivity.this.getString(R.string.logout_message),
+                                MainActivity.this.getString(R.string.logout),
+                                new Callbacks.StandardAlertDialogCallback() {
+                                    @Override
+                                    public void onPositiveButtonPress() {
+                                        signOut();
+                                    }
+
+                                    @Override
+                                    public void onNegativeButtonPress() {
+                                        // When logout is pressed menu item corresponding to the logout will be checked,
+                                        // so check back so check 'Home'  from the navigation menu.
+                                        binding.navigationViewActivityMain.setCheckedItem(R.id.nav_home_menu_nav_drawer_activity_main);
+                                    }
+                                }
+                        );
+                        // Return from function because is no need to close drawer.
+                        return true;
                     default:
                         Timber.e("Item id [" + item.getItemId() + "] is not good");
                 }

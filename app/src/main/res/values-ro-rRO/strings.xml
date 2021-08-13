@@ -631,6 +631,7 @@
     <string name="seconds_ago">seconds ago</string>
     <string name="one_second_ago">1 second ago</string>
     <string name="added">Added</string>
+    <string name="logout_message">You are about to log out. You want to continue?</string>
 
     <string-array name="languages">
         <item>Engleza</item>
