@@ -30,7 +30,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.expression.GuestExpressionService;
 import com.smart_learn.core.services.word.GuestWordService;
 import com.smart_learn.core.services.SettingsService;
-import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.helpers.ThreadExecutorService;
 import com.smart_learn.core.services.expression.UserExpressionService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.word.UserWordService;

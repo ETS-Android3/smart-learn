@@ -1,4 +1,4 @@
-package com.smart_learn.core.services;
+package com.smart_learn.core.services.helpers;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

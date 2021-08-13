@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 import androidx.annotation.NonNull;
 
-import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.helpers.ThreadExecutorService;
 
 import org.jetbrains.annotations.NotNull;
 

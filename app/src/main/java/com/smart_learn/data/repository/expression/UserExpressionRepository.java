@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
-import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.helpers.ThreadExecutorService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;

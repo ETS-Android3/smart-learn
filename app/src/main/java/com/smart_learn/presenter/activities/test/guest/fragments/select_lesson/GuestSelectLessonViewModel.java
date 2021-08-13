@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.smart_learn.core.services.expression.GuestExpressionService;
 import com.smart_learn.core.services.word.GuestWordService;
-import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.helpers.ThreadExecutorService;
 import com.smart_learn.data.room.entities.Lesson;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
 import com.smart_learn.presenter.helpers.fragments.lessons.guest.standard.GuestStandardLessonsViewModel;

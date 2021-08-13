@@ -9,7 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
-import com.smart_learn.core.services.ThreadExecutorService;
+import com.smart_learn.core.services.helpers.ThreadExecutorService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.helpers.ConnexionChecker;
