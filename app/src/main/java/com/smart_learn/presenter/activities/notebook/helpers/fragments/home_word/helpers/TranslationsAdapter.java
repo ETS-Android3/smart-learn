@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.helpers.Translation;

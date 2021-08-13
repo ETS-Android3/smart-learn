@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.databinding.FragmentScheduledTestInfoBinding;

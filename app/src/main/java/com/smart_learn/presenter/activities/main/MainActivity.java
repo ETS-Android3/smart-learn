@@ -24,7 +24,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.ActivityMainBinding;

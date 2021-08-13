@@ -19,7 +19,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.helpers.ConnexionChecker;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataCallbacks;

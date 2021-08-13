@@ -6,7 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.core.services.lesson.UserLessonService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.presenter.helpers.adapters.expressions.UserExpressionsAdapter;
 import com.smart_learn.presenter.helpers.fragments.expressions.BasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;

@@ -15,7 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.databinding.LayoutDialogTranslationBinding;
 

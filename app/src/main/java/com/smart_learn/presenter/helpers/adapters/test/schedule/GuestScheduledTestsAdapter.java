@@ -13,7 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.entities.RoomTest;

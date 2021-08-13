@@ -20,7 +20,7 @@ import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.GroupChatMessageDocument;
 import com.smart_learn.databinding.LayoutCardViewChatMessageBinding;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;

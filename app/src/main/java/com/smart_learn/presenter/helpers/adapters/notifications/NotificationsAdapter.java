@@ -18,7 +18,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.NotificationService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewNotificationBinding;

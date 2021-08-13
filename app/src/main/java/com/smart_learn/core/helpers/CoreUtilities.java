@@ -1,4 +1,4 @@
-package com.smart_learn.core.utilities;
+package com.smart_learn.core.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

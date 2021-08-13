@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.databinding.FragmentUserProfileBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
 import com.smart_learn.presenter.helpers.Callbacks;

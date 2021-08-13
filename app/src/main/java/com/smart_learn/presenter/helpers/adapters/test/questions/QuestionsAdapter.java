@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.QuestionFullWrite;
 import com.smart_learn.data.entities.QuestionMixed;

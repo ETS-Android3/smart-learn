@@ -3,7 +3,7 @@ package com.smart_learn.data.room.entities.helpers;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.helpers.DataHelpers;
 
 import org.jetbrains.annotations.NotNull;

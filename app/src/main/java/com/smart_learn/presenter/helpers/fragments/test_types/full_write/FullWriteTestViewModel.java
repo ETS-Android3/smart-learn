@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.QuestionFullWrite;
 import com.smart_learn.data.entities.Test;

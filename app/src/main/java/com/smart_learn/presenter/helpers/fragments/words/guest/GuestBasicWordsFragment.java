@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
 import com.smart_learn.core.services.word.GuestWordService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.words.GuestWordsAdapter;

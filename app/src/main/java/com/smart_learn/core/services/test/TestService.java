@@ -34,7 +34,7 @@ import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.expression.UserExpressionService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.word.UserWordService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.LessonEntrance;
 import com.smart_learn.data.entities.Question;
 import com.smart_learn.data.entities.QuestionFullWrite;

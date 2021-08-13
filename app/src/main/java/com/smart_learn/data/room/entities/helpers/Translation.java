@@ -2,7 +2,7 @@ package com.smart_learn.data.room.entities.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Statistics;
 
 import org.jetbrains.annotations.NotNull;

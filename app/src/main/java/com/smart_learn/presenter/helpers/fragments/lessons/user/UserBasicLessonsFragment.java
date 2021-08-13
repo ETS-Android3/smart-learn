@@ -3,7 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.lessons.user;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.presenter.helpers.adapters.lessons.UserLessonsAdapter;
 import com.smart_learn.presenter.helpers.fragments.lessons.BasicLessonsFragment;
 import com.smart_learn.presenter.helpers.fragments.recycler_view_with_bottom_menu.BasicFragmentForRecyclerView;

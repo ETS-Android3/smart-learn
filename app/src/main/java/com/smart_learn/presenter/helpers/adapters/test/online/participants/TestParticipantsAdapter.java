@@ -14,7 +14,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.databinding.LayoutCardViewTestParticipantBinding;
 import com.smart_learn.presenter.helpers.ApplicationController;

@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataUtilities;

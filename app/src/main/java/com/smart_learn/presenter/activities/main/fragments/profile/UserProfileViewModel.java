@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;

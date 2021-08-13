@@ -18,7 +18,7 @@ import com.google.firebase.firestore.Query;
 import com.smart_learn.R;
 import com.smart_learn.core.services.expression.UserExpressionService;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.CoreUtilities;
+import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.ExpressionDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.databinding.LayoutCardViewExpressionBinding;
