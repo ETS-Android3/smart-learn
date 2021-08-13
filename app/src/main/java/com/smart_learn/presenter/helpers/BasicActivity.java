@@ -1,6 +1,8 @@
 package com.smart_learn.presenter.helpers;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 
@@ -19,6 +21,7 @@ public abstract class BasicActivity extends AppCompatActivity {
     // Used to close a progress dialog after some time if was not previously closed.
     private CountDownTimer progressDialogCountDownTimer;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,11 @@ public abstract class BasicActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/51053724/how-to-make-stay-in-the-last-language-when-android-app-is-closed
         // https://stackoverflow.com/questions/2900023/change-app-language-programmatically-in-android
         SettingsService.getInstance().loadLanguageConfiguration(getBaseContext());
+
+        // Block activity in portrait mode.
+        // https://stackoverflow.com/questions/6745797/how-to-set-entire-application-in-portrait-mode-only/9784269#9784269
+        // https://stackoverflow.com/questions/582185/how-can-i-disable-landscape-mode-in-android
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
 
