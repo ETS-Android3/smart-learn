@@ -3,7 +3,6 @@ package com.smart_learn.data.room.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.smart_learn.core.utilities.Logs;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.room.dao.BasicDao;
 import com.smart_learn.data.room.db.AppRoomDatabase;
@@ -56,7 +55,7 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             // https://androidx.de/androidx/room/EntityInsertionAdapter.html#insertAndReturnId(T)
             // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
             if(rowId == INSERTION_FAILED){
-                Timber.e("%s Insertion failed ", Logs.UNEXPECTED_ERROR);
+                Timber.e("Insertion failed for value [" + value.toString() + "]");
                 callback.onFailure();
             }
             else{
@@ -75,7 +74,7 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             // https://androidx.de/androidx/room/EntityInsertionAdapter.html#insertAndReturnId(T)
             // https://stackoverflow.com/questions/64498784/check-if-row-is-inserted-into-room-database
             if(rowId == INSERTION_FAILED){
-                Timber.e("%s Insertion failed ", Logs.UNEXPECTED_ERROR);
+                Timber.e("Insertion failed for value [" + value.toString() + "]");
                 callback.onFailure();
             }
             else{
@@ -103,7 +102,7 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             // https://stackoverflow.com/questions/48519896/room-update-or-insert-if-not-exist-rows-and-return-count-changed-rows
             // update is made for one item so must be 1 row affected
             if(numberOfAffectedRows != 1){
-                Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were updated");
+                Timber.e("Invalid nr. of rows [" + numberOfAffectedRows + "] were updated");
                 callback.onFailure();
             }
             else{
@@ -131,7 +130,7 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             // https://stackoverflow.com/questions/53448287/how-to-check-whether-record-is-delete-or-not-in-room-database
             // deletion is made for one item so must be 1 row affected
             if(numberOfAffectedRows != 1){
-                Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were deleted");
+                Timber.e("Invalid nr. of rows " + numberOfAffectedRows + " were deleted");
                 callback.onFailure();
             }
             else{
@@ -155,7 +154,7 @@ public abstract class BasicRoomRepository <T, K extends BasicDao<T>> {
             }
 
             if(numberOfAffectedRows != valueList.size()){
-                Timber.e(Logs.UNEXPECTED_ERROR + " rows " + numberOfAffectedRows + " were deleted");
+                Timber.e("Invalid nr. rows " + numberOfAffectedRows + " were deleted");
                 callback.onFailure();
             }
             else{
