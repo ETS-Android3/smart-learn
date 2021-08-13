@@ -71,7 +71,7 @@
                         android:id="@+id/bottom_navigation_activity_main"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:theme="@style/AppTheme.BottomNavigationView.Primary"
+                        android:theme="@style/MaterialComponents.BottomNavigationView.Primary"
                         app:menu="@menu/menu_bottom_navigation_activity_main" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

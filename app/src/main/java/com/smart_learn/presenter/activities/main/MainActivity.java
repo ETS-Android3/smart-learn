@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -15,12 +16,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.smart_learn.R;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.utilities.CoreUtilities;
 import com.smart_learn.core.utilities.GeneralUtilities;
+import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.ActivityMainBinding;
 import com.smart_learn.databinding.LayoutNavHeaderActivityMainBinding;
 import com.smart_learn.presenter.activities.community.CommunityActivity;
@@ -40,6 +46,7 @@ public class MainActivity extends BasicActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
+    private BadgeDrawable unreadNotificationsBadge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +88,36 @@ public class MainActivity extends BasicActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        UserService.getInstance()
+                .getUserDocumentReference()
+                .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Timber.e(error);
+                            return;
+                        }
+
+                        if (value == null) {
+                            Timber.w("value is null");
+                            return;
+                        }
+
+                        UserDocument userDocument = value.toObject(UserDocument.class);
+                        if (userDocument == null) {
+                            Timber.i("userDocument is null");
+                            return;
+                        }
+
+                        setNotificationsBadgeNumber((int)userDocument.getNrOfUnreadNotifications());
+                    }
+                });
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // main activity is home activity so check 'Home' from the navigation menu
@@ -100,6 +137,23 @@ public class MainActivity extends BasicActivity {
         // try to set navigation graph
         navController = Utilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_main,
                 binding.bottomNavigationActivityMain, null, null);
+
+        // set badge for notifications
+        // https://material.io/develop/android/components/badging
+        unreadNotificationsBadge = binding.bottomNavigationActivityMain.getOrCreateBadge(R.id.notifications_fragment_nav_graph_activity_main);
+    }
+
+    private void setNotificationsBadgeNumber(int unreadNotifications){
+        if(unreadNotificationsBadge != null){
+            if(unreadNotifications > 0){
+                unreadNotificationsBadge.setVisible(true);
+                unreadNotificationsBadge.setNumber(unreadNotifications);
+            }
+            else {
+                unreadNotificationsBadge.setVisible(false);
+                unreadNotificationsBadge.clearNumber();
+            }
+        }
     }
 
     private void setNavigationDrawer(){
