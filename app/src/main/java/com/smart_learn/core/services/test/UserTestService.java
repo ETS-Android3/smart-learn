@@ -11,7 +11,7 @@ import com.smart_learn.data.firebase.firestore.entities.GroupChatMessageDocument
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
-import com.smart_learn.data.repository.UserTestRepository;
+import com.smart_learn.data.repository.test.UserTestRepository;
 
 import timber.log.Timber;
 

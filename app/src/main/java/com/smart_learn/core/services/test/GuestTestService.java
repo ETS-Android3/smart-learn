@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.smart_learn.core.services.helpers.BasicRoomService;
 import com.smart_learn.data.entities.Test;
-import com.smart_learn.data.repository.GuestTestRepository;
+import com.smart_learn.data.repository.test.GuestTestRepository;
 import com.smart_learn.data.room.entities.RoomTest;
 
 import java.util.List;
