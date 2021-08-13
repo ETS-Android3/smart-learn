@@ -24,6 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
@@ -60,6 +61,8 @@ public abstract class CoreUtilities {
         public static final int MAX_MONTH = 11;
         public static final int MIN_YEAR = 2021;
         public static final int MAX_YEAR = 2100;
+        public static final int STANDARD_YEAR_DAYS = 365;
+        public static final int STANDARD_MONTH_DAYS = 30;
 
 
         /**
@@ -392,6 +395,88 @@ public abstract class CoreUtilities {
             calendar.set(Calendar.MILLISECOND, 0);
 
             return calendar.getTimeInMillis();
+        }
+
+        /**
+         * Get a formatted difference between a past time and current time. Format will be:
+         *   - 'one year ago / ... years ago' if are >= 1 years in difference
+         *   - 'one month ago / ... months ago' if are >= 1 months in difference
+         *   - 'one day ago / ... days ago' if are >= 1 days in difference
+         *   - 'one hour ago / ... hours ago' if are >= 1 hours in difference
+         *   - 'one minute ago / ... minutes ago' if are >= 1 minutes in difference
+         *   - 'one second ago / ... seconds ago' if are >= 1 seconds in difference
+         *   - 'now' if is no difference
+         *   - "" is time is bigger than current time.
+         *
+         * @param time Value for which will be calculated difference.
+         *
+         * @return Formatted value.
+         * */
+        @NonNull @NotNull
+        public static String getFormattedTimeDifferenceFromPastToPresent(long time){
+            long currentTime = System.currentTimeMillis();
+            long difference = currentTime - time;
+            // check if given time was not in future
+            if(difference < 0){
+                return "";
+            }
+            if(difference == 0){
+                return ApplicationController.getInstance().getString(R.string.now);
+            }
+
+            // check years
+            long days = TimeUnit.MILLISECONDS.toDays(difference);
+            if(days >= STANDARD_YEAR_DAYS){
+                if(days / STANDARD_YEAR_DAYS > 1){
+                    return (days / STANDARD_YEAR_DAYS) + " " + ApplicationController.getInstance().getString(R.string.years_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_year_ago);
+            }
+
+            // check months
+            if(days >= STANDARD_MONTH_DAYS){
+                if(days / STANDARD_MONTH_DAYS > 1){
+                    return (days / STANDARD_MONTH_DAYS) + " " + ApplicationController.getInstance().getString(R.string.months_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_month_ago);
+            }
+
+            // check days
+            if(days > 0){
+                if(days > 1){
+                    return days + " " + ApplicationController.getInstance().getString(R.string.days_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_day_ago);
+            }
+
+            // check hours
+            long hours = TimeUnit.MILLISECONDS.toHours(difference);
+            if(hours > 0){
+                if(hours > 1){
+                    return hours + " " + ApplicationController.getInstance().getString(R.string.hours_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_hour_ago);
+            }
+
+            // check minutes
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(difference);
+            if(minutes > 0){
+                if(minutes > 1){
+                    return minutes + " " + ApplicationController.getInstance().getString(R.string.minutes_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_minute_ago);
+            }
+
+            // check seconds
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(difference);
+            if(seconds > 0){
+                if(seconds > 1){
+                    return seconds + " " + ApplicationController.getInstance().getString(R.string.seconds_ago);
+                }
+                return ApplicationController.getInstance().getString(R.string.one_second_ago);
+            }
+
+            return ApplicationController.getInstance().getString(R.string.now);
         }
 
 
