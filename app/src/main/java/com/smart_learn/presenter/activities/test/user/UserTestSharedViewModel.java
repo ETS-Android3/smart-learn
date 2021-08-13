@@ -12,7 +12,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.ThreadExecutorService;
 import com.smart_learn.core.services.UserService;
 import com.smart_learn.core.services.test.TestService;
-import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataUtilities;

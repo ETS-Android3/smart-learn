@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;

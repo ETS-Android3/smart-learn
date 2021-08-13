@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
-import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.fragments.friends.BasicFriendsViewModel;

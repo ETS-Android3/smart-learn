@@ -12,11 +12,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.services.UserService;
-import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.presenter.activities.community.fragments.users.helpers.UserDialog;
-import com.smart_learn.presenter.helpers.ApplicationController;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;

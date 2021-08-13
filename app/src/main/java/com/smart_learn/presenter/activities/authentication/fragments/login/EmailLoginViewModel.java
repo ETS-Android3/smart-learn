@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.smart_learn.R;
-import com.smart_learn.core.utilities.ConnexionChecker;
+import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.presenter.activities.authentication.AuthenticationActivity;
 import com.smart_learn.presenter.activities.authentication.helpers.LoginForm;
 import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
