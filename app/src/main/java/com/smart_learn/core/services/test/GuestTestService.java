@@ -63,12 +63,24 @@ class GuestTestService extends BasicRoomService<RoomTest, GuestTestRepository> {
         return repositoryInstance.getLiveNumberOfNotHiddenNonScheduledTests();
     }
 
+    protected LiveData<Integer> getLiveNumberOfInProgressTests(){
+        return repositoryInstance.getLiveNumberOfInProgressTests();
+    }
+
+    protected LiveData<Integer> getLiveNumberOfFinishedTests(){
+        return repositoryInstance.getLiveNumberOfFinishedTests();
+    }
+
     protected Integer getNumberOfNonScheduledTests(){
         return repositoryInstance.getNumberOfNonScheduledTests();
     }
 
     protected Integer getNumberOfScheduledTests(){
         return repositoryInstance.getNumberOfScheduledTests();
+    }
+
+    protected LiveData<Float> getLiveSuccessRate(){
+        return repositoryInstance.getLiveSuccessRate();
     }
 
     @Override

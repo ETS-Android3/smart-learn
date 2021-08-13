@@ -58,12 +58,24 @@ public class GuestTestRepository extends BasicRoomRepository<RoomTest, RoomTestD
         return dao.getLiveNumberOfNotHiddenNonScheduledTests();
     }
 
+    public LiveData<Integer> getLiveNumberOfInProgressTests(){
+        return dao.getLiveNumberOfNotHiddenInProgressTests();
+    }
+
+    public LiveData<Integer> getLiveNumberOfFinishedTests(){
+        return dao.getLiveNumberOfNotHiddenFinishedTests();
+    }
+
     public Integer getNumberOfNonScheduledTests(){
         return dao.getNumberOfNonScheduledTests();
     }
 
     public Integer getNumberOfScheduledTests(){
         return dao.getNumberOfScheduledTests();
+    }
+
+    public LiveData<Float> getLiveSuccessRate(){
+        return dao.getLiveSuccessRate();
     }
 
 }

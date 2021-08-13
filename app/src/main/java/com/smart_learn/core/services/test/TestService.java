@@ -179,6 +179,17 @@ public class TestService {
         return guestTestServiceInstance.getLiveNumberOfNotHiddenNonScheduledTests();
     }
 
+    public LiveData<Integer> getLiveNumberOfInProgressTests(){
+        return guestTestServiceInstance.getLiveNumberOfInProgressTests();
+    }
+
+    public LiveData<Integer> getLiveNumberOfFinishedTests(){
+        return guestTestServiceInstance.getLiveNumberOfFinishedTests();
+    }
+
+    public LiveData<Float> getLiveSuccessRate(){
+        return guestTestServiceInstance.getLiveSuccessRate();
+    }
 
     /* *********************************************************************************************
      *                                    User Test Service

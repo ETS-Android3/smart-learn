@@ -36,9 +36,18 @@ public interface RoomTestDao extends BasicDao<RoomTest> {
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0 AND isHidden == 0")
     LiveData<Integer> getLiveNumberOfNotHiddenNonScheduledTests();
 
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0 AND isFinished == 0 AND isHidden == 0")
+    LiveData<Integer> getLiveNumberOfNotHiddenInProgressTests();
+
+    @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0 AND isFinished AND isHidden == 0")
+    LiveData<Integer> getLiveNumberOfNotHiddenFinishedTests();
+
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0")
     Integer getNumberOfNonScheduledTests();
 
     @Query("SELECT COUNT(id) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled")
     Integer getNumberOfScheduledTests();
+
+    @Query("SELECT AVG(successRate) FROM " + AppRoomDatabase.TESTS_TABLE + " WHERE isScheduled == 0 AND isFinished")
+    LiveData<Float> getLiveSuccessRate();
 }
