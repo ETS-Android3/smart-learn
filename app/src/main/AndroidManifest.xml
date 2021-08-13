@@ -29,7 +29,6 @@
         <activity android:name=".presenter.activities.community.CommunityActivity" />
         <activity android:name=".presenter.activities.guest.GuestActivity" />
         <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
-        <activity android:name=".presenter.activities.TestLocalActivity" />
         <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,9 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presenter.activities.TestSettingsActivity" />
-        <activity android:name=".presenter.activities.TestGenerationActivity" />
-        <activity android:name=".presenter.activities.TestOnlineActivity" />
 
         <!-- For scheduling alarms for scheduled tests. -->
         <receiver android:name=".core.services.test.TestService$ScheduledTestAlarmManager$ScheduledTestAlarmReceiver"
