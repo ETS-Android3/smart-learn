@@ -23,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.smart_learn.R;
 import com.smart_learn.databinding.FragmentBasicForRecyclerViewBinding;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.adapters.helpers.ItemDecoration;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
@@ -244,7 +244,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
         }
 
         menu.setGroupVisible(getSearchOnGroupId(), true);
-        PresenterUtilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new Callbacks.SearchActionCallback() {
+        PresenterUtilities.Activities.setSearchMenuItem(menu, getActionSearchId(), new PresenterCallbacks.SearchActionCallback() {
                     @Override
                     public void onQueryTextChange(String newText) {
                         onFilter(newText);
@@ -403,7 +403,7 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
     }
 
 
-    protected void startActionMode(@NonNull Callbacks.ActionModeCustomCallback actionModeCustomCallback){
+    protected void startActionMode(@NonNull PresenterCallbacks.ActionModeCustomCallback actionModeCustomCallback){
         actionMode = ((AppCompatActivity)requireActivity()).startSupportActionMode(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {

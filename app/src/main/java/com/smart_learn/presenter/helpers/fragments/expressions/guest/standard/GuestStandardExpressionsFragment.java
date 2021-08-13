@@ -9,7 +9,7 @@ import com.smart_learn.R;
 import com.smart_learn.data.room.entities.Expression;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.helpers.fragments.expressions.helpers.ExpressionDialog;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.expressions.guest.GuestBasicExpressionsFragment;
 
@@ -101,7 +101,7 @@ public abstract class GuestStandardExpressionsFragment <VM extends GuestStandard
     }
 
     private void startFragmentActionMode() {
-        super.startActionMode(new Callbacks.ActionModeCustomCallback() {
+        super.startActionMode(new PresenterCallbacks.ActionModeCustomCallback() {
             @Override
             public void onCreateActionMode() {
                 onActionModeCreate();

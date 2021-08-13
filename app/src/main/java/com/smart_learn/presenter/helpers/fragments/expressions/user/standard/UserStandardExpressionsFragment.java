@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.helpers.fragments.expressions.helpers.ExpressionDialog;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.fragments.expressions.user.UserBasicExpressionsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -90,7 +90,7 @@ public abstract class UserStandardExpressionsFragment <VM extends UserStandardEx
     }
 
     private void startFragmentActionMode() {
-        super.startActionMode(new Callbacks.ActionModeCustomCallback() {
+        super.startActionMode(new PresenterCallbacks.ActionModeCustomCallback() {
             @Override
             public void onCreateActionMode() {
                 onActionModeCreate();

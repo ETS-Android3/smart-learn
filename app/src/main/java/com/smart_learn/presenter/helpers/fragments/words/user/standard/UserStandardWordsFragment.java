@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.smart_learn.R;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.helpers.fragments.words.helpers.WordDialog;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.fragments.words.user.UserBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -89,7 +89,7 @@ public abstract class UserStandardWordsFragment <VM extends UserStandardWordsVie
     }
 
     private void startFragmentActionMode() {
-        super.startActionMode(new Callbacks.ActionModeCustomCallback() {
+        super.startActionMode(new PresenterCallbacks.ActionModeCustomCallback() {
             @Override
             public void onCreateActionMode() {
                 onActionModeCreate();

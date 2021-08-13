@@ -34,7 +34,7 @@ import com.smart_learn.presenter.activities.notebook.user.UserNotebookActivity;
 import com.smart_learn.presenter.activities.settings.UserSettingsActivity;
 import com.smart_learn.presenter.activities.test.user.UserTestActivity;
 import com.smart_learn.presenter.helpers.activities.BasicActivity;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import timber.log.Timber;
@@ -197,7 +197,7 @@ public class MainActivity extends BasicActivity {
                                 MainActivity.this.getString(R.string.logout),
                                 MainActivity.this.getString(R.string.logout_message),
                                 MainActivity.this.getString(R.string.logout),
-                                new Callbacks.StandardAlertDialogCallback() {
+                                new PresenterCallbacks.StandardAlertDialogCallback() {
                                     @Override
                                     public void onPositiveButtonPress() {
                                         signOut();

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.google.android.material.card.MaterialCardView;
 import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterHelpers;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
@@ -189,7 +189,7 @@ public abstract class BasicListAdapter <T extends PresenterHelpers.SelectionHelp
     }
 
 
-    public interface Callback <K> extends Callbacks.StandardAdapterCallback <K> {
+    public interface Callback <K> extends PresenterCallbacks.StandardAdapterCallback <K> {
 
     }
 }

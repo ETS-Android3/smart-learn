@@ -14,7 +14,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.databinding.FragmentBasicSettingsBinding;
 import com.smart_learn.presenter.activities.settings.SettingsActivity;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
@@ -84,7 +84,7 @@ public class BasicSettingsFragment extends BasicFragment<BasicSettingsViewModel>
         }
 
         PresenterUtilities.Activities.showStandardAlertDialog(requireContext(), getString(R.string.change_language),
-                getString(R.string.change_language_alert), getString(R.string.ok), new Callbacks.StandardAlertDialogCallback() {
+                getString(R.string.change_language_alert), getString(R.string.ok), new PresenterCallbacks.StandardAlertDialogCallback() {
                         @Override
                         public void onPositiveButtonPress() {
                             // set new language

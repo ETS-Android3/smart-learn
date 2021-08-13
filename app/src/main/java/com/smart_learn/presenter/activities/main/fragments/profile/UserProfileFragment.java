@@ -13,7 +13,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.databinding.FragmentUserProfileBinding;
 import com.smart_learn.presenter.activities.main.MainActivity;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.helpers.BasicFragment;
 
@@ -70,7 +70,7 @@ public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
                 String description = UserProfileFragment.this.getString(R.string.delete_account_description);
 
                 PresenterUtilities.Activities.showStandardAlertDialog(UserProfileFragment.this.requireContext(),
-                        title, description, new Callbacks.StandardAlertDialogCallback() {
+                        title, description, new PresenterCallbacks.StandardAlertDialogCallback() {
                     @Override
                     public void onPositiveButtonPress() {
                         viewModel.deleteAccount(UserProfileFragment.this);
@@ -81,7 +81,7 @@ public class UserProfileFragment extends BasicFragment<UserProfileViewModel> {
 
         // layout for profile name (if is email-password provider display name can be changed, otherwise not)
         PresenterUtilities.Activities.setCustomEditableLayout(binding.toolbarFragmentUserProfile, binding.layoutProfileNameFragmentUserProfile,
-                binding.tvProfileNameFragmentUserProfile, new Callbacks.CustomEditableLayoutCallback() {
+                binding.tvProfileNameFragmentUserProfile, new PresenterCallbacks.CustomEditableLayoutCallback() {
                     @Override
                     public void savePreviousValue() {
                         viewModel.savePreviousProfileName();

@@ -19,7 +19,7 @@ import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.FriendDocument;
 import com.smart_learn.databinding.LayoutCardViewFriendBinding;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
@@ -184,7 +184,7 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
                         String description = getString(R.string.remove_friend_description);
                         String positiveButtonDescription = getString(R.string.remove);
                         PresenterUtilities.Activities.showStandardAlertDialog(adapterCallback.getFragment().requireContext(),
-                                title, description, positiveButtonDescription, new Callbacks.StandardAlertDialogCallback() {
+                                title, description, positiveButtonDescription, new PresenterCallbacks.StandardAlertDialogCallback() {
                                     @Override
                                     public void onPositiveButtonPress() {
                                         adapterCallback.onRemoveFriend(getSnapshots().getSnapshot(position));

@@ -10,7 +10,7 @@ import com.smart_learn.data.room.entities.Word;
 import com.smart_learn.data.room.entities.helpers.Translation;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.words.helpers.WordDialog;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.fragments.words.guest.GuestBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -101,7 +101,7 @@ public abstract class GuestStandardWordsFragment <VM extends GuestStandardWordsV
     }
 
     private void startFragmentActionMode() {
-        super.startActionMode(new Callbacks.ActionModeCustomCallback() {
+        super.startActionMode(new PresenterCallbacks.ActionModeCustomCallback() {
             @Override
             public void onCreateActionMode() {
                 onActionModeCreate();

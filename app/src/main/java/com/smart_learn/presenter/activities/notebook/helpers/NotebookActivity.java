@@ -18,7 +18,7 @@ import com.smart_learn.R;
 import com.smart_learn.databinding.ActivityNotebookBinding;
 import com.smart_learn.databinding.LayoutBottomSheetFilterOptionsBinding;
 import com.smart_learn.presenter.helpers.activities.BasicActivity;
-import com.smart_learn.presenter.helpers.Callbacks;
+import com.smart_learn.presenter.helpers.PresenterCallbacks;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
@@ -123,7 +123,7 @@ public abstract class NotebookActivity <VM extends NotebookSharedViewModel> exte
      * @param fragment Fragment where modal bottom sheet will appear.
      * @param fragmentCallback Callback that will manage filter options.
      * */
-    public void showFilterOptionsDialog(@NonNull Fragment fragment, @NonNull Callbacks.FragmentFilterOptionsCallback fragmentCallback){
+    public void showFilterOptionsDialog(@NonNull Fragment fragment, @NonNull PresenterCallbacks.FragmentFilterOptionsCallback fragmentCallback){
 
         // create dialog and load layout
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(fragment.requireContext(), R.style.AppTheme_BottomSheetDialogTheme);

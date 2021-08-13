@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Main callbacka interface.
  * */
-public interface Callbacks {
+public interface PresenterCallbacks {
 
     interface FragmentGeneralCallback<T> {
         T getFragment();

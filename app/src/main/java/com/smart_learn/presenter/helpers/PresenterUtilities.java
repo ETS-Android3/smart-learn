@@ -349,7 +349,7 @@ public final class PresenterUtilities {
          * @param searchActionCallback Callback that will manage search.
          * */
         public static void setSearchMenuItem(@NonNull FragmentActivity activity, @NonNull Menu menu, @IdRes int menuId,
-                                             @IdRes int menuGroup, @NonNull Callbacks.SearchActionCallback searchActionCallback){
+                                             @IdRes int menuGroup, @NonNull PresenterCallbacks.SearchActionCallback searchActionCallback){
             MenuItem searchItem = menu.findItem(menuId);
             if(searchItem == null){
                 Timber.w("searchItem is null ==> search is not functionally");
@@ -388,14 +388,14 @@ public final class PresenterUtilities {
          * @param searchActionCallback Callback that will manage search.
          * */
         public static void setSearchMenuItem(@NonNull Menu menu, @IdRes int menuId,
-                                             @NonNull Callbacks.SearchActionCallback searchActionCallback){
+                                             @NonNull PresenterCallbacks.SearchActionCallback searchActionCallback){
             setSearchView(menu, menuId, searchActionCallback);
         }
 
         /**
          * Helper for setSearchMenuItem(...)
          * */
-        private static void setSearchView(@NonNull Menu menu, @IdRes int menuId, @NonNull Callbacks.SearchActionCallback searchActionCallback){
+        private static void setSearchView(@NonNull Menu menu, @IdRes int menuId, @NonNull PresenterCallbacks.SearchActionCallback searchActionCallback){
             MenuItem searchItem = menu.findItem(menuId);
             if(searchItem == null){
                 Timber.w("searchItem is null ==> search is not functionally");
@@ -722,7 +722,7 @@ public final class PresenterUtilities {
          * @param callback Callback which will manage actions.
          * */
         public static void setCustomEditableLayout(@Nullable Toolbar toolbar, @Nullable TextInputLayout textInputLayout,
-                                                   @Nullable TextView textView, @NonNull Callbacks.CustomEditableLayoutCallback callback){
+                                                   @Nullable TextView textView, @NonNull PresenterCallbacks.CustomEditableLayoutCallback callback){
             if(toolbar == null || textInputLayout == null || textView == null){
                 return;
             }
@@ -879,7 +879,7 @@ public final class PresenterUtilities {
          * */
         @Deprecated
         public static void showStandardAlertDialog(@NonNull Context context, @NonNull String title,
-                                                   @NonNull String message, @NonNull Callbacks.StandardAlertDialogCallback standardAlertDialogCallback){
+                                                   @NonNull String message, @NonNull PresenterCallbacks.StandardAlertDialogCallback standardAlertDialogCallback){
             //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
             new AlertDialog.Builder(context)
                         .setTitle(title)
@@ -914,7 +914,7 @@ public final class PresenterUtilities {
          * */
         public static void showStandardAlertDialog(@NonNull @NotNull Context context, @NonNull @NotNull String title,
                                                    @NonNull @NotNull String message, @NonNull @NotNull String positiveButtonDescription,
-                                                   @NonNull Callbacks.StandardAlertDialogCallback standardAlertDialogCallback){
+                                                   @NonNull PresenterCallbacks.StandardAlertDialogCallback standardAlertDialogCallback){
             //https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android/2115770#2115770
             new AlertDialog.Builder(context)
                     .setTitle(title)
