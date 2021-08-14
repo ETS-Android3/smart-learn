@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * */
 public class ThreadExecutorService {
 
-    private static final int INITIAL_POOL_SIZE = 10;
+    private static final int INITIAL_POOL_SIZE = 25;
 
     private static ThreadExecutorService instance;
 
