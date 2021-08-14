@@ -480,29 +480,6 @@ public abstract class CoreUtilities {
 
 
         /**
-         * Use to remove all adjacent spaces and new lines from a string.
-         * All adjacent spaces/new lines will be replaced with a single space.
-         *
-         * @param value String to be processed.
-         *
-         * @return Processed string.
-         * */
-        @NonNull @NotNull
-        public static String removeAdjacentSpacesAndNewLines(String value){
-            if(value == null || value.isEmpty()){
-                return "";
-            }
-
-            // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead/2932439#2932439
-            // https://stackoverflow.com/questions/2163045/how-to-remove-line-breaks-from-a-file-in-java/2163204#2163204
-            return value
-                    .trim()
-                    .replaceAll("\\R+", " ")
-                    .replaceAll(" +", " ");
-        }
-
-
-        /**
          * Use to trim a string and then to remove adjacent spaces and adjacent break lines from a
          * string. All adjacent spaces and adjacent break lines will be replaced with a single space.
          *

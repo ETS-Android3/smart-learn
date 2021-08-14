@@ -1773,7 +1773,7 @@ public class TestService {
             // 1. Set question values.
 
             // 1.1 Remove all two or more adjacent spaces/new lines and split item value in words.
-            String[] values = CoreUtilities.General.removeAdjacentSpacesAndNewLines(item.getValue()).split(" ");
+            String[] values = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getValue()).split(" ");
             ArrayList<String> wordsList = new ArrayList<>(Arrays.asList(values));
 
             // 1.2 Create question value and correct answer order.
