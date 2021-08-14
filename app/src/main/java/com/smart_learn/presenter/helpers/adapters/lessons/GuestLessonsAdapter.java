@@ -64,7 +64,7 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 isFiltering = true;
-                filteringValue = constraint.toString().toLowerCase();
+                filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(constraint.toString()).toLowerCase();
 
                 // For filtering mode we search always in all db.
                 List<Lesson> allItems = GuestLessonService.getInstance().getAllSampleLesson();
@@ -76,7 +76,10 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getName().toLowerCase().contains(filteringValue))
+                            .filter(it -> CoreUtilities.General
+                                            .trimAndRemoveAdjacentSpacesAndBreakLines(it.getName())
+                                            .toLowerCase()
+                                            .contains(filteringValue))
                             .collect(Collectors.toList());
                 }
 
@@ -146,8 +149,9 @@ public class GuestLessonsAdapter extends BasicListAdapter<Lesson, GuestLessonsAd
         protected void bind(@NonNull @NotNull Lesson item, int position) {
 
             if(isFiltering){
+                String lessonName = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getName());
                 liveLessonSpannedName.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getName().toLowerCase(), filteringValue), item.getName()));
+                        CoreUtilities.General.getSubstringIndexes(lessonName.toLowerCase(), filteringValue), lessonName));
             }
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));

@@ -99,7 +99,10 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
      * @param value Value to be search.
      * */
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
-        filteringValue = value.toLowerCase();
+        filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(value).toLowerCase();
+        if(filteringValue.isEmpty()){
+            filteringValue = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
+        }
         isFiltering = true;
         Query query = UserLessonService.getInstance().getQueryForFilter(INITIAL_ADAPTER_CAPACITY, filteringValue,
                 SettingsService.getInstance().getUserLessonShowOption());
@@ -160,8 +163,9 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
             }
 
             if(isFiltering){
+                String lessonName = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getName());
                 liveLessonSpannedName.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getName().toLowerCase(), filteringValue), item.getName()));
+                        CoreUtilities.General.getSubstringIndexes(lessonName.toLowerCase(), filteringValue), lessonName));
             }
             else {
                 liveLessonSpannedName.setValue(new SpannableString(item.getName()));

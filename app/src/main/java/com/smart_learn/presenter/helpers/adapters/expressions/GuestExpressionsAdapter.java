@@ -66,7 +66,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 isFiltering = true;
-                filteringValue = constraint.toString().toLowerCase();
+                filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(constraint.toString()).toLowerCase();
 
                 // For filtering mode we search always in all db.
                 List<Expression> allItems = GuestExpressionService.getInstance()
@@ -79,7 +79,10 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getExpression().toLowerCase().contains(filteringValue))
+                            .filter(it -> CoreUtilities.General
+                                    .trimAndRemoveAdjacentSpacesAndBreakLines(it.getExpression())
+                                    .toLowerCase()
+                                    .contains(filteringValue))
                             .collect(Collectors.toList());
                 }
 
@@ -169,8 +172,9 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
             viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
             if(isFiltering){
+                String expression = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getExpression());
                 liveSpannedExpression.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getExpression().toLowerCase(), filteringValue), item.getExpression()));
+                        CoreUtilities.General.getSubstringIndexes(expression.toLowerCase(), filteringValue), expression));
                 // TODO: try to show more lines only if value is on the hidden lines
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_FILTER_LINES);
             }

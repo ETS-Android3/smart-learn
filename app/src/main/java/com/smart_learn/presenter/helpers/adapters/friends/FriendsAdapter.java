@@ -92,7 +92,10 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
      * @param value Value to be search.
      * */
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
-        filteringValue = value.toLowerCase();
+        filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(value).toLowerCase();
+        if(filteringValue.isEmpty()){
+            filteringValue = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
+        }
         isFiltering = true;
         Query query = FriendService.getInstance().getQueryForFilter(INITIAL_ADAPTER_CAPACITY, filteringValue);
         FirestoreRecyclerOptions<FriendDocument> newOptions = new FirestoreRecyclerOptions.Builder<FriendDocument>()
@@ -120,11 +123,14 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
         protected void bind(@NonNull @NotNull FriendDocument friendDocument, int position){
 
             if(isFiltering){
+                String email = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(friendDocument.getEmail());
+                String displayName = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(friendDocument.getDisplayName());
+
                 friendDocument.setSpannedEmail(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(friendDocument.getEmail().toLowerCase(), filteringValue), friendDocument.getEmail()));
+                        CoreUtilities.General.getSubstringIndexes(email.toLowerCase(), filteringValue), email));
 
                 friendDocument.setSpannedDisplayName(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(friendDocument.getDisplayName().toLowerCase(), filteringValue), friendDocument.getDisplayName()));
+                        CoreUtilities.General.getSubstringIndexes(displayName.toLowerCase(), filteringValue), displayName));
             }
             else {
                 friendDocument.setSpannedEmail(new SpannableString(friendDocument.getEmail()));

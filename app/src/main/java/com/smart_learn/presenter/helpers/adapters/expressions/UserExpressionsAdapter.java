@@ -108,7 +108,10 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
      * @param value Value to be search.
      * */
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
-        filteringValue = value.toLowerCase();
+        filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(value).toLowerCase();
+        if(filteringValue.isEmpty()){
+            filteringValue = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
+        }
         isFiltering = true;
         Query query = UserExpressionService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(), INITIAL_ADAPTER_CAPACITY,
                 adapterCallback.isSharedLessonSelected(), filteringValue);
@@ -174,8 +177,9 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
             viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
 
             if(isFiltering){
+                String expression = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getExpression());
                 liveSpannedExpression.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getExpression().toLowerCase(), filteringValue), item.getExpression()));
+                        CoreUtilities.General.getSubstringIndexes(expression.toLowerCase(), filteringValue), expression));
                 // TODO: try to show more lines only if value is on the hidden lines
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_FILTER_LINES);
             }

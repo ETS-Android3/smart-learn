@@ -104,7 +104,10 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
      * @param value Value to be search.
      * */
     public void setFilterOption(@NonNull @NotNull Fragment fragment, @NonNull @NotNull String value){
-        filteringValue = value.toLowerCase();
+        filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(value).toLowerCase();
+        if(filteringValue.isEmpty()){
+            filteringValue = CoreUtilities.General.DEFAULT_VALUE_FOR_SEARCH;
+        }
         isFiltering = true;
         Query query = UserWordService.getInstance().getQueryForFilter(currentLessonSnapshot.getId(),
                 INITIAL_ADAPTER_CAPACITY, adapterCallback.isSharedLessonSelected(), filteringValue);
@@ -171,8 +174,9 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
+                String word = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getWord());
                 liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getWord().toLowerCase(), filteringValue), item.getWord()));
+                        CoreUtilities.General.getSubstringIndexes(word.toLowerCase(), filteringValue), word));
             }
             else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));

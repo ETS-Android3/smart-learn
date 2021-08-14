@@ -61,7 +61,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 isFiltering = true;
-                filteringValue = constraint.toString().toLowerCase();
+                filteringValue = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(constraint.toString()).toLowerCase();
 
                 // For filtering mode we search always in all db.
                 List<Word> allItems = GuestWordService.getInstance().getCurrentLessonSampleWords(currentLessonId);
@@ -73,7 +73,10 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                 }
                 else {
                     filteredItems = allItems.stream()
-                            .filter(it -> it.getWord().toLowerCase().contains(filteringValue))
+                            .filter(it -> CoreUtilities.General
+                                    .trimAndRemoveAdjacentSpacesAndBreakLines(it.getWord())
+                                    .toLowerCase()
+                                    .contains(filteringValue))
                             .collect(Collectors.toList());
                 }
 
@@ -163,8 +166,9 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
             if(isFiltering){
+                String word = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getWord());
                 liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(item.getWord().toLowerCase(), filteringValue), item.getWord()));
+                        CoreUtilities.General.getSubstringIndexes(word.toLowerCase(), filteringValue), word));
             }
             else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));

@@ -503,6 +503,29 @@ public abstract class CoreUtilities {
 
 
         /**
+         * Use to trim a string and then to remove adjacent spaces and adjacent break lines from a
+         * string. All adjacent spaces and adjacent break lines will be replaced with a single space.
+         *
+         * @param value String for which processing is made.
+         *
+         * @return Processed string.
+         * */
+        @NotNull
+        @NonNull
+        public static String trimAndRemoveAdjacentSpacesAndBreakLines(String value){
+            if(value == null || value.isEmpty()){
+                return "";
+            }
+
+            // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead/2932439#2932439
+            // https://stackoverflow.com/questions/2163045/how-to-remove-line-breaks-from-a-file-in-java/2163204#2163204
+            return value
+                    .trim()
+                    .replaceAll("\\R+", " ")
+                    .replaceAll(" +", " ");
+        }
+
+        /**
          * Use to remove spaces from a string.
          *
          * @param value String for which space removal is made.
@@ -519,7 +542,6 @@ public abstract class CoreUtilities {
             // https://stackoverflow.com/questions/5455794/removing-whitespace-from-strings-in-java
             return value.replaceAll("\\s","");
         }
-
 
         /**
          * Use to split a String in all possible substrings.
@@ -611,7 +633,7 @@ public abstract class CoreUtilities {
             // Use set`s to avoid duplicates
             HashSet<String> resultList = new HashSet<>();
             for(String value : valueList){
-                value = removeSpaces(value);
+                value = trimAndRemoveAdjacentSpacesAndBreakLines(value);
                 value = value.toLowerCase();
                 resultList.addAll(splitStringInSubstrings(value));
             }
