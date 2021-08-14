@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.text.SpannableString"/>
         <variable
             name="from"
             type="String" />
@@ -9,8 +10,8 @@
             name="createdTime"
             type="String" />
         <variable
-            name="description"
-            type="String" />
+            name="spannedDescription"
+            type="SpannableString" />
         <variable
             name="message"
             type="String" />
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="@{description}"
+                android:text="@{spannedDescription}"
                 android:textSize="16sp"
                 android:textAppearance="?attr/textAppearanceBody2"/>
 

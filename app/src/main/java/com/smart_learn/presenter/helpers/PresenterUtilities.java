@@ -3,6 +3,7 @@ package com.smart_learn.presenter.helpers;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spannable;
@@ -863,6 +864,25 @@ public final class PresenterUtilities {
             SpannableString spannableString = new SpannableString(value);
             spannableString.setSpan(new ForegroundColorSpan(ApplicationController.getInstance().getColor(R.color.colorAccent)),
                     0, value.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            return spannableString;
+        }
+
+        /**
+         * Use to set a string as spanned with Bold format.
+         *
+         * @param value String to be transformed in spanned string.
+         *
+         * @return SpannableString object created.
+         * */
+        public static SpannableString setStringAsSpannedBold(String value){
+            // https://stackoverflow.com/questions/14371092/how-to-make-a-specific-text-on-textview-bold/14371141#14371141
+            SpannableString spannableString = new SpannableString(value);
+            spannableString.setSpan(
+                    new android.text.style.StyleSpan(Typeface.BOLD),
+                    0,
+                    value.length(),
+                    Spannable.SPAN_INCLUSIVE_EXCLUSIVE
+            );
             return spannableString;
         }
 

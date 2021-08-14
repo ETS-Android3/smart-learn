@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="25dp"
                 android:singleLine="true"
-                android:text="@{viewHolder.liveItemInfo.description}"
+                android:text="@{viewHolder.liveNotificationDescription}"
                 android:textAppearance="?attr/textAppearanceBody2"/>
             
         </LinearLayout>

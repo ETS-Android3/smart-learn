@@ -1,12 +1,16 @@
 package com.smart_learn.data.firebase.firestore.entities;
 
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 import com.smart_learn.R;
-import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.core.helpers.ApplicationController;
+import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -106,8 +110,9 @@ public class NotificationDocument {
 
     // Not needed in firestore document. Used to set description of the notification based on type,
     // in order to be readable for the user and to give more info`s than title.
-    @Exclude
-    private String description;
+    @Exclude @NonNull @NotNull
+    private SpannableString spannedDescription = new SpannableString("");
+
 
     // Not needed in firestore document. Used to set title of the notification based on type, in
     // order to be readable for the user.
@@ -168,14 +173,18 @@ public class NotificationDocument {
         return declined;
     }
 
+    public void setSpannedDescription(SpannableString spannedDescription) {
+        this.spannedDescription = spannedDescription == null ? new SpannableString("") : spannedDescription;
+    }
+
     /**
-     * Field description is NOT needed in the firestore document.
+     * Field getSpannedDescription is NOT needed in the firestore document.
      *
      * https://stackoverflow.com/questions/49865558/firestore-where-exactly-to-put-the-exclude-annotation
      * */
-    @Exclude
-    public String getDescription() {
-        return description;
+    @Exclude @NonNull @NotNull
+    public SpannableString getSpannedDescription() {
+        return spannedDescription;
     }
 
     /**
@@ -240,7 +249,7 @@ public class NotificationDocument {
      *
      * @return A string which represents the custom description.
      * */
-    public static String generateNotificationDescription(int type, @Nullable String extraInfo){
+    public static SpannableString generateNotificationDescription(int type, @Nullable String extraInfo){
         String tmp = "";
         if(extraInfo != null){
             tmp = extraInfo;
@@ -249,49 +258,60 @@ public class NotificationDocument {
         ApplicationController applicationController = ApplicationController.getInstance();
         switch (type){
             case Types.TYPE_FRIEND_REQUEST_SENT:
-                return applicationController.getString(R.string.friend_request_sent_description_1) + " " + tmp + ". " +
-                    applicationController.getString(R.string.friend_request_sent_description_2);
+                return processDescription(applicationController.getString(R.string.friend_request_sent_description_1), tmp,
+                        applicationController.getString(R.string.friend_request_sent_description_2));
             case Types.TYPE_FRIEND_REQUEST_RECEIVED:
-                return applicationController.getString(R.string.friend_request_received_description) + " " + tmp + ".";
+                return processDescription(applicationController.getString(R.string.friend_request_received_description), tmp, "");
             case Types.TYPE_FRIEND_REQUEST_ACCEPTED:
-                return applicationController.getString(R.string.friend_request_accepted_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.friend_request_accepted_description_2);
+                return processDescription(applicationController.getString(R.string.friend_request_accepted_description_1), tmp,
+                        applicationController.getString(R.string.friend_request_accepted_description_2));
 
             case Types.TYPE_FRIEND_REMOVED_YOU:
-                return applicationController.getString(R.string.friend_removed_you_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.friend_removed_you_description_2);
+                return processDescription(applicationController.getString(R.string.friend_removed_you_description_1), tmp,
+                        applicationController.getString(R.string.friend_removed_you_description_2));
             case Types.TYPE_YOU_REMOVED_FRIEND:
-                return applicationController.getString(R.string.you_removed_friend_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.you_removed_friend_description_2);
+                return processDescription(applicationController.getString(R.string.you_removed_friend_description_1), tmp,
+                        applicationController.getString(R.string.you_removed_friend_description_2));
 
             case Types.TYPE_NORMAL_LESSON_RECEIVED:
-                return applicationController.getString(R.string.normal_lesson_received_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.normal_lesson_received_description_2);
+                return processDescription(applicationController.getString(R.string.normal_lesson_received_description_1), tmp,
+                        applicationController.getString(R.string.normal_lesson_received_description_2));
             case Types.TYPE_NORMAL_LESSON_SENT:
-                return applicationController.getString(R.string.normal_lesson_sent_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.normal_lesson_sent_description_2);
+                return processDescription(applicationController.getString(R.string.normal_lesson_sent_description_1), tmp,
+                        applicationController.getString(R.string.normal_lesson_sent_description_2));
             case Types.TYPE_SHARED_LESSON_RECEIVED:
-                return applicationController.getString(R.string.shared_lesson_received_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.shared_lesson_received_description_2);
+                return processDescription(applicationController.getString(R.string.shared_lesson_received_description_1), tmp,
+                        applicationController.getString(R.string.shared_lesson_received_description_2));
             case Types.TYPE_SHARED_LESSON_SENT:
-                return applicationController.getString(R.string.shared_lesson_sent_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.shared_lesson_sent_description_2);
+                return processDescription(applicationController.getString(R.string.shared_lesson_sent_description_1), tmp,
+                        applicationController.getString(R.string.shared_lesson_sent_description_2));
 
             case Types.TYPE_WORD_RECEIVED:
-                return applicationController.getString(R.string.word_received_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.word_received_description_2);
+                return processDescription(applicationController.getString(R.string.word_received_description_1), tmp,
+                        applicationController.getString(R.string.word_received_description_2));
             case Types.TYPE_EXPRESSION_RECEIVED:
-                return applicationController.getString(R.string.expression_received_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.expression_received_description_2);
+                return processDescription(applicationController.getString(R.string.expression_received_description_1), tmp,
+                        applicationController.getString(R.string.expression_received_description_2));
 
             case Types.TYPE_ONLINE_TEST_INVITATION_RECEIVED:
-                return applicationController.getString(R.string.online_test_invitation_received_description_1) + " " + tmp + ". " +
-                        applicationController.getString(R.string.online_test_invitation_received_description_2);
+                return processDescription(applicationController.getString(R.string.online_test_invitation_received_description_1), tmp,
+                        applicationController.getString(R.string.online_test_invitation_received_description_2));
 
             case Types.TYPE_NONE:
             default:
-                return applicationController.getString(R.string.empty);
+                return new SpannableString(applicationController.getString(R.string.empty));
         }
+    }
+
+    private static SpannableString processDescription(String description1, String extraInfo, String description2){
+        SpannableStringBuilder spannedValue = new SpannableStringBuilder();
+        spannedValue
+                .append(description1)
+                .append(" ")
+                .append(PresenterUtilities.Activities.setStringAsSpannedBold(extraInfo))
+                .append(". ")
+                .append(description2);
+        return new SpannableString(spannedValue);
     }
 
 

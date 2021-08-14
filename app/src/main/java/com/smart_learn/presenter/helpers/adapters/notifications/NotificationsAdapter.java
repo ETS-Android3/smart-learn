@@ -71,11 +71,13 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
     public final class NotificationViewHolder extends BasicViewHolder<NotificationDocument, LayoutCardViewNotificationBinding> {
 
+        private final MutableLiveData<String> liveNotificationDescription;
         private final MutableLiveData<String> liveDateDifferenceDescription;
         private final AtomicBoolean isHideActive;
 
         public NotificationViewHolder(@NonNull @NotNull LayoutCardViewNotificationBinding viewHolderBinding) {
             super(viewHolderBinding);
+            liveNotificationDescription = new MutableLiveData<>("");
             liveDateDifferenceDescription = new MutableLiveData<>("");
             isHideActive = new AtomicBoolean(false);
             makeStandardSetup(viewHolderBinding.toolbarLayoutCardViewNotification, viewHolderBinding.cvLayoutCardViewNotification);
@@ -84,6 +86,10 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
         public LiveData<String> getLiveDateDifferenceDescription() {
             return liveDateDifferenceDescription;
+        }
+
+        public LiveData<String> getLiveNotificationDescription() {
+            return liveNotificationDescription;
         }
 
         private void setListeners(){
@@ -155,8 +161,10 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
             notification.setTitle(adapterCallback.getFragment()
                     .getString(NotificationDocument.generateNotificationTitle(notification.getType())));
 
-            notification.setDescription(NotificationDocument.generateNotificationDescription(notification.getType(),
+            notification.setSpannedDescription(NotificationDocument.generateNotificationDescription(notification.getType(),
                     notification.getExtraInfo()));
+            // here description must be shown as normal
+            liveNotificationDescription.setValue(notification.getSpannedDescription().toString());
 
             liveItemInfo.setValue(notification);
 

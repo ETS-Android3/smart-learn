@@ -2,6 +2,7 @@ package com.smart_learn.presenter.activities.main.fragments.notifications.helper
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,13 +52,13 @@ public class NotificationDialog extends DialogFragment {
         if(notificationDocument == null){
             dialogBinding.setFrom("");
             dialogBinding.setCreatedTime("");
-            dialogBinding.setDescription("");
+            dialogBinding.setSpannedDescription(new SpannableString(""));
             dialogBinding.setMessage("");
             dialogTitleResourceId = R.string.no_notification_info;
         }
         else {
             dialogBinding.setFrom(notificationDocument.getFromDisplayName() == null ? "" : notificationDocument.getFromDisplayName());
-            dialogBinding.setDescription(NotificationDocument.generateNotificationDescription(notificationDocument.getType(),
+            dialogBinding.setSpannedDescription(NotificationDocument.generateNotificationDescription(notificationDocument.getType(),
                     notificationDocument.getExtraInfo()));
             dialogTitleResourceId = NotificationDocument.generateNotificationTitle(notificationDocument.getType());
 
