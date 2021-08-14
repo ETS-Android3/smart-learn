@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -290,6 +291,23 @@ public abstract class BasicFragmentForRecyclerView<VM extends BasicViewModelForR
             stopRefreshing();
         }
     }
+
+    public int getCurrentVisiblePosition(){
+        if(recyclerView != null && recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+            if(linearLayoutManager != null){
+                // If recycler layout is inverse return last visible position because when scroll
+                // to position is made, calculation will be made from back to start.
+                // https://stackoverflow.com/questions/38247602/android-how-can-i-get-current-positon-on-recyclerview-that-user-scrolled-to-item
+                if(startFromEnd()){
+                    return linearLayoutManager.findLastVisibleItemPosition();
+                }
+                return linearLayoutManager.findFirstVisibleItemPosition();
+            }
+        }
+        return RecyclerView.NO_POSITION;
+    }
+
 
     protected void setLayoutUtilities(){
         // set views

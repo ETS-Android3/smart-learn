@@ -88,6 +88,13 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
     // used manage different actions
     private final PresenterHelpers.FragmentRecyclerViewHelper helper;
 
+    // Used to keep adapter on same position between startListening(...) and stopListening(...) actions.
+    // These methods will be called when lifecycle owner is resumed/paused, in the following order:
+    //   - stopListening(...) when is paused
+    //   - startListening(...) when is resumed
+    private boolean isBackAfterStopListening;
+    private int savedVisiblePositionBeforeStopListening;
+
 
     /**
      * @param options Options needed by the FirestoreRecyclerAdapter in order to load data.
@@ -113,6 +120,8 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         this.isLoadingNewData = false;
         this.secondCall = false;
         this.currentLoad = UNSET;
+        this.isBackAfterStopListening = false;
+        this.savedVisiblePositionBeforeStopListening = NO_POSITION;
     }
 
     @Override
@@ -149,6 +158,26 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
         helper.showOrHideEmptyLabel(totalItems < 1);
     }
 
+    @Override
+    public void startListening() {
+        super.startListening();
+        // Is no need to save 'isBackAfterStopListening = true' here because these method will be
+        // called when initial setup is made also, so errors can appears.
+        // 'isBackAfterStopListening = true' must be set only when stop listening is made.
+    }
+
+    @Override
+    public void stopListening() {
+        // First save current status.
+        // Mark 'isBackAfterStopListening = true' in order to go to 'savedVisiblePositionBeforeStopListening'
+        // when listening is started again.
+        isBackAfterStopListening = true;
+        savedVisiblePositionBeforeStopListening = adapterCallback.getFragment().getCurrentVisiblePosition();
+
+        // And then stop listener.
+        super.stopListening();
+    }
+
     private boolean isInitialSetup(int totalItems){
         // this will be executed only at the first loading
         if(currentLoad == UNSET){
@@ -156,6 +185,20 @@ public abstract class BasicFirestoreRecyclerAdapter <T, VH extends BasicViewHold
             helper.stopRefreshing();
             return true;
         }
+
+        // if adapter is back from a resumed state, restore adapter position
+        if(isBackAfterStopListening){
+            currentLoad = totalItems;
+            isBackAfterStopListening = false;
+            // scroll only if position is valid
+            if(savedVisiblePositionBeforeStopListening != NO_POSITION && savedVisiblePositionBeforeStopListening < currentLoad){
+                adapterCallback.getFragment().scrollToPosition(savedVisiblePositionBeforeStopListening);
+                savedVisiblePositionBeforeStopListening = NO_POSITION;
+            }
+            helper.stopRefreshing();
+            return true;
+        }
+
         return false;
     }
 
