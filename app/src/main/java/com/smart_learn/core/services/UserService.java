@@ -117,6 +117,23 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
         repositoryInstance.searchUserByEmail(email, callback);
     }
 
+    public void updateUserDocumentProfileName(String profileName, DataCallbacks.General callback){
+        if(profileName == null || profileName.isEmpty()){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("Profile name can not be null or empty");
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("Profile name [" + profileName + "] updated",
+                    "Profile name [" + profileName + "] was NOT updated");
+        }
+
+        repositoryInstance.updateUserDocumentProfileName(profileName, callback);
+    }
+
     public void updateUserDocumentPhotoUrl(String photoUrl, DataCallbacks.General callback){
         if(photoUrl == null){
             // empty value can be used to unset photo url

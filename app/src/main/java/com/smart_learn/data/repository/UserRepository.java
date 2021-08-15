@@ -236,6 +236,15 @@ public class UserRepository extends BasicFirestoreRepository<UserDocument> {
         callback.onSuccess();
     }
 
+    public void updateUserDocumentProfileName(@NonNull @NotNull String profileName, @NonNull @NotNull DataCallbacks.General callback){
+        HashMap<String, Object> data = new HashMap<>();
+        data.put(BasicProfileDocument.Fields.DISPLAY_NAME_FIELD_NAME, profileName);
+        data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+        getUserDocumentReference().update(data);
+        // TODO: same problem as in batchCommit method
+        callback.onSuccess();
+    }
+
     public void uploadProfileImage(Uri profileImage, String imageName, DataCallbacks.General callback){
         ThreadExecutorService.getInstance().execute(() -> tryToUploadProfileImage(profileImage, imageName, callback));
     }

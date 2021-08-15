@@ -135,6 +135,8 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
     }
 
     protected void saveProfileName(){
+        // TODO: refactor and move method in User Service
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser == null){
             liveProfileName.setValue(previousProfileName); // restore previous value
@@ -153,8 +155,25 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            liveToastMessage.setValue(ApplicationController.getInstance().getResources()
-                                    .getString(R.string.success_display_name_updated));
+                            // Here profile name on firebase account was changes, so change display
+                            // name on user document.
+                            UserService.getInstance().updateUserDocumentProfileName(firebaseUser.getDisplayName(), new DataCallbacks.General() {
+                                @Override
+                                public void onSuccess() {
+                                    liveToastMessage.setValue(ApplicationController.getInstance().getResources()
+                                            .getString(R.string.success_display_name_updated));
+                                }
+
+                                @Override
+                                public void onFailure() {
+                                    // Here is no need to restore to previous profile name because
+                                    // value was already save on FirebaseUser.
+
+                                    liveToastMessage.setValue(ApplicationController.getInstance().getResources()
+                                            .getString(R.string.error_display_name_updated_1));
+                                }
+                            });
+
                             return;
                         }
 

@@ -649,4 +649,5 @@
     <string name="error_invalid_image_format_2">is invalid</string>
     <string name="error_image_too_big_1">Image size</string>
     <string name="error_image_too_big_2">is too big. Maximum accepted size is</string>
+    <string name="error_display_name_updated_1">Profile name was not fully updated. Please try again later.</string>
 </resources>
