@@ -117,7 +117,7 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
         repositoryInstance.searchUserByEmail(email, callback);
     }
 
-    public void updateUserPhotoUrl(String photoUrl, DataCallbacks.General callback){
+    public void updateUserDocumentPhotoUrl(String photoUrl, DataCallbacks.General callback){
         if(photoUrl == null){
             // empty value can be used to unset photo url
             photoUrl = "";
@@ -128,7 +128,7 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
                     "PhotoUrl [" + photoUrl + "] was NOT updated");
         }
 
-        repositoryInstance.updateUserPhotoUrl(photoUrl, callback);
+        repositoryInstance.updateUserDocumentPhotoUrl(photoUrl, callback);
     }
 
     public void uploadProfileImage(Uri profileImage, String imageName, DataCallbacks.General callback){

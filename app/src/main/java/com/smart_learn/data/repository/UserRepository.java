@@ -227,7 +227,7 @@ public class UserRepository extends BasicFirestoreRepository<UserDocument> {
         });
     }
 
-    public void updateUserPhotoUrl(@NonNull @NotNull String photoUrl, @NonNull @NotNull DataCallbacks.General callback){
+    public void updateUserDocumentPhotoUrl(@NonNull @NotNull String photoUrl, @NonNull @NotNull DataCallbacks.General callback){
         HashMap<String, Object> data = new HashMap<>();
         data.put(BasicProfileDocument.Fields.PROFILE_PHOTO_URL_FIELD_NAME, photoUrl);
         data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
@@ -307,7 +307,7 @@ public class UserRepository extends BasicFirestoreRepository<UserDocument> {
 
                         // Here account update was successfully so update profilePhotoUrl on user
                         // document. This will be used to show photo to the other users.
-                        UserService.getInstance().updateUserPhotoUrl(profileImage.toString(), new DataCallbacks.General() {
+                        UserService.getInstance().updateUserDocumentPhotoUrl(profileImage.toString(), new DataCallbacks.General() {
                             @Override
                             public void onSuccess() {
                                 // Here photo is loaded and url was updated on user account and
