@@ -58,7 +58,7 @@ public class GuestHomeExpressionViewModel extends HomeExpressionViewModel {
         GuestExpressionService.getInstance().update(expression, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_expression));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_expression));
             }
             @Override
             public void onFailure() {
@@ -80,7 +80,7 @@ public class GuestHomeExpressionViewModel extends HomeExpressionViewModel {
         GuestExpressionService.getInstance().update(expression, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_notes));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_notes));
             }
             @Override
             public void onFailure() {

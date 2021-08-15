@@ -176,7 +176,7 @@ public class UsersViewModel extends BasicAndroidViewModel {
             public void onSuccess() {
                 fragment.requireActivity().runOnUiThread(() -> {
                     fragment.closeProgressDialog();
-                    liveToastMessage.setValue(fragment.getString(R.string.succes_send_friend_request));
+                    liveToastMessage.setValue(fragment.getString(R.string.success_send_friend_request));
                     listener.onSuccess();
                 });
             }

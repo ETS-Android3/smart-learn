@@ -117,7 +117,7 @@ public class TestService {
         errorInvalidNumberOfQuestions   = context == null ? "" : context.getString(R.string.error_invalid_number_of_questions);
         errorNoGeneratedQuestions       = context == null ? "" : context.getString(R.string.error_no_generated_questions);
         errorInvalidTestType            = context == null ? "" : context.getString(R.string.error_invalid_test_type);
-        errorInvalidConnexion           = context == null ? "" : context.getString(R.string.error_invalid_conexion);
+        errorInvalidConnexion           = context == null ? "" : context.getString(R.string.error_invalid_connexion);
         errorCouldNotExtractWords       = context == null ? "" : context.getString(R.string.error_could_not_extract_words);
         errorCouldNotExtractExpressions = context == null ? "" : context.getString(R.string.error_could_not_extract_expressions);
         errorNoWords                    = context == null ? "" : context.getString(R.string.error_no_words);

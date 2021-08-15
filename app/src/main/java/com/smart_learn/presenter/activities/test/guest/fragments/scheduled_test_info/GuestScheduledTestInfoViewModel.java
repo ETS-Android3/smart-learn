@@ -65,7 +65,7 @@ public class GuestScheduledTestInfoViewModel extends ScheduledTestInfoViewModel 
         TestService.getInstance().update((RoomTest) newTest, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_test_updated));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_test_updated));
                 fragment.requireActivity().runOnUiThread(() -> fragment.requireActivity().onBackPressed());
             }
 

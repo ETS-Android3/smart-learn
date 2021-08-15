@@ -54,7 +54,7 @@ public class GuestHomeWordViewModel extends HomeWordViewModel {
         GuestWordService.getInstance().update(word, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_word));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_word));
             }
             @Override
             public void onFailure() {
@@ -76,7 +76,7 @@ public class GuestHomeWordViewModel extends HomeWordViewModel {
         GuestWordService.getInstance().update(word, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_phonetic));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_phonetic));
             }
             @Override
             public void onFailure() {
@@ -98,7 +98,7 @@ public class GuestHomeWordViewModel extends HomeWordViewModel {
         GuestWordService.getInstance().update(word, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_notes));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_notes));
             }
             @Override
             public void onFailure() {

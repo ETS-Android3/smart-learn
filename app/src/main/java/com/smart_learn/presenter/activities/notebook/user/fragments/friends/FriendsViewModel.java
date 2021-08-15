@@ -147,7 +147,7 @@ public class FriendsViewModel extends SelectFriendsViewModel {
                     fragment.closeProgressDialog();
                     (fragment.requireActivity()).onBackPressed();
                     PresenterUtilities.General.showShortToastMessage(ApplicationController.getInstance(),
-                            ApplicationController.getInstance().getString(R.string.sucess_add_new_shared_lesson));
+                            ApplicationController.getInstance().getString(R.string.success_add_new_shared_lesson));
                 });
             }
 

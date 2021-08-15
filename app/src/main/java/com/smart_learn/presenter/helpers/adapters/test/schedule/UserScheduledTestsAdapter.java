@@ -248,7 +248,7 @@ public class UserScheduledTestsAdapter extends BasicFirestoreRecyclerAdapter<Tes
             TestService.getInstance().deleteScheduledTest(testSnapshot, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {
-                    showMessage(R.string.succes_delete_test);
+                    showMessage(R.string.success_delete_test);
                     isDeletingActive.set(false);
                 }
 

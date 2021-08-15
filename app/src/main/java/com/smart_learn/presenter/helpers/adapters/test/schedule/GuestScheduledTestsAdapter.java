@@ -221,7 +221,7 @@ public class GuestScheduledTestsAdapter extends BasicListAdapter<RoomTest, Guest
             TestService.getInstance().delete(test, new DataCallbacks.General() {
                 @Override
                 public void onSuccess() {
-                    showMessage(R.string.succes_delete_test);
+                    showMessage(R.string.success_delete_test);
                     isDeletingActive.set(false);
                 }
 

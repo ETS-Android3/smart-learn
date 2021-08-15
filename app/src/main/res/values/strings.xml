@@ -1,35 +1,18 @@
 <resources>
     <string name="action_settings">Settings</string>
-    <string name="app_name">smart-learn</string>
+    <string name="app_name" translatable="false">smart-learn</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="new_lesson">New lesson</string>
-    <string name="open_lesson">Open lesson</string>
-    <string name="help">Help</string>
-    <string name="import_lesson">Import lesson</string>
-    <string name="no_entry_here">No entry here</string>
     <string name="search">Search</string>
-    <string name="add_words_from_exiting_lesson">Add words from exiting lesson</string>
-    <string name="add_words_from_external_lesson">Add words from external lesson</string>
-    <string name="display_words">Display Words</string>
     <string name="update_lesson">Update lesson</string>
     <string name="test">Test</string>
-    <string name="hello_how_are_you">Hello. How are you?</string>
-    <string name="default_user_img">default_user_img</string>
-    <string name="some_time">08:00 AM</string>
     <string name="image">image</string>
-    <string name="tab_text_1">Test</string>
-    <string name="tab_text_2">Chat</string>
-    <string name="tab_text_3">Participants</string>
-    <string name="send_message">Message...</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="no">No</string>
     <string name="add_lesson">Add Lesson</string>
-    <string name="add_entrance">Add Entrance</string>
-    <string name="update_entrance">Update Entrance</string>
     <string name="save">Save</string>
 
     <!-- NavigationDrawer -->
@@ -44,17 +27,17 @@
 
     <!-- MainActivity -->
     <string name="error_profile_name_is_same">Profile name was not changed</string>
-    <string name="error_updating_user_display_name">Error while updating profile. Name was not changed</string>
-    <string name="error_deleting_user">Account can not be deleted.</string>
+    <string name="error_updating_user_display_name">Error while updating the profile. Your name was not changed.</string>
+    <string name="error_deleting_user">Your account cannot be deleted</string>
     <string name="error_sensitive_deletion">This operation is sensitive and requires recent authentication. Log in again before retrying this request.</string>
 
-    <string name="success_display_name_updated">Profile name was changed.</string>
+    <string name="success_display_name_updated">Profile name was changed</string>
     <string name="success_account_deleted">Account was deleted</string>
 
     <string name="online">Online</string>
     <string name="delete_account">Delete account</string>
     <string name="email_and_password">Email and password</string>
-    <string name="delete_account_description">Are you sure you want to delete account? All your data will be deleted also!</string>
+    <string name="delete_account_description">Are you sure you want to delete your account?</string>
     <string name="profile_name_point">Profile name:</string>
     <string name="email_point">Email:</string>
     <string name="register_provider_point">Register provider:</string>
@@ -77,37 +60,37 @@
     <!-- AuthenticationActivity -->
     <string name="error_empty_credentials">Empty credentials</string>
     <string name="error_email_not_valid">Email address is not valid</string>
-    <string name="error_password_too_short">Password is too short. Use minimum</string>
-    <string name="error_passwords_not_matching">Passwords not matching.</string>
+    <string name="error_password_too_short">Inserted password is too short. Use minimum</string>
+    <string name="error_passwords_not_matching">Passwords not matching</string>
     <string name="error_authentication_failed">Authentication failed</string>
-    <string name="error_register_failed">Register failed.</string>
-    <string name="error_verify_email_send">Verification email was not sent. Please try again later.</string>
-    <string name="error_no_network">Device is not connected to a network.</string>
-    <string name="error_no_internet_connection">Internet is not available.</string>
+    <string name="error_register_failed">Register failed</string>
+    <string name="error_verify_email_send">The verification email was not sent. Please try again later.</string>
+    <string name="error_no_network">This device is not connected to a network</string>
+    <string name="error_no_internet_connection">Internet is not available</string>
     <string name="error_weak_password">Password is too weak. Use at least one letter and one number.</string>
     <string name="error_invalid_email">Email is not valid</string>
-    <string name="error_user_exists">This email already exists.</string>
+    <string name="error_user_exists">This email already exists</string>
     <string name="error_login_failed">Login failed</string>
     <string name="error_user_not_exist">This account does not exist</string>
     <string name="error_invalid_login_credentials">Invalid login credentials</string>
-    <string name="error_to_many_login_requests">To many login requests. Account is temporally blocked. Try to reset password or try to login later.</string>
-    <string name="error_email_not_verified">"Email is not verified. We`ve sent you a verification email."</string>
+    <string name="error_to_many_login_requests">Too many login requests. This account is temporally blocked. Try to reset the password or try to log in later.</string>
+    <string name="error_email_not_verified">Email is not verified. We\'ve sent you a verification email.</string>
     <string name="error_emails_not_matching">Emails not matching</string>
     <string name="error_required">Required</string>
     <string name="error_profile_too_long">Choose a shorter profile name</string>
     <string name="error_email_is_required">Email is required</string>
-    <string name="error_password_too_long">Password is too long. Maxim</string>
+    <string name="error_password_too_long">Inserted password is too long. Maxim</string>
     <string name="error_email_too_long">Email is too long</string>
-    <string name="error_send_password_reset_email">Reset email was not send. Please try again later.</string>
+    <string name="error_send_password_reset_email">The reset email was not sent. Please try again later.</string>
     <string name="error_google_login_failed">Google authentication failed</string>
 
     <string name="success_register_successfully">Register successfully, please verify your email address.</string>
-    <string name="success_verify_email_send">Verification email was sent.</string>
-    <string name="success_send_password_reset_email">"Reset email was send. "</string>
+    <string name="success_verify_email_send">A verification email was sent</string>
+    <string name="success_send_password_reset_email">Reset email was send</string>
 
-    <string name="verify_email">Please verify your email address.</string>
-    <string name="registering_user">Register is made.</string>
-    <string name="sign_in_user">Sign in is made.</string>
+    <string name="verify_email">Please verify your email address</string>
+    <string name="registering_user">Registering is made</string>
+    <string name="sign_in_user">Signing in</string>
     <string name="characters">characters</string>
     <string name="are_allowed">are allowed</string>
     <string name="logout">Logout</string>
@@ -127,11 +110,11 @@
 
     <!-- NotebookActivity -->
     <string name="error_loading_screen">Error while loading screen</string>
-    <string name="error_lesson_can_not_be_opened">Lesson can not be opened</string>
-    <string name="error_selected_item_can_not_be_opened">Selected item can not be opened</string>
+    <string name="error_lesson_can_not_be_opened">Lesson cannot be opened</string>
+    <string name="error_selected_item_can_not_be_opened">Selected item cannot be opened</string>
     <string name="error_lesson_name_too_long">Lesson name is too long</string>
-    <string name="error_word_can_not_be_opened">Word can not pe loaded.</string>
-    <string name="error_lesson_name_is_same">Lesson name is same.</string>
+    <string name="error_word_can_not_be_opened">Word cannot be loaded</string>
+    <string name="error_lesson_name_is_same">Lesson name is the same</string>
 
     <string name="add_new">Add new</string>
     <string name="selected">Selected:</string>
@@ -159,22 +142,22 @@
     <string name="from_point">From:</string>
     <string name="received_point">Received:</string>
     <string name="description_point">Description:</string>
-    <string name="no_notification_info">No informations available</string>
+    <string name="no_notification_info">No information available</string>
     <string name="normal_lesson_received_title">New lesson</string>
     <string name="shared_lesson_received_title">New shared lesson</string>
     <string name="friend_request_received_title">New friend request</string>
     <string name="word_received_title">New word</string>
     <string name="expression_received_title">New expression</string>
     <string name="nothing_here">Nothing here</string>
-    <string name="friend_request_received_description">You`ve received a new friend request from</string>
-    <string name="normal_lesson_received_description_1">You`ve received lesson</string>
-    <string name="normal_lesson_received_description_2">You can find it at your received lessons.</string>
-    <string name="word_received_description_1">You`ve received word</string>
-    <string name="word_received_description_2">You can find it at your received words.</string>
-    <string name="expression_received_description_1">You`ve received expression</string>
-    <string name="expression_received_description_2">You can find it at your received expressions.</string>
-    <string name="shared_lesson_received_description_1">You`ve received access to the shared lesson</string>
-    <string name="shared_lesson_received_description_2">You can find it at your shared lessons.</string>
+    <string name="friend_request_received_description">You\'ve received a new friend request from</string>
+    <string name="normal_lesson_received_description_1">You\'ve received the lesson</string>
+    <string name="normal_lesson_received_description_2">You can find it in your received lessons.</string>
+    <string name="word_received_description_1">You\'ve received the word</string>
+    <string name="word_received_description_2">You can find it in your received words.</string>
+    <string name="expression_received_description_1">You\'ve received the expression</string>
+    <string name="expression_received_description_2">You can find it in your received expressions.</string>
+    <string name="shared_lesson_received_description_1">You\'ve received access to the shared lesson</string>
+    <string name="shared_lesson_received_description_2">You can find it in your shared lessons.</string>
     <string name="friend_request_accepted_title">Friend request accepted</string>
     <string name="friend_request_accepted_description_1">User</string>
     <string name="friend_request_accepted_description_2">accepted your request.</string>
@@ -183,15 +166,15 @@
     <string name="friend_removed_you_description_2">removed you from his friend list. You are no longer friends.</string>
     <string name="you_removed_friend_title">You removed a friend</string>
     <string name="you_removed_friend_description_1">You removed user</string>
-    <string name="you_removed_friend_description_2">"from friend list. "</string>
+    <string name="you_removed_friend_description_2">from your friend list.</string>
     <string name="friend_request_sent_title">Friend request sent</string>
-    <string name="friend_request_sent_description_1">You sent a friend reqeust to the user</string>
-    <string name="friend_request_sent_description_2">. We will notify you when request is accepted.</string>
+    <string name="friend_request_sent_description_1">You sent a friend request to the user</string>
+    <string name="friend_request_sent_description_2">. We will notify you when the request is accepted.</string>
     <string name="normal_lesson_sent_title">You sent a lesson</string>
     <string name="shared_lesson_sent_title">You sent a shared lesson</string>
-    <string name="normal_lesson_sent_description_1">You`ve sent lesson</string>
+    <string name="normal_lesson_sent_description_1">You sent the lesson</string>
     <string name="normal_lesson_sent_description_2">.</string>
-    <string name="shared_lesson_sent_description_1">You`ve sent shared lesson</string>
+    <string name="shared_lesson_sent_description_1">You sent the shared lesson</string>
     <string name="shared_lesson_sent_description_2">.</string>
     <string name="message_point">Message:</string>
     <string name="error_accept_request">Request can not be accepted. Please try again later.</string>
@@ -207,7 +190,7 @@
     <string name="friends">Friends</string>
     <string name="no_users">There are no users</string>
     <string name="users">Users</string>
-    <string name="search_users">Use search option to find users by their email</string>
+    <string name="search_users">Use the search option to find users by their email</string>
     <string name="name_point">Name:</string>
     <string name="friends_since_point">Friends since:</string>
     <string name="remove_friend">Remove friend</string>
@@ -216,18 +199,18 @@
     <string name="remove">Remove</string>
     <string name="error_remove_friend">Unable to remove friend</string>
     <string name="success_remove_friend">Friend was removed</string>
-    <string name="error_search_user">User was not found</string>
+    <string name="error_search_user">Searched user was not found</string>
     <string name="user_with_email">User with email</string>
     <string name="not_found">not found!</string>
     <string name="error_send_friend_request">Error while sending request. Try again later.</string>
-    <string name="succes_send_friend_request">Friend request sent</string>
+    <string name="success_send_friend_request">Friend request sent</string>
     <string name="send_friend_request">Send friend request</string>
-    <string name="friend_request_sent">Friend request was send"</string>
+    <string name="friend_request_sent">Friend request was send</string>
     <string name="user_profile">User profile</string>
     <string name="is_your_friend">Is your friend</string>
     <string name="is_you_description">is you. If you want to see your profile please check your account page.</string>
     <string name="search_user_by_email">Search user by email</string>
-    <string name="request_already_sent">Request was sent. Please wait until request is finished.</string>
+    <string name="request_already_sent">The request was sent. Please wait until the request is finished.</string>
     <string name="decline">Decline</string>
     <string name="request_declined">Request declined</string>
     <string name="error_decline_request">Request cannot be declined. Please try again later.</string>
@@ -235,7 +218,7 @@
     <string name="accept_friend_request">Accept friend request</string>
     <string name="dismiss">Dismiss</string>
     <string name="sending_request">Sending request</string>
-    <string name="search_is_in_progress">Please wait until search is finished.</string>
+    <string name="search_is_in_progress">Please wait until the current search is finished.</string>
     <string name="removing_friend">Removing friend</string>
     <string name="action_finished">Action finished</string>
 
@@ -248,9 +231,9 @@
     <string name="delete_lesson_description_2">words</string>
     <string name="delete_lesson_description_3">and</string>
     <string name="delete_lesson_description_4">expressions</string>
-    <string name="delete_lesson_description_5">. Please delete entries before deleting lesson.</string>
+    <string name="delete_lesson_description_5">. Please delete entries before deleting this lesson.</string>
     <string name="delete">Delete</string>
-    <string name="error_deleting_lesson">Lesson can not be deleted. Please try again later.</string>
+    <string name="error_deleting_lesson">This lesson can not be deleted. Please try again later.</string>
     <string name="success_adding_lesson">Lesson was added</string>
     <string name="error_adding_lesson">Lesson could not be added</string>
     <string name="success_deleting_lesson">Lesson was deleted</string>
@@ -258,9 +241,9 @@
     <string name="error_update_lesson_name">Lesson was not updated</string>
     <string name="error_notes_is_same">Notes were not modified</string>
     <string name="error_notes_too_long">Notes are too long</string>
-    <string name="succes_update_lesson_name">Lesson name was updated</string>
+    <string name="success_update_lesson_name">Lesson name was updated</string>
     <string name="error_update_notes">Notes were not updated</string>
-    <string name="succes_update_notes">Notes were updated</string>
+    <string name="success_update_notes">Notes were updated</string>
     <string name="lesson_overview">Lesson overview</string>
     <string name="words_point">Words:</string>
     <string name="expressions_point">Expressions:</string>
@@ -268,10 +251,10 @@
     <string name="update">Update</string>
     <string name="name">Name</string>
     <string name="update_notes">Update notes</string>
-    <string name="error_delete_words">Words canot be deleted</string>
-    <string name="error_adding_word">Word can not be added</string>
+    <string name="error_delete_words">Words cannot be deleted</string>
+    <string name="error_adding_word">Word cannot be added</string>
     <string name="success_deleting_word">Word was deleted</string>
-    <string name="error_deleting_word">Word can not be deleted</string>
+    <string name="error_deleting_word">Word cannot be deleted</string>
     <string name="error_word_too_long">Word is too long</string>
     <string name="error_translation_too_long">Translation is too long</string>
     <string name="word">Word</string>
@@ -287,7 +270,7 @@
     <string name="error_word_phonetic_is_same">Word phonetic is same</string>
     <string name="error_phonetic_too_long">Phonetic is too long</string>
     <string name="error_update_word">Word was not updated</string>
-    <string name="succes_update_word">Word was updated</string>
+    <string name="success_update_word">Word was updated</string>
     <string name="phonetic">Phonetic</string>
     <string name="update_word">Update word</string>
     <string name="update_phonetic">Update phonetic</string>
@@ -303,7 +286,7 @@
     <string name="error_delete_translation">Error while deleting translation</string>
     <string name="success_delete_translation">Translation was deleted</string>
     <string name="error_update_phonetic">Error while updating phonetic</string>
-    <string name="succes_update_phonetic">Phonetic was updated</string>
+    <string name="success_update_phonetic">Phonetic was updated</string>
     <string name="error_add_translations">Error while adding translation</string>
     <string name="success_add_translations">Translation was added</string>
     <string name="add_translation">Add translation</string>
@@ -320,7 +303,7 @@
     <string name="add_expression">Add expression</string>
     <string name="error_expression_too_long">Expression is too long</string>
     <string name="expression">Expression</string>
-    <string name="error_expression_can_not_be_opened">Expression can not be opened</string>
+    <string name="error_expression_can_not_be_opened">Expression cannot be opened</string>
     <string name="error_adding_expression">Error while adding expression</string>
     <string name="success_adding_expression">Expression was added</string>
     <string name="success_deleting_expression">Expression was deleted</string>
@@ -331,7 +314,7 @@
     <string name="error_expression_is_same">Expression is the same</string>
     <string name="expression_overview">Expression overview</string>
     <string name="error_update_expression">Error while updating expression</string>
-    <string name="succes_update_expression">Expression was updated</string>
+    <string name="success_update_expression">Expression was updated</string>
 
     <!-- GuestWordContainerFragment -->
     <string name="overview">Overview</string>
@@ -378,7 +361,7 @@
     <string name="selected_point">Selected:</string>
 
     <string name="january">January</string>
-    <string name="ferbruary">February</string>
+    <string name="february">February</string>
     <string name="march">March</string>
     <string name="april">April</string>
     <string name="may">May</string>
@@ -394,7 +377,7 @@
     <string name="question_quiz_description">Choose correct translation for the following word</string>
     <string name="question_true_or_false_description">Choose if the following expression translation is correct or not</string>
     <string name="question_word_full_write_description">Write translation for the following word</string>
-    <string name="question_mixed_description">Arrange values in correct order</string>
+    <string name="question_mixed_description">Arrange values in the correct order</string>
     <string name="true_option">True</string>
     <string name="false_option">False</string>
     <string name="no_response_given">No response given</string>
@@ -420,8 +403,6 @@
     <string name="filter">Filter</string>
     <string name="no_expressions">No expressions</string>
     <string name="hide">Hide</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_tests">There are no tests</string>
     <string name="tests">Tests</string>
     <string name="error_test_can_not_be_opened">Test can not be opened</string>
@@ -432,7 +413,6 @@
     <string name="test_number_point">Test number:</string>
     <string name="history">History</string>
     <string name="schedule">Schedule</string>
-    <string name="start_test">start_test</string>
     <string name="start_new_local_test">Start new local test</string>
     <string name="show_all">Show all</string>
     <string name="show_only_finished">Show only finished</string>
@@ -452,16 +432,16 @@
     <string name="use_custom_selection">Use custom selection</string>
     <string name="use_all">Use all</string>
     <string name="use_specific_number">Use specific number</string>
-    <string name="use_counter">Use counter</string>
+    <string name="use_counter">Counterclockwise test</string>
     <string name="yes">Yes</string>
     <string name="select_test_options">Select test options</string>
     <string name="next">Next</string>
     <string name="error_can_not_continue">Can not continue</string>
-    <string name="error_lesson_has_no_words">Lesson has no words</string>
-    <string name="error_lesson_has_no_expressions">Lesson has no expressions</string>
-    <string name="error_lesson_has_no_entries">Lesson has no entries</string>
+    <string name="error_lesson_has_no_words">Selected lesson has no words</string>
+    <string name="error_lesson_has_no_expressions">Selected lesson has no expressions</string>
+    <string name="error_lesson_has_no_entries">Selected lesson has no entries</string>
     <string name="error_unable_to_continue_with_setup">Unable to continue with setup</string>
-    <string name="generating_test">Generating test</string>
+    <string name="generating_test">Generating your test</string>
     <string name="error">Error</string>
     <string name="error_not_good_question_type">Could not load question</string>
     <string name="your_answer_point">Your answer:</string>
@@ -470,17 +450,16 @@
     <string name="continue_test">Continue test</string>
     <string name="see_progress">See progress</string>
     <string name="mixed_letters">Mixed letters</string>
-    <string name="custom_name">Custom name</string>
+    <string name="custom_name">Name</string>
     <string name="date">Date</string>
     <string name="repeat">Repeat</string>
     <string name="save_changes">Save changes</string>
-    <string name="prepare_test">Prepare test</string>
     <string name="select_test_date">Select test date</string>
     <string name="error_date_is_not_set">Must set a date or a repeat interval</string>
     <string name="error_time_is_not_set">Time is not set</string>
     <string name="test_name_optional">Test name (optional)</string>
-    <string name="error_name_is_same">Name is same</string>
-    <string name="error_test_custom_name_too_long">Name is too long</string>
+    <string name="error_name_is_same">Inserted name is the same</string>
+    <string name="error_test_custom_name_too_long">Inserted name is too long</string>
     <string name="time_point">Time:</string>
     <string name="date_point">Date:</string>
     <string name="monday_small">M</string>
@@ -493,9 +472,9 @@
     <string name="test_options">Test options</string>
     <string name="test_type_point">Test type:</string>
     <string name="values_selection_point">Values selection:</string>
-    <string name="use_counter_point">Use counter:</string>
+    <string name="use_counter_point">Counterclockwise test:</string>
     <string name="error_can_not_process_selection">Can not process selection</string>
-    <string name="succes_test_updated">Test was updated</string>
+    <string name="success_test_updated">Test was updated</string>
     <string name="error_test_updated">Test was not updated</string>
     <string name="custom_selection">Custom selection</string>
     <string name="use_specific_number_of_selections">Use specific numbers of selections</string>
@@ -504,10 +483,10 @@
     <string name="success_test_generated">Test was generated</string>
     <string name="error_date_is_in_past">Date can not be in past</string>
     <string name="error_time_is_in_past">Time can not be in past</string>
-    <string name="succes_delete_test">Test was deleted</string>
+    <string name="success_delete_test">Test was deleted</string>
     <string name="error_delete_test">Can not delete test</string>
     <string name="error_can_not_set_schedule">Schedule can not be set</string>
-    <string name="error_can_not_set_schedule_because_date_is_in_past">Can not set schdule on because date is in past</string>
+    <string name="error_can_not_set_schedule_because_date_is_in_past">Can not set schedule because the date is in past</string>
     <string name="total_test_time">Total test time</string>
     <string name="progress">Progress</string>
     <string name="next_question">Next question</string>
@@ -557,71 +536,65 @@
     <string name="created_by_point">Created by:</string>
     <string name="continue_value">Continue</string>
     <string name="chat">Chat</string>
-    <string name="ranking">Ranking</string>
     <string name="online_test">Online test</string>
     <string name="participants">Participants</string>
-    <string name="no_messages">No mesages</string>
+    <string name="no_messages">No messages</string>
     <string name="done_icon">Done icon</string>
-    <string name="error_no_internet_connection_snackbar_description">Internet is not available. Data can not be sync.</string>
-    <string name="error_no_network_snackbar_description">Network is disabled. Data can not be sync.</string>
+    <string name="error_no_internet_connection_snackbar_description">Internet is not available. Data cannot be sync.</string>
+    <string name="error_no_network_snackbar_description">Your device is not connected to a network. Data cannot be sync.</string>
 
 
     <!-- NotificationDocument -->
-    <string name="online_test_invitation_received_description_1">You\'ve received access to online test</string>
-    <string name="online_test_invitation_received_description_2">You can find it at your online tests.</string>
+    <string name="online_test_invitation_received_description_1">You\'ve received access to an online test</string>
+    <string name="online_test_invitation_received_description_2">You can find it in your online tests.</string>
     <string name="online_test_invitation_received_title">New online test invitation</string>
 
 
     <string name="error_add_new_shared_lesson">Can not add new shared lesson</string>
     <string name="add_new_shared_lesson">Add new shared lesson</string>
-    <string name="sucess_add_new_shared_lesson">Lesson was added</string>
+    <string name="success_add_new_shared_lesson">Lesson was added</string>
     <string name="show_local_personal_and_received">Show local (personal and received)</string>
     <string name="show_personal">Show personal</string>
     <string name="show_received">Show received</string>
     <string name="show_shared">Show shared</string>
-    <string name="no_participants">Lesson contains no participants</string>
+    <string name="no_participants">This lesson contains no participants</string>
     <string name="created_by">created by</string>
     <string name="language_point">Language:</string>
     <string name="launch_now">Launch now</string>
 
-    <string-array name="languages">
-        <item>English</item>
-        <item>Romanian</item>
-    </string-array>
-
     <string name="change_language">Change language</string>
-    <string name="change_language_alert">Application must be restarted in order to apply changes</string>
+    <string name="change_language_alert">This application must be restarted in order to apply changes</string>
     <string name="preparing_test">Preparing test</string>
     <string name="scheduled_test_alarm_notification_title">It\'s time to make a test</string>
-    <string name="scheduled_test_alarm_notification_message">Click if you want to start test</string>
+    <string name="scheduled_test_alarm_notification_message">Click if you want to start the test</string>
     <string name="friend_request_received_description_push">You\'ve received a friend request. Check your notification center for more info.</string>
-    <string name="friend_request_accepted_description_push">Your friend request was accepted.  Check your notification center for more info.</string>
-    <string name="normal_lesson_received_description_push">You\'ve receive a new lesson.  Check your notification center for more info.</string>
-    <string name="shared_lesson_received_description_push">You\'ve receive access to a shared lesson.  Check your notification center for more info.</string>
-    <string name="online_test_invitation_received_description_push">You;ve received an online test invitation.  Check your notification center for more info.</string>
+    <string name="friend_request_accepted_description_push">Your friend request was accepted. Check your notification center for more info.</string>
+    <string name="normal_lesson_received_description_push">You\'ve received a new lesson. Check your notification center for more info.</string>
+    <string name="shared_lesson_received_description_push">You\'ve received access to a shared lesson. Check your notification center for more info.</string>
+    <string name="online_test_invitation_received_description_push">You\'ve received an online test invitation. Check your notification center for more info.</string>
     <string name="from_lesson">from lesson</string>
     <string name="success_set_schedule">Alarm was set</string>
     <string name="success_cancel_schedule">Alarm was canceled</string>
-    <string name="error_expression_has_no_translation">Expression can not be selected because has no translation</string>
-    <string name="error_word_has_no_translation">Word can not be selected because it has no translation.</string>
-    <string name="error_word_can_not_be_selected">Word can not be selected.</string>
-    <string name="error_expression_can_not_be_selected">Expression can not be selected</string>
+    <string name="error_expression_has_no_translation">This expression cannot be selected because has no translation</string>
+    <string name="error_word_has_no_translation">This word cannot be selected because it has no translation</string>
+    <string name="error_word_can_not_be_selected">This word cannot be selected</string>
+    <string name="error_expression_can_not_be_selected">This expression cannot be selected</string>
     <string name="any_of_the_followings">Any of the following options:</string>
-    <string name="error_not_enough_words_1">"Are not enough word for this test type. Minimum "</string>
+    <string name="error_not_enough_words_1">Are not enough word for this test type. Minimum </string>
     <string name="error_not_enough_words_2">are required. Now lesson has</string>
     <string name="error_not_enough_words_3">words.</string>
-    <string name="error_can_not_generate_test">Can not generate test.</string>
-    <string name="error_invalid_number_of_questions">Invalid number of questions. Can not generate test.</string>
-    <string name="error_invalid_test_type">Test type is invalid. Can not generate test.</string>
-    <string name="error_could_not_extract_words">Could not extract words. Test can not be generated.</string>
+    <string name="error_can_not_generate_test">Can not generate test</string>
+    <string name="error_invalid_number_of_questions">An invalid number of questions were generated. Can not generate test.</string>
+    <string name="error_invalid_test_type">The test type is invalid. Can not generate test.</string>
+    <string name="error_could_not_extract_words">Could not extract words. Your test can not be generated.</string>
     <string name="error_could_not_extract_expressions">Could not extract expressions. Test can not be generated.</string>
-    <string name="error_invalid_conexion">Test can not be generated because could not extract data. Check your connexion.</string>
-    <string name="error_no_words">Test can not be generated because lesson has no words.</string>
-    <string name="error_no_expressions">Test can not be generated because lesson has no expressions.</string>
-    <string name="error_no_values_for_test">Test can not be generated because are no valid values extracted. Values must contain at least one translation in order to be valid.</string>
+    <string name="error_invalid_connexion">Test can not be generated because could not extract data. Check your connexion.</string>
+    <string name="error_no_words">Test can not be generated because testing lesson has no words</string>
+    <string name="error_no_expressions">Test can not be generated because testing lesson has no expressions</string>
+    <string name="error_no_values_for_test">Test can not be generated because no valid values were extracted. Values must contain at least one translation in order to be valid.</string>
     <string name="error_no_values_for_quiz_test">Test can not be generated because are not enough values for quiz test. Needed values:</string>
     <string name="error_no_generated_questions">No questions were generated. Can not generate test.</string>
-    <string name="error_can_not_save_generated_test">Genrated test can not be saved.</string>
+    <string name="error_can_not_save_generated_test">This generated test can not be saved</string>
     <string name="now">Just now</string>
     <string name="years_ago">years ago</string>
     <string name="one_year_ago">1 year ago</string>
@@ -636,18 +609,22 @@
     <string name="seconds_ago">seconds ago</string>
     <string name="one_second_ago">1 second ago</string>
     <string name="added">Added</string>
-    <string name="logout_message">You are about to log out. You want to continue?</string>
+    <string name="logout_message">You are about to log out. Do you want to continue?</string>
     <string name="no_image_selected">No image is selected for upload</string>
-    <string name="upload_image">Upload image</string>
-    <string name="error_upload_image">Image could not be uploaded. You can try again later.</string>
+    <string name="upload_image">Uploading image</string>
+    <string name="error_upload_image">Your image could not be uploaded. You can try again later.</string>
     <string name="success_upload_image">Image uploaded</string>
-    <string name="change_profile_image_point">Change profile image:</string>
     <string name="change_image">Change image</string>
     <string name="profile_info">Profile info</string>
     <string name="permitted_images_format">Only the following formats are accepted</string>
     <string name="error_invalid_image_format_1">Image extension</string>
     <string name="error_invalid_image_format_2">is invalid</string>
     <string name="error_image_too_big_1">Image size</string>
-    <string name="error_image_too_big_2">is too big. Maximum accepted size is</string>
-    <string name="error_display_name_updated_1">Profile name was not fully updated. Please try again later.</string>
+    <string name="error_image_too_big_2">is too big. The maximum accepted size is</string>
+    <string name="error_display_name_updated_1">Your profile name was not fully updated. Please try again later.</string>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>Romanian</item>
+    </string-array>
 </resources>

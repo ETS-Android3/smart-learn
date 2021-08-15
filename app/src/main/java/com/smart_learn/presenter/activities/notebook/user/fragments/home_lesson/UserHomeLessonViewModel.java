@@ -46,7 +46,7 @@ public class UserHomeLessonViewModel extends HomeLessonViewModel {
         UserLessonService.getInstance().updateLessonName(newValue, lessonSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_lesson_name));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_lesson_name));
             }
             @Override
             public void onFailure() {
@@ -60,7 +60,7 @@ public class UserHomeLessonViewModel extends HomeLessonViewModel {
         UserLessonService.getInstance().updateLessonNotes(newValue, lessonSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_notes));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_notes));
             }
             @Override
             public void onFailure() {

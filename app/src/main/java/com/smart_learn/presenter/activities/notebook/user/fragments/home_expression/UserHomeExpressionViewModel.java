@@ -44,7 +44,7 @@ public class UserHomeExpressionViewModel extends HomeExpressionViewModel {
         UserExpressionService.getInstance().updateExpressionValue(newValue, expressionSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_expression));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_expression));
             }
             @Override
             public void onFailure() {
@@ -58,7 +58,7 @@ public class UserHomeExpressionViewModel extends HomeExpressionViewModel {
         UserExpressionService.getInstance().updateExpressionNotes(newValue, expressionSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_notes));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_notes));
             }
             @Override
             public void onFailure() {

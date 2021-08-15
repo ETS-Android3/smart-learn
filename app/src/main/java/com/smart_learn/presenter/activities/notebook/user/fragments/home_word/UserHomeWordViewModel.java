@@ -46,7 +46,7 @@ public class UserHomeWordViewModel extends HomeWordViewModel {
         UserWordService.getInstance().updateWordValue(newValue, wordSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_word));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_word));
             }
             @Override
             public void onFailure() {
@@ -60,7 +60,7 @@ public class UserHomeWordViewModel extends HomeWordViewModel {
         UserWordService.getInstance().updateWordPhonetic(newValue, wordSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_phonetic));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_phonetic));
             }
             @Override
             public void onFailure() {
@@ -74,7 +74,7 @@ public class UserHomeWordViewModel extends HomeWordViewModel {
         UserWordService.getInstance().updateWordNotes(newValue, wordSnapshot, new DataCallbacks.General() {
             @Override
             public void onSuccess() {
-                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.succes_update_notes));
+                liveToastMessage.postValue(ApplicationController.getInstance().getString(R.string.success_update_notes));
             }
             @Override
             public void onFailure() {

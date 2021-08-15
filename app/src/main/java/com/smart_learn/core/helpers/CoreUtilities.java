@@ -171,7 +171,7 @@ public abstract class CoreUtilities {
                     if(!isLeapYear && dayOfMonth > 28){
                         return emptyValue;
                     }
-                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.ferbruary) + separator + year;
+                    return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.february) + separator + year;
                 case Calendar.MARCH:
                     return dayOfMonth + separator + ApplicationController.getInstance().getString(R.string.march) + separator + year;
                 case Calendar.APRIL:
