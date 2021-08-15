@@ -13,6 +13,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -46,6 +47,10 @@ public class ApplicationController extends Application {
         super.onCreate();
         applicationController = this;
         if(BuildConfig.DEBUG){
+            // https://gist.github.com/katowulf/0475fb7a5907ed757f687aab6ed15878
+            // https://stackoverflow.com/questions/48674134/how-to-set-log-level-for-firestore
+            FirebaseFirestore.setLoggingEnabled(true);
+
             Timber.plant(new CustomTimberDebugTree());
         }
 
