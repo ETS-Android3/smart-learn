@@ -102,6 +102,8 @@ public class TestParticipantsAdapter extends BasicFirestoreRecyclerAdapter<TestD
 
         @Override
         protected void bind(@NonNull @NotNull TestDocument item, int position){
+            PresenterUtilities.Activities.loadProfileImage(item.getUserProfilePhotoUrl(), viewHolderBinding.ivProfileLayoutCardViewTestParticipant);
+
             liveItemInfo.setValue(item);
 
             liveTotalTestTimeDescription.setValue(item.getTotalTimeDescription());

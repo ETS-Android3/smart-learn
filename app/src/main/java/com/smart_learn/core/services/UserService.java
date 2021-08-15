@@ -1,5 +1,6 @@
 package com.smart_learn.core.services;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -46,7 +47,11 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
     }
 
     public String getUserPhotoUrl(){
-        return repositoryInstance.getUserPhotoUrl();
+        return repositoryInstance.getUserProfilePhotoUrl();
+    }
+
+    public Uri getUserPhotoUri(){
+        return repositoryInstance.getUserProfilePhotoUri();
     }
 
     public DocumentReference getUserDocumentReference(){
@@ -110,6 +115,43 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
             return;
         }
         repositoryInstance.searchUserByEmail(email, callback);
+    }
+
+    public void updateUserPhotoUrl(String photoUrl, DataCallbacks.General callback){
+        if(photoUrl == null){
+            // empty value can be used to unset photo url
+            photoUrl = "";
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("PhotoUrl [" + photoUrl + "] updated",
+                    "PhotoUrl [" + photoUrl + "] was NOT updated");
+        }
+
+        repositoryInstance.updateUserPhotoUrl(photoUrl, callback);
+    }
+
+    public void uploadProfileImage(Uri profileImage, String imageName, DataCallbacks.General callback){
+        if(profileImage == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("profileImage is null");
+            return;
+        }
+
+        if(callback == null){
+            callback = DataUtilities.General.generateGeneralCallback("PhotoUrl [" + profileImage.toString() + "] uploaded",
+                    "PhotoUrl [" + profileImage.toString() + "] was NOT uploaded");
+        }
+
+        if(imageName == null || imageName.isEmpty()){
+            callback.onFailure();
+            Timber.w("imageName is null or empty");
+            return;
+        }
+
+        repositoryInstance.uploadProfileImage(profileImage, imageName, callback);
     }
 
 }

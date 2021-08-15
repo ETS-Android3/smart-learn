@@ -169,6 +169,7 @@ public class MainActivity extends BasicActivity {
         LayoutNavHeaderActivityMainBinding navBinding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.layout_nav_header_activity_main, binding.navigationViewActivityMain, false);
         binding.navigationViewActivityMain.addHeaderView(navBinding.getRoot());
+        PresenterUtilities.Activities.loadProfileImage(UserService.getInstance().getUserPhotoUri(), navBinding.ivProfileLayoutNavHeaderActivityMain);
         navBinding.setUserHelloMessage(this.getString(R.string.hi) + " " + UserService.getInstance().getUserDisplayName());
 
         // set on menu item listener

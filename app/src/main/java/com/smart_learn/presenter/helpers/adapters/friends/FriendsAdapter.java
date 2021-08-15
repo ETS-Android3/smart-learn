@@ -122,6 +122,8 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
         @Override
         protected void bind(@NonNull @NotNull FriendDocument friendDocument, int position){
 
+            PresenterUtilities.Activities.loadProfileImage(friendDocument.getProfilePhotoUrl(), viewHolderBinding.ivProfileLayoutCardViewFriend);
+
             if(isFiltering){
                 String email = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(friendDocument.getEmail());
                 String displayName = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(friendDocument.getDisplayName());

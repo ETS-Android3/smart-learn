@@ -395,4 +395,20 @@
         <!-- <item name="itemBackground">@color/colorPrimary</item> -->
     </style>
 
+    <!--  =====================================================================================  -->
+    <!--                       For profile image appearance                                      -->
+    <!--  =====================================================================================  -->
+    <style name="AppTheme.ProfileImageStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:backgroundTint">@color/transparent</item>
+        <item name="android:src">@drawable/ic_baseline_account_circle_50</item>
+    </style>
+
+    <!-- https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml/61986850#61986850 -->
+    <style name="AppTheme.ProfileImageShapeAppearanceOverlay">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

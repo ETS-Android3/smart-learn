@@ -136,6 +136,9 @@ dependencies {
     // (implementation 'com.google.firebase:firebase-firestore')
     implementation 'com.firebaseui:firebase-ui-firestore:7.2.0'
 
+    // Declare for the Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
     /* END Firebase */
 
     // For showing App Inspection -> Background task inspector
@@ -146,6 +149,10 @@ dependencies {
     // https://github.com/google/flexbox-layout
     // https://stackoverflow.com/questions/39436115/auto-fit-according-to-screen-size-in-grid-layout-android/62279449#62279449
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // https://square.github.io/picasso/
+    // https://github.com/square/picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // for debugging with SQLite on phone
     // https://stackoverflow.com/questions/19194576/how-do-i-view-the-sqlite-database-on-an-android-device

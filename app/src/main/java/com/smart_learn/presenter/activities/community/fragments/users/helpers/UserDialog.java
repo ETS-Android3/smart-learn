@@ -82,6 +82,7 @@ public class UserDialog extends DialogFragment {
 
         setListeners(btnSend, btnAccept);
 
+        PresenterUtilities.Activities.loadProfileImage(userDocument.getProfilePhotoUrl(), binding.ivProfileLayoutDialogViewUser);
         binding.setDisplayName(userDocument.getDisplayName());
         binding.setEmail(userDocument.getEmail());
 

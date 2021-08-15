@@ -23,6 +23,7 @@ import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.core.helpers.CoreUtilities;
 import com.smart_learn.data.firebase.firestore.entities.GroupChatMessageDocument;
 import com.smart_learn.databinding.LayoutCardViewChatMessageBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -108,6 +109,8 @@ public class GroupChatMessagesAdapter extends BasicFirestoreRecyclerAdapter<Grou
 
         @Override
         protected void bind(@NonNull @NotNull GroupChatMessageDocument item, int position){
+            PresenterUtilities.Activities.loadProfileImage(item.getFromUserProfilePhotoUrl(), viewHolderBinding.ivProfileLayoutCardViewChatMessage);
+
             liveItemInfo.setValue(item);
 
             final boolean isMessageOwner = item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid());

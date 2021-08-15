@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -42,12 +43,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.muddzdev.styleabletoast.StyleableToast;
 import com.smart_learn.R;
 import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.data.room.entities.helpers.IndexRange;
 import com.smart_learn.presenter.helpers.adapters.helpers.ItemDecoration;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -83,6 +86,9 @@ public final class PresenterUtilities {
 
     /** All utilities related to activities or fragments. */
     public static final class Activities {
+
+        private final static int MAX_IMAGE_WIDTH = 250;
+        private final static int MAX_IMAGE_HEIGTH = 250;
 
         /**
          * Use to set navigation graph.
@@ -972,6 +978,48 @@ public final class PresenterUtilities {
                     .setPositiveButton(android.R.string.ok, null)
                     .setIcon(R.drawable.ic_baseline_info_triangle_24)
                     .show();
+        }
+
+        /**
+         * Use to load an image into an ImageView container.
+         *
+         * @param imageUri Image to be loaded.
+         * @param imageView Container where image must be loaded.
+         * */
+        public static void loadProfileImage(Uri imageUri, ShapeableImageView imageView){
+            if(imageUri == null || imageView == null){
+                return;
+            }
+            // https://github.com/square/picasso
+            // https://www.youtube.com/watch?v=p8UNBK06Bf4&ab_channel=CodinginFlow
+            Picasso.get()
+                    .load(imageUri)
+                    .placeholder(R.drawable.ic_baseline_account_circle_50)
+                    //.fit() // using this will delay image load
+                    .resize(MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGTH)
+                    .centerCrop()
+                    .into(imageView);
+        }
+
+        /**
+         * Use to load an image into an ImageView container using image URL.
+         *
+         * @param imageUrl Path for image which must be loaded.
+         * @param imageView Container where image must be loaded.
+         * */
+        public static void loadProfileImage(String imageUrl, ShapeableImageView imageView){
+            if(imageUrl == null || imageUrl.isEmpty() || imageView == null){
+                return;
+            }
+            // https://github.com/square/picasso
+            // https://www.youtube.com/watch?v=p8UNBK06Bf4&ab_channel=CodinginFlow
+            Picasso.get()
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_baseline_account_circle_50)
+                    //.fit() // using this will delay image load
+                    .resize(MAX_IMAGE_WIDTH, MAX_IMAGE_HEIGTH)
+                    .centerCrop()
+                    .into(imageView);
         }
     }
 

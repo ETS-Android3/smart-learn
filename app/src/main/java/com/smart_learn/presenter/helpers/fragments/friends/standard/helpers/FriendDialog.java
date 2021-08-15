@@ -64,6 +64,7 @@ public class FriendDialog extends DialogFragment {
             dialogBinding.setFriendsSince("");
         }
         else {
+            PresenterUtilities.Activities.loadProfileImage(friendDocument.getProfilePhotoUrl(), dialogBinding.ivProfileLayoutDialogViewFriend);
             dialogBinding.setDisplayName(friendDocument.getDisplayName());
             dialogBinding.setEmail(friendDocument.getEmail());
             dialogBinding.setFriendsSince(CoreUtilities.General.longToDateTime(friendDocument.getFriendsSince()));
@@ -73,13 +74,12 @@ public class FriendDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
         // set dialog characteristics
-        builder.setTitle(R.string.profile)
-                .setView(dialogBinding.getRoot())
+        builder.setView(dialogBinding.getRoot())
                 // If setCancelable is true when you click beside the dialog the dialog is dismissed.
                 .setCancelable(true)
                 // No need for a listener because I do no action when BUTTON_NEGATIVE is pressed.
                 // Dialog will be dismissed automatically.
-                .setNegativeButton(R.string.ok, null);
+                .setNegativeButton(R.string.close, null);
 
         return builder.create();
     }

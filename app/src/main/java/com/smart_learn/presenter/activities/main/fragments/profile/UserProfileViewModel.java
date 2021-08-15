@@ -1,6 +1,10 @@
 package com.smart_learn.presenter.activities.main.fragments.profile;
 
 import android.app.Application;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.OpenableColumns;
+import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -14,18 +18,31 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.smart_learn.R;
-import com.smart_learn.core.helpers.CoreUtilities;
-import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.core.helpers.ApplicationController;
+import com.smart_learn.core.helpers.ConnexionChecker;
+import com.smart_learn.core.helpers.CoreUtilities;
+import com.smart_learn.core.services.UserService;
+import com.smart_learn.data.helpers.DataCallbacks;
+import com.smart_learn.presenter.activities.authentication.helpers.RegisterForm;
 import com.smart_learn.presenter.helpers.view_models.BasicAndroidViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import lombok.Getter;
 import timber.log.Timber;
 
 @Getter
 public class UserProfileViewModel extends BasicAndroidViewModel {
+
+    // size in bytes (in decimal)
+    // https://www.gbmb.org/megabytes
+    private static final long ONE_MB = 1000000;
+    private static final long MAX_IMAGE_DIMENSION = 5 * ONE_MB;
+    private static final String MAX_IMAGE_DIMENSION_DESCRIPTION = "5 MB";
 
     private int maxProfileName;
     private int providerId;
@@ -34,6 +51,7 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
     private String email;
     private String provider;
     private String registerTime;
+    private MutableLiveData<Uri> liveProfilePhotoUri;
 
     public UserProfileViewModel(@NonNull @NotNull Application application) {
         super(application);
@@ -49,10 +67,12 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
             email = "";
             provider = "";
             registerTime = "";
+            liveProfilePhotoUri = new MutableLiveData<>(null);
             return;
         }
 
         // user was not null ==> set values
+        liveProfilePhotoUri = new MutableLiveData<>(user.getPhotoUrl());
         liveProfileName = new MutableLiveData<>(user.getDisplayName());
         email = user.getEmail();
 
@@ -210,5 +230,97 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
         });
     }
 
+    protected void uploadImage(Uri profileImage, @NonNull @NotNull UserProfileFragment fragment){
+        if(profileImage == null){
+            liveToastMessage.setValue(fragment.getString(R.string.no_image_selected));
+            return;
+        }
+
+        // Check if file is an image.
+        // https://www.youtube.com/watch?v=gqIWrNitbbk&ab_channel=CodinginFlow
+        // https://stackoverflow.com/questions/13760269/android-how-to-check-if-file-is-image/13760444
+        String fileExtension = MimeTypeMap.getSingleton()
+                .getExtensionFromMimeType(fragment.requireActivity().getContentResolver().getType(profileImage));
+
+        HashSet<String> acceptedImagesFormat = new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "bmp"));
+        if(!acceptedImagesFormat.contains(fileExtension)){
+            String error = fragment.getString(R.string.error_invalid_image_format_1) + " [" + fileExtension + "] " +
+                    fragment.getString(R.string.error_invalid_image_format_2) + ". " +
+                    fragment.getString(R.string.permitted_images_format) + " :jpg, jpeg, png, bmp";
+            liveToastMessage.setValue(error);
+            return;
+        }
+
+        // Check image dimension accept only images with max size of MAX_IMAGE_DIMENSION_DESCRIPTION.
+        // https://stackoverflow.com/questions/29137003/how-to-check-image-size-less-then-100kb-android/51992147#51992147
+        Cursor cursor = fragment.requireActivity().getContentResolver().query(profileImage, null, null, null, null);
+        int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+        cursor.moveToFirst();
+        long imageSize = cursor.getLong(sizeIndex);
+        cursor.close();
+
+        if(imageSize > MAX_IMAGE_DIMENSION){
+            double sizeInMB =  (double)imageSize / (double)ONE_MB;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            String error = fragment.getString(R.string.error_image_too_big_1) + " [" + decimalFormat.format(sizeInMB) + " MB]" +
+                    fragment.getString(R.string.error_image_too_big_2) + " " + MAX_IMAGE_DIMENSION_DESCRIPTION;
+            liveToastMessage.setValue(error);
+            return;
+        }
+
+        // Here upload can start.
+
+        fragment.showProgressDialog("",fragment.getString(R.string.upload_image));
+
+        // for upload, internet is required
+        new ConnexionChecker(new ConnexionChecker.Callback() {
+            @Override
+            public void isConnected() {
+                fragment.requireActivity().runOnUiThread(() -> continueWithImageUpload(profileImage, fileExtension, fragment));
+            }
+
+            @Override
+            public void networkDisabled() {
+                liveToastMessage.postValue(fragment.getString(R.string.error_no_network));
+            }
+
+            @Override
+            public void internetNotAvailable() {
+                liveToastMessage.postValue(fragment.getString(R.string.error_no_internet_connection));
+            }
+
+            @Override
+            public void notConnected() {
+                fragment.requireActivity().runOnUiThread(fragment::closeProgressDialog);
+            }
+        }).check();
+    }
+
+    private void continueWithImageUpload(Uri profileImage, String fileExtension, @NonNull @NotNull UserProfileFragment fragment){
+
+        // Every user will have a single profile photo, so if upload is made again old photo will
+        // be overridden.
+        String imageName = "user_" + UserService.getInstance().getUserUid() + "_profile_photo." + fileExtension;
+
+        UserService.getInstance().uploadProfileImage(profileImage, imageName, new DataCallbacks.General() {
+            @Override
+            public void onSuccess() {
+                fragment.requireActivity().runOnUiThread(() -> {
+                    fragment.closeProgressDialog();
+                    liveToastMessage.setValue(fragment.getString(R.string.success_upload_image));
+                    fragment.loadProfileImage(UserService.getInstance().getUserPhotoUri());
+                });
+            }
+
+            @Override
+            public void onFailure() {
+                fragment.requireActivity().runOnUiThread(() -> {
+                    fragment.closeProgressDialog();
+                    liveToastMessage.setValue(fragment.getString(R.string.error_upload_image));
+                });
+            }
+        });
+
+    }
 
 }

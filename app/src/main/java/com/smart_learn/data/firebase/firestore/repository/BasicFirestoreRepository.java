@@ -30,6 +30,7 @@ public abstract class BasicFirestoreRepository <T> {
     public static final String COLLECTION_ONLINE_TESTS = "online_tests";
     public static final String COLLECTION_ONLINE_TEST_CHAT_MESSAGES = "messages";
     public static final String COLLECTION_ONLINE_TEST_PARTICIPANTS = "participants";
+    public static final String FOLDER_PROFILE_PHOTOS = "profile_photos";
 
     public void addDocument(@NonNull @NotNull T item, @NonNull @NotNull CollectionReference collectionReference,
                             @NonNull @NotNull DataCallbacks.General callback){

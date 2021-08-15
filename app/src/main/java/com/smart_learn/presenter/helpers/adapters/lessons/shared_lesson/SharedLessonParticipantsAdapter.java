@@ -13,6 +13,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.LayoutCardViewSharedLessonParticipantBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicFirestoreRecyclerAdapter;
 import com.smart_learn.presenter.helpers.adapters.helpers.BasicViewHolder;
 
@@ -79,6 +80,7 @@ public class SharedLessonParticipantsAdapter extends BasicFirestoreRecyclerAdapt
 
         @Override
         protected void bind(@NonNull @NotNull UserDocument item, int position){
+            PresenterUtilities.Activities.loadProfileImage(item.getProfilePhotoUrl(), viewHolderBinding.ivProfileLayoutCardViewSharedLessonParticipant);
             liveItemInfo.setValue(item);
         }
     }
