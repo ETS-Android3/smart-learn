@@ -8,10 +8,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.util.Pair;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,12 +23,20 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.helpers.BasicFirestoreService;
 import com.smart_learn.core.services.helpers.ThreadExecutorService;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
+import com.smart_learn.data.firebase.firestore.entities.UserDocument;
+import com.smart_learn.data.firebase.firestore.entities.helpers.DocumentMetadata;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.data.repository.NotificationRepository;
 import com.smart_learn.presenter.activities.main.MainActivity;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -252,6 +263,99 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
         // TODO: try to generate specific unique id's and save id's in DB
         int uniqueId = (int) System.currentTimeMillis();
         notificationManager.notify(uniqueId, builder.build());
+    }
+
+    /**
+     * Use to sync data inside a notificationDocument with data from the UserDocumentReference which is
+     * contained in the notificationDocument. Check will be made in a worker thread.
+     *
+     * @param notificationSnapshot DocumentSnapshot to be synced.
+     * @param callback Callback to manage onSuccess(...) and onFailure(...) actions.
+     * */
+    public void syncNotificationDocument(DocumentSnapshot notificationSnapshot, @Nullable DataCallbacks.General callback){
+        ThreadExecutorService.getInstance().execute(() -> tryToSyncNotificationDocument(notificationSnapshot, callback));
+    }
+
+    private void tryToSyncNotificationDocument(DocumentSnapshot notificationSnapshot, @Nullable DataCallbacks.General callback){
+        if(DataUtilities.Firestore.notGoodDocumentSnapshot(notificationSnapshot)){
+            if(callback != null){
+                callback.onFailure();
+            }
+            return;
+        }
+
+        NotificationDocument notification = notificationSnapshot.toObject(NotificationDocument.class);
+        if(notification == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("notification is null");
+            return;
+        }
+
+        if(notification.getFromDocumentReference() == null){
+            if(callback != null){
+                callback.onFailure();
+            }
+            Timber.w("notification.getFromDocumentReference() is null");
+            return;
+        }
+
+        // try extract document snapshot and try to sync data if necessary
+        notification.getFromDocumentReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                if(DataUtilities.Firestore.notGoodBasicResultConfiguration(task)){
+                    if(callback != null){
+                        callback.onFailure();
+                    }
+                    return;
+                }
+
+                UserDocument user = Objects.requireNonNull(task.getResult()).toObject(UserDocument.class);
+                if(user == null){
+                    if(callback != null){
+                        callback.onFailure();
+                    }
+                    Timber.w("user is null");
+                    return;
+                }
+
+                boolean changed = false;
+                Map<String,Object> data = new HashMap<>();
+
+                if(notification.isFriendAccountMarkedForDeletion() != user.isAccountMarkedForDeletion()){
+                    data.put(NotificationDocument.Fields.IS_FRIEND_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME, user.isAccountMarkedForDeletion());
+                    changed = true;
+                }
+
+                if(!changed){
+                    if(callback != null){
+                        callback.onSuccess();
+                    }
+                    return;
+                }
+
+                // Here were changes, so try to update the update document in database. Update is
+                // made for the notification document snapshot.
+                data.put(DocumentMetadata.Fields.COMPOSED_MODIFIED_AT_FIELD_NAME, System.currentTimeMillis());
+                repositoryInstance.updateDocument(data, notificationSnapshot, new DataCallbacks.General() {
+                    @Override
+                    public void onSuccess() {
+                        if(callback != null){
+                            callback.onSuccess();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        if(callback != null){
+                            callback.onFailure();
+                        }
+                    }
+                });
+            }
+        });
     }
 
 }

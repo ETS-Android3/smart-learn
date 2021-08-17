@@ -623,6 +623,12 @@
     <string name="error_image_too_big_2">este prea mare. Dimensiunea maximă acceptată este</string>
     <string name="error_display_name_updated_1">Numele profilului dvs. nu a fost complet actualizat. Vă rugăm să încercați din nou mai târziu.</string>
 
+    <string name="account_marked_for_deletion">Acest cont este marcat pentru ștergere</string>
+    <string name="error_can_not_select_friend">Acest prieten nu poate fi selectat</string>
+    <string name="error_can_not_select_friend_marked_for_deletion">Acest cont este marcat pentru ștergere și nu poate fi selectat</string>
+    <string name="marked_for_deletion_notification">Solicitarea nu poate fi acceptată deoarece acest cont de utilizator este marcat pentru ștergere</string>
+    <string name="error_accept_request_deletion">Acest cont este marcat pentru ștergere și solicitarea nu poate fi acceptată</string>
+
     <string-array name="languages">
         <item>Engleză</item>
         <item>Română</item>

@@ -121,6 +121,8 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
         @Override
         protected void bind(@NonNull @NotNull FriendDocument friendDocument, int position){
+            // try to get updated data from the friend user profile
+            FriendService.getInstance().syncFriendDocument(getSnapshots().getSnapshot(position), null);
 
             PresenterUtilities.Activities.loadProfileImage(friendDocument.getProfilePhotoUrl(), viewHolderBinding.ivProfileLayoutCardViewFriend);
 
@@ -148,9 +150,6 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
 
             viewHolderBinding.cvLayoutCardViewFriend.setChecked(false);
             liveItemInfo.setValue(friendDocument);
-
-            // try to get updated data from the friend user profile
-            FriendService.getInstance().syncFriendDocument(getSnapshots().getSnapshot(position), null);
         }
 
         private void setListeners(){
@@ -167,7 +166,17 @@ public class FriendsAdapter extends BasicFirestoreRecyclerAdapter<FriendDocument
                         return;
                     }
 
+                    FriendDocument friend = getSnapshots().getSnapshot(position).toObject(FriendDocument.class);
+                    if(friend == null){
+                        showMessage(R.string.error_can_not_select_friend);
+                        return;
+                    }
+
                     if(isSelectionModeActive()){
+                        if(friend.isAccountMarkedForDeletion()){
+                            showMessage(R.string.error_can_not_select_friend_marked_for_deletion);
+                            return;
+                        }
                         markItem(position, getSnapshots().getSnapshot(position));
                         return;
                     }

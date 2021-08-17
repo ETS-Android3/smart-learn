@@ -1,6 +1,7 @@
 package com.smart_learn.presenter.activities.community.fragments.users.helpers;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.smart_learn.R;
+import com.smart_learn.core.helpers.ApplicationController;
 import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.databinding.LayoutDialogViewUserBinding;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
@@ -80,13 +82,22 @@ public class UserDialog extends DialogFragment {
             return;
         }
 
-        setListeners(btnSend, btnAccept);
-
         PresenterUtilities.Activities.loadProfileImage(userDocument.getProfilePhotoUrl(), binding.ivProfileLayoutDialogViewUser);
         binding.setDisplayName(userDocument.getDisplayName());
         binding.setEmail(userDocument.getEmail());
 
-        // set custom layout based on status (friend > isRequestReceived > isPending > no-status)
+        // set custom layout based on status (isAccountMarkedForDeletion > friend > isRequestReceived > isPending > no-status)
+        if(userDocument.isAccountMarkedForDeletion()){
+            btnSend.setVisibility(View.GONE);
+            btnAccept.setVisibility(View.GONE);
+            btnDisabled.setVisibility(View.VISIBLE);
+            btnDisabled.setText(R.string.account_marked_for_deletion);
+            btnDisabled.setCompoundDrawables(null, null, null, null);
+            Drawable drawable = ContextCompat.getDrawable(ApplicationController.getInstance().getApplicationContext(), R.drawable.background_button_alert);
+            btnDisabled.setBackground(drawable);
+            return;
+        }
+
         if(isFriend){
             btnSend.setVisibility(View.GONE);
             btnAccept.setVisibility(View.GONE);
@@ -96,6 +107,7 @@ public class UserDialog extends DialogFragment {
         }
 
         if(isRequestReceived){
+            setAcceptRequestListeners(btnAccept);
             btnSend.setVisibility(View.GONE);
             btnAccept.setVisibility(View.VISIBLE);
             btnDisabled.setVisibility(View.GONE);
@@ -111,13 +123,13 @@ public class UserDialog extends DialogFragment {
         }
 
         // no-status configuration
+        setSendRequestListeners(btnSend);
         btnSend.setVisibility(View.VISIBLE);
         btnAccept.setVisibility(View.GONE);
         btnDisabled.setVisibility(View.GONE);
     }
 
-    private void setListeners(Button btnSend, Button btnAccept){
-
+    private void setSendRequestListeners(Button btnSend){
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +166,9 @@ public class UserDialog extends DialogFragment {
                 });
             }
         });
+    }
+
+    private void setAcceptRequestListeners(Button btnAccept){
 
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override

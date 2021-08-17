@@ -15,6 +15,7 @@ public abstract class BasicProfileDocument {
         String EMAIL_FIELD_NAME = "email";
         String DISPLAY_NAME_FIELD_NAME = "displayName";
         String PROFILE_PHOTO_URL_FIELD_NAME = "profilePhotoUrl";
+        String IS_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME = "accountMarkedForDeletion";
     }
 
     private DocumentMetadata documentMetadata;
@@ -22,6 +23,8 @@ public abstract class BasicProfileDocument {
     private String email;
     private String displayName;
     private String profilePhotoUrl;
+    // mark that associated user deleted his account
+    private boolean isAccountMarkedForDeletion;
 
     public BasicProfileDocument() {
         // needed for Firestore
@@ -44,6 +47,7 @@ public abstract class BasicProfileDocument {
         data.put(BasicProfileDocument.Fields.EMAIL_FIELD_NAME, document.getEmail());
         data.put(BasicProfileDocument.Fields.DISPLAY_NAME_FIELD_NAME, document.getDisplayName());
         data.put(BasicProfileDocument.Fields.PROFILE_PHOTO_URL_FIELD_NAME, document.getProfilePhotoUrl());
+        data.put(Fields.IS_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME, document.isAccountMarkedForDeletion());
 
         return data;
     }

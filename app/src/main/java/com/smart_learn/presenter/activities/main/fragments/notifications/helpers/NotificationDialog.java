@@ -102,6 +102,14 @@ public class NotificationDialog extends DialogFragment {
             return;
         }
 
+        if(notification.isFriendAccountMarkedForDeletion()){
+            btnAccept.setVisibility(View.GONE);
+            btnMaybeLater.setVisibility(View.GONE);
+            btnDisabled.setVisibility(View.GONE);
+            binding.tvAccountMarkedForDeletionLayoutDialogViewNotification.setVisibility(View.VISIBLE);
+            return;
+        }
+
         btnAccept.setVisibility(View.VISIBLE);
         btnMaybeLater.setVisibility(View.VISIBLE);
         btnDisabled.setVisibility(View.GONE);

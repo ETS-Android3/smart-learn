@@ -170,6 +170,12 @@ public class NotificationsAdapter extends BasicFirestoreRecyclerAdapter<Notifica
 
             String dateDifferenceDescription = " - " + CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(notification.getDocumentMetadata().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
+
+            // For this type of notifications update if user who sent request has account marked for
+            // deletion or not.
+            if(notification.getType() == NotificationDocument.Types.TYPE_FRIEND_REQUEST_RECEIVED){
+                NotificationService.getInstance().syncNotificationDocument(getSnapshots().getSnapshot(position), null);
+            }
         }
     }
 

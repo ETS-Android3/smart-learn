@@ -210,6 +210,11 @@ public class FriendService extends BasicFirestoreService<FriendDocument, FriendR
                     changed = true;
                 }
 
+                if(friend.isAccountMarkedForDeletion() != user.isAccountMarkedForDeletion()){
+                    data.put(BasicProfileDocument.Fields.IS_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME, user.isAccountMarkedForDeletion());
+                    changed = true;
+                }
+
                 if(!changed){
                     if(callback != null){
                         callback.onSuccess();

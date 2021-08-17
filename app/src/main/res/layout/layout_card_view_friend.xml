@@ -82,6 +82,16 @@
                     android:text="@{viewHolder.liveItemInfo.spannedEmail}"
                     android:textAppearance="?attr/textAppearanceBody2"/>
 
+                <TextView
+                    android:visibility="@{viewHolder.liveItemInfo.accountMarkedForDeletion ? View.VISIBLE : View.GONE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/colorError"
+                    android:text="@string/account_marked_for_deletion"/>
+
             </LinearLayout>
 
         </LinearLayout>

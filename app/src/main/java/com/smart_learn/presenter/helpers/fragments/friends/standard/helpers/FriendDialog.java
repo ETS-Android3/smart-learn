@@ -62,12 +62,14 @@ public class FriendDialog extends DialogFragment {
             dialogBinding.setDisplayName("");
             dialogBinding.setEmail("");
             dialogBinding.setFriendsSince("");
+            dialogBinding.setAccountMarkedForDeletion(false);
         }
         else {
             PresenterUtilities.Activities.loadProfileImage(friendDocument.getProfilePhotoUrl(), dialogBinding.ivProfileLayoutDialogViewFriend);
             dialogBinding.setDisplayName(friendDocument.getDisplayName());
             dialogBinding.setEmail(friendDocument.getEmail());
             dialogBinding.setFriendsSince(CoreUtilities.General.longToDateTime(friendDocument.getFriendsSince()));
+            dialogBinding.setAccountMarkedForDeletion(friendDocument.isAccountMarkedForDeletion());
         }
 
         // build dialog

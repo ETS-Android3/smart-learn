@@ -11,6 +11,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.FriendService;
 import com.smart_learn.core.helpers.ConnexionChecker;
 import com.smart_learn.data.firebase.firestore.entities.NotificationDocument;
+import com.smart_learn.data.firebase.firestore.entities.UserDocument;
 import com.smart_learn.data.helpers.DataCallbacks;
 import com.smart_learn.data.helpers.DataUtilities;
 import com.smart_learn.presenter.activities.main.fragments.notifications.helpers.NotificationDialog;
@@ -83,10 +84,29 @@ public class NotificationsViewModel extends BasicViewModelForRecyclerView<Notifi
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                        if(DataUtilities.Firestore.notGoodBasicResultConfiguration(task)){
+                        if(!task.isSuccessful() || task.getResult() == null){
                             fragment.requireActivity().runOnUiThread(() -> {
                                 fragment.closeProgressDialog();
                                 liveToastMessage.setValue(fragment.getString(R.string.error_accept_request));
+                                listener.onFailure();
+                            });
+                            return;
+                        }
+
+                        UserDocument friend = task.getResult().toObject(UserDocument.class);
+                        if(friend == null){
+                            fragment.requireActivity().runOnUiThread(() -> {
+                                fragment.closeProgressDialog();
+                                liveToastMessage.setValue(fragment.getString(R.string.error_accept_request));
+                                listener.onFailure();
+                            });
+                            return;
+                        }
+
+                        if(friend.isAccountMarkedForDeletion()){
+                            fragment.requireActivity().runOnUiThread(() -> {
+                                fragment.closeProgressDialog();
+                                liveToastMessage.setValue(fragment.getString(R.string.error_accept_request_deletion));
                                 listener.onFailure();
                             });
                             return;

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="displayName"
             type="String" />
@@ -12,6 +13,9 @@
         <variable
             name="friendsSince"
             type="String" />
+        <variable
+            name="accountMarkedForDeletion"
+            type="Boolean" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -29,6 +33,18 @@
             android:text="@string/profile"
             android:textSize="24sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:visibility="@{accountMarkedForDeletion ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/account_marked_for_deletion"
+            android:textColor="@color/colorError"
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <!-- https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml/61986850#61986850 -->
         <com.google.android.material.imageview.ShapeableImageView

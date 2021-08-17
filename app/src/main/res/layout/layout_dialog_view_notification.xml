@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
         <import type="android.text.SpannableString"/>
         <variable
             name="from"
@@ -124,6 +125,18 @@
                 android:textAppearance="?attr/textAppearanceBody2"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/tv_account_marked_for_deletion_layout_dialog_view_notification"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textColor="@color/colorError"
+            android:text="@string/marked_for_deletion_notification"
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <Button
             android:id="@+id/btn_accept_layout_dialog_view_notification_for_friend_request"

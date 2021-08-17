@@ -38,6 +38,7 @@ public class NotificationDocument {
         String FINISHED_FIELD_NAME = "finished";
         String ACCEPTED_FIELD_NAME = "accepted";
         String DECLINED_FIELD_NAME = "declined";
+        String IS_FRIEND_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME = "friendAccountMarkedForDeletion";
         String RECEIVED_LESSON_FIELD_NAME = "receivedLesson";
         String RECEIVED_LESSON_WORD_LIST_FIELD_NAME = "receivedLessonWordList";
         String RECEIVED_LESSON_EXPRESSIONS_LIST_FIELD_NAME = "receivedLessonExpressionList";
@@ -98,6 +99,7 @@ public class NotificationDocument {
     // used for notifications with friend request type
     private boolean accepted;
     private boolean declined;
+    private boolean isFriendAccountMarkedForDeletion;
 
     private String receivedLesson;
     private String receivedLessonWordList;
@@ -363,6 +365,7 @@ public class NotificationDocument {
         data.put(Fields.FINISHED_FIELD_NAME, notificationDocument.getFinished());
         data.put(Fields.ACCEPTED_FIELD_NAME, notificationDocument.getAccepted());
         data.put(Fields.DECLINED_FIELD_NAME, notificationDocument.getDeclined());
+        data.put(Fields.IS_FRIEND_ACCOUNT_MARKED_FOR_DELETION_FIELD_NAME, notificationDocument.isFriendAccountMarkedForDeletion());
         data.put(Fields.RECEIVED_LESSON_FIELD_NAME, notificationDocument.getReceivedLesson());
         data.put(Fields.RECEIVED_LESSON_WORD_LIST_FIELD_NAME, notificationDocument.getReceivedLessonWordList());
         data.put(Fields.RECEIVED_LESSON_EXPRESSIONS_LIST_FIELD_NAME, notificationDocument.getReceivedLessonExpressionList());
