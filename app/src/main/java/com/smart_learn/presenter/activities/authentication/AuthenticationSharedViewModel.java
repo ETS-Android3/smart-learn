@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,12 +77,27 @@ public class AuthenticationSharedViewModel extends BasicAndroidViewModel {
                             editor.apply();
 
                             activity.goToMainActivity();
-                            return;
                         }
+                        else {
+                            // here login failed
+                            if(task.getException() == null){
+                                liveToastMessage.setValue(activity.getString(R.string.error_google_login_failed));
+                                Timber.e("task.getException() is null");
+                                return;
+                            }
 
-                        // some error occurred
-                        liveToastMessage.setValue(activity.getString(R.string.error_google_login_failed));
-                        Timber.e(task.getException());
+                            // task exception was not null ==> try to exit gracefully
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseNetworkException e) {
+                                liveToastMessage.setValue(activity.getString(R.string.error_no_internet_connection));
+                            } catch(FirebaseTooManyRequestsException e) {
+                                liveToastMessage.setValue(activity.getString(R.string.error_to_many_login_requests));
+                            } catch(Exception e) {
+                                liveToastMessage.setValue(activity.getString(R.string.error_login_failed));
+                                Timber.e(e);
+                            }
+                        }
                     }
                 });
     }
