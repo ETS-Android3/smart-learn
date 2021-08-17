@@ -137,9 +137,11 @@ public class MainActivity extends BasicActivity {
         navController = PresenterUtilities.Activities.setNavigationGraphWithBottomMenu(this, R.id.nav_host_fragment_activity_main,
                 binding.bottomNavigationActivityMain, null, null);
 
-        // set badge for notifications
+        // set badge for notifications (by default will be hidden in order to avoid showing an empty
+        // badge if no unread notifications exists)
         // https://material.io/develop/android/components/badging
         unreadNotificationsBadge = binding.bottomNavigationActivityMain.getOrCreateBadge(R.id.notifications_fragment_nav_graph_activity_main);
+        setNotificationsBadgeNumber(0);
     }
 
     private void setNotificationsBadgeNumber(int unreadNotifications){
