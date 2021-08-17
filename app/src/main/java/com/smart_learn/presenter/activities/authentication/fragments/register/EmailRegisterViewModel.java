@@ -37,7 +37,12 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
     public EmailRegisterViewModel(@NonNull Application application) {
         super(application);
         maxProfileNameLength = RegisterForm.MAX_PROFILE_LENGTH;
-        liveRegisterForm = new MutableLiveData<>(new RegisterForm(null, null, null,
+
+        // FIXME: Profile name can not be added when register is made because user document
+        //  update can not be done because email is not verified so use a default value. This value
+        //  will not be transmitted to Firestore when account is created, will be used only to pass
+        //  validation for profile.
+        liveRegisterForm = new MutableLiveData<>(new RegisterForm("empty value", null, null,
                 null, null));
     }
 
@@ -226,7 +231,9 @@ public class EmailRegisterViewModel extends BasicAndroidViewModel {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // register was made ==> update user profile and send verification email
-                            updateUserProfile(form);
+                            // FIXME: Profile can not be updated when register is made because user
+                            //  document update can not be done because email is not yet verified.
+                            // updateUserProfile(form);
                             fragment.getSharedViewModel().sendVerificationEmail();
 
                             fragment.requireActivity().onBackPressed();

@@ -628,6 +628,7 @@
     <string name="error_can_not_select_friend_marked_for_deletion">This account is marked for deletion and can not be selected</string>
     <string name="marked_for_deletion_notification">Request can not be accepted because this user account is marked for deletion</string>
     <string name="error_accept_request_deletion">This account is marked for deletion and the request can not be accepted</string>
+    <string name="create_a_new_account">Create a new account</string>
 
     <string-array name="languages">
         <item>English</item>

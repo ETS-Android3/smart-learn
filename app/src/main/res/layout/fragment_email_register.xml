@@ -24,7 +24,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="Create a new account"
+            android:text="@string/create_a_new_account"
             android:textAlignment="center"
             android:textSize="36sp"
             android:textStyle="bold"
@@ -35,6 +35,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_profile_fragment_email_register"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_marginStart="24dp"

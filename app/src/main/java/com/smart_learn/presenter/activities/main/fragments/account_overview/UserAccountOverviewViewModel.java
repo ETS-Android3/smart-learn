@@ -26,7 +26,14 @@ public class UserAccountOverviewViewModel extends AccountOverviewViewModel {
         liveNumberOfOnlineFinishedTests = new MutableLiveData<>(0);
         liveSuccessRate = new MutableLiveData<>(0.0f);
 
-        userHelloMessage = application.getResources().getString(R.string.hi) + ", " + UserService.getInstance().getUserDisplayName() + "!";
+        String displayName = UserService.getInstance().getUserDisplayName();
+        if(displayName == null || displayName.trim().isEmpty()){
+            userHelloMessage = application.getResources().getString(R.string.hi) + "!";
+        }
+        else{
+            userHelloMessage = application.getResources().getString(R.string.hi) + ", " + UserService.getInstance().getUserDisplayName() + "!";
+        }
+
     }
 
     protected void setValues(UserDocument userDocument){

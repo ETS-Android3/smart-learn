@@ -628,6 +628,7 @@
     <string name="error_can_not_select_friend_marked_for_deletion">Acest cont este marcat pentru ștergere și nu poate fi selectat</string>
     <string name="marked_for_deletion_notification">Solicitarea nu poate fi acceptată deoarece acest cont de utilizator este marcat pentru ștergere</string>
     <string name="error_accept_request_deletion">Acest cont este marcat pentru ștergere și solicitarea nu poate fi acceptată</string>
+    <string name="create_a_new_account">Creați un cont nou</string>
 
     <string-array name="languages">
         <item>Engleză</item>
