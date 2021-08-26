@@ -18,11 +18,14 @@ public class Statistics {
         String SCORE_FIELD_NAME = "score";
     }
 
+    private static final int MINUS_INFINITE = -2500000;
+    private static final int MULTIPLIER = 10000;
+
     private int correctAnswers = 0;
     private int totalExtractions = 0;
     private long totalTimeForCorrectAnswers = 0;
     private long totalTimeForWrongAnswers = 0;
-    private double score = 0.0d;
+    private long score = MINUS_INFINITE;
 
     public Statistics() {
     }
@@ -35,8 +38,29 @@ public class Statistics {
         else {
             totalTimeForWrongAnswers += answerTime;
         }
+
         totalExtractions++;
-        score = totalExtractions == 0 ? 0 : ((double) correctAnswers / (double)totalExtractions) * 100;
+
+        if(totalExtractions <= 0){
+            // if some error occurred reset all values
+            if(totalExtractions < 0){
+                totalExtractions = 0;
+                correctAnswers = 0;
+                totalTimeForCorrectAnswers = 0;
+                totalTimeForWrongAnswers = 0;
+            }
+            score = MINUS_INFINITE;
+            return;
+        }
+
+        // 'correctAnswers' can not be bigger than 'totalExtractions'
+        if(correctAnswers > totalExtractions){
+            correctAnswers = totalExtractions;
+        }
+
+        // get success rate only with two decimals and round it to int (ex: 1234.56789 will become 123456)
+        long successRate = Math.round(((float) correctAnswers / (float)totalExtractions) * 100);
+        score = successRate * MULTIPLIER - (totalExtractions - correctAnswers);
     }
 
     public static HashMap<String, Object> convertDocumentToHashMap(Statistics statistics){
@@ -76,19 +100,16 @@ public class Statistics {
         if (getTotalExtractions() != that.getTotalExtractions()) return false;
         if (getTotalTimeForCorrectAnswers() != that.getTotalTimeForCorrectAnswers()) return false;
         if (getTotalTimeForWrongAnswers() != that.getTotalTimeForWrongAnswers()) return false;
-        return Double.compare(that.getScore(), getScore()) == 0;
+        return getScore() == that.getScore();
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = getCorrectAnswers();
+        int result = getCorrectAnswers();
         result = 31 * result + getTotalExtractions();
         result = 31 * result + (int) (getTotalTimeForCorrectAnswers() ^ (getTotalTimeForCorrectAnswers() >>> 32));
         result = 31 * result + (int) (getTotalTimeForWrongAnswers() ^ (getTotalTimeForWrongAnswers() >>> 32));
-        temp = Double.doubleToLongBits(getScore());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (getScore() ^ (getScore() >>> 32));
         return result;
     }
 }

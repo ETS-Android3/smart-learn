@@ -980,13 +980,13 @@ public class TestService {
         // Here list contains more values that we need, so extract only 'questionsNr' values.
 
         // Add all values in an HashMap with (key, value) = (score, all values with that score)
-        HashMap<Double, ArrayList<LessonEntrance>> hashMap = new HashMap<>();
+        HashMap<Long, ArrayList<LessonEntrance>> hashMap = new HashMap<>();
         for(LessonEntrance item : valueList){
             if(item == null){
                 continue;
             }
 
-            double key = item.getStatistics().getScore();
+            long key = item.getStatistics().getScore();
             if(hashMap.containsKey(key)){
                 ArrayList<LessonEntrance> currentList = hashMap.get(key);
                 if(currentList == null){
@@ -1001,12 +1001,12 @@ public class TestService {
         }
 
         // Sort hash map keys (score) ascending.
-        ArrayList<Double> keySet = new ArrayList<>(hashMap.keySet());
+        ArrayList<Long> keySet = new ArrayList<>(hashMap.keySet());
         Collections.sort(keySet);
 
         // And extract only 'questionsNr' values.
         ArrayList<LessonEntrance> finalList = new ArrayList<>();
-        for(Double score : keySet){
+        for(Long score : keySet){
             // If all 'questionsNr' where extracted then is no need to continue.
             if(questionsNr < 1){
                 break;
@@ -1073,7 +1073,7 @@ public class TestService {
         // Add all translations in an HashMap with (key, value) where:
         //   - key   --> score
         //   - value --> all translation with same score stored as Pair(itemId,translation)
-        HashMap<Double, ArrayList<Pair<String,Translation>>> hashMap = new HashMap<>();
+        HashMap<Long, ArrayList<Pair<String,Translation>>> hashMap = new HashMap<>();
 
         // Go to every item.
         for(LessonEntrance item : valueList){
@@ -1087,7 +1087,7 @@ public class TestService {
                     continue;
                 }
 
-                double key = translation.getStatistics().getScore();
+                long key = translation.getStatistics().getScore();
                 if(hashMap.containsKey(key)){
                     ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
                     if(currentList == null){
@@ -1103,7 +1103,7 @@ public class TestService {
         }
 
         // Shuffle all translations with same score in order to give some randomness.
-        for(Double key : hashMap.keySet()){
+        for(Long key : hashMap.keySet()){
             ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
             if(currentList == null){
                 hashMap.remove(key);
@@ -1114,12 +1114,12 @@ public class TestService {
         }
 
         // Sort hash map keys (score) ascending.
-        ArrayList<Double> sortedKeySet = new ArrayList<>(hashMap.keySet());
+        ArrayList<Long> sortedKeySet = new ArrayList<>(hashMap.keySet());
         Collections.sort(sortedKeySet);
 
         // Add final values in a queue.
         LinkedList<Pair<String,Translation>> queue = new LinkedList<>();
-        for(Double key : sortedKeySet){
+        for(Long key : sortedKeySet){
             ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
             if(currentList == null){
                 continue;
