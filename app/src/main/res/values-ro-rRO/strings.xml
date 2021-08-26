@@ -49,11 +49,11 @@
     <string name="notebook_summary">Rezumatul activității</string>
     <string name="user_icon">Imagine utilizator</string>
     <string name="hi">Bună</string>
-    <string name="account_overview">Prezentarea generală a contului</string>
+    <string name="account_overview">Rezumat activitate</string>
     <string name="expressions">Expresii</string>
     <string name="tests_summary">Teste</string>
     <string name="active">Active</string>
-    <string name="finished">Finalizate</string>
+    <string name="finished">Finalizat</string>
     <string name="success_rate">Rata de succes</string>
 
 
