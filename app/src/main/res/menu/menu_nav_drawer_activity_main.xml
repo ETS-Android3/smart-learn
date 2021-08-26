@@ -7,10 +7,6 @@
             android:title="@string/home"
             android:icon="@drawable/ic_baseline_home_24"/>
         <item
-            android:id="@+id/nav_account_menu_nav_drawer_activity_main"
-            android:title="@string/account"
-            android:icon="@drawable/ic_baseline_profile_24"/>
-        <item
             android:id="@+id/nav_community_menu_nav_drawer_activity_main"
             android:title="@string/community"
             android:icon="@drawable/ic_baseline_community_24"/>
