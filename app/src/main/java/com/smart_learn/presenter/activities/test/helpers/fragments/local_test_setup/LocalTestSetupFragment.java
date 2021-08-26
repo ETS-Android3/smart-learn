@@ -67,6 +67,14 @@ public abstract class LocalTestSetupFragment <VM extends LocalTestSetupViewModel
             return;
         }
 
+        // If is a shared lesson 'specific number selection' will be disabled.
+        if(sharedViewModel.getGeneratedTest().isSharedLesson()){
+            // One is with INVISIBLE and one with GONE just for design purposes, because both will
+            // out of the screen.
+            binding.rbUseSpecificNumberFragmentLocalTestSetup.setVisibility(View.INVISIBLE);
+            binding.numberPickerValuesFragmentLocalTestSetup.setVisibility(View.GONE);
+        }
+
         // values selection setup
         radioGroupValues.check(R.id.rb_use_specific_number_fragment_local_test_setup);
         numberPickerValues.setMinValue(Test.MIN_CUSTOM_SELECTED_VALUES);

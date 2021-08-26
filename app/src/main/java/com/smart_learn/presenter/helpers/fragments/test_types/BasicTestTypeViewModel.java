@@ -434,13 +434,14 @@ public abstract class BasicTestTypeViewModel extends BasicAndroidViewModel {
             public void onSuccess() {
                 // here progress is saved
 
-                // if test is online is no need to update statistics so go directly to next question
-                if(isOnline){
+                // If test is online or test is from a shared lesson, is no need to update statistics
+                // so go directly to the next question.
+                if(isOnline || extractedTest.isSharedLesson()){
                     fragment.requireActivity().runOnUiThread(callback::onSuccessFinishProcessing);
                     return;
                 }
 
-                // here is local test so update statistics
+                // Here is local test so update statistics.
                 TestService.getInstance().updateStatistics(processedQuestion, new DataCallbacks.General() {
                     @Override
                     public void onSuccess() {

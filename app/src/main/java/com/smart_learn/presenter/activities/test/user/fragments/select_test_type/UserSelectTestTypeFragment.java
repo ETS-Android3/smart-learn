@@ -46,15 +46,16 @@ public class UserSelectTestTypeFragment extends SelectTestTypeFragment<UserSelec
         if((sharedViewModel.getGeneratedTest() instanceof TestDocument) && ((TestDocument)sharedViewModel.getGeneratedTest()).isOnline()){
             int type = sharedViewModel.getGeneratedTest().getType();
             String lessonId = sharedViewModel.getGeneratedTest().getLessonId();
+            boolean isSharedLesson = sharedViewModel.getGeneratedTest().isSharedLesson();
             switch (type){
                 case Test.Types.WORD_MIXED_LETTERS:
                 case Test.Types.WORD_QUIZ:
                 case Test.Types.WORD_WRITE:
-                    ((UserTestActivity)requireActivity()).goToUserSelectWordsFragment(lessonId);
+                    ((UserTestActivity)requireActivity()).goToUserSelectWordsFragment(lessonId, isSharedLesson);
                     return;
                 case Test.Types.EXPRESSION_MIXED_WORDS:
                 case Test.Types.EXPRESSION_TRUE_OR_FALSE:
-                    ((UserTestActivity)requireActivity()).goToUserSelectExpressionsFragment(lessonId);
+                    ((UserTestActivity)requireActivity()).goToUserSelectExpressionsFragment(lessonId, isSharedLesson);
                     return;
                 default:
                     Timber.w("Type [" + type + "] is not valid");

@@ -27,7 +27,8 @@ public class UserTestSetupFragment extends LocalTestSetupFragment<UserTestSetupV
             showMessage(R.string.error_can_not_continue);
             return;
         }
-        ((UserTestActivity)requireActivity()).goToUserSelectWordsFragment(sharedViewModel.getGeneratedTest().getLessonId());
+        ((UserTestActivity)requireActivity()).goToUserSelectWordsFragment(sharedViewModel.getGeneratedTest().getLessonId(),
+                sharedViewModel.getGeneratedTest().isSharedLesson());
     }
 
     @Override
@@ -37,7 +38,8 @@ public class UserTestSetupFragment extends LocalTestSetupFragment<UserTestSetupV
             showMessage(R.string.error_can_not_continue);
             return;
         }
-        ((UserTestActivity)requireActivity()).goToUserSelectExpressionsFragment(sharedViewModel.getGeneratedTest().getLessonId());
+        ((UserTestActivity)requireActivity()).goToUserSelectExpressionsFragment(sharedViewModel.getGeneratedTest().getLessonId(),
+                sharedViewModel.getGeneratedTest().isSharedLesson());
     }
 
     @Override

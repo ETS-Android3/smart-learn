@@ -28,10 +28,13 @@ import com.smart_learn.presenter.activities.test.helpers.fragments.test_question
 import com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment;
 import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.dialogs.SingleLineEditableLayoutDialog;
+import com.smart_learn.presenter.helpers.fragments.expressions.BasicExpressionsFragment;
+import com.smart_learn.presenter.helpers.fragments.expressions.user.UserBasicExpressionsFragment;
 import com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeFragment;
 import com.smart_learn.presenter.helpers.fragments.test_types.mixed.MixedTestFragment;
 import com.smart_learn.presenter.helpers.fragments.words.BasicWordsFragment;
+import com.smart_learn.presenter.helpers.fragments.words.user.UserBasicWordsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -269,15 +272,17 @@ public class UserTestActivity extends TestActivity<UserTestSharedViewModel> {
         navController.navigate(R.id.action_user_select_test_type_fragment_to_user_test_setup_fragment_nav_graph_activity_user_test);
     }
 
-    public void goToUserSelectWordsFragment(String lessonId) {
+    public void goToUserSelectWordsFragment(String lessonId, boolean isSharedLesson) {
         Bundle args = new Bundle();
         args.putString(BasicWordsFragment.SELECTED_LESSON_KEY, lessonId);
+        args.putBoolean(UserBasicWordsFragment.IS_SHARED_LESSON_SELECTED, isSharedLesson);
         navController.navigate(R.id.user_select_words_fragment_nav_graph_activity_user_test, args);
     }
 
-    public void goToUserSelectExpressionsFragment(String lessonId) {
+    public void goToUserSelectExpressionsFragment(String lessonId, boolean isSharedLesson) {
         Bundle args = new Bundle();
-        args.putString(BasicWordsFragment.SELECTED_LESSON_KEY, lessonId);
+        args.putString(BasicExpressionsFragment.SELECTED_LESSON_KEY, lessonId);
+        args.putBoolean(UserBasicExpressionsFragment.IS_SHARED_LESSON_SELECTED, isSharedLesson);
         navController.navigate(R.id.user_select_expressions_fragment_nav_graph_activity_user_test, args);
     }
 
