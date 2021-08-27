@@ -33,8 +33,8 @@
 
         <Space
             android:id="@+id/space_1_fragment_full_write_test"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="279dp"
+            android:layout_height="3dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:visibility="invisible"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/your_answer"
             android:textSize="26sp"
@@ -85,8 +85,8 @@
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:maxLength="@{Limits.MAX_ANSWER_QUESTION_FULL_WRITE}"
-                android:scrollbars="vertical"
                 android:maxLines="4"
+                android:scrollbars="vertical"
                 android:text="@={viewModel.liveUserAnswer}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textSize="16sp" />
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="24dp"
             android:drawableStart="@drawable/ic_baseline_save_alt_24"
             android:drawablePadding="10dp"
             android:text="@string/submit_answer"

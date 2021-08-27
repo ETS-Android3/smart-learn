@@ -161,8 +161,16 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
-            if (isSelectionModeActive()) {
+            if(isFiltering){
+                String word = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getWord());
+                liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
+                        CoreUtilities.General.getSubstringIndexes(word.toLowerCase(), filteringValue), word));
+            }
+            else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
+            }
+
+            if (isSelectionModeActive()) {
                 boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
                 liveIsSelected.setValue(isSelected);
                 viewHolderBinding.cvLayoutCardViewWord.setChecked(isSelected);
@@ -172,15 +180,6 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
             // selection mode is not active so items must be unchecked
             liveIsSelected.setValue(false);
             viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
-
-            if(isFiltering){
-                String word = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getWord());
-                liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
-                        CoreUtilities.General.getSubstringIndexes(word.toLowerCase(), filteringValue), word));
-            }
-            else {
-                liveSpannedWord.setValue(new SpannableString(item.getWord()));
-            }
         }
 
         private void setListeners(){

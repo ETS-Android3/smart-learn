@@ -3,6 +3,7 @@ package com.smart_learn.presenter.helpers.fragments.tests.history.guest;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
+import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.room.entities.RoomTest;
@@ -21,6 +22,20 @@ import timber.log.Timber;
 public abstract class GuestBasicTestHistoryFragment <VM extends GuestBasicTestHistoryViewModel> extends BasicTestFragment<RoomTest, VM> {
 
     private Observer<List<RoomTest>> observer;
+
+    @Override
+    protected int getToolbarTitle() {
+        int option = SettingsService.getInstance().getGuestTestFilterOption();
+        switch (option){
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS:
+                return R.string.finished_tests;
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS:
+                return R.string.in_progress_tests;
+            case TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS:
+            default:
+                return R.string.tests;
+        }
+    }
 
     @Override
     protected void setLayoutUtilities() {

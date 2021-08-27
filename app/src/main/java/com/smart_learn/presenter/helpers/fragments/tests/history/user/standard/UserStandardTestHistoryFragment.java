@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
@@ -15,6 +16,7 @@ import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.firebase.firestore.entities.TestDocument;
 import com.smart_learn.databinding.LayoutBottomSheetShowUserTestFilterOptionsBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.tests.history.helpers.TestInfoDialog;
 import com.smart_learn.presenter.helpers.fragments.tests.history.user.UserBasicTestHistoryFragment;
 
@@ -141,6 +143,7 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveUserTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.local_tests));
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().refreshData(UserStandardTestHistoryFragment.this);
                 }
@@ -156,6 +159,7 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveUserTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.finished_local_tests));
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().refreshData(UserStandardTestHistoryFragment.this);
                 }
@@ -171,6 +175,7 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveUserTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.in_progress_local_tests));
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().refreshData(UserStandardTestHistoryFragment.this);
                 }
@@ -186,6 +191,7 @@ public abstract class UserStandardTestHistoryFragment <VM extends UserStandardTe
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveUserTestFilterOption(TestService.SHOW_ONLY_ONLINE_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.common_tests));
                 if(viewModel.getAdapter() != null){
                     viewModel.getAdapter().refreshData(UserStandardTestHistoryFragment.this);
                 }

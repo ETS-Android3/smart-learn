@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
@@ -14,6 +15,7 @@ import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.test.TestService;
 import com.smart_learn.data.room.entities.RoomTest;
 import com.smart_learn.databinding.LayoutBottomSheetShowGuestTestFilterOptionsBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.tests.history.guest.GuestBasicTestHistoryFragment;
 import com.smart_learn.presenter.helpers.fragments.tests.history.helpers.TestInfoDialog;
 
@@ -113,6 +115,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.tests));
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });
@@ -126,6 +129,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_FINISHED_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.finished_tests));
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });
@@ -139,6 +143,7 @@ public abstract class GuestStandardTestHistoryFragment <VM extends GuestStandard
                 }
                 bottomSheetDialog.dismiss();
                 SettingsService.getInstance().saveGuestTestFilterOption(TestService.SHOW_ONLY_LOCAL_NON_SCHEDULED_IN_PROGRESS_TESTS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.in_progress_tests));
                 GuestStandardTestHistoryFragment.super.changeTestObserver();
             }
         });

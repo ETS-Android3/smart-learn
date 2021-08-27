@@ -28,6 +28,11 @@ public class OnlineTestParticipantsFragment extends BasicFragmentForRecyclerView
     }
 
     @Override
+    protected boolean isFragmentWithBottomNav() {
+        return false;
+    }
+
+    @Override
     protected void setViewModel() {
         super.setViewModel();
 

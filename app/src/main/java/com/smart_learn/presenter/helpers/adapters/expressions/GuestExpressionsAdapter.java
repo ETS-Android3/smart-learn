@@ -145,6 +145,8 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
             viewHolderBinding.setLiveSpannedExpression(liveSpannedExpression);
             viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
+            // guest user is always the owner
+            viewHolderBinding.setLiveIsOwner(new MutableLiveData<>(true));
 
             setListeners();
         }
@@ -160,17 +162,6 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
-            if (isSelectionModeActive()) {
-                liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
-                boolean isSelected = isSelected(item);
-                liveIsSelected.setValue(isSelected);
-                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
-                return;
-            }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
-
             if(isFiltering){
                 String expression = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getExpression());
                 liveSpannedExpression.setValue(PresenterUtilities.Activities.generateSpannedString(
@@ -182,6 +173,16 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
                 liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_NO_FILTER_LINES);
             }
+
+            if (isSelectionModeActive()) {
+                boolean isSelected = isSelected(item);
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
+                return;
+            }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
         }
 
 

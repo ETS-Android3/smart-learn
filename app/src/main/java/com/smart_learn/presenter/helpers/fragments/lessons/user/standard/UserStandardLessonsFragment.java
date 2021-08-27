@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
@@ -13,6 +14,7 @@ import com.smart_learn.R;
 import com.smart_learn.core.services.SettingsService;
 import com.smart_learn.core.services.lesson.UserLessonService;
 import com.smart_learn.databinding.LayoutBottomSheetShowLessonsOptionsBinding;
+import com.smart_learn.presenter.helpers.PresenterUtilities;
 import com.smart_learn.presenter.helpers.fragments.lessons.helpers.LessonDialog;
 import com.smart_learn.presenter.helpers.fragments.lessons.user.UserBasicLessonsFragment;
 
@@ -108,6 +110,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
                 }
                 bottomSheetDialog.dismiss();
                 viewModel.setNewOptionForShowingLessons(UserStandardLessonsFragment.this, UserLessonService.SHOW_ALL_LESSONS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.local_lessons));
             }
         });
 
@@ -120,6 +123,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
                 }
                 bottomSheetDialog.dismiss();
                 viewModel.setNewOptionForShowingLessons(UserStandardLessonsFragment.this, UserLessonService.SHOW_ONLY_LOCAL_LESSONS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.personal_lessons));
             }
         });
 
@@ -132,6 +136,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
                 }
                 bottomSheetDialog.dismiss();
                 viewModel.setNewOptionForShowingLessons(UserStandardLessonsFragment.this, UserLessonService.SHOW_ONLY_RECEIVED_LESSONS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.received_lessons));
             }
         });
 
@@ -144,6 +149,7 @@ public abstract class UserStandardLessonsFragment <VM extends UserStandardLesson
                 }
                 bottomSheetDialog.dismiss();
                 viewModel.setNewOptionForShowingLessons(UserStandardLessonsFragment.this, UserLessonService.SHOW_ONLY_SHARED_LESSONS);
+                PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.common_lessons));
             }
         });
     }

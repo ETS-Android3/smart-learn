@@ -21,7 +21,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:gravity="center"
-            android:text="@string/finished"
+            android:text="@string/finished_test"
             android:textSize="46sp"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_1_fragment_finalize_test"
             app:layout_constraintEnd_toEndOf="parent"

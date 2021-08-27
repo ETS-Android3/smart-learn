@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark_second">#0EA8ED</color>
     <color name="colorPrimary">#F3F4F6</color>
     <color name="colorPrimaryDark">#EBEBEB</color>
-    <color name="colorAccent">#0EA8ED</color>
-    <color name="colorAccentDark">#007AB1</color>
+    <color name="colorAccent">#0ACEF1</color>
+    <color name="colorAccentDark">#2C8FDD</color>
     <color name="colorAccentDisabled">#2384AF</color>
     <color name="colorResult">#DA0303</color>
     <color name="colorToolbarTextLightTheme">#000000</color>
@@ -45,4 +45,5 @@
     <color name="colorMessageSent">#9BE184</color>
     <color name="colorMessageSentDark">#72E34D</color>
     <color name="colorButtonSentPressed">#151515</color>
+    <color name="colorSwitchScheduledTestsActivated">#0ACEF1</color>
 </resources>

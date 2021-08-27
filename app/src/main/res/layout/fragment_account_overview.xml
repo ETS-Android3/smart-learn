@@ -19,9 +19,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="8dp"
             android:orientation="vertical"
             android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_notebook_summary_fragment_account_overview"
@@ -35,7 +35,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@{viewModel.userHelloMessage}"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="15dp"
+                android:padding="5dp"
                 android:text="@string/this_is_your_account_overview"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@string/local"
+                        android:text="@string/local_tests_1"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -285,13 +285,13 @@
                                 android:layout_marginBottom="5dp"
                                 android:text="@string/active"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{String.valueOf(viewModel.liveNumberOfLocalActiveTests)}"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -309,13 +309,13 @@
                                 android:layout_marginBottom="5dp"
                                 android:text="@string/finished"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{String.valueOf(viewModel.liveNumberOfLocalFinishedTests)}"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -362,13 +362,13 @@
                                 android:layout_marginBottom="5dp"
                                 android:text="@string/active"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{String.valueOf(viewModel.liveNumberOfOnlineActiveTests)}"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -386,13 +386,13 @@
                                 android:layout_marginBottom="5dp"
                                 android:text="@string/finished"
                                 android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{String.valueOf(viewModel.liveNumberOfOnlineFinishedTests)}"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -430,14 +430,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="@string/success_rate"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.liveSuccessRateDescription}"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

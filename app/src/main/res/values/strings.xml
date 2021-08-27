@@ -94,7 +94,7 @@
     <string name="characters">characters</string>
     <string name="are_allowed">are allowed</string>
     <string name="logout">Logout</string>
-    <string name="intro">Welcome</string>
+    <string name="intro">Authentication</string>
     <string name="continue_with_email">Continue with email</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="not_have_an_account">Not have an account?</string>
@@ -170,11 +170,11 @@
     <string name="friend_request_sent_title">Friend request sent</string>
     <string name="friend_request_sent_description_1">You sent a friend request to the user</string>
     <string name="friend_request_sent_description_2">. We will notify you when the request is accepted.</string>
-    <string name="normal_lesson_sent_title">You sent a lesson</string>
-    <string name="shared_lesson_sent_title">You sent a shared lesson</string>
+    <string name="normal_lesson_sent_title">Lesson sent</string>
+    <string name="shared_lesson_sent_title">Common lesson sent</string>
     <string name="normal_lesson_sent_description_1">You sent the lesson</string>
     <string name="normal_lesson_sent_description_2">.</string>
-    <string name="shared_lesson_sent_description_1">You sent the shared lesson</string>
+    <string name="shared_lesson_sent_description_1">You sent the common lesson</string>
     <string name="shared_lesson_sent_description_2">.</string>
     <string name="message_point">Message:</string>
     <string name="error_accept_request">Request can not be accepted. Please try again later.</string>
@@ -401,7 +401,7 @@
 
     <!-- TestActivity -->
     <string name="filter">Filter</string>
-    <string name="no_expressions">No expressions</string>
+    <string name="no_expressions">You have no expressions</string>
     <string name="hide">Hide</string>
     <string name="no_tests">There are no tests</string>
     <string name="tests">Tests</string>
@@ -528,7 +528,7 @@
     <string name="show_all_local">Show all local</string>
     <string name="show_only_local_finished">Show only local finished</string>
     <string name="show_only_local_in_progress">Show only local in progress</string>
-    <string name="show_online">Show online</string>
+    <string name="show_online">Show common</string>
 
     <string name="participants_point">Participants:</string>
     <string name="none">none</string>
@@ -556,7 +556,7 @@
     <string name="show_local_personal_and_received">Show local (personal and received)</string>
     <string name="show_personal">Show personal</string>
     <string name="show_received">Show received</string>
-    <string name="show_shared">Show shared</string>
+    <string name="show_shared">Show common</string>
     <string name="no_participants">This lesson contains no participants</string>
     <string name="created_by">created by</string>
     <string name="language_point">Language:</string>
@@ -631,9 +631,9 @@
     <string name="create_a_new_account">Create a new account</string>
 
     <string name="welcome_back">Welcome back!</string>
-    <string name="login_message">Add message here</string>
-    <string name="intro_message">Add message here</string>
-    <string name="intro_title_message">Smart-learn</string>
+    <string name="login_message">Here you can log into your account</string>
+    <string name="intro_message">Here you can log into your account or create a new one</string>
+    <string name="intro_title_message">Welcome!</string>
     <string name="all">All</string>
     <string name="nothing_here_please_add_a_item">Nothing here.\nPlease add a item.</string>
     <string name="by_date_newest_first">By date (newest first)</string>
@@ -642,6 +642,20 @@
     <string name="by_name_from_z_to_a">By name (from Z to A)</string>
     <string name="info">Info</string>
     <string name="edit">Edit</string>
+    <string name="total_test_time_point_2">Test total time:</string>
+    <string name="local_lessons">Local lessons</string>
+    <string name="personal_lessons">Personal lessons</string>
+    <string name="received_lessons">Received lessons</string>
+    <string name="common_lessons">Common lessons</string>
+    <string name="common_tests">Common tests</string>
+    <string name="finished_local_tests">Local tests: finished</string>
+    <string name="in_progress_local_tests">Local tests: in progress</string>
+    <string name="local_tests">Local tests</string>
+    <string name="finished_tests">Finished tests</string>
+    <string name="in_progress_tests">Tests in progress </string>
+    <string name="word_info">Current values</string>
+    <string name="finished_test">Finished</string>
+    <string name="local_tests_1">Local</string>
 
     <string-array name="languages">
         <item>English</item>

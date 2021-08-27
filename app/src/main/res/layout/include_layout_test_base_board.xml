@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/total_test_time"
+                    android:text="@string/total_test_time_point_2"
                     android:textSize="16sp" />
 
                 <TextView
@@ -98,7 +98,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:background="@android:color/transparent"
             android:layout_gravity="center"
             android:clickable="false"
@@ -117,6 +117,7 @@
             android:id="@+id/switch_reverse_include_layout_test_base_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="@string/reverse"
             android:checked="@={passedViewModel.liveIsReverseChecked}"
             android:textSize="12sp"/>

@@ -411,4 +411,10 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- For switch from scheduled tests
+     https://stackoverflow.com/questions/11253512/change-on-color-of-a-switch/38278533#38278533 -->
+    <style name="AppTheme.SwitchStyle" parent="AppTheme">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorSwitchScheduledTestsActivated</item>
+    </style>
 </resources>

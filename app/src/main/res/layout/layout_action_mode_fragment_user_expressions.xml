@@ -17,7 +17,7 @@
             style="@style/AppTheme.ButtonStyle.ActionModeButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_baseline_delete_24"
+            android:drawableTop="@drawable/ic_baseline_delete_20"
             android:text="@string/delete" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

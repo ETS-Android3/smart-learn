@@ -164,18 +164,6 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
-            if (isSelectionModeActive()) {
-                liveSpannedExpression.setValue(new SpannableString(item.getExpression()));
-                boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
-                liveIsSelected.setValue(isSelected);
-                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
-                return;
-            }
-
-            // selection mode is not active so items must be unchecked
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
-
             if(isFiltering){
                 String expression = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getExpression());
                 liveSpannedExpression.setValue(PresenterUtilities.Activities.generateSpannedString(
@@ -188,6 +176,16 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
                 viewHolderBinding.tvSpannedExpressionLayoutCardViewExpression.setMaxLines(MAX_NO_FILTER_LINES);
             }
 
+            if (isSelectionModeActive()) {
+                boolean isSelected = isSelected(getSnapshots().getSnapshot(position));
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewExpression.setChecked(isSelected);
+                return;
+            }
+
+            // selection mode is not active so items must be unchecked
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewExpression.setChecked(false);
         }
 
         private void setListeners(){

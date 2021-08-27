@@ -139,6 +139,8 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             viewHolderBinding.setLiveSpannedWord(liveSpannedWord);
             viewHolderBinding.setLiveDateDifferenceDescription(liveDateDifferenceDescription);
             viewHolderBinding.setLiveIsSelected(liveIsSelected);
+            // guest user is always the owner
+            viewHolderBinding.setLiveIsOwner(new MutableLiveData<>(true));
 
             setListeners();
         }
@@ -154,17 +156,6 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
-            if (isSelectionModeActive()) {
-                liveSpannedWord.setValue(new SpannableString(item.getWord()));
-                boolean isSelected = isSelected(item);
-                liveIsSelected.setValue(isSelected);
-                viewHolderBinding.cvLayoutCardViewWord.setChecked(isSelected);
-                return;
-            }
-
-            liveIsSelected.setValue(false);
-            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
-
             if(isFiltering){
                 String word = CoreUtilities.General.trimAndRemoveAdjacentSpacesAndBreakLines(item.getWord());
                 liveSpannedWord.setValue(PresenterUtilities.Activities.generateSpannedString(
@@ -173,6 +164,16 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
             else {
                 liveSpannedWord.setValue(new SpannableString(item.getWord()));
             }
+
+            if (isSelectionModeActive()) {
+                boolean isSelected = isSelected(item);
+                liveIsSelected.setValue(isSelected);
+                viewHolderBinding.cvLayoutCardViewWord.setChecked(isSelected);
+                return;
+            }
+
+            liveIsSelected.setValue(false);
+            viewHolderBinding.cvLayoutCardViewWord.setChecked(false);
 
         }
 

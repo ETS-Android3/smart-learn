@@ -114,7 +114,7 @@ public class GuestWordContainerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.word));
+        PresenterUtilities.Activities.resetToolbarTitle((AppCompatActivity) requireActivity(), getString(R.string.word_overview));
         ((NotebookActivity<?>)requireActivity()).hideBottomNavigationMenu();
     }
 

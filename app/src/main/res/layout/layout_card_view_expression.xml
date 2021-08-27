@@ -49,20 +49,13 @@
 
                 <TextView
                     android:id="@+id/tv_spanned_expression_layout_card_view_expression"
-                    android:layout_width="320dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:singleLine="false"
                     android:maxLines="4"
                     android:text="@{liveSpannedExpression}"
                     android:textAppearance="?attr/textAppearanceHeadline6"/>
-
-                <!-- Use this to center the toolbar at right end
-                 https://stackoverflow.com/questions/10829835/right-align-button-in-horizontal-linearlayout/29209614#29209614
-                 -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_layout_card_view_expression"
@@ -78,7 +71,7 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="320dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@{liveDateDifferenceDescription}"
