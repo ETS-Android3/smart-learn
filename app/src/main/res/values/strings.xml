@@ -630,6 +630,19 @@
     <string name="error_accept_request_deletion">This account is marked for deletion and the request can not be accepted</string>
     <string name="create_a_new_account">Create a new account</string>
 
+    <string name="welcome_back">Welcome back!</string>
+    <string name="login_message">Add message here</string>
+    <string name="intro_message">Add message here</string>
+    <string name="intro_title_message">Smart-learn</string>
+    <string name="all">All</string>
+    <string name="nothing_here_please_add_a_item">Nothing here.\nPlease add a item.</string>
+    <string name="by_date_newest_first">By date (newest first)</string>
+    <string name="by_date_oldest_first">By date (oldest first)</string>
+    <string name="by_name_from_a_to_z">By name (from A to Z)</string>
+    <string name="by_name_from_z_to_a">By name (from Z to A)</string>
+    <string name="info">Info</string>
+    <string name="edit">Edit</string>
+
     <string-array name="languages">
         <item>English</item>
         <item>Romanian</item>

@@ -6,7 +6,7 @@
         android:id="@+id/guest_group_menu_card_view_lesson">
         <item
             android:id="@+id/action_guest_delete_menu_card_view_lesson"
-            android:title="Delete"
+            android:title="@string/delete"
             app:showAsAction="never"/>
     </group>
 

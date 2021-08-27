@@ -21,7 +21,7 @@
     <group android:id="@+id/secondary_group_menu_layout_with_recycler_view">
         <item
             android:id="@+id/action_filter_menu_layout_with_recycler_view"
-            android:title="Filter"
+            android:title="@string/filter"
             app:showAsAction="never"/>
     </group>
 

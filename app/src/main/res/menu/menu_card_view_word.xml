@@ -6,7 +6,7 @@
         android:id="@+id/main_group_menu_card_view_word">
         <item
             android:id="@+id/action_delete_menu_card_view_word"
-            android:title="Delete"
+            android:title="@string/delete"
             app:showAsAction="never"/>
     </group>
 

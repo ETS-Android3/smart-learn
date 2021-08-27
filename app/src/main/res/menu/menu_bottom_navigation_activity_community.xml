@@ -8,10 +8,10 @@
         <item
             android:id="@+id/friends_fragment_nav_graph_activity_community"
             android:icon="@drawable/ic_baseline_friends_24"
-            android:title="Friends"/>
+            android:title="@string/friends"/>
         <item
             android:id="@+id/users_fragment_nav_graph_activity_community"
             android:icon="@drawable/ic_baseline_users_24"
-            android:title="Users"/>
+            android:title="@string/users"/>
     </group>
 </menu>

@@ -630,6 +630,19 @@
     <string name="error_accept_request_deletion">Acest cont este marcat pentru ștergere și solicitarea nu poate fi acceptată</string>
     <string name="create_a_new_account">Creați un cont nou</string>
 
+    <string name="welcome_back">Bine ați revenit!</string>
+    <string name="login_message">Adauga mesaj aici</string>
+    <string name="intro_message">Adauga mesaj aici</string>
+    <string name="intro_title_message">Smart-learn</string>
+    <string name="all">Toate</string>
+    <string name="nothing_here_please_add_a_item">Nu exista elemente.</string>
+    <string name="by_date_newest_first">După dată (cele mai noi)</string>
+    <string name="by_date_oldest_first">După dată (cele mai vechi)</string>
+    <string name="by_name_from_a_to_z">După nume (de la A la Z)</string>
+    <string name="by_name_from_z_to_a">După nume (de la Z la A)</string>
+    <string name="info">Informații</string>
+    <string name="edit">Editați</string>
+
     <string-array name="languages">
         <item>Engleză</item>
         <item>Română</item>

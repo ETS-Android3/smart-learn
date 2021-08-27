@@ -8,15 +8,15 @@
         <item
             android:id="@+id/guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_info_24"
-            android:title="Info"/>
+            android:title="@string/info"/>
         <item
             android:id="@+id/guest_words_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_email_24"
-            android:title="Words"/>
+            android:title="@string/words"/>
         <item
             android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
             android:icon="@drawable/ic_baseline_email_24"
-            android:title="Expressions"/>
+            android:title="@string/expressions"/>
     </group>
 
 </menu>

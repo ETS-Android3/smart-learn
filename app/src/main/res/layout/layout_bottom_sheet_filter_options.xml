@@ -19,7 +19,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
-            android:text="By date (newest first)"/>
+            android:text="@string/by_date_newest_first"/>
 
 
         <Button
@@ -30,7 +30,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
-            android:text="By date (oldest first)"/>
+            android:text="@string/by_date_oldest_first"/>
 
         <Button
             android:id="@+id/btn_filter_a_z_layout_bottom_sheet_filter_options"
@@ -40,7 +40,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
-            android:text="By name (from A to Z)"/>
+            android:text="@string/by_name_from_a_to_z"/>
 
         <Button
             android:id="@+id/btn_filter_z_a_layout_bottom_sheet_filter_options"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
-            android:text="By name (from Z to A)"/>
+            android:text="@string/by_name_from_z_to_a"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

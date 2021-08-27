@@ -39,7 +39,7 @@
             android:gravity="center"
             android:textSize="25sp"
             android:textColor="@color/text_color_no_item_recycler_view_primary"
-            android:text="Nothing here.\nPlease add a item."/>
+            android:text="@string/nothing_here_please_add_a_item"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -9,15 +9,15 @@
         <item
             android:id="@+id/user_home_lesson_fragment_nav_graph_activity_user_notebook"
             android:icon="@drawable/ic_baseline_info_24"
-            android:title="Info"/>
+            android:title="@string/info"/>
         <item
             android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
             android:icon="@drawable/ic_baseline_email_24"
-            android:title="Words"/>
+            android:title="@string/words"/>
         <item
             android:id="@+id/user_expressions_fragment_nav_graph_activity_user_notebook"
             android:icon="@drawable/ic_baseline_email_24"
-            android:title="Expressions"/>
+            android:title="@string/expressions"/>
     </group>
 
 </menu>

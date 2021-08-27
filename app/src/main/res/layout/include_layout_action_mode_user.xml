@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="22dp"
             android:drawableTop="@drawable/ic_baseline_unchecked_circle_24"
-            android:text="All" />
+            android:text="@string/all" />
 
         <Button
             android:id="@+id/btn_delete_include_layout_action_mode_user"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:drawableTop="@drawable/ic_baseline_delete_24"
-            android:text="Delete" />
+            android:text="@string/delete" />
 
         <Button
             android:id="@+id/btn_share_include_layout_action_mode_user"
@@ -36,7 +36,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_baseline_share_24"
-            android:text="Share" />
+            android:text="@string/share" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
