@@ -160,7 +160,7 @@ public class UserExpressionsAdapter extends BasicFirestoreRecyclerAdapter<Expres
         protected void bind(@NonNull @NotNull ExpressionDocument item, int position){
             liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
 
-            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.expression_added) + " " +
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 

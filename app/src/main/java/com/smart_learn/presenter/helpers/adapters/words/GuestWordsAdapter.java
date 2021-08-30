@@ -152,7 +152,7 @@ public class GuestWordsAdapter extends BasicListAdapter<Word, GuestWordsAdapter.
 
         @Override
         protected void bind(@NonNull @NotNull Word item, int position) {
-            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.word_added) + " " +
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 

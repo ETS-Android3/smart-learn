@@ -172,7 +172,7 @@ public class UserLessonsAdapter extends BasicFirestoreRecyclerAdapter<LessonDocu
             }
 
             String extraDescription = LessonDocument.generateLessonTypeTitle(item.getType()) + " - " +
-                    adapterCallback.getFragment().getString(R.string.added) + " " +
+                    adapterCallback.getFragment().getString(R.string.lesson_added) + " " +
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
             liveExtraInfo.setValue(extraDescription);
         }

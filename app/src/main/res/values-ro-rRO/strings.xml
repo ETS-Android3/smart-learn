@@ -34,12 +34,12 @@
     <string name="success_display_name_updated">Numele profilului a fost schimbat</string>
     <string name="success_account_deleted">Contul a fost șters</string>
 
-    <string name="online">Online</string>
+    <string name="online">Comune</string>
     <string name="delete_account">Șterge contul</string>
-    <string name="email_and_password">Email și parolă</string>
+    <string name="email_and_password">E-mail și parolă</string>
     <string name="delete_account_description">Sigur doreşti să ştergi contul?</string>
     <string name="profile_name_point">Nume:</string>
-    <string name="email_point">Email:</string>
+    <string name="email_point">E-mail:</string>
     <string name="register_provider_point">Modalitatea de înregistrare:</string>
     <string name="register_time_point">Data înregistrării:</string>
     <string name="profile">Profil</string>
@@ -151,14 +151,14 @@
     <string name="nothing_here">Nu este nimic aici</string>
     <string name="friend_request_received_description">Ai primit o nouă cerere de prietenie de la</string>
     <string name="normal_lesson_received_description_1">Ai primit lecția</string>
-    <string name="normal_lesson_received_description_2">O poți găsi în lecțiile primite.</string>
+    <string name="normal_lesson_received_description_2">. O poți găsi în lecțiile primite.</string>
     <string name="word_received_description_1">Ai primit cuvântul</string>
-    <string name="word_received_description_2">O poți găsi în cuvintele primite.</string>
+    <string name="word_received_description_2">. Îl poți găsi în cuvintele primite.</string>
     <string name="expression_received_description_1">Ai primit expresia</string>
-    <string name="expression_received_description_2">O poți găsi în expresiile primite.</string>
+    <string name="expression_received_description_2">. O poți găsi în expresiile primite.</string>
     <string name="shared_lesson_received_description_1">Ai primit acces la lecția comună</string>
-    <string name="shared_lesson_received_description_2">O poți găsi în lecțiile tale comune.</string>
-    <string name="friend_request_accepted_title">Cererea de prietenie a fost acceptată</string>
+    <string name="shared_lesson_received_description_2">. O poți găsi în lecțiile tale comune.</string>
+    <string name="friend_request_accepted_title">Cerere de prietenie acceptată</string>
     <string name="friend_request_accepted_description_1">Utilizatorul</string>
     <string name="friend_request_accepted_description_2">ți-a acceptat cererea de prietenie.</string>
     <string name="friend_removed_you_title">Prieten eliminat</string>
@@ -523,12 +523,12 @@
     <string name="total_test_time_point">Durata testului:</string>
     <string name="proposed_translation_point">Traducere propusă:</string>
     <string name="from_lesson_point">Din lecția:</string>
-    <string name="start_new_online_test">Începe un nou test online</string>
+    <string name="start_new_online_test">Începe un nou test comun</string>
     <string name="error_can_not_open_test">Nu se pot deschide informațiile testului</string>
     <string name="show_all_local">Afișează toate testele locale</string>
     <string name="show_only_local_finished">Afișează doar testele locale finalizate</string>
     <string name="show_only_local_in_progress">Afișează doar testele locale în progress</string>
-    <string name="show_online">Afișează toate testele online</string>
+    <string name="show_online">Afișează toate testele comune</string>
 
     <string name="participants_point">Participanți:</string>
     <string name="none">nici unul</string>
@@ -536,7 +536,7 @@
     <string name="created_by_point">Creat de:</string>
     <string name="continue_value">Continuă</string>
     <string name="chat">Chat</string>
-    <string name="online_test">Test online</string>
+    <string name="online_test">Test comun</string>
     <string name="participants">Participanți</string>
     <string name="no_messages">Nici un mesaj</string>
     <string name="done_icon">Imagine finalizat</string>
@@ -546,7 +546,7 @@
 
     <!-- NotificationDocument -->
     <string name="online_test_invitation_received_description_1">Ai primit acces la un test comun</string>
-    <string name="online_test_invitation_received_description_2">Îl poți găsi în testele tale comune.</string>
+    <string name="online_test_invitation_received_description_2">. Îl poți găsi în testele tale comune.</string>
     <string name="online_test_invitation_received_title">Invitație la test comun</string>
 
 
@@ -657,6 +657,10 @@
     <string name="word_info">Valori curente</string>
     <string name="finished_test">Finalizat</string>
     <string name="local_tests_1">Locale</string>
+    <string name="expression_added">Adăugată cu</string>
+    <string name="word_added">Adăugat cu</string>
+    <string name="lesson_added">Adăugată cu</string>
+    <string name="google_account">Cont Google</string>
 
     <string-array name="languages">
         <item>Engleză</item>

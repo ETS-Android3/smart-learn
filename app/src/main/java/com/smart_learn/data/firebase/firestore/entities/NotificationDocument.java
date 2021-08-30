@@ -311,7 +311,7 @@ public class NotificationDocument {
                 .append(description1)
                 .append(" ")
                 .append(PresenterUtilities.Activities.setStringAsSpannedBold(extraInfo))
-                .append(". ")
+                .append(" ")
                 .append(description2);
         return new SpannableString(spannedValue);
     }

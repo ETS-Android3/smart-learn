@@ -34,7 +34,7 @@
     <string name="success_display_name_updated">Profile name was changed</string>
     <string name="success_account_deleted">Account was deleted</string>
 
-    <string name="online">Online</string>
+    <string name="online">Common</string>
     <string name="delete_account">Delete account</string>
     <string name="email_and_password">Email and password</string>
     <string name="delete_account_description">Are you sure you want to delete your account?</string>
@@ -523,7 +523,7 @@
     <string name="total_test_time_point">Test time:</string>
     <string name="proposed_translation_point">Proposed translation:</string>
     <string name="from_lesson_point">From lesson:</string>
-    <string name="start_new_online_test">Start new online test</string>
+    <string name="start_new_online_test">Start new common test</string>
     <string name="error_can_not_open_test">Can not open test info</string>
     <string name="show_all_local">Show all local</string>
     <string name="show_only_local_finished">Show only local finished</string>
@@ -536,7 +536,7 @@
     <string name="created_by_point">Created by:</string>
     <string name="continue_value">Continue</string>
     <string name="chat">Chat</string>
-    <string name="online_test">Online test</string>
+    <string name="online_test">Common test</string>
     <string name="participants">Participants</string>
     <string name="no_messages">No messages</string>
     <string name="done_icon">Done icon</string>
@@ -545,9 +545,9 @@
 
 
     <!-- NotificationDocument -->
-    <string name="online_test_invitation_received_description_1">You\'ve received access to an online test</string>
-    <string name="online_test_invitation_received_description_2">You can find it in your online tests.</string>
-    <string name="online_test_invitation_received_title">New online test invitation</string>
+    <string name="online_test_invitation_received_description_1">You\'ve received access to a common test</string>
+    <string name="online_test_invitation_received_description_2">You can find it in your common tests.</string>
+    <string name="online_test_invitation_received_title">New common test invitation</string>
 
 
     <string name="error_add_new_shared_lesson">Can not add new shared lesson</string>
@@ -571,7 +571,7 @@
     <string name="friend_request_accepted_description_push">Your friend request was accepted. Check your notification center for more info.</string>
     <string name="normal_lesson_received_description_push">You\'ve received a new lesson. Check your notification center for more info.</string>
     <string name="shared_lesson_received_description_push">You\'ve received access to a shared lesson. Check your notification center for more info.</string>
-    <string name="online_test_invitation_received_description_push">You\'ve received an online test invitation. Check your notification center for more info.</string>
+    <string name="online_test_invitation_received_description_push">You\'ve received a common test invitation. Check your notification center for more info.</string>
     <string name="from_lesson">from lesson</string>
     <string name="success_set_schedule">Alarm was set</string>
     <string name="success_cancel_schedule">Alarm was canceled</string>
@@ -656,6 +656,10 @@
     <string name="word_info">Current values</string>
     <string name="finished_test">Finished</string>
     <string name="local_tests_1">Local</string>
+    <string name="expression_added">Added</string>
+    <string name="word_added">Added</string>
+    <string name="lesson_added">Added</string>
+    <string name="google_account">Google account</string>
 
     <string-array name="languages">
         <item>English</item>

@@ -83,7 +83,7 @@ public class UserProfileViewModel extends BasicAndroidViewModel {
                 provider = application.getResources().getString(R.string.email_and_password);
                 break;
             case CoreUtilities.Auth.PROVIDER_GOOGLE:
-                provider = "Google";
+                provider = application.getResources().getString(R.string.google_account);
                 break;
             default:
                 provider = "";

@@ -158,7 +158,7 @@ public class GuestExpressionsAdapter extends BasicListAdapter<Expression, GuestE
 
         @Override
         protected void bind(@NonNull @NotNull Expression item, int position) {
-            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.expression_added) + " " +
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getBasicInfo().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 

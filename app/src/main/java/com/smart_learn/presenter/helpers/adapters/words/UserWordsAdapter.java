@@ -157,7 +157,7 @@ public class UserWordsAdapter extends BasicFirestoreRecyclerAdapter<WordDocument
         protected void bind(@NonNull @NotNull WordDocument item, int position){
             liveIsOwner.setValue(item.getDocumentMetadata().getOwner().equals(UserService.getInstance().getUserUid()));
 
-            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.added) + " " +
+            String dateDifferenceDescription = adapterCallback.getFragment().getString(R.string.word_added) + " " +
                     CoreUtilities.General.getFormattedTimeDifferenceFromPastToPresent(item.getDocumentMetadata().getCreatedAt());
             liveDateDifferenceDescription.setValue(dateDifferenceDescription);
 
