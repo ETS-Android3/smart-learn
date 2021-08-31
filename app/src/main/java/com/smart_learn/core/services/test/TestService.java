@@ -1000,6 +1000,23 @@ public class TestService {
             }
         }
 
+        // Shuffle all components with same score in order to give some randomness.
+        for(Long key : hashMap.keySet()){
+            ArrayList<LessonEntrance> currentList = hashMap.get(key);
+            if(currentList == null || currentList.isEmpty()){
+                hashMap.remove(key);
+                continue;
+            }
+
+            // Is no need to shuffle if is only one element in list.
+            if(currentList.size() == 1){
+                continue;
+            }
+
+            Collections.shuffle(currentList, secureRandom);
+            hashMap.put(key, currentList);
+        }
+
         // Sort hash map keys (score) ascending.
         ArrayList<Long> keySet = new ArrayList<>(hashMap.keySet());
         Collections.sort(keySet);
@@ -1105,10 +1122,16 @@ public class TestService {
         // Shuffle all translations with same score in order to give some randomness.
         for(Long key : hashMap.keySet()){
             ArrayList<Pair<String,Translation>> currentList = hashMap.get(key);
-            if(currentList == null){
+            if(currentList == null || currentList.isEmpty()){
                 hashMap.remove(key);
                 continue;
             }
+
+            // Is no need to shuffle if is only one element in list.
+            if(currentList.size() == 1){
+                continue;
+            }
+
             Collections.shuffle(currentList, secureRandom);
             hashMap.put(key, currentList);
         }
@@ -1126,6 +1149,9 @@ public class TestService {
             }
             queue.addAll(currentList);
         }
+
+        // Queue will be shuffles in order to give a randomness.
+        Collections.shuffle(queue, secureRandom);
 
         return queue;
     }
