@@ -16,8 +16,6 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
 
     private static GuestExpressionRepository instance;
 
-    private LiveData<List<Expression>> currentLessonLiveExpressionList;
-
     private GuestExpressionRepository() {
         // no need for db instance in class because communication will be made using dao interface
         super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).expressionDao());
@@ -31,12 +29,7 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
     }
 
     public LiveData<List<Expression>> getCurrentLessonLiveExpressions(int currentLessonId){
-        if (currentLessonLiveExpressionList == null){
-            // one query is enough because LiveData is made i.e. to be automatically notified by room
-            // when changes are made in db
-            currentLessonLiveExpressionList = dao.getLessonLiveExpressions(currentLessonId);
-        }
-        return currentLessonLiveExpressionList;
+        return dao.getLessonLiveExpressions(currentLessonId);
     }
 
     public List<Expression> getLessonExpressions(int lessonId){
