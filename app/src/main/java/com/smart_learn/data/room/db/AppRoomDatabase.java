@@ -86,23 +86,25 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     private static void addInitialData(){
         BasicInfo basicInfo = new BasicInfo(System.currentTimeMillis());
 
+
+        // add first lesson
         int translationsUniqueId = 0;
 
-        Lesson lesson = new Lesson("This is an example lesson",false, basicInfo,"Example lesson");
+        Lesson lesson = new Lesson("Diverse cuvinte și expresii în limba engleză",false, basicInfo,"Lecție engleză");
         int idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
 
         // add words
         ArrayList<Pair<String, ArrayList<String>>> valuesWords = new ArrayList<>();
-        valuesWords.add(new Pair<>("Hi", new ArrayList<>(Arrays.asList("Salut","Buna"))));
-        valuesWords.add(new Pair<>("Good luck", new ArrayList<>(Arrays.asList("Noroc","Numai bine"))));
-        valuesWords.add(new Pair<>("car", new ArrayList<>(Arrays.asList("masina","autoturism"))));
-        valuesWords.add(new Pair<>("orange", new ArrayList<>(Arrays.asList("portocala","portocaliu"))));
+        valuesWords.add(new Pair<>("Good luck", new ArrayList<>(Arrays.asList("Noroc!","Numai bine!"))));
+        valuesWords.add(new Pair<>("Hi", new ArrayList<>(Arrays.asList("Salut!","Bună!","Hei!"))));
+        valuesWords.add(new Pair<>("car", new ArrayList<>(Arrays.asList("mașină","autoturism","automobil"))));
+        valuesWords.add(new Pair<>("clean", new ArrayList<>(Arrays.asList("curat", "îngrijit"))));
+        valuesWords.add(new Pair<>("green", new ArrayList<>(Collections.singletonList("verde"))));
+        valuesWords.add(new Pair<>("orange", new ArrayList<>(Arrays.asList("portocală","portocaliu"))));
+        valuesWords.add(new Pair<>("plane", new ArrayList<>(Collections.singletonList("avion"))));
         valuesWords.add(new Pair<>("sky", new ArrayList<>(Arrays.asList("cer","orizont"))));
-        valuesWords.add(new Pair<>("avion", new ArrayList<>(Collections.singletonList("plane"))));
-        valuesWords.add(new Pair<>("verde", new ArrayList<>(Collections.singletonList("green"))));
-        valuesWords.add(new Pair<>("curat", new ArrayList<>(Arrays.asList("clean", "fresh"))));
-        valuesWords.add(new Pair<>("univers", new ArrayList<>(Arrays.asList("universe", "cosmos"))));
-        valuesWords.add(new Pair<>("copac", new ArrayList<>(Collections.singletonList("tree"))));
+        valuesWords.add(new Pair<>("tree", new ArrayList<>(Arrays.asList("copac","arbore","pom"))));
+        valuesWords.add(new Pair<>("universe", new ArrayList<>(Arrays.asList("univers", "cosmos"))));
 
         ArrayList<Word> wordsList = new ArrayList<>();
         for(Pair<String, ArrayList<String>> pair : valuesWords){
@@ -122,18 +124,74 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
         // add expressions
         ArrayList<Pair<String, ArrayList<String>>> valuesExp = new ArrayList<>();
-        valuesExp.add(new Pair<>("It's a piece of cake", new ArrayList<>(Arrays.asList("Este usor", "E o nimica toata"))));
-        valuesExp.add(new Pair<>("It's raining cats and dogs", new ArrayList<>(Arrays.asList("Ploua cu galeata", "Plouă puternic"))));
-        valuesExp.add(new Pair<>("Kill two birds with one stone", new ArrayList<>(Collections.singletonList("omorî doi iepuri dintr-o împuşcătură"))));
-        valuesExp.add(new Pair<>("Let the cat out of the bag", new ArrayList<>(Arrays.asList("Da în vileag un secret","se da de gol"))));
+        valuesExp.add(new Pair<>("A storm in a teacup", new ArrayList<>(Collections.singletonList("Gălăgie făcută în jurul unui subiect neimportant"))));
+        valuesExp.add(new Pair<>("As cool as a cucumber", new ArrayList<>(Collections.singletonList("A fi calm, cumpătat și netulburat de stres"))));
         valuesExp.add(new Pair<>("He has bigger fish to fry", new ArrayList<>(Collections.singletonList("Are lucruri mai mari de care să aibă grijă decât ceea ce vorbim acum"))));
-        valuesExp.add(new Pair<>("A-și lua nasul la purtare", new ArrayList<>(Collections.singletonList("to be impudent"))));
-        valuesExp.add(new Pair<>("A călca pe bec", new ArrayList<>(Collections.singletonList(" to break a rule"))));
-        valuesExp.add(new Pair<>("A fi prins cu mâța-n sac", new ArrayList<>(Collections.singletonList("be caught lying"))));
-        valuesExp.add(new Pair<>("A ieși basma curată", new ArrayList<>(Collections.singletonList("to get rid of accusations"))));
-        valuesExp.add(new Pair<>("A-l scoate din pepeni", new ArrayList<>(Collections.singletonList("to annoy someone"))));
+        valuesExp.add(new Pair<>("Hold your horses!", new ArrayList<>(Collections.singletonList("Așteaptă puțin!"))));
+        valuesExp.add(new Pair<>("It's a piece of cake", new ArrayList<>(Arrays.asList("Este ușor", "E o nimica toată"))));
+        valuesExp.add(new Pair<>("It's raining cats and dogs", new ArrayList<>(Arrays.asList("Plouă cu găleata", "Plouă puternic"))));
+        valuesExp.add(new Pair<>("Kill two birds with one stone", new ArrayList<>(Collections.singletonList("A împușca doi iepuri dintr-un foc"))));
+        valuesExp.add(new Pair<>("Let the cat out of the bag", new ArrayList<>(Arrays.asList("A se da de gol","A da în vileag un secret"))));
+        valuesExp.add(new Pair<>("To be barking up the wrong tree", new ArrayList<>(Collections.singletonList("A urmări o pistă greșită"))));
+        valuesExp.add(new Pair<>("To turn a blind eye", new ArrayList<>(Collections.singletonList("A ignora în mod deliberat un fapt"))));
 
         ArrayList<Expression> expressionsList = new ArrayList<>();
+        for(Pair<String, ArrayList<String>> pair : valuesExp){
+            ArrayList<Translation> translations = new ArrayList<>();
+            for(String item : pair.second){
+                translationsUniqueId++;
+                translations.add(new Translation(translationsUniqueId, item,"", ""));
+            }
+
+            Expression expression = new Expression("",false, basicInfo, idLesson,false,"",
+                    translations,pair.first);
+            expressionsList.add(expression);
+        }
+
+        instance.expressionDao().insertAll(expressionsList);
+
+
+
+
+
+        // add second lesson
+
+        translationsUniqueId = 0;
+        lesson = new Lesson("Această lecție conține:\n- regionalisme\n- diverse expresii",false, basicInfo,"Regionalisme și expresii");
+        idLesson = Math.toIntExact(instance.lessonDao().insert(lesson));
+
+        // add words
+        valuesWords = new ArrayList<>();
+        valuesWords.add(new Pair<>("bai", new ArrayList<>(Arrays.asList("supărare","necaz","bucluc","încurcătură"))));
+        valuesWords.add(new Pair<>("barabulă", new ArrayList<>(Collections.singletonList("cartof"))));
+        valuesWords.add(new Pair<>("gâvan", new ArrayList<>(Collections.singletonList("polonic"))));
+        valuesWords.add(new Pair<>("obijdui", new ArrayList<>(Collections.singletonList("a neîndreptăți"))));
+        valuesWords.add(new Pair<>("păpușoi", new ArrayList<>(Collections.singletonList("porumb"))));
+
+        wordsList = new ArrayList<>();
+        for(Pair<String, ArrayList<String>> pair : valuesWords){
+            ArrayList<Translation> translations = new ArrayList<>();
+            for(String item : pair.second){
+                translationsUniqueId++;
+                translations.add(new Translation(translationsUniqueId, item,"", ""));
+            }
+
+            Word word = new Word("",false, basicInfo, idLesson,false,"",
+                    translations,pair.first, "");
+            wordsList.add(word);
+        }
+
+        instance.wordDao().insertAll(wordsList);
+
+
+        // add expressions
+        valuesExp = new ArrayList<>();
+        valuesExp.add(new Pair<>("a băga de seamă", new ArrayList<>(Arrays.asList("a observa cu mare atenție", "a fi foarte atent în ceea ce face"))));
+        valuesExp.add(new Pair<>("a face pe niznaiul", new ArrayList<>(Arrays.asList("a se preface că nu ştie nimic", "a se preface că nu îi place ceva"))));
+        valuesExp.add(new Pair<>("a fi prins cu mâța-n sac", new ArrayList<>(Arrays.asList("a fi prins cu minciuna","a fi prins cu înșelând"))));
+        valuesExp.add(new Pair<>("a-și lua nasul la purtare", new ArrayList<>(Collections.singletonList("a se obrăznici"))));
+
+        expressionsList = new ArrayList<>();
         for(Pair<String, ArrayList<String>> pair : valuesExp){
             ArrayList<Translation> translations = new ArrayList<>();
             for(String item : pair.second){
