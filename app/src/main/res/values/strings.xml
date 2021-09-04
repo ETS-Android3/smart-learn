@@ -660,6 +660,7 @@
     <string name="word_added">Added</string>
     <string name="lesson_added">Added</string>
     <string name="google_account">Google account</string>
+    <string name="error_lesson_has_not_enough_words">Selected lesson has not enough words for quiz test</string>
 
     <string-array name="languages">
         <item>English</item>

@@ -661,6 +661,7 @@
     <string name="word_added">Adăugat cu</string>
     <string name="lesson_added">Adăugată cu</string>
     <string name="google_account">Cont Google</string>
+    <string name="error_lesson_has_not_enough_words">Lecția selectată nu are suficiente cuvinte pentru testul de tip Quiz</string>
 
     <string-array name="languages">
         <item>Engleză</item>

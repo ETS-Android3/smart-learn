@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.smart_learn.R;
+import com.smart_learn.data.entities.QuestionQuiz;
 import com.smart_learn.data.entities.Test;
 import com.smart_learn.databinding.FragmentLocalTestSetupBinding;
 import com.smart_learn.presenter.activities.test.TestSharedViewModel;
@@ -80,7 +81,6 @@ public abstract class LocalTestSetupFragment <VM extends LocalTestSetupViewModel
         numberPickerValues.setMinValue(Test.MIN_CUSTOM_SELECTED_VALUES);
         switch (sharedViewModel.getGeneratedTest().getType()){
             case Test.Types.WORD_WRITE:
-            case Test.Types.WORD_QUIZ:
             case Test.Types.WORD_MIXED_LETTERS:
                 if(sharedViewModel.getNrOfLessonWords() < 1){
                     showMessage(R.string.error_lesson_has_no_words);
@@ -89,6 +89,24 @@ public abstract class LocalTestSetupFragment <VM extends LocalTestSetupViewModel
                 }
                 numberPickerValues.setMaxValue(sharedViewModel.getNrOfLessonWords());
                 break;
+            case Test.Types.WORD_QUIZ:
+                if(sharedViewModel.getNrOfLessonWords() < 1){
+                    showMessage(R.string.error_lesson_has_no_words);
+                    this.requireActivity().onBackPressed();
+                    return;
+                }
+
+                // for Quiz test will be necessary a minimum number of words
+                if(sharedViewModel.getNrOfLessonWords() < QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION){
+                    showMessage(R.string.error_lesson_has_not_enough_words);
+                    this.requireActivity().onBackPressed();
+                    return;
+                }
+
+                numberPickerValues.setMinValue(QuestionQuiz.MIN_ITEMS_NECESSARY_FOR_GENERATION);
+                numberPickerValues.setMaxValue(sharedViewModel.getNrOfLessonWords());
+                break;
+
             case Test.Types.EXPRESSION_MIXED_WORDS:
             case Test.Types.EXPRESSION_TRUE_OR_FALSE:
                 if(sharedViewModel.getNrOfLessonExpressions() < 1){
