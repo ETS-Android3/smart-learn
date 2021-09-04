@@ -134,6 +134,10 @@ public class QuestionQuiz extends Question implements PresenterHelpers.DiffUtilC
             return ApplicationController.getInstance().getString(R.string.no_response_given);
         }
 
+        if(options.size() == 1 && options.get(0) == NO_INDEX){
+            return ApplicationController.getInstance().getString(R.string.no_response_given);
+        }
+
         StringBuilder response = new StringBuilder();
         int lim = options.size();
         for(int i = 0; i < lim; i++){

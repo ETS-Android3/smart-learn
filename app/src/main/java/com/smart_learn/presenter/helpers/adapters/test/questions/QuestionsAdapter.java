@@ -328,7 +328,9 @@ public class QuestionsAdapter extends ListAdapter<Question, RecyclerView.ViewHol
             }
 
             int userAnswer = item.getUserAnswer();
-            optionsStatus.set(userAnswer, WRONG);
+            if(userAnswer != QuestionQuiz.NO_INDEX){
+                optionsStatus.set(userAnswer, WRONG);
+            }
             ArrayList<Integer> correctAnswers = item.isReversed() ? item.getCorrectAnswersReversed() : item.getCorrectAnswers();
             for(Integer answer : correctAnswers){
                 optionsStatus.set(answer, CORRECT);
