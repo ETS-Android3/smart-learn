@@ -104,7 +104,7 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
 
     public Query getQueryForFilterForSharedLessons(long limit, @NonNull @NotNull String value) {
         return getLessonsCollectionReference(true)
-                .whereArrayContains(LessonDocument.Fields.PARTICIPANTS_FIELD_NAME, UserService.getInstance().getUserUid())
+                //.whereArrayContains(LessonDocument.Fields.PARTICIPANTS_FIELD_NAME, UserService.getInstance().getUserUid())
                 .whereArrayContains(DocumentMetadata.Fields.COMPOSED_SEARCH_LIST_FIELD_NAME, value)
                 .orderBy(LessonDocument.Fields.NAME_FIELD_NAME, Query.Direction.ASCENDING)
                 .limit(limit);
