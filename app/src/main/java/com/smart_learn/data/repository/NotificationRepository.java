@@ -404,6 +404,8 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         // make same setups
         lesson.getDocumentMetadata().setCounted(true);
         lesson.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+        lesson.getDocumentMetadata().setCreatedAt(System.currentTimeMillis());
+        lesson.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
         lesson.setFromUid(notificationDocument.getFromUid());
         lesson.setFromDisplayName(notificationDocument.getFromDisplayName());
         lesson.setType(LessonDocument.Types.RECEIVED);
@@ -418,6 +420,8 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         CollectionReference wordsCollection = UserWordService.getInstance().getWordsCollectionReference(lessonDocRef.getId(), false);
         for(WordDocument word : wordList){
             word.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+            word.getDocumentMetadata().setCreatedAt(System.currentTimeMillis());
+            word.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
             word.setFromSharedLesson(false);
             DocumentReference wordDocRef = wordsCollection.document();
             batch.set(wordDocRef, WordDocument.convertDocumentToHashMap(word));
@@ -426,6 +430,8 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
         CollectionReference expressionsCollection = UserExpressionService.getInstance().getExpressionsCollectionReference(lessonDocRef.getId(), false);
         for(ExpressionDocument expression : expressionList){
             expression.getDocumentMetadata().setOwner(UserService.getInstance().getUserUid());
+            expression.getDocumentMetadata().setCreatedAt(System.currentTimeMillis());
+            expression.getDocumentMetadata().setModifiedAt(System.currentTimeMillis());
             expression.setFromSharedLesson(false);
             DocumentReference expressionDocRef = expressionsCollection.document();
             batch.set(expressionDocRef, ExpressionDocument.convertDocumentToHashMap(expression));
