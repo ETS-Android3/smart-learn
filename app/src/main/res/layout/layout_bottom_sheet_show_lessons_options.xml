@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="isAllSelected"
+            type="Boolean" />
+        <variable
+            name="isLocalSelected"
+            type="Boolean" />
+        <variable
+            name="isReceivedSelected"
+            type="Boolean" />
+        <variable
+            name="isSharedSelected"
+            type="Boolean" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_show_all_layout_bottom_sheet_show_lessons_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isAllSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_local_personal_and_received"/>
+
+
+        <Button
+            android:id="@+id/btn_show_local_layout_bottom_sheet_show_lessons_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isLocalSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_personal"/>
+
+        <Button
+            android:id="@+id/btn_show_received_layout_bottom_sheet_show_lessons_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isReceivedSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_received"/>
+
+        <Button
+            android:id="@+id/btn_show_shared_layout_bottom_sheet_show_lessons_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@{isSharedSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_shared"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

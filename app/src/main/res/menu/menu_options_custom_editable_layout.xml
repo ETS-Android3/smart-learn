@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/group_edit_menu_options_custom_editable_layout">
+        <item
+            android:id="@+id/action_edit_menu_options_custom_editable_layout"
+            android:title="@string/edit"
+            android:icon="@drawable/ic_baseline_edit_24"
+            app:showAsAction="ifRoom"/>
+    </group>
+    <group
+        android:id="@+id/group_update_menu_options_custom_editable_layout">
+        <item
+            android:id="@+id/action_update_menu_options_custom_editable_layout"
+            android:title="@string/update"
+            android:icon="@drawable/ic_baseline_done_24"
+            app:showAsAction="always"/>
+        <item
+            android:id="@+id/action_cancel_menu_options_custom_editable_layout"
+            android:title="@string/cancel"
+            android:icon="@drawable/ic_baseline_close_24"
+            app:showAsAction="always"/>
+    </group>
+</menu>

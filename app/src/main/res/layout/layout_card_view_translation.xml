@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewHolder"
+            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter.TranslationViewHolder" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_translation"
+        android:theme="@style/AppTheme.CardView.MaterialDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{viewHolder.liveItemInfo.translation}"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_phonetic_layout_card_view_translation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:singleLine="true"
+                    android:text="@{viewHolder.liveItemInfo.phonetic}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="14sp"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <!-- Use this to center the toolbar at right end
+             https://stackoverflow.com/questions/10829835/right-align-button-in-horizontal-linearlayout/29209614#29209614
+             -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_layout_card_view_translation"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle.CardView"
+                app:menu="@menu/menu_card_view_translation" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_filter_date_new_layout_bottom_sheet_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
+            android:text="@string/by_date_newest_first"/>
+
+
+        <Button
+            android:id="@+id/btn_filter_date_old_layout_bottom_sheet_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
+            android:text="@string/by_date_oldest_first"/>
+
+        <Button
+            android:id="@+id/btn_filter_a_z_layout_bottom_sheet_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
+            android:text="@string/by_name_from_a_to_z"/>
+
+        <Button
+            android:id="@+id/btn_filter_z_a_layout_bottom_sheet_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@drawable/ic_baseline_unchecked_circle_24"
+            android:text="@string/by_name_from_z_to_a"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

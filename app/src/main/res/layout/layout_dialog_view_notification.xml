@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.SpannableString"/>
+        <variable
+            name="from"
+            type="String" />
+        <variable
+            name="createdTime"
+            type="String" />
+        <variable
+            name="spannedDescription"
+            type="SpannableString" />
+        <variable
+            name="message"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="start"
+                android:text="@string/from_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{from}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="start"
+                android:text="@string/received_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{createdTime}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/description_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{spannedDescription}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear_layout_message_layout_dialog_view_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/message_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{message}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/tv_account_marked_for_deletion_layout_dialog_view_notification"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textColor="@color/colorError"
+            android:text="@string/marked_for_deletion_notification"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btn_accept_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:text="@string/accept"/>
+
+        <Button
+            android:id="@+id/btn_maybe_later_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:text="@string/maybe_later"/>
+
+        <Button
+            android:id="@+id/btn_disabled_layout_layout_dialog_view_notification_for_friend_request"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Info.Disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:drawableEnd="@drawable/ic_baseline_done_24"
+            android:drawablePadding="5dp"
+            android:text="@string/request_accepted"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewHolder"
+            type="com.smart_learn.presenter.helpers.adapters.test.questions.QuestionsAdapter.QuestionQuizViewHolder" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_question_quiz"
+        android:theme="@style/AppTheme.CardView.MaterialDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:text="@string/requirement_point"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="18sp"/>
+
+            <!--
+               Leave  android:inputType="textMultiLine|textNoSuggestions"  in order to disable spellcheck.
+               https://stackoverflow.com/questions/21449505/how-to-disable-spellcheck-android-edittext/33993169#33993169 -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="start"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:scrollbars="vertical"
+                android:text="@{viewHolder.liveQuestionDescription}"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLines="4"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="16sp"
+                android:autofillHints="question"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:text="@string/options_point"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="18sp"/>
+
+            <Button
+                android:id="@+id/btn_option_a_layout_card_view_question_quiz"
+                style="@style/AppTheme.ButtonStyle.WithBorder.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:enabled="false"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/img_letter_a_16"
+                android:drawablePadding="10dp" />
+
+            <Button
+                android:id="@+id/btn_option_b_layout_card_view_question_quiz"
+                style="@style/AppTheme.ButtonStyle.WithBorder.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:enabled="false"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/img_letter_b_16"
+                android:drawablePadding="10dp" />
+
+            <Button
+                android:id="@+id/btn_option_c_layout_card_view_question_quiz"
+                style="@style/AppTheme.ButtonStyle.WithBorder.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:enabled="false"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/img_letter_c_16"
+                android:drawablePadding="10dp" />
+
+            <Button
+                android:id="@+id/btn_option_d_layout_card_view_question_quiz"
+                style="@style/AppTheme.ButtonStyle.WithBorder.White"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:enabled="false"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/img_letter_d_16"
+                android:drawablePadding="10dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_answer_point"
+                    android:layout_marginEnd="5dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="@{viewHolder.liveUserAnswer}"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/correct_answer_point"
+                    android:layout_marginEnd="5dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="@{viewHolder.liveCorrectAnswer}"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,670 @@
+<resources>
+    <string name="action_settings">Setări</string>
+    <string name="app_name" translatable="false">smart-learn</string>
+    <string name="navigation_drawer_open">Deschide sertarul de navigare</string>
+    <string name="navigation_drawer_close">Închide sertarul de navigare</string>
+
+    <string name="search">Caută</string>
+    <string name="update_lesson">Actualizează lecția</string>
+    <string name="test">Test</string>
+    <string name="image">imagine</string>
+    <string name="add">Adaugă</string>
+    <string name="cancel">Anulează</string>
+    <string name="ok">OK</string>
+    <string name="no">Nu</string>
+    <string name="add_lesson">Adaugă o nouă lecție</string>
+    <string name="save">Salvare</string>
+
+    <!-- NavigationDrawer -->
+    <string name="home">Acasă</string>
+    <string name="account">Cont</string>
+    <string name="community">Comunitate</string>
+    <string name="lessons">Lecții</string>
+    <string name="settings">Setări</string>
+    <string name="login">Logare</string>
+    <string name="register">Înregistrare</string>
+
+
+    <!-- MainActivity -->
+    <string name="error_profile_name_is_same">Numele de profil nu a fost schimbat</string>
+    <string name="error_updating_user_display_name">Eroare la încercarea salvării numelui de profil. Acesta nu a putut fi schimbat.</string>
+    <string name="error_deleting_user">Contul nu poate fi șters</string>
+    <string name="error_sensitive_deletion">Această operațiune este sensibilă și necesită autentificare recentă. Conectează-te din nou înainte de a reîncerca această solicitare.</string>
+
+    <string name="success_display_name_updated">Numele profilului a fost schimbat</string>
+    <string name="success_account_deleted">Contul a fost șters</string>
+
+    <string name="online">Comune</string>
+    <string name="delete_account">Șterge contul</string>
+    <string name="email_and_password">E-mail și parolă</string>
+    <string name="delete_account_description">Sigur doreşti să ştergi contul?</string>
+    <string name="profile_name_point">Nume:</string>
+    <string name="email_point">E-mail:</string>
+    <string name="register_provider_point">Modalitatea de înregistrare:</string>
+    <string name="register_time_point">Data înregistrării:</string>
+    <string name="profile">Profil</string>
+
+
+    <!-- GuestActivity -->
+    <string name="notebook_summary">Status caiet</string>
+    <string name="user_icon">Imagine utilizator</string>
+    <string name="hi">Bună</string>
+    <string name="account_overview">Rezumat activitate</string>
+    <string name="expressions">Expresii</string>
+    <string name="tests_summary">Status teste</string>
+    <string name="active">Active</string>
+    <string name="finished">Finalizate</string>
+    <string name="success_rate">Rata de succes</string>
+
+
+    <!-- AuthenticationActivity -->
+    <string name="error_empty_credentials">Datele de conectare nu au fost introduse</string>
+    <string name="error_email_not_valid">Adresa de e-mail nu este validă</string>
+    <string name="error_password_too_short">Parola introdusă este prea scurtă. Folosește minim</string>
+    <string name="error_passwords_not_matching">Parolele nu se potrivesc</string>
+    <string name="error_authentication_failed">Autentificare eșuată</string>
+    <string name="error_register_failed">Înregistrea a eșuat</string>
+    <string name="error_verify_email_send">E-mailul de verificare nu a fost trimis. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="error_no_network">Acest dispozitiv nu este conectat la o rețea</string>
+    <string name="error_no_internet_connection">Internetul nu este disponibil</string>
+    <string name="error_weak_password">Parola este prea slabă. Folosește cel puțin o literă și un număr.</string>
+    <string name="error_invalid_email">E-mailul nu este valid</string>
+    <string name="error_user_exists">Acest email există deja</string>
+    <string name="error_login_failed">Autentificare eșuată</string>
+    <string name="error_user_not_exist">acest cont nu există</string>
+    <string name="error_invalid_login_credentials">Datele de conectare nu sunt valide</string>
+    <string name="error_to_many_login_requests">Prea multe solicitări de autentificare. Acest cont este blocat temporar. Încearcă să resetezi parola sau încearcă să te conectezi mai târziu.</string>
+    <string name="error_email_not_verified">Email-ul nu este verificat. Ți-am trimis un e-mail de verificare.</string>
+    <string name="error_emails_not_matching">Adresele de e-mail nu se potrivesc</string>
+    <string name="error_required">Necesar</string>
+    <string name="error_profile_too_long">Alege un nume de profil mai scurt</string>
+    <string name="error_email_is_required">E-mailul este obligatoriu</string>
+    <string name="error_password_too_long">Parola introdusă este prea lungă. Maxim</string>
+    <string name="error_email_too_long">E-mailul este prea lung</string>
+    <string name="error_send_password_reset_email">E-mailul de resetare nu a fost trimis. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="error_google_login_failed">Autentificarea prin intermediul Google a eșuat</string>
+
+    <string name="success_register_successfully">Înregistrare reușită! Te rugăm să îți verifici adresa de e-mail.</string>
+    <string name="success_verify_email_send">A fost trimis un e-mail de verificare</string>
+    <string name="success_send_password_reset_email">E-mailul pentru resetare a fost trimis</string>
+
+    <string name="verify_email">Adresa de email nu a fost verificată. Te rugăm să îți verifici adresa de email.</string>
+    <string name="registering_user">Se face înregistrea</string>
+    <string name="sign_in_user">Conectare în curs</string>
+    <string name="characters">caractere</string>
+    <string name="are_allowed">sunt permise</string>
+    <string name="logout">Delogare</string>
+    <string name="intro">Autentificare</string>
+    <string name="continue_with_email">Conectează-te cu e-mailul</string>
+    <string name="sign_in_with_google">Conectează-te cu Google</string>
+    <string name="not_have_an_account">Nu ai un cont?</string>
+    <string name="register_with_email">Înregistrează-te cu e-mailul</string>
+    <string name="already_have_an_account">Ai deja un cont?</string>
+    <string name="email">E-mail</string>
+    <string name="password">Parolă</string>
+    <string name="forgot_password">Ai uitat parola?</string>
+    <string name="profile_name">Numele utilizatorului</string>
+    <string name="retype_email">Rescrie adresa de e-mail</string>
+    <string name="retype_password">Reintrodu parola</string>
+
+
+    <!-- NotebookActivity -->
+    <string name="error_loading_screen">Eroare la încărcarea ecranului</string>
+    <string name="error_lesson_can_not_be_opened">Lecția nu poate fi deschisă</string>
+    <string name="error_selected_item_can_not_be_opened">Elementul selectat nu poate fi deschis</string>
+    <string name="error_lesson_name_too_long">Numele lecției este prea lung</string>
+    <string name="error_word_can_not_be_opened">Cuvântul nu poate fi încărcat</string>
+    <string name="error_lesson_name_is_same">Numele lecției este același</string>
+
+    <string name="add_new">Adaugă o nouă intrare</string>
+    <string name="selected">Selectate:</string>
+    <string name="words">Cuvinte</string>
+    <string name="lesson_name">Numele lecției</string>
+
+
+    <!-- AccountOverviewFragment -->
+    <string name="this_is_your_account_overview">Iată un scurt rezumat al activității tale</string>
+    <string name="local">Locală</string>
+
+
+    <!-- BasicFragmentForRecyclerView -->
+    <string name="no_items">Nu există elemente</string>
+    <string name="empty"> </string>
+
+    <!-- NotificationsFragment -->
+    <string name="no_notifications">Nu există notificări</string>
+    <string name="hide_notification">Ascunde notificarea</string>
+    <string name="mark_as_read">Marchează ca citit</string>
+    <string name="mark_as_unread">Marchează ca necitit</string>
+    <string name="notifications">Notificări</string>
+    <string name="notification">Notificare</string>
+    <string name="new_notification_title">Notificare nouă</string>
+    <string name="from_point">De la:</string>
+    <string name="received_point">Primită:</string>
+    <string name="description_point">Descriere:</string>
+    <string name="no_notification_info">Nici o informație disponibilă</string>
+    <string name="normal_lesson_received_title">Lecție nouă</string>
+    <string name="shared_lesson_received_title">Lecție comună nouă</string>
+    <string name="friend_request_received_title">Cerere de prietenie nouă</string>
+    <string name="word_received_title">Cuvânt nou</string>
+    <string name="expression_received_title">Expresie nouă</string>
+    <string name="nothing_here">Nu este nimic aici</string>
+    <string name="friend_request_received_description">Ai primit o nouă cerere de prietenie de la</string>
+    <string name="normal_lesson_received_description_1">Ai primit lecția</string>
+    <string name="normal_lesson_received_description_2">. O poți găsi în lecțiile primite.</string>
+    <string name="word_received_description_1">Ai primit cuvântul</string>
+    <string name="word_received_description_2">. Îl poți găsi în cuvintele primite.</string>
+    <string name="expression_received_description_1">Ai primit expresia</string>
+    <string name="expression_received_description_2">. O poți găsi în expresiile primite.</string>
+    <string name="shared_lesson_received_description_1">Ai primit acces la lecția comună</string>
+    <string name="shared_lesson_received_description_2">. O poți găsi în lecțiile tale comune.</string>
+    <string name="friend_request_accepted_title">Cerere de prietenie acceptată</string>
+    <string name="friend_request_accepted_description_1">Utilizatorul</string>
+    <string name="friend_request_accepted_description_2">ți-a acceptat cererea de prietenie.</string>
+    <string name="friend_removed_you_title">Prieten eliminat</string>
+    <string name="friend_removed_you_description_1">Utilizatorul</string>
+    <string name="friend_removed_you_description_2">te-a scos din lista lui de prieteni. Nu mai sunteți prieteni.</string>
+    <string name="you_removed_friend_title">Ai eliminat un prieten</string>
+    <string name="you_removed_friend_description_1">Ai eliminat utilizatorul</string>
+    <string name="you_removed_friend_description_2">din lista ta de prieteni.</string>
+    <string name="friend_request_sent_title">Cerere de prietenie trimisă</string>
+    <string name="friend_request_sent_description_1">Ai trimis o cerere de prietenie utilizatorului</string>
+    <string name="friend_request_sent_description_2">. Te vom anunța când cererea este acceptată.</string>
+    <string name="normal_lesson_sent_title">Ai partajat o lecție</string>
+    <string name="shared_lesson_sent_title">Ai trimis o lecție comună</string>
+    <string name="normal_lesson_sent_description_1">Ai partajat lecția</string>
+    <string name="normal_lesson_sent_description_2">.</string>
+    <string name="shared_lesson_sent_description_1">Ai trimis lecția comună</string>
+    <string name="shared_lesson_sent_description_2">.</string>
+    <string name="message_point">Mesaj:</string>
+    <string name="error_accept_request">Cererea nu poate fi acceptată. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="accepting_request">Se acceptă cererea</string>
+    <string name="close">Închide</string>
+    <string name="request_accepted">Cererea a fost acceptată</string>
+    <string name="accept">Acceptă</string>
+    <string name="maybe_later">Mai târziu</string>
+
+
+    <!-- CommunityActivity -->
+    <string name="no_friends">Nu ai adăugat nici un prieten</string>
+    <string name="friends">Prieteni</string>
+    <string name="no_users">Nu există utilizatori</string>
+    <string name="users">Utilizatori</string>
+    <string name="search_users">Utilizează opțiunea de căutare pentru a găsi utilizatorii prin intermediul e-mailului lor</string>
+    <string name="name_point">Nume:</string>
+    <string name="friends_since_point">Prieteni din data de:</string>
+    <string name="remove_friend">Șterge prieten</string>
+    <string name="friend_profile">Profilul prietenului</string>
+    <string name="remove_friend_description">Sigur dorești să elimini prietenul?</string>
+    <string name="remove">Elimină</string>
+    <string name="error_remove_friend">Imposibil de eliminat prietenul</string>
+    <string name="success_remove_friend">Prietenul a fost eliminat</string>
+    <string name="error_search_user">Utilizatorul căutat nu a fost găsit</string>
+    <string name="user_with_email">Utilizatorul cu e-mailul</string>
+    <string name="not_found">nu a fost găsit!</string>
+    <string name="error_send_friend_request">Eroare la trimiterea cererii. Încearcă mai târziu.</string>
+    <string name="success_send_friend_request">Cererea de prietenie a fost trimisă</string>
+    <string name="send_friend_request">Trimite cerere de prietenie</string>
+    <string name="friend_request_sent">Cererea de prietenie a fost trimisă</string>
+    <string name="user_profile">Profil utilizator</string>
+    <string name="is_your_friend">Este prietenul tău</string>
+    <string name="is_you_description">ești tu. Dacă dorești să îți vezi profilul, te rugăm să îți verifici pagina contului.</string>
+    <string name="search_user_by_email">Caută utilizatorul după e-mail</string>
+    <string name="request_already_sent">Cererea a fost trimisă. Te rugăm să aștepți până când se termină solicitarea.</string>
+    <string name="decline">Respinge</string>
+    <string name="request_declined">Solicitarea a fost respinsă</string>
+    <string name="error_decline_request">Solicitarea nu poate fi refuzată. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="request_received">Acceptă cererea de prietenie</string>
+    <string name="accept_friend_request">Acceptă cererea de prietenie</string>
+    <string name="dismiss">Renunță</string>
+    <string name="sending_request">Se trimite cererea</string>
+    <string name="search_is_in_progress">Te rugăm să aștepți până la finalizarea căutării curente.</string>
+    <string name="removing_friend">Eliminarea prietenului</string>
+    <string name="action_finished">Acțiunea s-a încheiat</string>
+
+    <!-- BasicLessonsFragment -->
+    <string name="no_lessons">Nu există lecții</string>
+
+    <!-- HomeLessonFragment -->
+    <string name="delete_lesson">Șterge lecția</string>
+    <string name="delete_lesson_description_1">Această lecție are</string>
+    <string name="delete_lesson_description_2">cuvinte</string>
+    <string name="delete_lesson_description_3">și</string>
+    <string name="delete_lesson_description_4">expresii</string>
+    <string name="delete_lesson_description_5">. Te rugăm să ștergi intrările înainte de a șterge această lecție.</string>
+    <string name="delete">Șterge</string>
+    <string name="error_deleting_lesson">Această lecție nu poate fi ștearsă. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="success_adding_lesson">A fost adăugată lecția</string>
+    <string name="error_adding_lesson">Lecția nu a putut fi adăugată</string>
+    <string name="success_deleting_lesson">Lecția a fost ștearsă</string>
+    <string name="notes">Notițe</string>
+    <string name="error_update_lesson_name">Lecția nu a fost actualizată</string>
+    <string name="error_notes_is_same">Notițele nu au fost modificate</string>
+    <string name="error_notes_too_long">Notițele sunt prea lungi</string>
+    <string name="success_update_lesson_name">Numele lecției a fost actualizat</string>
+    <string name="error_update_notes">Notițele nu au fost actualizate</string>
+    <string name="success_update_notes">Notițele au fost actualizate</string>
+    <string name="lesson_overview">Informații despre lecție</string>
+    <string name="words_point">Cuvinte:</string>
+    <string name="expressions_point">Expresii:</string>
+    <string name="notebook">Caiet</string>
+    <string name="update">Modifică</string>
+    <string name="name">Nume</string>
+    <string name="update_notes">Actualizează notițele</string>
+    <string name="error_delete_words">Cuvintele nu pot fi șterse</string>
+    <string name="error_adding_word">Cuvântul nu poate fi adăugat</string>
+    <string name="success_deleting_word">Cuvântul a fost șters</string>
+    <string name="error_deleting_word">Cuvântul nu poate fi șters</string>
+    <string name="error_word_too_long">Cuvântul este prea lung</string>
+    <string name="error_translation_too_long">Traducerea este prea lungă</string>
+    <string name="word">Cuvânt</string>
+    <string name="translation_optional">Traducere (opțional)</string>
+    <string name="add_word">Adaugă un nou cuvânt</string>
+    <string name="success_adding_word">Cuvântul a fost adăugat</string>
+
+
+    <!-- HomeWordFragment -->
+    <string name="word_overview">Informații despre cuvânt</string>
+    <string name="translations">Traduceri</string>
+    <string name="error_word_name_is_same">Cuvântul este același</string>
+    <string name="error_word_phonetic_is_same">Traducerea fonetică este aceeași</string>
+    <string name="error_phonetic_too_long">Traducerea fonetică este prea lungă</string>
+    <string name="error_update_word">Cuvântul nu a fost actualizat</string>
+    <string name="success_update_word">Cuvântul a fost actualizat</string>
+    <string name="phonetic">Traducere fonetică</string>
+    <string name="update_word">Actualizează cuvântul</string>
+    <string name="update_phonetic">Actualizează traducerea fonetică</string>
+    <string name="phonetic_optional">Traducere fonetică (opțional)</string>
+    <string name="error_add_translation">Eroare la adăugarea traducerii</string>
+    <string name="error_update_translations">Eroare la actualizarea traducerilor</string>
+    <string name="success_update_translations">Traducerile au fost actualizate</string>
+    <string name="error_translation_is_same">Traducerea nu a fost modificată</string>
+    <string name="error_phonetic_is_same">Traducere fonetică nu a fost modificată</string>
+    <string name="error_translation_exist">Această traducere există deja</string>
+    <string name="success_deleting_translation">Traducerea a fost ștearsă</string>
+    <string name="error_deleting_translation">Traducerea nu a fost ștearsă</string>
+    <string name="error_delete_translation">Eroare la ștergerea traducerii</string>
+    <string name="success_delete_translation">Traducerea a fost ștearsă</string>
+    <string name="error_update_phonetic">Eroare la actualizarea traducerii fonetice</string>
+    <string name="success_update_phonetic">Traducerea fonetică a fost actualizată</string>
+    <string name="error_add_translations">Eroare la adăugarea traducerii</string>
+    <string name="success_add_translations">Traducerea a fost adăugată</string>
+    <string name="add_translation">Adaugă o nouă traducere</string>
+    <string name="update_translation">Actualizează traducerea</string>
+    <string name="translation">Traducere</string>
+    <string name="value">Valoare</string>
+    <string name="translation_overview">Informații traducere</string>
+    <string name="change_info">Schimbă informațiile</string>
+    <string name="translation_point">Traducere:</string>
+    <string name="value_point">Valoare:</string>
+    <string name="phonetic_point">Traducere fonetică:</string>
+
+    <!-- ExpressionsFragment -->
+    <string name="add_expression">Adaugă o nouă expresie</string>
+    <string name="error_expression_too_long">Expresia este prea lungă</string>
+    <string name="expression">Expresie</string>
+    <string name="error_expression_can_not_be_opened">Expresia nu poate fi deschisă</string>
+    <string name="error_adding_expression">Eroare la adăugarea expresiei</string>
+    <string name="success_adding_expression">A fost adăugată expresia</string>
+    <string name="success_deleting_expression">Expresia a fost ștearsă</string>
+    <string name="error_deleting_expression">Expresia nu poate fi ștearsă</string>
+
+    <!-- HomeExpressionFragment -->
+    <string name="update_expression">Actualizează expresia</string>
+    <string name="error_expression_is_same">Expresia nu a fost modificată</string>
+    <string name="expression_overview">Informații despre expresie</string>
+    <string name="error_update_expression">Eroare la actualizarea expresiei</string>
+    <string name="success_update_expression">Expresia a fost actualizată</string>
+
+    <!-- GuestWordContainerFragment -->
+    <string name="overview">Prezentare generală</string>
+    <string name="meaning">Sens</string>
+    <string name="examples">Exemple</string>
+
+    <!-- LessonDocument -->
+    <string name="local_lesson">Tip: locală</string>
+    <string name="received_lesson">Tip: primită</string>
+    <string name="shared_lesson">Tip: comună</string>
+
+    <!-- UserLessonsFragment -->
+    <string name="share">Partajare</string>
+
+    <!-- FriendsFragment -->
+    <string name="selected_friends_point">Prieteni selectați:</string>
+    <string name="share_lesson">Partajează lecția</string>
+    <string name="success_shared_lesson">Lecția a fost partajată</string>
+    <string name="error_share_lesson">Lecția nu a fost partajată</string>
+    <string name="no_friend_selected">Nu ai selectat nici un prieten</string>
+
+    <!-- UserHomeLessonFragment -->
+    <string name="received_from">Primită de la</string>
+    <string name="from">de la</string>
+    <string name="string_with_other_users">cu alți utilizatori</string>
+    <string name="type">Tip:</string>
+    <string name="received">primită</string>
+    <string name="shared">comună</string>
+    <string name="personal">locală</string>
+
+    <!-- WordsFragment -->
+    <string name="no_words">Nu există cuvinte</string>
+
+    <!-- UserWordsFragment -->
+    <string name="error_deleting_words">Nu se pot șterge cuvintele selectate</string>
+    <string name="success_deleting_words">Cuvintele selectate au fost șterse</string>
+    <string name="no_selected_word">Nu este selectat niciun cuvânt</string>
+    <string name="selected_words_point">Selectate:</string>
+
+    <!-- UserExpressionsFragment -->
+    <string name="error_deleting_expressions">Expresiile nu pot fi șterse</string>
+    <string name="no_selected_expression">Nu este selectată nicio expresie</string>
+    <string name="success_deleting_expressions">Expresiile selectate au fost șterse</string>
+    <string name="selected_point">Selectate:</string>
+
+    <string name="january">Ianuarie</string>
+    <string name="february">Februarie</string>
+    <string name="march">Martie</string>
+    <string name="april">Aprilie</string>
+    <string name="may">Mai</string>
+    <string name="june">Iunie</string>
+    <string name="july">Iulie</string>
+    <string name="august">August</string>
+    <string name="september">Septembrie</string>
+    <string name="october">Octombrie</string>
+    <string name="november">Noiembrie</string>
+    <string name="december">Decembrie</string>
+
+    <!-- Question entity -->
+    <string name="question_quiz_description">Alege traducerea corectă pentru cuvântul următor</string>
+    <string name="question_true_or_false_description">Alege dacă următoarea traducere a expresiei este corectă sau nu</string>
+    <string name="question_word_full_write_description">Scrie traducerea pentru cuvântul următor</string>
+    <string name="question_mixed_description">Aranjează valorile în ordinea corectă</string>
+    <string name="true_option">Adevarat</string>
+    <string name="false_option">Fals</string>
+    <string name="no_response_given">Nu ai răspuns</string>
+
+    <!-- Test entity -->
+    <string name="word_full_write">Cuvânt scris complet</string>
+    <string name="word_quiz">Quiz</string>
+    <string name="word_mixed_letters">Litere amestecate</string>
+    <string name="expression_true_or_false">Adevărat sau fals</string>
+    <string name="expression_mixed_words">Cuvinte amestecate</string>
+    <string name="monday">Lun.</string>
+    <string name="tuesday">Mar.</string>
+    <string name="wednesday">Mie.</string>
+    <string name="thursday">Joi</string>
+    <string name="friday">Vin.</string>
+    <string name="saturday">Sâm.</string>
+    <string name="sunday">Dum.</string>
+    <string name="every_day">În fiecare zi</string>
+    <string name="test_name">Test</string>
+
+
+    <!-- TestActivity -->
+    <string name="filter">Filtrează</string>
+    <string name="no_expressions">Nu există expresii</string>
+    <string name="hide">Ascunde</string>
+    <string name="no_tests">Nu există teste</string>
+    <string name="tests">Teste</string>
+    <string name="error_test_can_not_be_opened">Testul nu poate fi deschis</string>
+    <string name="test_info">Informații despre test</string>
+    <string name="see_results">Vezi rezultatele</string>
+    <string name="start_date_point">Data de început:</string>
+    <string name="tested_lesson_point">Lecție testată:</string>
+    <string name="test_number_point">Numărul testului:</string>
+    <string name="history">Istoric</string>
+    <string name="schedule">Planificare</string>
+    <string name="start_new_local_test">Începe un nou test local</string>
+    <string name="show_all">Afișează tot</string>
+    <string name="show_only_finished">Afișează numai testele finalizate</string>
+    <string name="show_only_in_progress">Afișează numai testele în progress</string>
+    <string name="status_point">Status:</string>
+    <string name="finished_2">Finalizat</string>
+    <string name="in_progress">În progres</string>
+    <string name="error_page_can_not_be_opened">Eroare la deschiderea paginii</string>
+    <string name="select_lesson">Selectează lecția</string>
+    <string name="word_tests">Teste din cuvinte</string>
+    <string name="full_write">Scrie cuvântul complet</string>
+    <string name="quiz">Quiz</string>
+    <string name="mixed_words">Cuvinte amestecate</string>
+    <string name="expression_tests">Teste din expresii</string>
+    <string name="select_test_type">Selectează tipul de test</string>
+    <string name="lesson_values_selection">Selectarea valorilor lecției</string>
+    <string name="use_custom_selection">Folosește selecția personalizată</string>
+    <string name="use_all">Adaugă-le pe toate</string>
+    <string name="use_specific_number">Folosește un număr specific</string>
+    <string name="use_counter">Test contraconometru</string>
+    <string name="yes">Da</string>
+    <string name="select_test_options">Selectează opțiunile testului</string>
+    <string name="next">Mergi la următorul pas</string>
+    <string name="error_can_not_continue">Nu se poate continua</string>
+    <string name="error_lesson_has_no_words">Lecția selectată nu are cuvinte</string>
+    <string name="error_lesson_has_no_expressions">Lecția selectată nu are expresii</string>
+    <string name="error_lesson_has_no_entries">Lecția selectată nu are intrări</string>
+    <string name="error_unable_to_continue_with_setup">Nu se poate continua configurarea</string>
+    <string name="generating_test">Testului se generează</string>
+    <string name="error">Eroare</string>
+    <string name="error_not_good_question_type">Nu s-a putut încărca întrebarea</string>
+    <string name="your_answer_point">Răspunsul tău:</string>
+    <string name="no_questions">Nu există întrebări</string>
+    <string name="test_result">Rezultatul testului</string>
+    <string name="continue_test">Continuă testul</string>
+    <string name="see_progress">Vezi progresul</string>
+    <string name="mixed_letters">Litere amestecate</string>
+    <string name="custom_name">Nume</string>
+    <string name="date">Dată</string>
+    <string name="repeat">Repetă</string>
+    <string name="save_changes">Salvează modificările</string>
+    <string name="select_test_date">Selectează data testului</string>
+    <string name="error_date_is_not_set">Trebuie să setezi o dată sau un interval de repetare</string>
+    <string name="error_time_is_not_set">Ora nu este setată</string>
+    <string name="test_name_optional">Nume test (opțional)</string>
+    <string name="error_name_is_same">Numele inserat este același</string>
+    <string name="error_test_custom_name_too_long">Numele inserat este prea lung</string>
+    <string name="time_point">Oră:</string>
+    <string name="date_point">Dată:</string>
+    <string name="monday_small">L</string>
+    <string name="tuesday_small">M</string>
+    <string name="wednesday_small">M</string>
+    <string name="thursday_small">J</string>
+    <string name="friday_small">V</string>
+    <string name="saturday_small">S</string>
+    <string name="sunday_small">D</string>
+    <string name="test_options">Opțiunile testului</string>
+    <string name="test_type_point">Tip:</string>
+    <string name="values_selection_point">Selectarea valorilor:</string>
+    <string name="use_counter_point">Test contraconometru:</string>
+    <string name="error_can_not_process_selection">Nu se poate procesa selecția</string>
+    <string name="success_test_updated">Testul a fost actualizat</string>
+    <string name="error_test_updated">Testul nu a fost actualizat</string>
+    <string name="custom_selection">Selecție personalizată</string>
+    <string name="use_specific_number_of_selections">Folosește un număr specific de selecții</string>
+    <string name="test_saved">Testul a fost salvat</string>
+    <string name="error_can_not_save_test">Testul nu poate fi salvat</string>
+    <string name="success_test_generated">Testul a fost generat</string>
+    <string name="error_date_is_in_past">Data nu poate fi în trecut</string>
+    <string name="error_time_is_in_past">Timpul nu poate fi în trecut</string>
+    <string name="success_delete_test">Testul a fost șters</string>
+    <string name="error_delete_test">Nu se poate șterge testul</string>
+    <string name="error_can_not_set_schedule">Testul programat nu poate fi setat</string>
+    <string name="error_can_not_set_schedule_because_date_is_in_past">Nu se poate seta testul programat deoarece data este în trecut</string>
+    <string name="total_test_time">Timpul total al testului</string>
+    <string name="progress">Progres</string>
+    <string name="next_question">Următoarea întrebare</string>
+    <string name="submit">Trimite</string>
+    <string name="submit_answer">Trimite răspunsul</string>
+    <string name="reverse">Inversează</string>
+    <string name="progress_saved">Progres salvat</string>
+    <string name="error_progress_saved">Nu s-a putut salva progresul</string>
+    <string name="test_time_finished">Timpul total alocat testului a fost depășit</string>
+    <string name="correct_answers">Răspunsuri corecte</string>
+    <string name="error_can_not_open_results">Nu s-au putut deschide rezultatele</string>
+    <string name="your_answer">Răspunsul tău</string>
+    <string name="question">Întrebare</string>
+    <string name="current_order">Ordinea curentă</string>
+    <string name="success_point">Succes:</string>
+    <string name="generation_date_point">Data generării:</string>
+    <string name="general_info">Informatii generale</string>
+    <string name="progress_info">Informații despre progres</string>
+    <string name="test_name_point">Numele testului:</string>
+    <string name="current_progress_point">Progresul actual:</string>
+    <string name="success_rate_point">Rata de succes:</string>
+    <string name="current_success_rate">Rata de succes actuală</string>
+    <string name="current_success_rate_point">Rata de succes actuală:</string>
+    <string name="correct_answers_point">Răspunsuri corecte:</string>
+    <string name="result">Rezultat</string>
+    <string name="question_point">Întrebare:</string>
+    <string name="correct">Corect</string>
+    <string name="wrong">Greșit</string>
+    <string name="correct_answer_point">Răspuns corect:</string>
+    <string name="requirement_point">Cerință:</string>
+    <string name="results">Rezultate</string>
+    <string name="options_point">Opțiuni:</string>
+
+    <string name="total_test_time_point">Durata testului:</string>
+    <string name="proposed_translation_point">Traducere propusă:</string>
+    <string name="from_lesson_point">Din lecția:</string>
+    <string name="start_new_online_test">Începe un nou test comun</string>
+    <string name="error_can_not_open_test">Nu se pot deschide informațiile testului</string>
+    <string name="show_all_local">Afișează toate testele locale</string>
+    <string name="show_only_local_finished">Afișează doar testele locale finalizate</string>
+    <string name="show_only_local_in_progress">Afișează doar testele locale în progress</string>
+    <string name="show_online">Afișează toate testele comune</string>
+
+    <string name="participants_point">Participanți:</string>
+    <string name="none">nici unul</string>
+    <string name="see_test">Vezi testul</string>
+    <string name="created_by_point">Creat de:</string>
+    <string name="continue_value">Continuă</string>
+    <string name="chat">Chat</string>
+    <string name="online_test">Test comun</string>
+    <string name="participants">Participanți</string>
+    <string name="no_messages">Nici un mesaj</string>
+    <string name="done_icon">Imagine finalizat</string>
+    <string name="error_no_internet_connection_snackbar_description">Internetul nu este disponibil. Datele nu pot fi sincronizate.</string>
+    <string name="error_no_network_snackbar_description">Dispozitivul tău nu este conectat la o rețea. Datele nu pot fi sincronizate.</string>
+
+
+    <!-- NotificationDocument -->
+    <string name="online_test_invitation_received_description_1">Ai primit acces la un test comun</string>
+    <string name="online_test_invitation_received_description_2">. Îl poți găsi în testele tale comune.</string>
+    <string name="online_test_invitation_received_title">Invitație la test comun</string>
+
+
+    <string name="error_add_new_shared_lesson">Nu se poate adăuga o lecție comună nouă</string>
+    <string name="add_new_shared_lesson">Adaugă o lecție comună nouă</string>
+    <string name="success_add_new_shared_lesson">A fost adăugată lecția</string>
+    <string name="show_local_personal_and_received">Afișeză lecțiile locale (personale și primite)</string>
+    <string name="show_personal">Afișează doar lecțiile personale</string>
+    <string name="show_received">Afișează doar lecțiile primite</string>
+    <string name="show_shared">Afișează doar lecțiile comune</string>
+    <string name="no_participants">Această lecție nu conține participanți</string>
+    <string name="created_by">creată de</string>
+    <string name="language_point">Limbă:</string>
+    <string name="launch_now">Începe acum</string>
+
+    <string name="change_language">Schimbă limba</string>
+    <string name="change_language_alert">Această aplicație trebuie repornită pentru a aplica modificările</string>
+    <string name="preparing_test">Se pregătește testul</string>
+    <string name="scheduled_test_alarm_notification_title">Este timpul pentru un test</string>
+    <string name="scheduled_test_alarm_notification_message">Apasă dacă dorești să începi testul</string>
+    <string name="friend_request_received_description_push">Ai primit o cerere de prietenie. Verifică centrul de notificări pentru mai multe informații.</string>
+    <string name="friend_request_accepted_description_push">Cererea ta de prietenie a fost acceptată. Verifică centrul de notificări pentru mai multe informații.</string>
+    <string name="normal_lesson_received_description_push">Ai primit o nouă lecție. Verifică centrul de notificări pentru mai multe informații.</string>
+    <string name="shared_lesson_received_description_push">Ai primit acces la o lecție comună. Verifică centrul de notificări pentru mai multe informații.</string>
+    <string name="online_test_invitation_received_description_push">Ai primit o invitație la un test comun. Verifică centrul de notificări pentru mai multe informații.</string>
+    <string name="from_lesson">din lecția</string>
+    <string name="success_set_schedule">Alarma a fost setată</string>
+    <string name="success_cancel_schedule">Alarma a fost anulată</string>
+    <string name="error_expression_has_no_translation">Această expresie nu poate fi selectată deoarece nu are nici o traducere</string>
+    <string name="error_word_has_no_translation">Acest cuvânt nu poate fi selectat deoarece nu are nici o traducere.</string>
+    <string name="error_word_can_not_be_selected">Acest cuvânt nu poate fi selectat</string>
+    <string name="error_expression_can_not_be_selected">Această expresie nu poate fi selectată</string>
+    <string name="any_of_the_followings">Oricare dintre următoarele opțiuni:</string>
+    <string name="error_not_enough_words_1">Nu sunt suficiente cuvinte pentru acest tip de test. Minim </string>
+    <string name="error_not_enough_words_2">sunt necesare. Acum lecția are</string>
+    <string name="error_not_enough_words_3">cuvinte.</string>
+    <string name="error_can_not_generate_test">Nu se poate genera testul</string>
+    <string name="error_invalid_number_of_questions">A fost generat un număr invalid de întrebări. Nu se poate genera testul.</string>
+    <string name="error_invalid_test_type">Tipul de test nu este valid. Nu se poate genera testul.</string>
+    <string name="error_could_not_extract_words">Nu s-au putut extrage cuvintele. Testul nu poate fi generat.</string>
+    <string name="error_could_not_extract_expressions">Nu s-au putut extrage expresiile. Testul nu poate fi generat.</string>
+    <string name="error_invalid_connexion">Testul nu poate fi generat deoarece nu s-au putut extrage datele. Verifică conexiunea.</string>
+    <string name="error_no_words">Testul nu poate fi generat deoarece lecția din care se efectuează testarea nu are cuvinte</string>
+    <string name="error_no_expressions">Testul nu poate fi generat deoarece lecția din care se efectuează testarea nu are expresii</string>
+    <string name="error_no_values_for_test">Testul nu poate fi generat deoarece nu au fost extrase valori valide. Valorile trebuie să conțină cel puțin o traducere pentru a fi valide.</string>
+    <string name="error_no_values_for_quiz_test">Testul nu poate fi generat deoarece nu sunt suficiente valori pentru testul de tip quiz. Valori necesare:</string>
+    <string name="error_no_generated_questions">Nu au fost generate întrebări. Nu se poate genera testul.</string>
+    <string name="error_can_not_save_generated_test">Testul generat nu poate fi salvat</string>
+    <string name="now">Chiar acum</string>
+    <string name="years_ago">ani în urmă</string>
+    <string name="one_year_ago">1 an în urmă</string>
+    <string name="months_ago">luni în urmă</string>
+    <string name="one_month_ago">1 lună în urmă</string>
+    <string name="days_ago">zile în urmă</string>
+    <string name="one_day_ago">1 zi în urmă</string>
+    <string name="hours_ago">ore în urmă</string>
+    <string name="one_hour_ago">1 oră în urmă</string>
+    <string name="minutes_ago">minute în urmă</string>
+    <string name="one_minute_ago">1 minut în urmă</string>
+    <string name="seconds_ago">secunde în urmă</string>
+    <string name="one_second_ago">1 secundă în urmă</string>
+    <string name="added">Adăugat</string>
+    <string name="logout_message">Ești pe cale să te deconectezi. Dorești să continui?</string>
+    <string name="no_image_selected">Nu este selectată nicio imagine pentru încărcare</string>
+    <string name="upload_image">Se încarcă imaginea</string>
+    <string name="error_upload_image">Imaginea nu a putut fi încărcată. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="success_upload_image">Imagine încărcată</string>
+    <string name="change_image">Schimbă imaginea</string>
+    <string name="profile_info">Profilul utilizatorului</string>
+    <string name="permitted_images_format">Sunt acceptate doar următoarele formate</string>
+    <string name="error_invalid_image_format_1">Extensia imaginii</string>
+    <string name="error_invalid_image_format_2">este invalidă</string>
+    <string name="error_image_too_big_1">Dimensiunea imaginii</string>
+    <string name="error_image_too_big_2">este prea mare. Dimensiunea maximă acceptată este</string>
+    <string name="error_display_name_updated_1">Numele profilului nu a fost complet actualizat. Te rugăm să încerci din nou mai târziu.</string>
+
+    <string name="account_marked_for_deletion">Acest cont este marcat pentru ștergere</string>
+    <string name="error_can_not_select_friend">Acest prieten nu poate fi selectat</string>
+    <string name="error_can_not_select_friend_marked_for_deletion">Acest cont este marcat pentru ștergere și nu poate fi selectat</string>
+    <string name="marked_for_deletion_notification">Solicitarea nu poate fi acceptată deoarece acest cont de utilizator este marcat pentru ștergere</string>
+    <string name="error_accept_request_deletion">Acest cont este marcat pentru ștergere și solicitarea nu poate fi acceptată</string>
+    <string name="create_a_new_account">Creează un cont nou</string>
+
+    <string name="welcome_back">Bine ai revenit!</string>
+    <string name="login_message">Aici te poți conecta la contul tău</string>
+    <string name="intro_message">Aici te poți conecta la cont sau poți crea unul nou</string>
+    <string name="intro_title_message">Bine ai venit</string>
+    <string name="all">Toate</string>
+    <string name="nothing_here_please_add_a_item">Nu există elemente.</string>
+    <string name="by_date_newest_first">După dată (cele mai noi)</string>
+    <string name="by_date_oldest_first">După dată (cele mai vechi)</string>
+    <string name="by_name_from_a_to_z">După nume (de la A la Z)</string>
+    <string name="by_name_from_z_to_a">După nume (de la Z la A)</string>
+    <string name="info">Informații</string>
+    <string name="edit">Editează</string>
+
+    <string name="total_test_time_point_2">Timpul total al testului:</string>
+    <string name="local_lessons">Lecții locale</string>
+    <string name="personal_lessons">Lecții personale</string>
+    <string name="received_lessons">Lecții primite</string>
+    <string name="common_lessons">Lecții comune</string>
+    <string name="common_tests">Teste comune</string>
+    <string name="finished_local_tests">Teste locale finalizate</string>
+    <string name="in_progress_local_tests">Teste locale în progress</string>
+    <string name="local_tests">Teste locale</string>
+    <string name="finished_tests">Teste finalizate</string>
+    <string name="in_progress_tests">Teste în progress</string>
+    <string name="word_info">Valori curente</string>
+    <string name="finished_test">Finalizat</string>
+    <string name="local_tests_1">Locale</string>
+    <string name="expression_added">Adăugată cu</string>
+    <string name="word_added">Adăugat cu</string>
+    <string name="lesson_added">Adăugată cu</string>
+    <string name="google_account">Cont Google</string>
+    <string name="error_lesson_has_not_enough_words">Lecția selectată nu are suficiente cuvinte pentru testul de tip Quiz</string>
+
+    <string-array name="languages">
+        <item>Engleză</item>
+        <item>Română</item>
+    </string-array>
+</resources>

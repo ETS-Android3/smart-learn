@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="displayName"
+            type="String" />
+        <variable
+            name="email"
+            type="String" />
+        <variable
+            name="friendsSince"
+            type="String" />
+        <variable
+            name="accountMarkedForDeletion"
+            type="Boolean" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="@string/profile"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:visibility="@{accountMarkedForDeletion ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/account_marked_for_deletion"
+            android:textColor="@color/colorError"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <!-- https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml/61986850#61986850 -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_profile_layout_dialog_view_friend"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="center"
+            android:theme="@style/AppTheme.ProfileImageStyle"
+            app:strokeWidth="0dp"
+            app:shapeAppearanceOverlay="@style/AppTheme.ProfileImageShapeAppearanceOverlay" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="start"
+                android:text="@string/name_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{displayName}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="start"
+                android:text="@string/email_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{email}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/friends_since_point"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{friendsSince}"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceBody2"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/btn_remove_friend_layout_dialog_view_friend"
+            style="@style/AppTheme.ButtonStyle.WithBorder.Alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="@string/remove_friend" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

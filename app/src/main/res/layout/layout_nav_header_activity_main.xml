@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="userHelloMessage"
+            type="String" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="40dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="20dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/background_nav_header"
+            android:padding="20dp">
+
+            <!-- https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml/61986850#61986850 -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_profile_layout_nav_header_activity_main"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:theme="@style/AppTheme.ProfileImageStyle"
+                app:strokeWidth="0dp"
+                app:shapeAppearanceOverlay="@style/AppTheme.ProfileImageShapeAppearanceOverlay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userHelloMessage}"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

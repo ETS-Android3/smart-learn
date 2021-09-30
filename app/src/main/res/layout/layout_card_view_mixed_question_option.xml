@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewHolder"
+            type="com.smart_learn.presenter.helpers.adapters.mixed_question.MixedQuestionOptionsAdapter.OptionViewHolder" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_mixed_question_option"
+        android:theme="@style/AppTheme.CardView.MaterialDesign.MixedQuestionOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        android:layout_margin="2.5dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <TextView
+            android:visibility="@{viewHolder.liveIsMixedLetterTest ? View.VISIBLE : View.GONE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@{viewHolder.liveOptionValue}"
+            android:textSize="20sp"
+            android:background="@drawable/background_mixed_question_letter_option"/>
+
+        <TextView
+            android:visibility="@{viewHolder.liveIsMixedLetterTest ? View.GONE : View.VISIBLE}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="@{viewHolder.liveOptionValue}"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:background="@color/white"/>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

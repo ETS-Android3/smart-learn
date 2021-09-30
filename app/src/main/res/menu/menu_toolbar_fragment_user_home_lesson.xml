@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/main_group_menu_toolbar_fragment_user_home_lesson">
+        <item
+            android:id="@+id/action_view_participants_menu_toolbar_activity_community"
+            android:title="@string/participants"
+            app:showAsAction="never" />
+    </group>
+</menu>

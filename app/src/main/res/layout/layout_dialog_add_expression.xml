@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+        <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
+        <variable
+            name="viewModel"
+            type="com.smart_learn.presenter.helpers.fragments.expressions.helpers.ExpressionDialogViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_expression_value_layout_dialog_add_expression"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/expression"
+            app:counterEnabled="false"
+            app:counterMaxLength="@{Limits.MAX_EXPRESSION}"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/colorError">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:maxLines="4"
+                android:scrollbars="vertical"
+                android:maxLength="@{Limits.MAX_EXPRESSION}"
+                android:text="@={viewModel.liveExpressionValue}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="16sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_translation_layout_dialog_add_expression"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/translation_optional"
+            app:counterEnabled="false"
+            app:counterMaxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
+            app:errorEnabled="true"
+            app:errorTextColor="@color/colorError">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:maxLines="4"
+                android:scrollbars="vertical"
+                android:maxLength="@{Limits.MAX_EXPRESSION_TRANSLATION}"
+                android:text="@={viewModel.liveTranslation}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="16sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

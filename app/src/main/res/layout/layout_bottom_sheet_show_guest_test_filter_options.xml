@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="isAllSelected"
+            type="Boolean" />
+        <variable
+            name="isFinishedSelected"
+            type="Boolean" />
+        <variable
+            name="isInProgressSelected"
+            type="Boolean" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_show_all_layout_bottom_sheet_show_guest_test_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isAllSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_all"/>
+
+        <Button
+            android:id="@+id/btn_show_finished_layout_bottom_sheet_show_guest_test_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isFinishedSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_only_finished"/>
+
+        <Button
+            android:id="@+id/btn_show_in_progress_layout_bottom_sheet_show_guest_test_filter_options"
+            style="@style/AppTheme.ButtonStyle.FilterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@{isInProgressSelected ? @drawable/ic_baseline_checked_circle_24 : @drawable/ic_baseline_unchecked_circle_24}"
+            android:text="@string/show_only_in_progress"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "190442412437",
+    "project_id": "smart-learn-d3517",
+    "storage_bucket": "smart-learn-d3517.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190442412437:android:58799406d1a1ab512fbe9c",
+        "android_client_info": {
+          "package_name": "com.smart_learn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190442412437-ftlqammqja64sdq25m9vs8aekh11guo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smart_learn",
+            "certificate_hash": "1e04c7a1cc221b0e25b0c276c1e6623a50ad2a2b"
+          }
+        },
+        {
+          "client_id": "190442412437-vnstvvk4m6ukrf2ddjvvlvef90a90pua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTFn0XC2Ti_KtQU0UdbfAqa5F_ZaWpvH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190442412437-vnstvvk4m6ukrf2ddjvvlvef90a90pua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

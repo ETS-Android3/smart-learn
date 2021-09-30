@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_activity_guest_notebook"
+    app:startDestination="@id/guest_lessons_fragment_nav_graph_activity_guest_notebook">
+
+    <fragment
+        android:id="@+id/guest_lessons_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment"
+        android:label="guest_lessons_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_lessons_fragment_to_guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
+            app:destination="@id/guest_home_lesson_fragment_nav_graph_activity_guest_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_lesson.GuestHomeLessonFragment"
+        android:label="guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_home_lesson"/>
+    <fragment
+        android:id="@+id/guest_words_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.words.GuestWordsFragment"
+        android:label="guest_words_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_words_fragment_to_guest_word_container_fragment_nav_graph_activity_guest_notebook"
+            app:destination="@id/guest_word_container_fragment_nav_graph_activity_guest_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_word_container_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_word.GuestWordContainerFragment"
+        android:label="guest_word_container_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_guest_word_container"/>
+    <fragment
+        android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.GuestExpressionsFragment"
+        android:label="guest_expressions_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_guest_expressions_fragment_to_guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+            app:destination="@id/guest_home_expression_fragment_nav_graph_activity_guest_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_expression.GuestHomeExpressionFragment"
+        android:label="guest_home_expression_fragment_nav_graph_activity_guest_notebook"
+        tools:layout="@layout/fragment_home_expression"/>
+</navigation>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_nav_graph_fragment_online_test_container.xml"
+    app:startDestination="@id/online_test_participants_fragment_nested_nav_graph_fragment_online_test_container">
+
+    <fragment
+        android:id="@+id/online_test_messages_container_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerFragment"
+        android:label="online_test_messages_container_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_online_test_messages_container"/>
+    <fragment
+        android:id="@+id/online_test_participants_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.participants.OnlineTestParticipantsFragment"
+        android:label="online_test_participants_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
+    <fragment
+        android:id="@+id/user_full_write_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_types.test_full_write.UserFullWriteOnlineTestFragment"
+        android:label="user_full_write_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_full_write_test"/>
+
+    <fragment
+        android:id="@+id/user_quiz_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_types.quiz.UserQuizOnlineTestFragment"
+        android:label="user_quiz_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_quiz_test"/>
+    <fragment
+        android:id="@+id/user_true_or_false_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_types.true_or_false.UserTrueOrFalseOnlineTestFragment"
+        android:label="user_true_or_false_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_true_or_false_test"/>
+    <fragment
+        android:id="@+id/user_mixed_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_types.mixed.UserMixedOnlineTestFragment"
+        android:label="user_mixed_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_mixed_test"/>
+
+    <fragment
+        android:id="@+id/user_finalize_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.finalize_test.UserFinalizeOnlineTestFragment"
+        android:label="user_finalize_online_test_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_finalize_test"/>
+
+    <fragment
+        android:id="@+id/user_online_test_questions_fragment_nested_nav_graph_fragment_online_test_container"
+        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment"
+        android:label="user_online_test_questions_fragment_nested_nav_graph_fragment_online_test_container"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+</navigation>

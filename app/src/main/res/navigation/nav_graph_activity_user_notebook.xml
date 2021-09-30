@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_activity_user_notebook"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/user_lessons_fragment_nav_graph_activity_user_notebook">
+
+    <fragment
+        android:id="@+id/user_lessons_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.lessons.UserLessonsFragment"
+        android:label="user_lessons_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_user_lessons_fragment_to_friends_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/select_friends_fragment_nav_graph_activity_user_notebook" />
+        <action
+            android:id="@+id/action_user_lessons_fragment_to_user_home_lesson_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/user_home_lesson_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/select_friends_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.friends.FriendsFragment"
+        android:label="select_friends_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
+    <fragment
+        android:id="@+id/user_home_lesson_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_lesson.UserHomeLessonFragment"
+        android:label="user_home_lesson_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_home_lesson">
+        <action
+            android:id="@+id/action_user_home_lesson_fragment_to_shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/shared_lesson_participants_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.words.UserWordsFragment"
+        android:label="user_words_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_user_words_fragment_to_user_word_container_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/user_word_container_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_word_container_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_word.UserWordContainerFragment"
+        android:label="user_word_container_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_user_word_container"/>
+    <fragment
+        android:id="@+id/user_expressions_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.expressions.UserExpressionsFragment"
+        android:label="user_expressions_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view">
+        <action
+            android:id="@+id/action_user_expressions_fragment_to_user_home_expression_fragment_nav_graph_activity_user_notebook"
+            app:destination="@id/user_home_expression_fragment_nav_graph_activity_user_notebook" />
+    </fragment>
+    <fragment
+        android:id="@+id/user_home_expression_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.home_expression.UserHomeExpressionFragment"
+        android:label="user_home_expression_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_home_expression"/>
+    <fragment
+        android:id="@+id/shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+        android:name="com.smart_learn.presenter.activities.notebook.user.fragments.participants.SharedLessonParticipantsFragment"
+        android:label="shared_lesson_participants_fragment_nav_graph_activity_user_notebook"
+        tools:layout="@layout/fragment_basic_for_recycler_view"/>
+
+
+</navigation>

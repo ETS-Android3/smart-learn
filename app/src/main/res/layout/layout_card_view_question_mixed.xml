@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewHolder"
+            type="com.smart_learn.presenter.helpers.adapters.test.questions.QuestionsAdapter.QuestionMixedViewHolder" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_question_mixed"
+        android:theme="@style/AppTheme.CardView.MaterialDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:text="@string/requirement_point"
+                android:textStyle="bold"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="18sp"/>
+
+            <!--
+               Leave  android:inputType="textMultiLine|textNoSuggestions"  in order to disable spellcheck.
+               https://stackoverflow.com/questions/21449505/how-to-disable-spellcheck-android-edittext/33993169#33993169 -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="start"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:scrollbars="vertical"
+                android:text="@{viewHolder.liveQuestionDescription}"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLines="4"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="16sp"
+                android:autofillHints="question"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_answer_point"
+                    android:layout_marginEnd="5dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:visibility="@{viewHolder.liveItemInfo.answerCorrect ? View.VISIBLE : View.GONE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/correct"
+                    android:src="@drawable/ic_baseline_done_24"
+                    app:tint="@color/colorSuccess"/>
+
+                <ImageView
+                    android:visibility="@{viewHolder.liveItemInfo.answerCorrect ? View.GONE : View.VISIBLE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/wrong"
+                    android:src=" @drawable/ic_baseline_close_24"
+                    app:tint="@color/colorErrorSecond"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="start"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="start"
+                android:scrollbars="vertical"
+                android:text="@{viewHolder.liveUserAnswer}"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:maxLines="4"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="16sp"
+                android:autofillHints="question"
+                tools:ignore="LabelFor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{viewHolder.liveItemInfo.answerCorrect ? View.GONE : View.VISIBLE}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/correct_answer_point"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="start"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:gravity="start"
+                    android:scrollbars="vertical"
+                    android:text="@{viewHolder.liveCorrectAnswer}"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:maxLines="4"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="16sp"
+                    android:autofillHints="question"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

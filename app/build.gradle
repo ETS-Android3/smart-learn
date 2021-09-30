@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
+// for firebase
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
+
+    // use this in order to use data binding
+    dataBinding{
+        enabled = true
+    }
 
     defaultConfig {
-        applicationId "com.licenta.smart_learn"
-        minSdkVersion 24
+        applicationId "com.smart_learn"
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -22,16 +28,134 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.wear:wear:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // material dialogs
+    def material_dialogs_version = "3.1.0"
+    implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
+
+    // Recyclerview
+    def recyclerViewVersion = "1.0.0"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
+    // for multi selection in recycler view
+    // https://stackoverflow.com/questions/57442809/how-to-use-androidx-recyclerview-selection-in-androidx-recyclerview-widget-or-h
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
+
+    // for swipe reveal layout
+    // https://github.com/chthai64/SwipeRevealLayout
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    // leave that like here
+    // if you let only annotationProcessor will not work
+    // https://stackoverflow.com/questions/37991892/how-to-use-lombok-plugin-in-android-studio/51162444#51162444
+    implementation 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    // Room components
+    def room_version = "2.2.6"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    // Lifecycle components
+    // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    def lifecycle_version = "2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // if you upgrade from java-8 change this
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // timber library for logging purpose
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    /* START Jetpack navigation
+    https://developer.android.com/guide/navigation/navigation-getting-started */
+    def nav_version = "2.3.5"
+
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // Jetpack Compose Integration
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
+
+    /* END Jetpack navigation */
+
+    // for custom toast messages
+    // https://github.com/Muddz/StyleableToast
+    // https://www.youtube.com/watch?v=fq8TDVqpmZ0
+    implementation 'com.muddzdev:styleabletoast:2.3.0'
+
+    /* START Firebase */
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+
+    // Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics'
+
+    // Firebase Authentication library
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Dependency for the Google Play services library
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    // FirebaseUI for Cloud Firestore. This contains also the Cloud Firestore library dependency.
+    // (implementation 'com.google.firebase:firebase-firestore')
+    implementation 'com.firebaseui:firebase-ui-firestore:7.2.0'
+
+    // Declare for the Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    /* END Firebase */
+
+    // For showing App Inspection -> Background task inspector
+    // https://developer.android.com/jetpack/androidx/releases/work
+    implementation 'androidx.work:work-runtime:2.5.0'
+
+    // for flexbox layout for recycler view
+    // https://github.com/google/flexbox-layout
+    // https://stackoverflow.com/questions/39436115/auto-fit-according-to-screen-size-in-grid-layout-android/62279449#62279449
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // https://square.github.io/picasso/
+    // https://github.com/square/picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // for debugging with SQLite on phone
+    // https://stackoverflow.com/questions/19194576/how-do-i-view-the-sqlite-database-on-an-android-device
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
 
 }

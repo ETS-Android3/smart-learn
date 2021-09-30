@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.smart_learn.data.entities.Test"/>
+        <variable
+            name="liveTest"
+            type="LiveData&lt;Test&gt;" />
+        <variable
+            name="liveTimeDescription"
+            type="LiveData&lt;String&gt;" />
+        <variable
+            name="liveDateDescription"
+            type="LiveData&lt;String&gt;" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_test_schedule"
+        android:theme="@style/AppTheme.CardView.MaterialDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_layout_card_view_test_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="start"
+                android:gravity="center"
+                android:checked="@{liveTest.scheduleActive}"
+                android:padding="0dp"
+                android:theme="@style/AppTheme.SwitchStyle"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom"
+                        android:textSize="16sp"
+                        android:text="@{liveTimeDescription}"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="?android:attr/textColorSecondary"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom"
+                        android:text="@{liveDateDescription}"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textAppearance="?attr/textAppearanceBody2"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:visibility="@{liveTest.customTestName == null || liveTest.customTestName.isEmpty() ? View.GONE : View.VISIBLE}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@{liveTest.customTestName}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textSize="16sp"
+                    android:textColor="?android:attr/textColorSecondary"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_layout_card_view_test_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:padding="0dp"
+                android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle.CardView"
+                app:menu="@menu/menu_card_view_test_schedule" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/main_group_menu_bottom_navigation_activity_community">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
+        <item
+            android:id="@+id/friends_fragment_nav_graph_activity_community"
+            android:icon="@drawable/ic_baseline_friends_24"
+            android:title="@string/friends"/>
+        <item
+            android:id="@+id/users_fragment_nav_graph_activity_community"
+            android:icon="@drawable/ic_baseline_users_24"
+            android:title="@string/users"/>
+    </group>
+</menu>

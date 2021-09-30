@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="android.text.SpannableString"/>
+        <variable
+            name="liveSpannedWord"
+            type="LiveData&lt;SpannableString&gt;" />
+        <variable
+            name="liveIsActionModeActive"
+            type="LiveData&lt;Boolean&gt;" />
+        <variable
+            name="liveIsSelected"
+            type="LiveData&lt;Boolean&gt;" />
+        <variable
+            name="liveIsOwner"
+            type="LiveData&lt;Boolean&gt;" />
+        <variable
+            name="liveDateDifferenceDescription"
+            type="LiveData&lt;String&gt;" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_layout_card_view_word"
+        android:theme="@style/AppTheme.CardView.MaterialDesign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_lesson_name_layout_card_view_word"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{liveSpannedWord}"
+                    android:textAppearance="?attr/textAppearanceHeadline6"/>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_layout_card_view_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:visibility="@{!liveIsOwner ? View.GONE : liveIsActionModeActive ? View.GONE : liveIsSelected ? View.GONE : View.VISIBLE}"
+                    android:theme="@style/AppTheme.AppBarOverlay.ToolbarStyle.CardView"
+                    app:menu="@menu/menu_card_view_word" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{liveDateDifferenceDescription}"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

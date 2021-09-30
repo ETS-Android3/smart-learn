@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/main_group_menu_bottom_navigation_activity_user_notebook">
+
+        <!-- Do not change id`s for items because are related to the navigation graph where bottom
+         menu navigation is attached.-->
+        <item
+            android:id="@+id/user_home_lesson_fragment_nav_graph_activity_user_notebook"
+            android:icon="@drawable/ic_baseline_info_24"
+            android:title="@string/info"/>
+        <item
+            android:id="@+id/user_words_fragment_nav_graph_activity_user_notebook"
+            android:icon="@drawable/ic_baseline_email_24"
+            android:title="@string/words"/>
+        <item
+            android:id="@+id/user_expressions_fragment_nav_graph_activity_user_notebook"
+            android:icon="@drawable/ic_baseline_email_24"
+            android:title="@string/expressions"/>
+    </group>
+
+</menu>

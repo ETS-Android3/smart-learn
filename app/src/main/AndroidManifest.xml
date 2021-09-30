@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.licenta.smart_learn">
+    package="com.smart_learn">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- For using AlarmReceiver after device is rebooted. AlarmReceiver will detect boot action. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:name=".core.helpers.ApplicationController"
+        android:icon="@drawable/img_launcher_100"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/img_launcher_round_100"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".presenter.helpers.activities.BasicActivity" />
+        <activity android:name=".presenter.activities.settings.GuestSettingsActivity" />
+        <activity android:name=".presenter.activities.settings.UserSettingsActivity" />
+        <activity android:name=".presenter.activities.settings.SettingsActivity" />
+        <activity android:name=".presenter.activities.test.user.UserTestActivity" />
+        <activity android:name=".presenter.activities.test.guest.GuestTestActivity" />
+        <activity android:name=".presenter.activities.test.TestActivity" />
+        <activity android:name=".presenter.activities.notebook.user.UserNotebookActivity" />
+        <activity android:name=".presenter.activities.notebook.guest.GuestNotebookActivity" />
+        <activity android:name=".presenter.activities.notebook.helpers.NotebookActivity" />
+        <activity android:name=".presenter.activities.community.CommunityActivity" />
+        <activity android:name=".presenter.activities.guest.GuestActivity" />
+        <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
+        <activity android:name=".presenter.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- For scheduling alarms for scheduled tests. -->
+        <receiver android:name=".core.services.test.TestService$ScheduledTestAlarmManager$ScheduledTestAlarmReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
