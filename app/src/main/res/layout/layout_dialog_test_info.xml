@@ -3,7 +3,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <import type="com.smart_learn.data.entities.Test"/>
+        <import type="com.smart_learn.data.common.entities.Test"/>
         <variable
             name="testInfo"
             type="Test" />

@@ -5,16 +5,16 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.smart_learn.data.helpers.DataUtilities.Limits"/>
+        <import type="com.smart_learn.data.common.helpers.DataUtilities"/>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.test_types.true_or_false.TrueOrFalseTestViewModel" />
+            type="com.smart_learn.presenter.common.fragments.test.test_types.true_or_false.TrueOrFalseTestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.helpers.fragments.test_types.true_or_false.TrueOrFalseTestFragment">
+        tools:context=".presenter.common.fragments.test.test_types.true_or_false.TrueOrFalseTestFragment">
 
         <!-- https://stackoverflow.com/questions/58214894/how-to-pass-data-variable-to-included-layout -->
         <include

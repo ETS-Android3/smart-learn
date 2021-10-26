@@ -6,7 +6,7 @@
     app:startDestination="@id/guest_account_overview_fragment_nav_graph_activity_guest">
     <fragment
         android:id="@+id/guest_account_overview_fragment_nav_graph_activity_guest"
-        android:name="com.smart_learn.presenter.activities.guest.fragments.account_overview.GuestAccountOverviewFragment"
+        android:name="com.smart_learn.presenter.guest.activities.guest.fragments_account_overview.GuestAccountOverviewFragment"
         android:label="guest_account_overview_fragment_nav_graph_activity_guest"
         tools:layout="@layout/fragment_account_overview"/>
 </navigation>

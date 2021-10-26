@@ -7,13 +7,13 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonViewModel" />
+            type="com.smart_learn.presenter.common.activities.notebook.fragments.home_lesson.HomeLessonViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.notebook.helpers.fragments.home_lesson.HomeLessonFragment">
+        tools:context=".presenter.common.activities.notebook.fragments.home_lesson.HomeLessonFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_summary_fragment_home_lesson"

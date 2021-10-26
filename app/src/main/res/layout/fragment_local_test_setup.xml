@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.test.helpers.fragments.local_test_setup.LocalTestSetupFragment">
+        tools:context=".presenter.common.activities.test.fragments.local_test_setup.LocalTestSetupFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_1_fragment_local_test_setup"

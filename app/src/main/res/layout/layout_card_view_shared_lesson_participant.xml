@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.helpers.adapters.lessons.shared_lesson.SharedLessonParticipantsAdapter.ParticipantViewHolder" />
+            type="com.smart_learn.presenter.user.adapters.lessons.SharedLessonParticipantsAdapter.ParticipantViewHolder" />
     </data>
 
 

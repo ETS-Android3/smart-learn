@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/friends_fragment_nav_graph_activity_community"
-        android:name="com.smart_learn.presenter.activities.community.fragments.friends.FriendsFragment"
+        android:name="com.smart_learn.presenter.user.activities.community.fragments.friends.FriendsFragment"
         android:label="friends_fragment_nav_graph_activity_community"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
     <fragment
         android:id="@+id/users_fragment_nav_graph_activity_community"
-        android:name="com.smart_learn.presenter.activities.community.fragments.users.UsersFragment"
+        android:name="com.smart_learn.presenter.user.activities.community.fragments.users.UsersFragment"
         android:label="users_fragment_nav_graph_activity_community"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
 </navigation>

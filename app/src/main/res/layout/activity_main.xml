@@ -11,7 +11,7 @@
         android:id="@+id/drawer_layout_activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.main.MainActivity"
+        tools:context=".presenter.user.activities.main.MainActivity"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.navigation.NavigationView
@@ -32,7 +32,7 @@
                 android:id="@+id/layout_main_constraint_activity_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".presenter.activities.main.MainActivity">
+                tools:context=".presenter.user.activities.main.MainActivity">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_activity_main"

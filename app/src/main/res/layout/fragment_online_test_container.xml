@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.test.user.fragments.online_test_container.OnlineTestContainerFragment">
+        tools:context=".presenter.user.activities.test.fragments.online_test_container.OnlineTestContainerFragment">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_fragment_online_test_container"

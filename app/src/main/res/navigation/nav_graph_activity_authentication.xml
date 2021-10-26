@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/email_login_fragment_nav_graph_activity_authentication"
-        android:name="com.smart_learn.presenter.activities.authentication.fragments.login.EmailLoginFragment"
+        android:name="com.smart_learn.presenter.user.activities.authentication.fragments.login.EmailLoginFragment"
         android:label="fragment_email_login_nav_graph_activity_authentication"
         tools:layout="@layout/fragment_email_login" >
     </fragment>
     <fragment
         android:id="@+id/email_register_fragment_nav_graph_activity_authentication"
-        android:name="com.smart_learn.presenter.activities.authentication.fragments.register.EmailRegisterFragment"
+        android:name="com.smart_learn.presenter.user.activities.authentication.fragments.register.EmailRegisterFragment"
         android:label="fragment_email_register_nav_graph_activity_authentication"
         tools:layout="@layout/fragment_email_register" />
     <fragment
         android:id="@+id/intro_fragment_nav_graph_activity_authentication"
-        android:name="com.smart_learn.presenter.activities.authentication.fragments.intro.IntroFragment"
+        android:name="com.smart_learn.presenter.user.activities.authentication.fragments.intro.IntroFragment"
         android:label="fragment_intro_nav_graph_activity_authentication"
         tools:layout="@layout/fragment_intro">
         <action

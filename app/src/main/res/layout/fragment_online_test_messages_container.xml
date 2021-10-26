@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.smart_learn.data.helpers.DataUtilities.Limits"/>
+        <import type="com.smart_learn.data.common.helpers.DataUtilities.Limits"/>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerViewModel" />
+            type="com.smart_learn.presenter.user.activities.test.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerFragment">
+        tools:context=".presenter.user.activities.test.fragments.online_test_container.fragments.messages_container.OnlineTestMessagesContainerFragment">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nested_container_view_fragment_online_test_messages_container"
-            android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.messages_container.messages.OnlineTestMessagesFragment"
+            android:name="com.smart_learn.presenter.user.activities.test.fragments.online_test_container.fragments.messages_container.messages.OnlineTestMessagesFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_message_fragment_online_test_messages_container"

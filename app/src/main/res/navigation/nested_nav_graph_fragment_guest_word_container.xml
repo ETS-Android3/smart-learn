@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/guest_home_word_fragment_nav_graph_fragment_guest_word_container"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_word.GuestHomeWordFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.home_word.GuestHomeWordFragment"
         android:label="guest_home_word_fragment_nav_graph_fragment_guest_word_container"
         tools:layout="@layout/fragment_home_word" />
 
     <fragment
         android:id="@+id/meaning_web_view_fragment_nav_graph_fragment_guest_word_container"
-        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:name="com.smart_learn.presenter.common.fragments.helpers.WebViewFragment"
         android:label="meaning_web_view_fragment_nav_graph_fragment_guest_word_container"
         tools:layout="@layout/fragment_web_view"/>
 
     <fragment
         android:id="@+id/examples_web_view_fragment_nav_graph_fragment_guest_word_container"
-        android:name="com.smart_learn.presenter.helpers.fragments.helpers.WebViewFragment"
+        android:name="com.smart_learn.presenter.common.fragments.helpers.WebViewFragment"
         android:label="examples_web_view_fragment_nav_graph_fragment_guest_word_container"
         tools:layout="@layout/fragment_web_view"/>
 </navigation>

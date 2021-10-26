@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/guest_lessons_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.lessons.GuestLessonsFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.lessons.GuestLessonsFragment"
         android:label="guest_lessons_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_lesson.GuestHomeLessonFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.home_lesson.GuestHomeLessonFragment"
         android:label="guest_home_lesson_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_home_lesson"/>
     <fragment
         android:id="@+id/guest_words_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.words.GuestWordsFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.words.GuestWordsFragment"
         android:label="guest_words_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -30,12 +30,12 @@
     </fragment>
     <fragment
         android:id="@+id/guest_word_container_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_word.GuestWordContainerFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.home_word.GuestWordContainerFragment"
         android:label="guest_word_container_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_guest_word_container"/>
     <fragment
         android:id="@+id/guest_expressions_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.expressions.GuestExpressionsFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.expressions.GuestExpressionsFragment"
         android:label="guest_expressions_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/guest_home_expression_fragment_nav_graph_activity_guest_notebook"
-        android:name="com.smart_learn.presenter.activities.notebook.guest.fragments.home_expression.GuestHomeExpressionFragment"
+        android:name="com.smart_learn.presenter.guest.activities.notebook.fragments.home_expression.GuestHomeExpressionFragment"
         android:label="guest_home_expression_fragment_nav_graph_activity_guest_notebook"
         tools:layout="@layout/fragment_home_expression"/>
 </navigation>

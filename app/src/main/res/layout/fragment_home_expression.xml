@@ -6,13 +6,13 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_expression.HomeExpressionViewModel" />
+            type="com.smart_learn.presenter.common.activities.notebook.fragments.home_expression.HomeExpressionViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.notebook.helpers.fragments.home_expression.HomeExpressionFragment"
+        tools:context=".presenter.common.activities.notebook.fragments.home_expression.HomeExpressionFragment"
         android:scrollbars="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat

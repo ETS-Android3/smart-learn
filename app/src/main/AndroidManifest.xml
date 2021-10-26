@@ -10,26 +10,26 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
-        android:name=".core.helpers.ApplicationController"
+        android:name=".core.common.helpers.ApplicationController"
         android:icon="@drawable/img_launcher_100"
         android:label="@string/app_name"
         android:roundIcon="@drawable/img_launcher_round_100"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presenter.helpers.activities.BasicActivity" />
-        <activity android:name=".presenter.activities.settings.GuestSettingsActivity" />
-        <activity android:name=".presenter.activities.settings.UserSettingsActivity" />
-        <activity android:name=".presenter.activities.settings.SettingsActivity" />
-        <activity android:name=".presenter.activities.test.user.UserTestActivity" />
-        <activity android:name=".presenter.activities.test.guest.GuestTestActivity" />
-        <activity android:name=".presenter.activities.test.TestActivity" />
-        <activity android:name=".presenter.activities.notebook.user.UserNotebookActivity" />
-        <activity android:name=".presenter.activities.notebook.guest.GuestNotebookActivity" />
-        <activity android:name=".presenter.activities.notebook.helpers.NotebookActivity" />
-        <activity android:name=".presenter.activities.community.CommunityActivity" />
-        <activity android:name=".presenter.activities.guest.GuestActivity" />
-        <activity android:name=".presenter.activities.authentication.AuthenticationActivity" />
-        <activity android:name=".presenter.activities.main.MainActivity">
+        <activity android:name=".presenter.common.activities.helpers.BasicActivity" />
+        <activity android:name=".presenter.guest.activities.settings.GuestSettingsActivity" />
+        <activity android:name=".presenter.user.activities.settings.UserSettingsActivity" />
+        <activity android:name=".presenter.common.activities.settings.SettingsActivity" />
+        <activity android:name=".presenter.user.activities.test.UserTestActivity" />
+        <activity android:name=".presenter.guest.activities.test.GuestTestActivity" />
+        <activity android:name=".presenter.common.activities.test.TestActivity" />
+        <activity android:name=".presenter.user.activities.notebook.UserNotebookActivity" />
+        <activity android:name=".presenter.guest.activities.notebook.GuestNotebookActivity" />
+        <activity android:name=".presenter.common.activities.notebook.NotebookActivity" />
+        <activity android:name=".presenter.user.activities.community.CommunityActivity" />
+        <activity android:name=".presenter.guest.activities.guest.GuestActivity" />
+        <activity android:name=".presenter.user.activities.authentication.AuthenticationActivity" />
+        <activity android:name=".presenter.user.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,7 @@
         </activity>
 
         <!-- For scheduling alarms for scheduled tests. -->
-        <receiver android:name=".core.services.test.TestService$ScheduledTestAlarmManager$ScheduledTestAlarmReceiver"
+        <receiver android:name=".core.common.services.TestService$ScheduledTestAlarmManager$ScheduledTestAlarmReceiver"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
+        <import type="com.smart_learn.data.common.helpers.DataUtilities.Limits" />
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.words.helpers.WordDialogViewModel" />
+            type="com.smart_learn.presenter.common.fragments.words.helpers.WordDialogViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

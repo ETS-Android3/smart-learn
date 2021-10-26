@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.community.fragments.users.UsersViewModel" />
+            type="com.smart_learn.presenter.user.activities.community.fragments.users.UsersViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

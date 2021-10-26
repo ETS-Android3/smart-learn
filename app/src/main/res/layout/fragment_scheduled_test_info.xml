@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoViewModel" />
+            type="com.smart_learn.presenter.common.activities.test.fragments.scheduled_test_info.ScheduledTestInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.test.helpers.fragments.scheduled_test_info.ScheduledTestInfoFragment">
+        tools:context=".presenter.common.activities.test.fragments.scheduled_test_info.ScheduledTestInfoFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_date_fragment_scheduled_info"

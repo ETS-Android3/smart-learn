@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/user_test_history_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.history.UserTestHistoryFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.history.UserTestHistoryFragment"
         android:label="user_test_history_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/user_scheduled_tests_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.schedule.UserScheduledTestsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.schedule.UserScheduledTestsFragment"
         android:label="user_scheduled_tests_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/user_select_lesson_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_lesson.UserSelectLessonFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.select_lesson.UserSelectLessonFragment"
         android:label="user_select_lesson_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/user_select_test_type_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_test_type.UserSelectTestTypeFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.select_test_type.UserSelectTestTypeFragment"
         android:label="user_select_test_type_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_select_test_type">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/user_test_setup_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_setup.UserTestSetupFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_setup.UserTestSetupFragment"
         android:label="user_test_setup_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_local_test_setup">
         <action
@@ -55,64 +55,64 @@
     </fragment>
     <fragment
         android:id="@+id/user_select_words_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_words.UserSelectWordsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.select_words.UserSelectWordsFragment"
         android:label="user_select_words_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
     <fragment
         android:id="@+id/user_select_expressions_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_expressions.UserSelectExpressionsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.select_expressions.UserSelectExpressionsFragment"
         android:label="user_select_expressions_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
     <fragment
         android:id="@+id/user_test_questions_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_questions.UserTestQuestionsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_questions.UserTestQuestionsFragment"
         android:label="user_test_questions_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
     <fragment
         android:id="@+id/user_scheduled_test_info_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.scheduled_test_info.UserScheduledTestInfoFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.schedule_test_info.UserScheduledTestInfoFragment"
         android:label="userScheduledTestInfoFragment"
         tools:layout="@layout/fragment_scheduled_test_info"/>
     <fragment
         android:id="@+id/user_full_write_test_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_types.test_full_write.UserFullWriteTestFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_types.test_full_write.UserFullWriteTestFragment"
         android:label="user_full_write_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_full_write_test"/>
     <fragment
         android:id="@+id/user_finalize_test_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.finalize_test.UserFinalizeTestFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.finalize_test.UserFinalizeTestFragment"
         android:label="user_finalize_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_finalize_test"/>
     <fragment
         android:id="@+id/user_quiz_test_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_types.quiz.UserQuizTestFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_types.quiz.UserQuizTestFragment"
         android:label="user_quiz_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_quiz_test"/>
     <fragment
         android:id="@+id/user_true_or_false_test_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_types.true_or_false.UserTrueOrFalseTestFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_types.true_or_false.UserTrueOrFalseTestFragment"
         android:label="user_true_or_false_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_true_or_false_test"/>
     <fragment
         android:id="@+id/user_mixed_test_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.test_types.mixed.UserMixedTestFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.test_types.mixed.UserMixedTestFragment"
         android:label="user_mixed_test_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_mixed_test"/>
     <fragment
         android:id="@+id/online_test_container_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.OnlineTestContainerFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.online_test_container.OnlineTestContainerFragment"
         android:label="online_test_container_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_online_test_container"/>
     <fragment
         android:id="@+id/user_select_friends_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.select_friends.UserSelectFriendsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.select_friends.UserSelectFriendsFragment"
         android:label="user_select_friends_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
 
     <fragment
         android:id="@+id/user_online_test_questions_fragment_nav_graph_activity_user_test"
-        android:name="com.smart_learn.presenter.activities.test.user.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment"
+        android:name="com.smart_learn.presenter.user.activities.test.fragments.online_test_container.fragments.test_questions.UserOnlineTestQuestionsFragment"
         android:label="user_online_test_questions_fragment_nav_graph_activity_user_test"
         tools:layout="@layout/fragment_basic_for_recycler_view"/>
 

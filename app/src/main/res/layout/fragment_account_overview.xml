@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.account_overview.AccountOverviewViewModel" />
+            type="com.smart_learn.presenter.common.fragments.account_overview.AccountOverviewViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.helpers.fragments.account_overview.AccountOverviewFragment">
+        tools:context=".presenter.common.fragments.account_overview.AccountOverviewFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linear_layout_title_fragment_account_overview"

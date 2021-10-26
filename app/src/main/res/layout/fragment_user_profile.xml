@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.main.fragments.profile.UserProfileViewModel" />
+            type="com.smart_learn.presenter.user.activities.main.profile.UserProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.main.fragments.profile.UserProfileFragment">
+        tools:context=".presenter.user.activities.main.profile.UserProfileFragment">
 
         <!-- https://stackoverflow.com/questions/22105775/imageview-in-circular-through-xml/61986850#61986850 -->
         <com.google.android.material.imageview.ShapeableImageView

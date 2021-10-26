@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="passedViewModel"
-            type="com.smart_learn.presenter.helpers.fragments.test_types.BasicTestTypeViewModel" />
+            type="com.smart_learn.presenter.common.fragments.test.test_types.BasicTestTypeViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

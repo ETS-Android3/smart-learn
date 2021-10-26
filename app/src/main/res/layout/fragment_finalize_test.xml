@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.test_finalize.FinalizeTestViewModel" />
+            type="com.smart_learn.presenter.common.fragments.test.test_finalize.FinalizeTestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.helpers.fragments.test_finalize.FinalizeTestFragment">
+        tools:context=".presenter.common.fragments.test.test_finalize.FinalizeTestFragment">
 
         <TextView
             android:id="@+id/tv_1_fragment_finalize_test"

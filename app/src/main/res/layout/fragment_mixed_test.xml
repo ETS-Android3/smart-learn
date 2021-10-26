@@ -7,13 +7,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.test_types.mixed.MixedTestViewModel" />
+            type="com.smart_learn.presenter.common.fragments.test.test_types.mixed.MixedTestViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.helpers.fragments.test_types.mixed.MixedTestFragment">
+        tools:context=".presenter.common.fragments.test.test_types.mixed.MixedTestFragment">
 
         <!-- https://stackoverflow.com/questions/58214894/how-to-pass-data-variable-to-included-layout -->
         <include

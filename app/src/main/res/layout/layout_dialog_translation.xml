@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
+        <import type="com.smart_learn.data.common.helpers.DataUtilities.Limits" />
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationDialogViewModel" />
+            type="com.smart_learn.presenter.common.activities.notebook.fragments.home_word.helpers.TranslationDialogViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -14,7 +14,7 @@
             android:id="@+id/layout_main_constraint_activity_notebook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".presenter.activities.notebook.helpers.NotebookActivity">
+            tools:context=".presenter.common.activities.notebook.NotebookActivity">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_activity_notebook"

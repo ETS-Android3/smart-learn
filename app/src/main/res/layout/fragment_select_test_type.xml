@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.test.helpers.fragments.select_test_type.SelectTestTypeFragment">
+        tools:context=".presenter.common.activities.test.fragments.select_test_type.SelectTestTypeFragment">
 
         <TextView
             android:id="@+id/tv_1_fragment_select_test_type"

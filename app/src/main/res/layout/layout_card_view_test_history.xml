@@ -5,7 +5,7 @@
     <data>
         <import type="android.view.View"/>
         <import type="androidx.lifecycle.LiveData"/>
-        <import type="com.smart_learn.data.entities.Test"/>
+        <import type="com.smart_learn.data.common.entities.Test"/>
         <variable
             name="liveTest"
             type="LiveData&lt;Test&gt;" />

@@ -4,10 +4,10 @@
 
 
     <data>
-        <import type="com.smart_learn.data.helpers.DataUtilities.Limits" />
+        <import type="com.smart_learn.data.common.helpers.DataUtilities.Limits" />
         <variable
             name="viewModel"
-            type="com.smart_learn.presenter.helpers.fragments.expressions.helpers.ExpressionDialogViewModel" />
+            type="com.smart_learn.presenter.common.fragments.expressions.helpers.ExpressionDialogViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.activities.notebook.helpers.fragments.home_word.helpers.TranslationsAdapter.TranslationViewHolder" />
+            type="com.smart_learn.presenter.common.activities.notebook.fragments.home_word.helpers.TranslationsAdapter.TranslationViewHolder" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewHolder"
-            type="com.smart_learn.presenter.helpers.adapters.mixed_question.MixedQuestionOptionsAdapter.OptionViewHolder" />
+            type="com.smart_learn.presenter.common.adapters.MixedQuestionOptionsAdapter.OptionViewHolder" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

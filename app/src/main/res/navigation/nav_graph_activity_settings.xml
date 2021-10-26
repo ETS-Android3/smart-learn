@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/basic_settings_fragment_nav_graph_activity_settings"
-        android:name="com.smart_learn.presenter.activities.settings.fragments.basic_settings.BasicSettingsFragment"
+        android:name="com.smart_learn.presenter.common.activities.settings.fragments.basic_settings.BasicSettingsFragment"
         android:label="basic_settings_fragment_nav_graph_activity_settings"
         tools:layout="@layout/fragment_basic_settings"/>
 </navigation>

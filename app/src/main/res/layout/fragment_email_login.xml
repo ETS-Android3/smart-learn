@@ -6,13 +6,13 @@
     <data>
         <variable
             name="sharedViewModel"
-            type="com.smart_learn.presenter.activities.authentication.AuthenticationSharedViewModel" />
+            type="com.smart_learn.presenter.user.activities.authentication.AuthenticationSharedViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presenter.activities.authentication.fragments.login.EmailLoginFragment">
+        tools:context=".presenter.user.activities.authentication.fragments.login.EmailLoginFragment">
 
         <TextView
             android:id="@+id/tv_info_1_fragment_email_login"
