@@ -45,7 +45,7 @@ public class UserLessonRepository extends BasicFirestoreRepository<LessonDocumen
 
     }
 
-    public static UserLessonRepository getInstance() {
+    public static synchronized UserLessonRepository getInstance() {
         if(instance == null){
             instance = new UserLessonRepository();
         }

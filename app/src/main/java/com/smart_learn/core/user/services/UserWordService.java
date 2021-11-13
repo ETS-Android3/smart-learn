@@ -26,7 +26,7 @@ public class UserWordService extends BasicFirestoreService<WordDocument, UserWor
         super(UserWordRepository.getInstance());
     }
 
-    public static UserWordService getInstance() {
+    public static synchronized UserWordService getInstance() {
         if(instance == null){
             instance = new UserWordService();
         }

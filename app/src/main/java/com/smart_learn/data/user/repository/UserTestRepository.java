@@ -38,7 +38,7 @@ public class UserTestRepository extends BasicFirestoreRepository<TestDocument> {
     private UserTestRepository() {
     }
 
-    public static UserTestRepository getInstance() {
+    public static synchronized UserTestRepository getInstance() {
         if(instance == null){
             instance = new UserTestRepository();
         }

@@ -24,7 +24,7 @@ public class UserTestService extends BasicFirestoreService<TestDocument, UserTes
         super(UserTestRepository.getInstance());
     }
 
-    public static UserTestService getInstance() {
+    public static synchronized UserTestService getInstance() {
         if(instance == null){
             instance = new UserTestService();
         }

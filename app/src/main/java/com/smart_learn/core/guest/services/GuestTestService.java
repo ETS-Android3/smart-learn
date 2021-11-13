@@ -21,7 +21,7 @@ public class GuestTestService extends BasicRoomService<RoomTest, GuestTestReposi
         super(GuestTestRepository.getInstance());
     }
 
-    public static GuestTestService getInstance() {
+    public static synchronized GuestTestService getInstance() {
         if(instance == null){
             instance = new GuestTestService();
         }

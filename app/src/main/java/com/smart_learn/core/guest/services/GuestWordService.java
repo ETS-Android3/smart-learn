@@ -24,7 +24,7 @@ public class GuestWordService extends BasicRoomService<Word, GuestWordRepository
         super(GuestWordRepository.getInstance());
     }
 
-    public static GuestWordService getInstance() {
+    public static synchronized GuestWordService getInstance() {
         if(instance == null){
             instance = new GuestWordService();
         }

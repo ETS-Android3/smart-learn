@@ -31,7 +31,7 @@ public class UserLessonService extends BasicFirestoreService<LessonDocument, Use
         super(UserLessonRepository.getInstance());
     }
 
-    public static UserLessonService getInstance() {
+    public static synchronized UserLessonService getInstance() {
         if(instance == null){
             instance = new UserLessonService();
         }

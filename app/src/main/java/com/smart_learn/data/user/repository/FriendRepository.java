@@ -42,7 +42,7 @@ public class FriendRepository extends BasicFirestoreRepository<FriendDocument> {
 
     }
 
-    public static FriendRepository getInstance() {
+    public static synchronized FriendRepository getInstance() {
         if(instance == null){
             instance = new FriendRepository();
         }

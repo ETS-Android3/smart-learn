@@ -24,7 +24,7 @@ public class GuestExpressionService extends BasicRoomService<Expression, GuestEx
         super(GuestExpressionRepository.getInstance());
     }
 
-    public static GuestExpressionService getInstance() {
+    public static synchronized GuestExpressionService getInstance() {
         if(instance == null){
             instance = new GuestExpressionService();
         }

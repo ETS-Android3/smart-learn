@@ -35,7 +35,7 @@ public class UserWordRepository extends BasicFirestoreRepository<WordDocument> {
 
     }
 
-    public static UserWordRepository getInstance() {
+    public static synchronized UserWordRepository getInstance() {
         if(instance == null){
             instance = new UserWordRepository();
         }

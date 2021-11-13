@@ -41,7 +41,7 @@ public class SettingsService {
 
     }
 
-    public static SettingsService getInstance() {
+    public static synchronized SettingsService getInstance() {
         if(instance == null){
             instance = new SettingsService();
         }

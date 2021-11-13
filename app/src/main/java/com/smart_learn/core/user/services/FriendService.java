@@ -36,7 +36,7 @@ public class FriendService extends BasicFirestoreService<FriendDocument, FriendR
         super(FriendRepository.getInstance());
     }
 
-    public static FriendService getInstance() {
+    public static synchronized FriendService getInstance() {
         if(instance == null){
             instance = new FriendService();
         }

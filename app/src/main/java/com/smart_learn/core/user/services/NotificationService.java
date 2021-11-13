@@ -51,7 +51,7 @@ public class NotificationService extends BasicFirestoreService<NotificationDocum
         super(NotificationRepository.getInstance());
     }
 
-    public static NotificationService getInstance() {
+    public static synchronized NotificationService getInstance() {
         if(instance == null){
             instance = new NotificationService();
         }

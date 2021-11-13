@@ -21,7 +21,7 @@ public class GuestLessonService extends BasicRoomService<Lesson, GuestLessonRepo
         super(GuestLessonRepository.getInstance());
     }
 
-    public static GuestLessonService getInstance() {
+    public static synchronized GuestLessonService getInstance() {
         if(instance == null){
             instance = new GuestLessonService();
         }

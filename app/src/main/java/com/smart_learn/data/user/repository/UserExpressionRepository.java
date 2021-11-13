@@ -35,7 +35,7 @@ public class UserExpressionRepository extends BasicFirestoreRepository<Expressio
 
     }
 
-    public static UserExpressionRepository getInstance() {
+    public static synchronized UserExpressionRepository getInstance() {
         if(instance == null){
             instance = new UserExpressionRepository();
         }

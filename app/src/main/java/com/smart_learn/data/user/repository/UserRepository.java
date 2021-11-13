@@ -49,7 +49,7 @@ public class UserRepository extends BasicFirestoreRepository<UserDocument> {
         usersCollectionReference = FirebaseFirestore.getInstance().collection(COLLECTION_USERS);
     }
 
-    public static UserRepository getInstance() {
+    public static synchronized UserRepository getInstance() {
         if(instance == null){
             instance = new UserRepository();
         }

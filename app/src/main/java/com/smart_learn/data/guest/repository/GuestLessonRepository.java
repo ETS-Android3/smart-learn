@@ -28,7 +28,7 @@ public class GuestLessonRepository extends BasicRoomRepository<Lesson, LessonDao
         sampleLiveLessonList = dao.getAllLiveSampleLessons();
     }
 
-    public static GuestLessonRepository getInstance() {
+    public static synchronized GuestLessonRepository getInstance() {
         if(instance == null){
             instance = new GuestLessonRepository();
         }

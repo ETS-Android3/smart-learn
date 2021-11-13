@@ -127,7 +127,7 @@ public class TestService {
         errorCanNotSaveTest             = context == null ? "" : context.getString(R.string.error_can_not_save_generated_test);
     }
 
-    public static TestService getInstance() {
+    public static synchronized TestService getInstance() {
         if(instance == null){
             instance = new TestService();
         }

@@ -20,7 +20,7 @@ public class ThreadExecutorService {
         setNewPoolSize(INITIAL_POOL_SIZE);
     }
 
-    public static ThreadExecutorService getInstance() {
+    public static synchronized ThreadExecutorService getInstance() {
         if(instance == null){
             instance = new ThreadExecutorService();
         }

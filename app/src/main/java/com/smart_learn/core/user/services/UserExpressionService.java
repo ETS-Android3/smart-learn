@@ -26,7 +26,7 @@ public class UserExpressionService extends BasicFirestoreService<ExpressionDocum
         super(UserExpressionRepository.getInstance());
     }
 
-    public static UserExpressionService getInstance() {
+    public static synchronized UserExpressionService getInstance() {
         if(instance == null){
             instance = new UserExpressionService();
         }

@@ -19,7 +19,7 @@ public class GuestTestRepository extends BasicRoomRepository<RoomTest, RoomTestD
         super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).roomTestDao());
     }
 
-    public static GuestTestRepository getInstance() {
+    public static synchronized GuestTestRepository getInstance() {
         if(instance == null){
             instance = new GuestTestRepository();
         }

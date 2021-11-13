@@ -21,7 +21,7 @@ public class GuestWordRepository extends BasicRoomRepository<Word, WordDao> {
         super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).wordDao());
     }
 
-    public static GuestWordRepository getInstance() {
+    public static synchronized GuestWordRepository getInstance() {
         if(instance == null){
             instance = new GuestWordRepository();
         }

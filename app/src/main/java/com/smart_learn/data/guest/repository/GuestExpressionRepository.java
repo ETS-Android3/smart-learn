@@ -21,7 +21,7 @@ public class GuestExpressionRepository extends BasicRoomRepository<Expression, E
         super(AppRoomDatabase.getDatabaseInstance(ApplicationController.getInstance()).expressionDao());
     }
 
-    public static GuestExpressionRepository getInstance() {
+    public static synchronized GuestExpressionRepository getInstance() {
         if(instance == null){
             instance = new GuestExpressionRepository();
         }

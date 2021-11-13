@@ -27,7 +27,7 @@ public class UserService extends BasicFirestoreService<UserDocument, UserReposit
         super(UserRepository.getInstance());
     }
 
-    public static UserService getInstance() {
+    public static synchronized UserService getInstance() {
         if(instance == null){
             instance = new UserService();
         }

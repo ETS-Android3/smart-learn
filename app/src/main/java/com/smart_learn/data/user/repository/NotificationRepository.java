@@ -49,7 +49,7 @@ public class NotificationRepository extends BasicFirestoreRepository<Notificatio
 
     }
 
-    public static NotificationRepository getInstance() {
+    public static synchronized NotificationRepository getInstance() {
         if(instance == null){
             instance = new NotificationRepository();
         }
